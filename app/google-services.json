@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "151345665974",
+    "firebase_url": "https://inu-cafeteria.firebaseio.com",
+    "project_id": "inu-cafeteria",
+    "storage_bucket": "inu-cafeteria.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:151345665974:android:f157fc37c150c7b6",
+        "android_client_info": {
+          "package_name": "com.inu.cafeteria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "151345665974-hn2hhg7kka7bdvjrov5oiahvj1fgm60m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEm3FsQoHRFSfOd0v1ANYygP72mxBUTJw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

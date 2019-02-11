@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/view_rectangle"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/drawer_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="학생할인 바코드"
+            android:textColor="@color/pointBlue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:id="@+id/drawer_framelayout"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:padding="5dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <!--연결상태메세지-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="인터넷 연결을\n체크해주세요!"
+                    android:textColor="@color/pointBlue"
+                    android:textSize="23sp"
+                    android:textStyle="bold" />
+
+                <!--바코드-->
+                <ImageView
+                    android:id="@+id/drawer_img_barcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="#FFFFFF" />
+
+            </FrameLayout>
+
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/drawer_text_guide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="기숙사 식당 조식할인 시간,\n사범대 점심, 저녁시간에\n사용하실 수 있습니다."
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/drawer_text_dot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="···················"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightGray" />
+
+        <!--학번-->
+        <TextView
+            android:id="@+id/drawer_text_sno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="학번정보없음"
+            android:textSize="27sp"
+            android:textStyle="bold"
+            android:textColor="@color/pointBlue"
+            android:layout_marginBottom="5dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="14"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+        </LinearLayout>
+
+        <com.inu.cafeteria.Utility.CustomViewPager
+            android:id="@+id/vd_viewpager_advertisement"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:swipe_orientation="vertical"
+            android:layout_weight="5"
+            >
+        </com.inu.cafeteria.Utility.CustomViewPager>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+
+            <com.inu.cafeteria.Utility.CircleIndicator
+                android:id="@+id/vd_indicator_advertisement"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/vd_viewpager_advertisement"
+                >
+
+            </com.inu.cafeteria.Utility.CircleIndicator>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/vci_image_code"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+
+        <ImageView
+            android:id="@+id/vci_image_is_menu"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignBottom="@+id/vci_image_code"
+            android:layout_alignRight="@+id/vci_image_code"
+            android:background="@drawable/ic_menu_5"
+            android:layout_margin="5dp"
+            />
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>

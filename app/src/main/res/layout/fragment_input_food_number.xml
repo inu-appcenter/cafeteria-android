@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        xmlns:imageCoverFlow="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="식당을 선택해주세요."
+            android:textSize="12sp"
+            android:layout_marginTop="20dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+
+            <Button
+                android:id="@+id/fifn_btn_previous"
+                android:layout_width="25dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                />
+
+            <com.inu.cafeteria.CoverFlow.CoverFlowView
+                android:id="@+id/fifn_coverflow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                imageCoverFlow:coverflowGravity="center_vertical"
+                imageCoverFlow:coverflowLayoutMode="wrap_content"
+                imageCoverFlow:reflectionGap="30dp"
+                imageCoverFlow:reflectionHeight="10%"
+                imageCoverFlow:visibleImage="3"
+                />
+
+            <Button
+                android:id="@+id/fifn_btn_forward"
+                android:layout_width="25dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/fifn_text_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="학생식당"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="15dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/fifn_layout_input_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <Button
+                    android:id="@+id/fifn_btn_minus"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/btn_minus"
+                    android:layout_toLeftOf="@+id/fifn_recycle_input_food_number"
+                    android:layout_alignBottom="@+id/fifn_recycle_input_food_number"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="invisible"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/fifn_recycle_input_food_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    >
+                </android.support.v7.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/fifn_btn_plus"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/btn_plus"
+                    android:layout_toRightOf="@+id/fifn_recycle_input_food_number"
+                    android:layout_alignBottom="@+id/fifn_recycle_input_food_number"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="8dp"
+                    />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/fifn_btn_submit"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="입력"
+                android:background="@drawable/btn_default"
+                android:layout_marginTop="10dp"
+                android:stateListAnimator="@null"
+                style="@style/btn_default"
+                android:layout_below="@+id/fifn_layout_input_list"
+                android:layout_centerHorizontal="true"
+                />
+
+            <SlidingDrawer
+                android:id="@+id/fifn_slidingdrawer_foodmenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:content="@id/content"
+                android:handle="@id/handle"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/handle"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/fifn_slidingdrawer_handle"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="메뉴"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/lightGray"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        />
+
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/fifn_slidingdrawer_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    >
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="서비스 준비중입니다."
+                        android:textSize="20sp"
+                        android:gravity="center_horizontal"
+                        />
+
+                    <ListView
+                        android:id="@+id/fifn_listview_foodmenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:listSelector="@android:color/transparent"
+                        >
+
+                    </ListView>
+
+                </RelativeLayout>
+
+            </SlidingDrawer>
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
