@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Cafeteria.iml" filepath="$PROJECT_DIR$/Cafeteria.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/INU_CafeTeria_android.iml" filepath="$PROJECT_DIR$/.idea/INU_CafeTeria_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/INU_CafeTeria_android.iml" filepath="$PROJECT_DIR$/INU_CafeTeria_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
