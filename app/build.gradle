@@ -39,7 +39,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     // design support library
-    compile 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
 
     // recyclerview library
     implementation 'com.android.support:recyclerview-v7:26.1.0'
@@ -72,7 +72,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
 
     // 소켓통신
-    compile ('io.socket:socket.io-client:1.0.0') {
+    implementation ('io.socket:socket.io-client:1.0.0') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
