@@ -11,8 +11,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- for get device information -->
-    <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
-    <!-- <uses-permission android:name="android.permission.BLUETOOTH" /> -->
     <application
         android:name=".Application.ApplicationController"
         android:allowBackup="true"

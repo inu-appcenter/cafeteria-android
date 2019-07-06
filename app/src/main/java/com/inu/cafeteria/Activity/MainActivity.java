@@ -60,16 +60,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ * 메인!! 액티비티!!
+ *
+ * 액티비티 실행 순서:
+ * SplashActivity -> (LoginActivity) -> MainActivity
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-
+    /**
+     * ApplicationController에서 가져올 retrofit 객체.
+     */
     NetworkService networkService;
 
-    // 다이얼로그
+    /**
+     * UI 객체들.
+     */
     private Dialog mDialog;
-
-    // 드로어
     private android.support.v7.widget.Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -83,10 +90,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final static private String DRAWER_OPENED = "1";
     final static private String DRAWER_CLOSED = "0";
 
-    // 핸드폰 기존 밝기 값 저장
+    /**
+     * 기기 화면 밝기 저장할 소수.
+     */
     private float originBright;
 
-    // 광고 뷰페이저
+    /**
+     * 광고 띄울 때에 사용할 뷰페이저 UI 객체와 이를 도와줄 기타 등등 객체들.
+     */
     private ArrayList<AdvertisementResultList> advertisementResultList;
     private CustomViewPager advertisementViewPager;
     private CircleIndicator circleIndicator;
@@ -94,25 +105,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TimerTask swipeTimerTask;
     private int currentPage;
 
-
-    // 뒤로가기 버튼
+    /**
+     * 뒤로가기 버튼에 반응해줄 녀석.
+     */
     private BackPressCloseHandler backPressCloseHandler;
 
-    // 로그아웃
+    /**
+     * 로그아웃 요청 보낼 때에 쓸 객체.
+     */
     LogoutData logoutData;
 
-    // 주문번호 초기화
+    /**
+     * 대기번호 싹 지우는 요청 보낼 때에 쓸 객체.
+     */
     ResetNumModel resetNumModel;
 
-    // 번호 등록 데이터
+    /**
+     * 대기번호 등록하는 요청 보낼 때에 쓸 객체.
+     */
     RegisterData registerData;
 
 
-    // 회원 정보
+    /**
+     * 로그인 정보 포함 회원 정보를 담은 shared preference.
+     */
     SharedPreferences studentInfo, checkNoReplayNoticeDate;
     SharedPreferences.Editor student, noReplayNoticeDate;
     String sno, token, barcode;
 
+    /**
+     * 여러 용도로 쓰일 인텐트들.
+     */
     Intent intent, loginIntent, appInfoIntent, inquireIntent;
 
 
@@ -123,17 +146,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final static String TAG_FRAGMENT = "FRAGMENT";
 
 
-
+    /**
+     * 시작점.
+     * @param savedInstanceState 안써욧
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        // networkService 객체 가져오기
         initNetwork();
+
+        // UI 포함 객체들 초기화
         initView();
+
+        // 클릭 리스너 설정
         initEvent();
+
+        // actionbar로 toolbar 사용
         initActionbar();
+
         initDrawer();
         checkMember();
         initAdvertisementItem();
@@ -143,20 +176,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * networkService 객체 초기화.
+     */
     private void initNetwork() {
-
         networkService = ApplicationController.getInstance().getNetworkService();
-
     }
 
-
+    /**
+     * 객체 초기화.
+     */
     private void initView() {
-
         inputFoodNumberFragment = new InputFoodNumberFragment();
         waitingFoodNumberFragment = new WaitingFoodNumberFragment();
 
         intent = getIntent();
-
 
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.vt_toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.am_layout_drawer);
@@ -170,8 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         advertisementResultList = new ArrayList<>();
         advertisementViewPager = (CustomViewPager) findViewById(R.id.vd_viewpager_advertisement);
         circleIndicator = (CircleIndicator) findViewById(R.id.vd_indicator_advertisement);
-//        layoutForAdvertisementIndicator = (LinearLayout) findViewById(R.id.vd_container_indicator);
-
+        // layoutForAdvertisementIndicator = (LinearLayout) findViewById(R.id.vd_container_indicator);
 
         studentInfo = getSharedPreferences("studentInfo", Activity.MODE_PRIVATE);
         checkNoReplayNoticeDate = getSharedPreferences("checkNoReplayNoticeDate", Activity.MODE_PRIVATE);
@@ -186,45 +219,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inquireIntent = new Intent(MainActivity.this, InquireActivity.class);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-
     }
 
-
+    /**
+     * 바코드 이미지에 대한 클릭 이벤트 지정
+     */
     private void initEvent() {
-
         imgBarcode.setOnClickListener(this);
-
     }
 
-
+    /**
+     * toolbar의 title을 없앤 채로 supportActionbar로 지정.
+     */
     private void initActionbar() {
-
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
     }
 
-
+    /**
+     * 옆에서 밀면 나오는 바코드 달린 drawer 초기화.
+     */
     private void initDrawer() {
 
-
-        // 뷰 데이터 설정
+        // 학번은 이미 아니까 바로 설정해줌
         textSno.setText(sno);
 
-        // 드로어 토글 설정
+        // 토글시 동작 설정
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
+
+            /**
+             * Drawer가 닫힐 때!!
+             * 바코드 비활성화해준다.
+             * @param drawerView 닫힐 그 drawer!
+             */
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
 
-
-                // turn the brightness back
+                // 밝기 원래대로 돌려놓기
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.screenBrightness = originBright;
                 getWindow().setAttributes(params);
 
-
-                // 바코드 활성화 (서버 통신)
+                // 바코드 비활성화 (서버 통신)
                 Call<ActiveBarcodeResult> activeBarcodeResultCall = networkService.getActiveBarcodeResult(new ActiveBarcodeData(DRAWER_CLOSED, barcode));
                 activeBarcodeResultCall.enqueue(new Callback<ActiveBarcodeResult>() {
                     @Override
@@ -244,10 +281,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 });
 
+                // 옵션 메뉴 새로 그리기를 종용!
                 invalidateOptionsMenu();
-
             }
 
+            /**
+             * Drawer가 열릴 때!!
+             * 바코드 다시 활성화해준다.
+             * @param drawerView 열리는 drawer
+             */
             @Override
             public void onDrawerOpened(View drawerView) {
 
@@ -261,32 +303,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 layoutParams.screenBrightness = 1.0f;
                 getWindow().setAttributes(layoutParams);
 
-
                 // 바코드 활성화 (서버 통신)
                 Call<ActiveBarcodeResult> activeBarcodeResultCall = networkService.getActiveBarcodeResult(new ActiveBarcodeData(DRAWER_OPENED, barcode));
                 activeBarcodeResultCall.enqueue(new Callback<ActiveBarcodeResult>() {
 
-
                     @Override
                     public void onResponse(Call<ActiveBarcodeResult> call, Response<ActiveBarcodeResult> response) {
 
-
-                        // 서버 통신이 정상적으로 이루어진 경우
                         if (response.isSuccessful()) {
-
+                            /*
+                             * 서버 통신 결과가 성공인 경우.
+                             */
                             if (response.body().getActive().equals("1")) {
-
-                                // 바코드 활성화
+                                /*
+                                 * 적절한 응답이 왔으면 바코드 활성화
+                                 */
                                 imgBarcode.setVisibility(View.VISIBLE);
                             } else {
-
-                                // 바코드 비활성화
-
+                                /*
+                                 * 그렇지 않으면 비활성화
+                                 */
                                 imgBarcode.setVisibility(View.INVISIBLE);
                             }
 
-                        } else {
-
+                        }
+                        else {
+                            /*
+                             * 결과가 실패이면 그냥 숨겨버림
+                             */
                             imgBarcode.setVisibility(View.INVISIBLE);
 
                         }
@@ -295,27 +339,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onFailure(Call<ActiveBarcodeResult> call, Throwable t) {
-
+                        /*
+                         * 서버와 통신이 실패한 경우.
+                         * 숨겨버림
+                         */
                         imgBarcode.setVisibility(View.INVISIBLE);
-
                     }
 
                 });
+
+                // 옵션 메뉴 새로고치기
                 invalidateOptionsMenu();
             }
         };
 
-
+        // drawer 리스너로 등록
         drawerLayout.setDrawerListener(drawerToggle);
 
-        // Create barcode
+        // 바코드 만들어주기
         if (studentInfo != null) {
-
             CreateBarcode();
         }
     }
 
-
+    /**
+     * 적절한 바코드 생성.
+     */
     private void CreateBarcode() {
 
         MultiFormatWriter gen = new MultiFormatWriter();
@@ -346,8 +395,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
-    // 회원 로그인인지 비회원 로그인인지 체크
+    /**
+     * 회원 로그인인지 비회원 로그인인지 구분.
+     * 비회원일 경우 drawer에서 UI 변경.
+     */
     private void checkMember() {
 
         initActionbarMenu();
@@ -371,19 +422,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-    // 드로어 메뉴 이미지 설정 및 활성화
+    /**
+     * Drawer를 띄울 수 있는 메뉴 포함 액션 바 설정.
+     */
     private void initActionbarMenu() {
-
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.btn_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-
-    // 광고 아이템 삽입
+    /**
+     * 광고 끼워넣기
+     */
     private void initAdvertisementItem() {
-
 
         Call<List<AdvertisementResult>> advertisementResultCall = networkService.getAdvertisemetnResult();
         advertisementResultCall.enqueue(new Callback<List<AdvertisementResult>>() {
@@ -491,8 +542,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // set a custom tint color for all system bars
         tintManager.setTintColor(Color.parseColor("#20000000"));
     }
-
-
 
     // 프래그먼트 교체
     public void onFragmentChanged(int index, final RegisterData registerData, final String cafename) {

@@ -9,7 +9,11 @@ public class LoginData {
     private String token;
     private String device;
 
-    public LoginData(String sno, String pw, boolean auto, String token, String device) {
+    public LoginData(String sno,
+                     String pw,
+                     boolean auto,
+                     String token,
+                     String device) {
         this.sno = sno;
         this.pw = pw;
         if(auto) {

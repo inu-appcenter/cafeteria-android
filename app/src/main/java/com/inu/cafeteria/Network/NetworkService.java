@@ -87,5 +87,5 @@ public interface NetworkService {
 
     // temp
     @GET("/version.json")
-    Call<VersionResult> getVersionREsult();
+    Call<VersionResult> getVersionResult();
 }

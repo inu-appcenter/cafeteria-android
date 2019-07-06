@@ -28,7 +28,7 @@ public class ApplicationController extends Application {
 
     // 먼저 어플리케이션 인스턴스 객체를 하나 선언
     private static ApplicationController instance;
-    private static String baseUrl = "...";
+    private static String baseUrl = Private.serverUrl; /* 비밀이지롱~ */
     private static String nation = "korea";
 
     // WaitingFoodNumberActivity 뷰 식당 이미지
@@ -238,7 +238,7 @@ public class ApplicationController extends Application {
                 .build();
 
 
-
+        // 여기서 실제로 retrofit 객체 레퍼런스가 대입된다.
         networkService = retrofit.create(NetworkService.class);
     }
 
