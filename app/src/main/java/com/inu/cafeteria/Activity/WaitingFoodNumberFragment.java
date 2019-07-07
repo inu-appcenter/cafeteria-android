@@ -31,68 +31,65 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
+/**
+ * 등록된 대기번호 표시하는 프래그먼트.
+ * 번호는 소켓으로 날아온다.
+ */
 public class WaitingFoodNumberFragment extends Fragment {
 
-
-    // when delete Temporary Code, go to DialogVibe line 44 ~ 45
-    ///////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////// Temporary Code //////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////
-
-    // 클래스 외부에서 함수를 사용하기 위함
-//    public static Fragment mFragment;
-//
-//
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//
-//        View view = (ViewGroup) inflater.inflate(R.layout.fragment_waiting_food_board, container, false);
-//
-//        return view;
-//    }
-
-
-    /////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////// Temporary Code //////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////
-
-
+    /**
+     * 의존성 주입 인스턴스
+     */
     ApplicationController controller;
 
+    /**
+     * 기타 UI
+     */
     ViewGroup view;
-
-    // 다이얼로그
     Dialog mDialog;
-
-    // 식당 관련 정보
     private String cafeteriaName, num1, num2, num3, code;
     private LinearLayout llBackImage;
     private LinearLayout llFoodNum;
     private TextView txFoodNum1, txFoodNum2, txFoodNum3, textCafeteriaName;
     private ImageButton tvInit;
 
-
+    /**
+     * retrofit 아닌 bundle로부터 받은 번호 데이터들.
+     */
     Bundle bundle;
     private RegisterData registerData;
 
-
-    // 클래스 외부에서 함수를 사용하기 위함
+    /** 클래스 외부에서 함수를 사용하기 위함
+     * ##주의## 이렇게 하면 메모리 누수 생김...
+     */
     public static Fragment mFragment;
 
-
-
-    // 전광판 관련한 소켓 통신 정보
+    /**
+     * 번호 수신받기 위한 소켓 정보.
+     */
     private String socketURL;
     private String receiveMessage;
     private String tagCafeteria;
 
+    /**
+     * 그리고 소켓.
+     */
     private Socket mSocket;
 
+    /**
+     * 완료된 번호를 표시할 그리드뷰와, 그 친구인 어댑터.
+     */
     GridView gridCompleteFoodNumber;
     GridviewAdapter gridviewAdapter;
 
 
+    /**
+     * 진입점.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -110,7 +107,6 @@ public class WaitingFoodNumberFragment extends Fragment {
             cafeteriaName = bundle.getString("cafename");
         }
 
-
         mFragment = this;
 
         initView();
@@ -123,7 +119,9 @@ public class WaitingFoodNumberFragment extends Fragment {
         return view;
     }
 
-
+    /**
+     * 필드 객체 초기화
+     */
     private void initView() {
 
         controller = (ApplicationController) getActivity().getApplication();
@@ -144,7 +142,9 @@ public class WaitingFoodNumberFragment extends Fragment {
 
     }
 
-
+    /**
+     * 클릭 리스너 등록
+     */
     private void initEvent() {
 
         tvInit.setOnClickListener(new View.OnClickListener() {
@@ -165,8 +165,10 @@ public class WaitingFoodNumberFragment extends Fragment {
 
     }
 
-
-    // 기다리는 번호 레이아웃 설정
+    /**
+     * 기다리는 번호 레이아웃을 설정해준다.
+     * 수동으로..
+     */
     private void setWaitNumber() {
 
         int margin = 10;
@@ -213,40 +215,13 @@ public class WaitingFoodNumberFragment extends Fragment {
 
     }
 
-
-
-    private int IntToDp(int margin) {
-
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        return (int)(10 * dm.density);
-    }
-
-
-    private View.OnClickListener initCancel = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-
-            mDialog.cancel();
-        }
-    };
-
-
-    private View.OnClickListener initConfirm = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-
-            mDialog.cancel();
-
-            MainActivity mainActivity = (MainActivity) getActivity();
-            mainActivity.onFragmentChanged(1, null, null);
-        }
-    };
-
-
-
-    // 완료된 푸시 TextView 설정
+    /**
+     * 수신한 대기번호가 등록된 번호라면 색칠해주고 true를 반환.
+     * 등록된 3개 번호 중 하나와도 일치하지 않을 때,
+     * 즉 관심없는 번호일 때에는 아무것도 안하고 false 반환
+     * @param number 날아온 대기번호
+     * @return 기다리는 번호였으면 true, 아니면 false
+     */
     public boolean matchCompleteFoodNumber(String number) {
 
         String completeColor = "#F26C4F";
@@ -270,8 +245,10 @@ public class WaitingFoodNumberFragment extends Fragment {
         return false;
     }
 
-
-
+    /**
+     * 소켓통신과 관련된 완료번호 UI를 초기화.
+     * @param view 이 프래그먼트 뷰
+     */
     private void initSocketView(View view) {
 
         socketURL = controller.getBaseUrl();
@@ -282,7 +259,9 @@ public class WaitingFoodNumberFragment extends Fragment {
         tagCafeteria = registerData.getCode();
     }
 
-
+    /**
+     * 소켓을 초기화하고 연결.
+     */
     private void initSocket() {
 
         try {
@@ -290,10 +269,20 @@ public class WaitingFoodNumberFragment extends Fragment {
         } catch (URISyntaxException e) {
 
         }
+
+        /*
+         * 지금은 작동을 안하는 모양이다.... 주석처리되어있었네..
+         */
+
         //mSocket.connect();
         //mSocket.on(tagCafeteria, onNewMessage);
     }
 
+    /**
+     * 소켓으로다가 보낸다.
+     * @param tag 무엇
+     * @param sendMessage 무엇에 해당하는 메시지
+     */
     private void attemptSend(String tag, String sendMessage) {
         sendMessage = "전송할 데이터";
         if (TextUtils.isEmpty(sendMessage)) {
@@ -303,6 +292,11 @@ public class WaitingFoodNumberFragment extends Fragment {
         mSocket.emit(tag, sendMessage);
     }
 
+    /**
+     * 소켓으로 대기번호 데이터가 날아올 때 취할 행동.
+     *
+     * 기다리는 번호가 있으면 처리하고, 그렇지 않으면 하단의 완료번호 목록에 추가함.
+     */
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
 
         @Override
@@ -320,7 +314,6 @@ public class WaitingFoodNumberFragment extends Fragment {
                         return;
                     }
 
-                    //Log.i("debug", receiveMessage);
                     // 소켓통신으로 온 완료된 음식번호 중 사용자가 대기중이었던 번호를 제외하고 미니전광판에 띄움
                     if (!matchCompleteFoodNumber(receiveMessage)) {
                         gridviewAdapter.add(receiveMessage);
@@ -332,7 +325,10 @@ public class WaitingFoodNumberFragment extends Fragment {
 
     };
 
-
+    /**
+     * 완료된 대기번호 목록에 하나를 추가해준다.
+     * @param number 추가할 것
+     */
     public void addCompleteFood(String number) {
         if (mSocket.connected()) {
             gridviewAdapter.add(number);
@@ -340,14 +336,12 @@ public class WaitingFoodNumberFragment extends Fragment {
         }
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
         mSocket.connect();
         mSocket.on(tagCafeteria, onNewMessage);
     }
-
 
     @Override
     public void onStop() {
@@ -363,4 +357,31 @@ public class WaitingFoodNumberFragment extends Fragment {
         mSocket.off(tagCafeteria, onNewMessage);
     }
 
+    private View.OnClickListener initCancel = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            mDialog.cancel();
+        }
+    };
+
+
+    private View.OnClickListener initConfirm = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            mDialog.cancel();
+
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.onFragmentChanged(1, null, null);
+        }
+    };
+
+    private int IntToDp(int margin) {
+
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        return (int)(10 * dm.density);
+    }
 }

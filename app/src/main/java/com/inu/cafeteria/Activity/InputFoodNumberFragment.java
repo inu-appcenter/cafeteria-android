@@ -134,13 +134,13 @@ public class InputFoodNumberFragment extends Fragment implements View.OnClickLis
         // 리스너 등록
         initEvent();
 
-        //
+        // 식당 목록과 번호 목록 초기화
         initListDataAndAction();
 
         // 식단 불러오기
         loadFoodMenu();
 
-        //
+        // 식당에 따른 입력버튼 제한 설정
         initInputLock();
 
         return view;
