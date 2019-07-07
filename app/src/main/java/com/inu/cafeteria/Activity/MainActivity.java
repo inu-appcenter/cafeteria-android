@@ -65,6 +65,19 @@ import retrofit2.Response;
  *
  * 액티비티 실행 순서:
  * SplashActivity -> (LoginActivity) -> MainActivity
+ *
+ * 루틴 실행 순서:
+ * 1. 필드 초기화
+ * 2. 클릭 리스너 설정
+ * 3. actionBar 설정
+ * 4. drawer 초기화
+ * 5. 학생회원 확인
+ * 6. 광고 표시
+ * 7. 프래그먼트 설정
+ * 8. 상태바 색상 설정
+ *
+ * 기능에 관한 상세 상호작용은 각 fragment에 정의되어 있음.
+ * InputFoodNumberFragment와 WaitingFoodNumberFragment 참고.
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -139,7 +152,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Intent intent, loginIntent, appInfoIntent, inquireIntent;
 
 
-    // 프래그먼트 관련 정보
+    /**
+     * 프래그먼트 교체할 때에 쓸 매니저와, 바꿀 프래그먼트들
+     */
     android.support.v4.app.FragmentManager myFragmentManager;
     InputFoodNumberFragment inputFoodNumberFragment;
     WaitingFoodNumberFragment waitingFoodNumberFragment;
@@ -167,13 +182,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // actionbar로 toolbar 사용
         initActionbar();
 
+        // 바코드와 광고가 나오는 drawer 초기화.
         initDrawer();
-        checkMember();
-        initAdvertisementItem();
-        initFragment();
-        // for transparent status bar in kitkat
-        initStatusBar();
 
+        // 회원인지 확인하여 비회원일 때에는 drawer 레이아웃 일부 변경
+        checkMember();
+
+        // drawer에 띄울 광고 설정
+        initAdvertisementItem();
+
+        // 처음 띄울 프래그먼트 설정
+        initFragment();
+
+        // 상태바 색상 설정
+        initStatusBar();
     }
 
     /**
@@ -404,12 +426,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initActionbarMenu();
 
         if (barcode != null) {
-            // 회원 로그인인 경우
-        } else {
-            // 비회원 로그인인 경우
-            //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            /*
+             * 회원 로그인인 경우 아무것도 안함.
+             */
+        }
+        else {
+            /*
+             * 비회원 로그인인 경우, UI 재설정.
+             */
 
-            // 바코드 관련한 Text, Layout 재설정
             textGuide.setText("로그인 후 조식할인을\n이용하실 수 있습니다.");
             textGuide.setTextSize(12);
             textGuide.setGravity(Gravity.CENTER);
@@ -432,10 +457,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 광고 끼워넣기
+     * 광고 끼워넣기.
      */
     private void initAdvertisementItem() {
 
+        // 똑똑.. 광고 있나요
         Call<List<AdvertisementResult>> advertisementResultCall = networkService.getAdvertisemetnResult();
         advertisementResultCall.enqueue(new Callback<List<AdvertisementResult>>() {
 
@@ -443,6 +469,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onResponse(Call<List<AdvertisementResult>> call, Response<List<AdvertisementResult>> response) {
 
                 if (response.body() != null) {
+                    // 네 광고 있어요
                     for (int i = 0; i < response.body().size(); i++) {
                         if (!response.body().get(i).getTitle().equals("")) {
                             advertisementResultList.add(new AdvertisementResultList(response.body().get(i)));
@@ -479,10 +506,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFailure(Call<List<AdvertisementResult>> call, Throwable t) {
                 Log.d("debug", t.getMessage().toString());
-
             }
         });
 
+        /*
+         * 슥슥 넘어가는 광고
+         */
         swipeTimer = new Timer();
         swipeTimer.schedule(new TimerTask() {
 
@@ -502,9 +531,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    /**
+     * 처음에 어떤 프래그먼트를 표시할지 결정함.
+     */
     private void initFragment() {
+        /*
+         * MainActivity를 띄우는 놈은 SplashActivity거나 LoginActivity인데,
+         * SplashActivity가 띄우는 경우에는 현재 등록된 대기번호를 표시해야 하는 경우가 있다.
+         * 이는 intent에 담겨 bundle로 날아오는데, 여기서 code라는 extra에 식당 번호가 담긴다.
+         * 이게 null이면 대기번호를 등록하는 프래그먼트를 띄우면 되고,
+         * 그렇지 않다면 이미 존재하는 대기번호를 표시하기 위해 WaitingFoodNumberFragment 프래그먼트를
+         * 띄우면 된다.
+         */
 
-        // Main화면에 뿌려질 프래그먼트를 결정함
         if (intent.getSerializableExtra("code") == null) {
             // InputFoodNumberFragment
             getSupportFragmentManager()
@@ -512,9 +551,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .add(R.id.am_fragment, new InputFoodNumberFragment())
                     .commit();
         }
-
         else {
-
             // WaitingFoodNumberFragment
             registerData = new RegisterData(
                     String.valueOf(intent.getSerializableExtra("code")),
@@ -530,7 +567,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    // Status Bar Tint
+    /**
+     * 상태바 색상 설정.
+     */
     private void initStatusBar(){
         // create our manager instance after the content view is set
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -543,20 +582,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tintManager.setTintColor(Color.parseColor("#20000000"));
     }
 
-    // 프래그먼트 교체
+    /**
+     * 프래그먼트 교체
+     * @param index 0이면 주문번호 대기 화면으로 넘어가고, 1이면 번호 입력 화면으로 넘어감.
+     * @param registerData 등록할 주문번호 정보
+     * @param cafename 주문번호를 등록할 식당 정보
+     */
     public void onFragmentChanged(int index, final RegisterData registerData, final String cafename) {
 
+        // 프래그먼트 매니저 초기화
         myFragmentManager = getSupportFragmentManager();
 
-        // WaitingFoodNumberFragment로 교체 되는 경우 (식당 정보 및 입력한 번호를 전송)
         if (index == 0) {
+            /*
+             * WaitingFoodNumberFragment로 교체 되는 경우. (식당 정보 및 입력한 번호를 전송)
+             * 입력 버튼 누른 후에 일어남.
+             */
 
+            // 입력된 번호가 들어있는 registerData를 가지고 서버 호출.
             Call<RegisterResult> registerResultCall = networkService.getRegisterResult(registerData);
             registerResultCall.enqueue(new Callback<RegisterResult>() {
 
                 @Override
                 public void onResponse(Call<RegisterResult> call, Response<RegisterResult> response) {
-
+                    /*
+                     * 성공시 waitingFoodNumberFragment로 넘어가는데,
+                     * registerData와 cafename를 가지고 넘어감.
+                     */
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("data", registerData);
                     bundle.putString("cafename", cafename);
@@ -565,22 +617,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     android.support.v4.app.FragmentTransaction fragmentTransaction = myFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.am_fragment, waitingFoodNumberFragment, TAG_FRAGMENT);
                     fragmentTransaction.commit();
-
                 }
 
                 @Override
                 public void onFailure(Call<RegisterResult> call, Throwable t) {
+                    /*
+                     * 실패하면 프래그먼트를 교체하지 않고 토스트를 띄우고 끝냄.
+                     */
                     Toast.makeText(MainActivity.this, "서버접속이 끊겼습니다.", Toast.LENGTH_SHORT).show();
                 }
 
             });
 
-
         }
-
-        // InputFoodNumberFragment로 교체 되는 경우 (주문번호를 초기화)
         else if (index == 1) {
+            /*
+             * InputFoodNumberFragment로 교체되는 경우. (다시 번호 입력받음)
+             * 주문번호 초기화할 때에 일어남.
+             */
 
+            // reset을 목적으로 resetNumModel를 만들어서 서버 호출.
             resetNumModel = new ResetNumModel(FirebaseInstanceId.getInstance().getToken());
             Call<ResetNumModel> resetNumModelCall = networkService.getResetNumResult(resetNumModel);
             resetNumModelCall.enqueue(new Callback<ResetNumModel>() {
@@ -589,32 +645,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onResponse(Call<ResetNumModel> call, Response<ResetNumModel> response) {
 
                     if (response.body().getResult().equals("success")) {
-
+                        /*
+                         * 주문번호 초기화 성공하면 inputFoodNumberFragment로 돌아감.
+                         */
                         Log.d("Token: ", resetNumModel.getFcmtoken());
 
                         android.support.v4.app.FragmentTransaction fragmentTransaction = myFragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.am_fragment, inputFoodNumberFragment, TAG_FRAGMENT);
                         fragmentTransaction.commit();
-
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResetNumModel> call, Throwable t) {
-
+                    /*
+                     * 실패하면 토스트 띄우고 아무것도 안함.
+                     */
                     Toast.makeText(MainActivity.this, "서버접속이 끊겼습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
-
         }
-
     }
 
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
     }
-
 
     @Override
     protected void onResume() {
@@ -668,7 +724,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    // 홈버튼 눌렀을 때
     @Override
     protected void onPause() {
         super.onPause();
@@ -738,7 +793,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -774,7 +828,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
-
 
     private View.OnClickListener logoutCancel = new View.OnClickListener() {
         @Override
