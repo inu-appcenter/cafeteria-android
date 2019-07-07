@@ -42,70 +42,114 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ * 식당을 지정하고 대기번호를 추가하는 프래그먼트.
+ */
 public class InputFoodNumberFragment extends Fragment implements View.OnClickListener {
 
     private ViewGroup view;
+
+    /**
+     * 대기번호 몇개나 썼나
+     */
     private int editInputCount;
 
-
-    // Coverflow 관련 뷰
+    /**
+     * 식당 옆으로 넘겨서 보는 cover flow
+     */
     private CoverFlowView coverFlowView;
     private TextView textCode;
     private List<CoverflowModel> coverflowList;
 
+    /**
+     * cover flow 뷰에 사용할 어댑터
+     */
     CoverFlowAdapter coverFlowAdapter;
 
-
-    // 입력 값 저장을 위한 배열
+    /**
+     * 입력한 대기번호 배열. 최대 3개라 3개임.
+     */
     private String[] loadData = {"", "", ""};
 
+    /**
+     * 대기번호 입력할 리사이클러뷰와 그 어댑터, 그리고 레이아웃 매니저
+     */
     RecyclerView recyclerInputFoodNumber;
     RecyclerView.Adapter adapterInputFoodNumber;
     RecyclerView.LayoutManager layoutManager;
 
+    /**
+     * 번호 추가, 삭제, 입력 버튼
+     */
     private Button btnInput;
     private Button btnPlus;
     private Button btnMinus;
 
+    /**
+     * 서버에 보낼 대기번호 등록 데이터
+     */
     RegisterData registerData;
 
+    /**
+     * 주문번호 초기화하고 돌아갈 프래그먼트
+     */
     InputFoodNumberFragment fragment;
     Bundle bundle;
 
-    //SlidingDrawer for Cafeteria Food Menu
+    /**
+     * 음식 메뉴 보여줄 슬라이딩 drawer
+     */
     SlidingDrawer foodMenuSlidingDrawer;
-    NetworkService networkService;
     ListView foodMenuListView;
 
+    /**
+     * retrofit 객체
+     */
+    NetworkService networkService;
 
+
+    /**
+     * 생성자이다. 사실 안쓴다.
+     */
     public InputFoodNumberFragment() {
+        // 오잉 생성자가 비어있네
     }
 
-
+    /**
+     * 진입점.
+     * @param inflater 다 아는 그거
+     * @param container 이것도 다 아는거
+     * @param savedInstanceState 뻔한거
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = (ViewGroup) inflater.inflate(R.layout.fragment_input_food_number, container, false);
 
+        // 객체 초기화
         initView();
+
+        // 리스너 등록
         initEvent();
+
+        //
         initListDataAndAction();
+
+        // 식단 불러오기
         loadFoodMenu();
+
+        //
         initInputLock();
 
         return view;
     }
 
-    private void initInputLock() {
-        coverFlowView.setCoverflowIsAlarm(ApplicationController.getInstance().getCoverflowIsAlarm());
-        coverFlowView.setSubmitButton(btnInput);
-    }
-
-
+    /**
+     * 필드 초기화.
+     */
     private void initView() {
-
         editInputCount = 1;
 
         coverFlowView = (CoverFlowView) view.findViewById(R.id.fifn_coverflow);
@@ -117,29 +161,43 @@ public class InputFoodNumberFragment extends Fragment implements View.OnClickLis
         foodMenuSlidingDrawer = (SlidingDrawer) view.findViewById(R.id.fifn_slidingdrawer_foodmenu);
         networkService = ApplicationController.getInstance().getNetworkService();
         foodMenuListView = (ListView) view.findViewById(R.id.fifn_listview_foodmenu);
-
     }
 
-
+    /**
+     * 클릭 리스너 등록.
+     */
     private void initEvent() {
         btnInput.setOnClickListener(this);
         btnPlus.setOnClickListener(this);
         btnMinus.setOnClickListener(this);
     }
 
-
+    /**
+     * 대기번호 목록과 식당 목록 UI 초기화.
+     */
     private void initListDataAndAction() {
+        /*
+         * 번호 입력 부분
+         */
 
-
+        // 대기번호 입력 리사이클러뷰 레이아웃 매니저와 어댑터 만들어서 적용
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerInputFoodNumber.setLayoutManager(layoutManager);
         adapterInputFoodNumber = new InputFoodNumberRecyclerAdapter(getActivity(), editInputCount, loadData);
         recyclerInputFoodNumber.setAdapter(adapterInputFoodNumber);
-        // set the interval between items
+
+        // 번호 목록 사이 간격은 10.
         recyclerInputFoodNumber.addItemDecoration(new CustomRecyclerDecoration(10));
 
+
+        /*
+         * 식당 목록 부분
+         */
+
+        // 식당 목록이 들어갈 리스트
         coverflowList = new ArrayList<>();
 
+        // 의존성 주입받음. ApplicationController에서 가져옴.
         for (int i = 0; i < ApplicationController.getInstance().getCoverflowTitles().length; i++) {
             CoverflowModel channelBean = new CoverflowModel();
             channelBean.setImg(ApplicationController.getInstance().getCoverflowImages()[i]);
@@ -147,16 +205,20 @@ public class InputFoodNumberFragment extends Fragment implements View.OnClickLis
             coverflowList.add(channelBean);
         }
 
-        coverFlowAdapter = new CoverFlowAdapter(getActivity(), coverflowList);
-        // 스크롤할 때 식당이름을 나타내는 텍스트뷰를 넣는 부분
+        // 식당 이름을 나타낼 텍스트뷰는 textCode를 사용.
         coverFlowView.setTextView(textCode);
-        // 스크롤할 때 변경되는 식당이름을 넣는 부분
-        coverFlowView.setCafeList(ApplicationController.getInstance().getCoverflowTitles());
-        coverFlowView.setAdapter(coverFlowAdapter);
 
+        // 식당 타이틀 목록은 ApplicationController로부터 공수.
+        coverFlowView.setCafeList(ApplicationController.getInstance().getCoverflowTitles());
+
+        // 어댑터 만들어서 설정.
+        coverFlowAdapter = new CoverFlowAdapter(getActivity(), coverflowList);
+        coverFlowView.setAdapter(coverFlowAdapter);
     }
 
-
+    /**
+     * 식단 가져와 표시하기.
+     */
     private void loadFoodMenu() {
         Call<JsonElement> foodMenuCall = networkService.getFoodMenu(getTodayFormatyyyyMMdd());
         foodMenuCall.enqueue(new Callback<JsonElement>() {
@@ -166,6 +228,9 @@ public class InputFoodNumberFragment extends Fragment implements View.OnClickLis
                     HashMap<String, String> hashMap = ApplicationController.getInstance().getSlidingdrawer_cafecode();
                     ArrayList<String> arrayList = ApplicationController.getInstance().getSlidingdrawer_cafename();
 
+                    /*
+                     * 식당별로 음식 메뉴 데이터 설정해줌.
+                     */
                     JsonObject allCafeteriaMenuInfo = response.body().getAsJsonObject();//최상위 오브젝트 받아옴
                     coverFlowView.setCafeCode(ApplicationController.getInstance().getCoverflowCodes());
                     coverFlowView.setCoverflowIsMenu((ApplicationController.getInstance().getCoverflowIsMenu()));
@@ -173,7 +238,6 @@ public class InputFoodNumberFragment extends Fragment implements View.OnClickLis
                     coverFlowView.setFoodMenu(allCafeteriaMenuInfo);
                     FoodMenuListViewAdpater foodMenuListViewAdpater = new FoodMenuListViewAdpater(getContext());
                     coverFlowView.setFoodMenuAdapter(foodMenuListViewAdpater);
-
                 }
             }
 
@@ -184,23 +248,34 @@ public class InputFoodNumberFragment extends Fragment implements View.OnClickLis
         });
     }
 
+    /**
+     * 입력 버튼을 누를 수 있는 식당 설정하기.
+     */
+    private void initInputLock() {
+        coverFlowView.setCoverflowIsAlarm(ApplicationController.getInstance().getCoverflowIsAlarm());
+        coverFlowView.setSubmitButton(btnInput);
+    }
 
+    /**
+     * 다양한 버튼 처리를 여기서.
+     * @param view
+     */
     @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
 
-            case R.id.fifn_btn_submit:
+            case R.id.fifn_btn_submit: {
+                /*
+                 * 입력 버튼!
+                 */
 
-//                Toast.makeText(getContext(), "현재 점검중입니다.", Toast.LENGTH_SHORT).show();
-//                if(true) break;
-
-                // 키보드 내림
+                // 버튼이 눌렸으면 일단 키보드를 내린다.
                 InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
 
 
-                // 비어있는 input 칸의 개수를 셈
+                // 비어있는 input 칸의 개수를 센다.
                 int editEmptyCount = 0;
 
                 for (int i = 0; i < editInputCount; i++) {
@@ -262,10 +337,12 @@ public class InputFoodNumberFragment extends Fragment implements View.OnClickLis
                 mainActivity.onFragmentChanged(0, registerData, bundle.getString("name"));
 
                 break;
+            }
 
-
-            // TODO
-            case R.id.fifn_btn_plus:
+            case R.id.fifn_btn_plus: {
+                /*
+                 * 번호 추가 버튼!
+                 */
 
                 // 기존에 입력한 데이터 저장
                 for (int i = 0; i < editInputCount; i++) {
@@ -286,9 +363,12 @@ public class InputFoodNumberFragment extends Fragment implements View.OnClickLis
                 }
 
                 break;
+            }
 
-
-            case R.id.fifn_btn_minus:
+            case R.id.fifn_btn_minus: {
+                /*
+                 * 번호 삭제 버튼!
+                 */
 
                 for (int i = 0; i < editInputCount - 1; i++) {
                     EditText editText = (EditText) recyclerInputFoodNumber.getChildAt(i).findViewById(R.id.vrifni_edit_input_food_number);
@@ -312,11 +392,10 @@ public class InputFoodNumberFragment extends Fragment implements View.OnClickLis
                 }
 
                 break;
+            }
 
             default:
                 break;
-
-
         }
 
     }
@@ -327,6 +406,4 @@ public class InputFoodNumberFragment extends Fragment implements View.OnClickLis
         String today = sdf.format(calendar.getTime());
         return today;
     }
-
-
 }

@@ -64,7 +64,7 @@ public class SplashActivity extends AppCompatActivity {
     String token;
 
     /**
-     * 공지사항 가져와서 담을 문자열
+     * 공지사항 가져와서 담을 문자열.
      */
     private String alreadyConfirmAllNotice;
     private String alreadyConfirmAndroidNotice;
@@ -72,7 +72,7 @@ public class SplashActivity extends AppCompatActivity {
     private String curAndroidNoticeId;
 
     /**
-     * 버전 확인할 때에 쓸 문자열
+     * 버전 확인할 때에 쓸 문자열.
      */
     String storeVersion;
     String deviceVersion;
