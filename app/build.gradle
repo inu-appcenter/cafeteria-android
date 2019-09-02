@@ -31,10 +31,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    // implementation project(":common")
+
     /** Koin 테스트 */
     androidTestImplementation "org.koin:koin-test:$koin_version"
-
-    /** Koin */
-    implementation "org.koin:koin-android:$koin_version"
-
 }

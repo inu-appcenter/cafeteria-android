@@ -1,4 +1,4 @@
-package org.inu.data
+package org.inu.cafeteria
 
 import org.junit.Test
 
