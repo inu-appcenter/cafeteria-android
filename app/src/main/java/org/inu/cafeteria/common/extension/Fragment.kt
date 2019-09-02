@@ -113,6 +113,7 @@ val Fragment.viewContainer: View? get() = (activity as? AppCompatActivity)?.frag
 val Fragment.appContext: Context get() = activity?.applicationContext!!
 
 val Fragment.supportActionBar: ActionBar? get() = (activity as? AppCompatActivity)?.supportActionBar
+
 fun Fragment.setSupportActionBar(toolbar: Toolbar, title: Boolean = false, upButton: Boolean = false) {
     withNonNull(activity as? AppCompatActivity) {
         setSupportActionBar(toolbar)

@@ -45,4 +45,8 @@ dependencies {
     /** ViewModel */
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
+
+    /** Material */
+    implementation "com.google.android.material:material:$material_version"
+
 }

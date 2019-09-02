@@ -9,4 +9,6 @@
     <dimen name="textTertiary">12sp</dimen>
     <dimen name="textToolbar">20sp</dimen>
 
+    <!-- Toolbar height including status bar. -->
+    <dimen name="toolbarHeight">80dp</dimen>
 </resources>
