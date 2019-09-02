@@ -9,7 +9,4 @@ import retrofit2.Call
 abstract class LoginRepository : Repository() {
     abstract fun login(params: LoginParams): Call<LoginResult>
     abstract fun logout(params: LogoutParams): Call<LogoutResult>
-
-    abstract fun getToken(): String?
-    abstract fun setToken(token: String?)
 }

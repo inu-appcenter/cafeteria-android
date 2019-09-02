@@ -1,8 +1,7 @@
 package org.inu.cafeteria.injection
 
 import org.inu.cafeteria.common.Navigator
-import org.inu.cafeteria.repository.VersionRepository
-import org.inu.cafeteria.repository.VersionRepositoryImpl
+import org.inu.cafeteria.repository.*
 import org.inu.cafeteria.usecase.GetVersion
 import org.koin.dsl.module
 
@@ -22,12 +21,36 @@ val myModules = module {
         )
     }
 
+
+    /*****************************
+     * Repository
+     *****************************/
+
+    /** Login Repository */
+    single {
+        LoginRepositoryImpl(
+            networkService = get()
+        )
+    }
+
+    /** Student Info Repository */
+    single {
+        StudentInfoRepositoryImpl(
+            context = get()
+        )
+    }
+
     /** Version Repository */
     single {
         VersionRepositoryImpl(
             networkService = get()
         ) as VersionRepository
     }
+
+
+    /*****************************
+     * Use Case
+     *****************************/
 
     /** Get Version */
     single {
