@@ -22,7 +22,7 @@ abstract class UseCase<in Params, out Type> : FailableComponent() {
     /**
      * Use thread instead of coroutine because it ruins Realm.
      */
-    operator fun invoke(params: Params, onResult: (Result<*>) -> Unit = {}) {
+    operator fun invoke(params: Params, onResult: (Result<Type>) -> Unit = {}) {
         Thread {
             try {
                 Timber.v("UseCase running on ${Thread.currentThread().name}")
