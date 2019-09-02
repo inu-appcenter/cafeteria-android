@@ -1,87 +1,33 @@
 apply plugin: 'com.android.application'
 
-android {
-    compileSdkVersion 26
-    defaultConfig {
-        applicationId "com.inu.cafeteria"
-        minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 15
-        versionName "2.1.2"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
+apply plugin: 'kotlin-android'
 
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "org.inu.cafeteria"
+        minSdkVersion 24
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-
-//            minifyEnabled true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-//            shrinkResources true
-
-
-            applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "${variant.name}-${variant.versionName}.apk"
-                }
-            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.core:core-ktx:1.0.2'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
-    // design support library
-    implementation 'com.android.support:design:26.1.0'
-
-    // recyclerview library
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-
-
-
-    // Retrofit2 Library
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.google.code.gson:gson:2.8.0'
-
-    // PersistentCookie Library (세션쿠키 유지를 위함)
-    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
-
-    // Okhttp Library (데이터 보낼 때 Okhttp 사용)
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-
-    // Jsoup Library (jsoup을 이용해서 html 문서 파싱)
-    implementation 'org.jsoup:jsoup:1.11.2'
-
-
-    // Firebase Library (최신버전 유지할 것)
-    implementation 'com.google.firebase:firebase-messaging:11.8.0'
-    implementation 'com.google.firebase:firebase-core:11.8.0'
-
-    // Barcode Library (바코드 생성)
-    implementation 'com.google.zxing:core:3.2.1'
-
-    // Glide Library
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
-
-    // 소켓통신
-    implementation ('io.socket:socket.io-client:1.0.0') {
-        // excluding org.json which is provided by Android
-        exclude group: 'org.json', module: 'json'
-    }
-
-    // for status bar tint
-    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-
-
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
-
-// Google-service Plugin
-apply plugin: 'com.google.gms.google-services'

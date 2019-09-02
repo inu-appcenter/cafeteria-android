@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!--하얀색, 투명도 80% (CC)-->
-    <color name="whiteTransparent">#80ffffff</color>
-
-    <!--
-투명도
-100% — FF
-90% — E6
-80% — CC
-70% — B3
-60% — 99
-50% — 80
-40% — 66
-30% — 4D
-20% — 33
-10% — 1A
-0% — 00
--->
-
-    <color name="pointBlue">#38b1e4</color>
-    <color name="lightGray">#e5e5e5</color>
-    <color name="middleGray">#c5c5c5</color>
-    <color name="heavyGray">#a0a0a0</color>
-
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
 </resources>
