@@ -11,16 +11,15 @@
             type="org.inu.cafeteria.feature.main.DrawerViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:attr/windowBackground" >
 
         <!-- Student info -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            app:barcodeState="@{drawerViewModel.barcodeState}"
             android:id="@+id/student_info_layout"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
@@ -28,10 +27,12 @@
             android:background="@drawable/rounded_rectangle_outline_2dp"
             android:backgroundTint="?android:attr/divider"
             android:padding="24dp"
+            app:barcodeState="@{drawerViewModel.barcodeState}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!-- Student tag title -->
             <TextView
                 android:id="@+id/info_title"
                 android:layout_width="wrap_content"
@@ -44,6 +45,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!-- Barcode layout -->
             <FrameLayout
                 android:id="@+id/barcode_layout"
                 android:layout_width="200dp"
@@ -53,6 +55,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/info_title">
 
+                <!-- The barcode -->
                 <ImageView
                     android:id="@+id/barcode"
                     android:layout_width="match_parent"
@@ -65,6 +68,7 @@
                     tools:srcCompat="@tools:sample/backgrounds/scenic"
                     tools:visibility="gone" />
 
+                <!-- Network warning -->
                 <TextView
                     android:id="@+id/internet_warning"
                     android:layout_width="match_parent"
@@ -80,6 +84,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="gone" />
 
+                <!-- Loading -->
                 <ProgressBar
                     android:id="@+id/loading"
                     android:layout_width="wrap_content"
@@ -93,6 +98,7 @@
 
             </FrameLayout>
 
+            <!-- Barcode guide -->
             <TextView
                 android:id="@+id/barcode_guide"
                 style="@style/TextTertiary"
@@ -118,24 +124,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/barcode_guide" />
 
+            <!-- Student ID -->
             <TextView
                 android:id="@+id/student_id"
-                android:text="@{drawerViewModel.studentId}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:text="@{drawerViewModel.studentId}"
                 android:textColor="@color/pointBlue"
                 android:textSize="@dimen/textToolbar"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/separator"
-                tools:text="201X12345" />
-
+                tools:text="201701562"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </layout>
 

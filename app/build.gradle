@@ -35,6 +35,7 @@ dependencies {
 
     implementation project(":common")
     implementation project(":domain")
+    implementation project(":data")
 
     /** Koin 테스트 */
     androidTestImplementation "org.koin:koin-test:$koin_version"
@@ -52,4 +53,6 @@ dependencies {
     /** Material */
     implementation "com.google.android.material:material:$material_version"
 
+    /** Persistent Cookie Jar */
+    implementation "com.github.franmontiel:PersistentCookieJar:$cookiejar_version"
 }

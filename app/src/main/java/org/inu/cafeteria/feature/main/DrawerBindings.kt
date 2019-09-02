@@ -18,5 +18,5 @@ fun setBarcodeState(layout: ConstraintLayout, state: BarcodeState?) {
         layout.internet_warning.isVisible = isNetworkDown
     }
 
-    Timber.i("Barcode is set.")
+    Timber.i("Barcode state is set.")
 }

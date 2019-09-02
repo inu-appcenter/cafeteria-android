@@ -1,0 +1,15 @@
+package org.inu.cafeteria.repository
+
+import org.inu.cafeteria.model.scheme.LoginParams
+import org.inu.cafeteria.model.scheme.LoginResult
+import org.inu.cafeteria.model.scheme.LogoutParams
+import org.inu.cafeteria.model.scheme.LogoutResult
+import retrofit2.Call
+
+abstract class LoginRepository : Repository() {
+    abstract fun login(params: LoginParams): Call<LoginResult>
+    abstract fun logout(params: LogoutParams): Call<LogoutResult>
+
+    abstract fun getToken(): String?
+    abstract fun setToken(token: String?)
+}

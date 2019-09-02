@@ -12,13 +12,18 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".feature.main.CafeteriaActivity">
+        <!-- Activity -->
+        <activity android:name=".common.RouterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".feature.splash.SplashActivity" />
+        <activity android:name=".feature.login.LoginActivity" />
+        <activity android:name=".feature.main.CafeteriaActivity" />
 
-        </application>
+
+    </application>
 
 </manifest>

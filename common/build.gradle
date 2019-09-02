@@ -34,7 +34,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     /**
-     *
+     * Dependencies below will be used globally in every module.
+     * The 'api' artifact reveals its dependencies to its user,
+     * allowing them to be used without 'implementation' again in each module.
      */
 
     /** Timber */
@@ -42,4 +44,11 @@ dependencies {
 
     /** Koin */
     api "org.koin:koin-android:$koin_version"
+
+    /** Retrofit2 */
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    /** GSON */
+    api "com.google.code.gson:gson:$gson_version"
 }
