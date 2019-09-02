@@ -1,0 +1,12 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="bottom_sheet_peek_height">50dp</dimen>
+
+    <dimen name="textBig">22sp</dimen>
+    <dimen name="textPrimary">16sp</dimen>
+    <dimen name="textSecondary">14sp</dimen>
+    <dimen name="textTertiary">12sp</dimen>
+    <dimen name="textToolbar">20sp</dimen>
+
+</resources>

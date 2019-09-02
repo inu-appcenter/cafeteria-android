@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_ask">문의하기</string>
+    <string name="menu_app_info">앱 정보</string>
+    <string name="menu_logout">로그아웃</string>
+</resources>

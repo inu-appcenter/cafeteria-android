@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.potados.geomms.base.Failable
-import com.potados.geomms.common.extension.setVisible
+import org.inu.cafeteria.base.Failable
+import org.inu.cafeteria.common.extension.setVisible
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
@@ -131,5 +131,4 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), Failable
     protected open fun areContentsTheSame(old: T, new: T): Boolean {
         return old == new
     }
-
 }

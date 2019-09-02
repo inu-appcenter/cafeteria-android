@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppThemeLight" parent="AppBaseThemeLight" />
+
+    <!-- Light theme -->
+    <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.NoActionBar">item>
+        <item name="android:divider">@color/separatorLight</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorTertiary">@color/textTertiary</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="android:windowContentTransitions">true</item>
+
+        <!--item name="colorPrimary">@color/toolbarLight</item-->
+        <item name="colorPrimaryDark">@color/statusBarLight</item>
+        <item name="colorAccent">@color/green</item>
+        <item name="selectableItemBackground">@drawable/ripple</item>
+    </style>
+
+</resources>

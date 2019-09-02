@@ -20,11 +20,10 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider.Factory
 import androidx.lifecycle.ViewModelProviders
-import com.potados.geomms.R
-import com.potados.geomms.common.base.NavigationFragment
-import com.potados.geomms.extension.withNonNull
-import com.potados.geomms.util.Notify
 import kotlinx.android.synthetic.main.single_fragment_activity.*
+import org.inu.cafeteria.R
+import org.inu.cafeteria.extension.withNonNull
+import org.inu.cafeteria.util.Notify
 
 /**
  * Do something in the middle of beginTransaction() and commit().
@@ -59,10 +58,6 @@ inline fun FragmentManager.showOnly(predicate: (Fragment) -> Boolean): Boolean  
     executePendingTransactions()
 
     return true
-}
-
-fun FragmentManager.findFragmentByNavigationId(id: Int): Fragment? {
-    return fragments.find { (it as? NavigationFragment)?.navigationItemId == id }
 }
 
 /**
@@ -131,7 +126,7 @@ fun Fragment.setSupportActionBar(toolbar: Toolbar, title: Boolean = false, upBut
 
 fun Fragment.setTitle(title: String?) {
     withNonNull(activity as? AppCompatActivity) {
-        findViewById<TextView>(R.id.toolbar_title)?.text = title
+     //   findViewById<TextView>(R.id.toolbar_title)?.text = title TODO
     }
 }
 

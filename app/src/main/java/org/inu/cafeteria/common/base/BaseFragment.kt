@@ -9,15 +9,13 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.potados.geomms.R
-import com.potados.geomms.base.Failable
-import com.potados.geomms.base.FailableContainer
-import com.potados.geomms.base.FailableHandler
-import com.potados.geomms.common.extension.notify
-import com.potados.geomms.common.extension.observe
-import com.potados.geomms.common.extension.resolveThemeColor
-import com.potados.geomms.common.extension.setTint
-import com.potados.geomms.preference.MyPreferences
+import org.inu.cafeteria.base.Failable
+import org.inu.cafeteria.base.FailableContainer
+import org.inu.cafeteria.base.FailableHandler
+import org.inu.cafeteria.common.extension.notify
+import org.inu.cafeteria.common.extension.observe
+import org.inu.cafeteria.common.extension.resolveThemeColor
+import org.inu.cafeteria.common.extension.setTint
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
@@ -32,8 +30,6 @@ abstract class BaseFragment : Fragment(), Failable, FailableContainer, FailableH
 
     private var menu: Menu? = null
     fun getOptionsMenu(): Menu? = menu
-
-    private val preferences: MyPreferences by inject()
 
 
     /******************************
@@ -68,7 +64,7 @@ abstract class BaseFragment : Fragment(), Failable, FailableContainer, FailableH
 
     @CallSuper
     override fun onFail(failure: Failable.Failure) {
-        if (failure.show || preferences.showAllError) {
+        if (failure.show) {
             notify(failure.message, long = true)
         }
 
@@ -118,9 +114,11 @@ abstract class BaseFragment : Fragment(), Failable, FailableContainer, FailableH
             Timber.d("Inflate option menu")
         }
 
+        /*
         context?.let {
             menu.setTint(it, it.resolveThemeColor(R.attr.tintPrimary))
         }
+        */
 
         this.menu = menu
     }

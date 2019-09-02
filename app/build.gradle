@@ -31,8 +31,18 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    // implementation project(":common")
+    implementation project(":common")
 
     /** Koin 테스트 */
     androidTestImplementation "org.koin:koin-test:$koin_version"
+
+    /** RecyclerView */
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+
+    /** ConstraintLayout */
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+
+    /** ViewModel */
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
 }

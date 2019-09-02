@@ -19,6 +19,7 @@ import android.graphics.Canvas
 import android.view.ViewGroup
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import org.inu.cafeteria.extension.tryOrNull
 
 
 fun Context.getColorCompat(colorRes: Int): Int {
