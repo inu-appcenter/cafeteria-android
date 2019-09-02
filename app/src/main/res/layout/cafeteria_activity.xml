@@ -1,36 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/am_layout_drawer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Content -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/am_layout_main"
+    <data>
+        <variable
+            name="drawerViewModel"
+            type="org.inu.cafeteria.feature.main.DrawerViewModel" />
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
 
-        <!-- Toolbar -->
+        <!-- Content -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/am_layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Toolbar -->
+            <include
+                android:id="@+id/toolbar_include"
+                layout="@layout/toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Fragment -->
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_include" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Drawer -->
         <include
-            android:id="@+id/toolbar_include"
-            layout="@layout/toolbar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:drawerViewModel="@{drawerViewModel}"
+            layout="@layout/drawer"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start" />
 
-        <!-- Fragment -->
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_include" />
+    </androidx.drawerlayout.widget.DrawerLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
 
-</androidx.drawerlayout.widget.DrawerLayout>

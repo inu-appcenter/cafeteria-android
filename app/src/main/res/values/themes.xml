@@ -8,6 +8,9 @@
         <item name="android:divider">@color/separatorLight</item>
         <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorTertiary">@color/textTertiary</item>
 
         <item name="android:fitsSystemWindows">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -16,6 +19,7 @@
 
         <item name="colorPrimary">@color/toolbarLight</item>
         <item name="colorPrimaryDark">@color/statusBarLight</item>
+        <item name="colorAccent">@color/pointBlue</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
     </style>
 

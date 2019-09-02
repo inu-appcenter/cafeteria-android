@@ -10,12 +10,13 @@ import org.inu.cafeteria.common.extension.inImmediateTransaction
 abstract class SingleFragmentActivity : BaseActivity() {
 
     abstract val fragment: Fragment
-    open val layoutId: Int = R.layout.single_fragment_activity
+    open val layoutId: Int? = R.layout.single_fragment_activity
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutId)
+
+        layoutId?.let { setContentView(it) }
 
         addFragment(savedInstanceState)
     }

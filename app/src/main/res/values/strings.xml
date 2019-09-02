@@ -4,4 +4,11 @@
     <string name="menu_app_info">App Info</string>
     <string name="menu_logout">Logout</string>
     <string name="desc_logo">This is a logo of this application.</string>
+    <string name="desc_close_drawer">Close drawer</string>
+    <string name="desc_open_drawer">Open drawer</string>
+    <string name="title_student_barcode">Student Tag</string>
+    <string name="warn_internet">Please check the internet.</string>
+    <string name="desc_student_barcode">This is a student tag.</string>
+    <string name="loading">Loading...</string>
+    <string name="desc_for_the_discount">For the discount at dining halls in dormitory and the college of education.</string>
 </resources>

@@ -21,6 +21,11 @@
 
     <color name="bubbleLight">#EFF1F3</color>
 
-    <color name="separatorLight">#0C000000</color>
+    <color name="separatorLight">#FFCCCCCC</color>
+
+    <color name="pointBlue">#38b1e4</color>
+    <color name="lightGray">#e5e5e5</color>
+    <color name="middleGray">#c5c5c5</color>
+    <color name="heavyGray">#a0a0a0</color>
 
 </resources>

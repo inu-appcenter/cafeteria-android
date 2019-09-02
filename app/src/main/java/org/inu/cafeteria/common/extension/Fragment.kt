@@ -104,7 +104,7 @@ inline fun <reified T : ViewModel> FragmentActivity.getViewModel(factory: Factor
  * For Activity
  * Get ViewModel of the fragment without SingleUseCaseViewModelFactory.
  */
-inline fun <reified T : ViewModel> FragmentActivity.getViewModel(body: T.() -> Unit): T {
+inline fun <reified T : ViewModel> FragmentActivity.getViewModel(body: T.() -> Unit = {}): T {
     return ViewModelProviders.of(this).get(T::class.java).apply(body)
 }
 
