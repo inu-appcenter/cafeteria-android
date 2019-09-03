@@ -138,3 +138,7 @@ fun Fragment.notify(message: String?, long: Boolean = false) {
         }
     }
 }
+
+fun Fragment.finishActivity() {
+    activity?.finish()
+}
