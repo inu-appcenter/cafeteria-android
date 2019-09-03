@@ -9,6 +9,6 @@ class LoginActivity : SingleFragmentActivity() {
     override val fragment: Fragment = LoginFragment()
 
     companion object {
-        fun callingIntent(context: Context) = Intent(context, SingleFragmentActivity::class.java)
+        fun callingIntent(context: Context) = Intent(context, LoginActivity::class.java)
     }
 }
