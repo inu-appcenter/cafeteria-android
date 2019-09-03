@@ -12,6 +12,7 @@ import org.inu.cafeteria.common.extension.finishActivity
 import org.inu.cafeteria.common.extension.handleRetrofitException
 import org.inu.cafeteria.common.util.ThemedDialog
 import org.inu.cafeteria.exception.ServerNoResponseException
+import org.inu.cafeteria.model.VersionCompared
 import org.inu.cafeteria.usecase.GetVersion
 import org.inu.cafeteria.util.Notify
 import org.koin.android.ext.android.inject
@@ -82,7 +83,6 @@ class SplashFragment : BaseFragment() {
      * @param onPass launched when no need to update.
      * @param onUpdate launched when user pressed update button.
      * @param onDismiss launched when user pressed cancel button.
-     *
      */
     private fun checkVersion(
         onFail: (e: Exception) -> Unit,
@@ -90,25 +90,26 @@ class SplashFragment : BaseFragment() {
         onUpdate: () -> Unit,
         onDismiss: () -> Unit
     ) {
+
+        // Temporal dialog factory
+        val getDialog = { version: VersionCompared ->
+            ThemedDialog(baseActivity!!)
+                .withTitle(R.string.dialog_new_version, version.latestVersion)
+                .withMessage(R.string.dialog_ask_update)
+                .withPositiveButton(R.string.button_update) {
+                    onUpdate()
+                }
+                .withNegativeButton(R.string.button_cancel) {
+                    onDismiss()
+                }
+        }
+
         getVersion(Unit) {
             it.onSuccess { version ->
-                when (version.needUpdate()) {
-                    true -> {
-                        // New version detected.
-                        ThemedDialog(baseActivity!!)
-                            .withTitle(R.string.dialog_new_version, version.latestVersion)
-                            .withMessage(R.string.dialog_ask_update)
-                            .withPositiveButton(R.string.button_update) {
-                                onUpdate()
-                            }
-                            .withNegativeButton(R.string.button_cancel) {
-                                onDismiss()
-                            }
-                            .show()
-                    }
-                    else -> {
-                        onPass()
-                    }
+                if (version.needUpdate()) {
+                    getDialog(version).show()
+                } else {
+                    onPass()
                 }
             }.onError { e ->
                 onFail(e)

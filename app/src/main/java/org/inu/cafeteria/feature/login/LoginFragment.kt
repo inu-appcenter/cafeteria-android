@@ -10,10 +10,6 @@ import org.inu.cafeteria.common.base.BaseFragment
 
 class LoginFragment : BaseFragment() {
 
-    private val tryLoginWithIdAndPw = {
-
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // check autologin
@@ -34,6 +30,14 @@ class LoginFragment : BaseFragment() {
         with(view.login) {
 
         }
+    }
+
+    private fun tryLoginWithIdAndPw(
+        id: String,
+        pw: String,
+        onSuccess: () -> Unit,
+        onFail: () -> Unit) {
+
     }
 
 }
