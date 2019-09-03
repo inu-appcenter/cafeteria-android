@@ -96,7 +96,7 @@ class SplashFragment : BaseFragment() {
                     true -> {
                         // New version detected.
                         ThemedDialog(baseActivity!!)
-                            .withTitle(R.string.dialog_new_version)
+                            .withTitle(R.string.dialog_new_version, version.latestVersion)
                             .withMessage(R.string.dialog_ask_update)
                             .withPositiveButton(R.string.button_update) {
                                 onUpdate()

@@ -8,7 +8,9 @@ import retrofit2.Call
 class VersionRepositoryImpl(
     private val networkService: CafeteriaNetworkService
 ) : VersionRepository() {
+
     override fun getCurrentVersion(): String {
+        // BuildConfig from module common.
         return BuildConfig.VERSION_NAME
     }
 

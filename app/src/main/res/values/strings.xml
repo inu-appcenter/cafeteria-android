@@ -13,7 +13,7 @@
     <string name="fail_server">Could not communicate with server :(</string>
     <string name="fail_response">Server request failed :(</string>
     <string name="fail_unexpected">Unexpected error occurd.</string>
-    <string name="dialog_new_version">New Version</string>
+    <string name="dialog_new_version">New Version %s</string>
     <string name="dialog_ask_update">New version is available. Do you want to update?</string>
     <string name="button_update">Update</string>
     <string name="button_cancel">Cancel</string>
@@ -22,4 +22,10 @@
     <string name="title_server_error">Server error</string>
     <string name="dialog_server_not_respond">Server is not responding... :(</string>
     <string name="button_exit">Exit</string>
+    <string name="hint_stuno">학번</string>
+    <string name="hint_password">비밀번호</string>
+    <string name="check_auto_login">자동로그인</string>
+    <string name="button_login">LOG IN</string>
+    <string name="ask_not_inu">인천대생이 아니신가요?</string>
+    <string name="button_no_user_login">비회원 로그인</string>
 </resources>
