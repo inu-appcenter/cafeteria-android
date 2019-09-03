@@ -13,6 +13,11 @@ fun setBarcodeState(layout: ConstraintLayout, state: BarcodeState?) {
     state ?: return
 
     with(state) {
+        layout.alpha = if (isAvailable) 1.0f else 0.5f
+
+        layout.login_feature_group.isVisible = isAvailable
+        layout.login_notice.isVisible = !isAvailable
+
         layout.barcode_image.isVisible = isAvailable && !isLoading && !isNetworkDown
         layout.loading.isVisible = isAvailable && isLoading && !isNetworkDown
         layout.internet_warning.isVisible = isNetworkDown

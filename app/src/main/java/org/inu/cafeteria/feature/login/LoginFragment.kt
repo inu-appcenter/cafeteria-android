@@ -9,6 +9,7 @@ import org.inu.cafeteria.R
 import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.extension.getViewModel
 import org.inu.cafeteria.common.extension.handleRetrofitException
+import org.inu.cafeteria.common.extension.hideKeyboard
 import timber.log.Timber
 
 class LoginFragment : BaseFragment() {
@@ -73,9 +74,15 @@ class LoginFragment : BaseFragment() {
 
         with(view.no_user_login) {
             setOnClickListener {
-                // Bypass the login.
                 viewModel.showMain(this@LoginFragment)
             }
         }
+
+        with(view.root_layout) {
+            setOnClickListener {
+                hideKeyboard()
+            }
+        }
+
     }
 }

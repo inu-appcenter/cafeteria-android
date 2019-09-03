@@ -2,8 +2,7 @@
 
 <!-- TODO -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/al_view"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_animation" >
@@ -97,7 +96,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:background="@null"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
+                android:background="@drawable/rounded_rectangle_outline_3dp"
                 android:text="@string/button_login"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"/>
@@ -127,7 +128,8 @@
                 android:layout_marginTop="9dp"
                 android:text="@string/button_no_user_login"
                 android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 

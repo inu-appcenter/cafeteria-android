@@ -6,7 +6,7 @@
     <string name="desc_logo">This is a logo of this application.</string>
     <string name="desc_close_drawer">Close drawer</string>
     <string name="desc_open_drawer">Open drawer</string>
-    <string name="title_student_barcode">Student Tag</string>
+    <string name="title_student_barcode">TAG</string>
     <string name="warn_internet">Please check the internet.</string>
     <string name="desc_student_barcode">This is a student tag.</string>
     <string name="desc_for_the_discount">For the discount at dining halls in dormitory and the college of education.</string>
@@ -22,13 +22,14 @@
     <string name="title_server_error">Server error</string>
     <string name="dialog_server_not_respond">Server is not responding... :(</string>
     <string name="button_exit">Exit</string>
-    <string name="hint_stuno">학번</string>
-    <string name="hint_password">비밀번호</string>
-    <string name="check_auto_login">자동로그인</string>
+    <string name="hint_stuno">Student ID</string>
+    <string name="hint_password">Password</string>
+    <string name="check_auto_login">Keep me logged in</string>
     <string name="button_login">LOG IN</string>
-    <string name="ask_not_inu">인천대생이 아니신가요?</string>
-    <string name="button_no_user_login">비회원 로그인</string>
+    <string name="button_no_user_login">Without account</string>
     <string name="fail_wrong_auth">Please check your ID and password.</string>
     <string name="fail_token_invalid">Token is invalid.</string>
     <string name="fail_no_barcode">No tag information.</string>
+    <string name="ask_not_inu">Not a member?</string>
+    <string name="desc_login_to_see_tag">This feature requires student information. You can login to proceed.</string>
 </resources>

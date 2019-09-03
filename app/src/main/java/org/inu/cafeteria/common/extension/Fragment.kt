@@ -8,11 +8,13 @@ package org.inu.cafeteria.common.extension
 
 import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -141,4 +143,8 @@ fun Fragment.notify(message: String?, long: Boolean = false) {
 
 fun Fragment.finishActivity() {
     activity?.finish()
+}
+
+fun Fragment.hideKeyboard() {
+    baseActivity?.hideKeyboard()
 }
