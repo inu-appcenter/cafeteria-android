@@ -19,4 +19,7 @@
     <string name="button_cancel">Cancel</string>
     <string name="desc_app_description">INU cafeteria</string>
     <string name="notify_not_implemented">This feature is not implemented yet :)</string>
+    <string name="title_server_error">Server error</string>
+    <string name="dialog_server_not_respond">Server is not responding... :(</string>
+    <string name="button_exit">Exit</string>
 </resources>

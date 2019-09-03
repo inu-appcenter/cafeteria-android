@@ -3,6 +3,7 @@ package org.inu.cafeteria.common.extension
 import org.inu.cafeteria.R
 import org.inu.cafeteria.base.Failable
 import org.inu.cafeteria.exception.ResponseFailException
+import org.inu.cafeteria.exception.ServerNoResponseException
 import timber.log.Timber
 import java.io.IOException
 
@@ -11,7 +12,7 @@ import java.io.IOException
  */
 fun Failable.handleRetrofitException(e: Exception) {
     when (e) {
-        is IOException -> {
+        is ServerNoResponseException -> {
             fail(R.string.fail_server, show = true)
         }
         is ResponseFailException -> {

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.StringRes
 import org.inu.cafeteria.R
+import org.inu.cafeteria.common.extension.setVisible
 
 class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Translucent_NoTitleBar) {
 
@@ -106,12 +107,14 @@ class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Tra
     }
     private fun setPositiveButton(buttonText: String?, onClick: () -> Unit = {}) {
         with(positiveButton) {
+            setVisible(buttonText != null)
             text = buttonText
             setOnClickListener { onClick() }
         }
     }
     private fun setNegativeButton(buttonText: String?, onClick: () -> Unit = {}) {
         with(negativeButton) {
+            setVisible(buttonText != null)
             text = buttonText
             setOnClickListener { onClick() }
         }

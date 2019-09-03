@@ -11,10 +11,13 @@ import org.inu.cafeteria.common.extension.baseActivity
 import org.inu.cafeteria.common.extension.finishActivity
 import org.inu.cafeteria.common.extension.handleRetrofitException
 import org.inu.cafeteria.common.util.ThemedDialog
+import org.inu.cafeteria.exception.ServerNoResponseException
 import org.inu.cafeteria.usecase.GetVersion
 import org.inu.cafeteria.util.Notify
 import org.koin.android.ext.android.inject
 import timber.log.Timber
+import java.io.IOException
+import kotlin.system.exitProcess
 
 /**
  * Display splash screen, while checking version.
@@ -24,6 +27,10 @@ class SplashFragment : BaseFragment() {
 
     private val getVersion: GetVersion by inject()
     private val navigator: Navigator by inject()
+
+    init {
+        failables += this
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,13 +44,30 @@ class SplashFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         checkVersion(
+            onFail = {
+                if (it is ServerNoResponseException) {
+                    // server fatal error.
+                    ThemedDialog(baseActivity!!)
+                        .withTitle(R.string.title_server_error)
+                        .withMessage(R.string.dialog_server_not_respond)
+                        .withPositiveButton(R.string.button_exit) {
+                            exitProcess(0)
+                        }
+                        .show()
+                } else {
+                    handleRetrofitException(it)
+                }
+            },
+            onPass = {
+                navigator.showLogin()
+                finishActivity()
+            },
             onUpdate = {
                 Notify(context).short(getString(R.string.notify_not_implemented))
+                navigator.showLogin()
+                finishActivity()
             },
             onDismiss = {
-                // pass
-            },
-            finally = {
                 navigator.showLogin()
                 finishActivity()
             }
@@ -54,18 +78,17 @@ class SplashFragment : BaseFragment() {
      * Compare build version to the latest version(from the server).
      * If update is needed, let user know it.
      *
+     * @param onFail launched on server fault.
+     * @param onPass launched when no need to update.
      * @param onUpdate launched when user pressed update button.
      * @param onDismiss launched when user pressed cancel button.
-     * @param fainally launched after check routine.
-     * This is blocked until the user takes action or no need to update, or error occurred.
      *
-     * WARNING: Do not finish activity on [onUpdate] and [finally].
-     * It will prevent [finally] being executed.
      */
     private fun checkVersion(
+        onFail: (e: Exception) -> Unit,
+        onPass: () -> Unit,
         onUpdate: () -> Unit,
-        onDismiss: () -> Unit,
-        finally: () -> Unit
+        onDismiss: () -> Unit
     ) {
         getVersion(Unit) {
             it.onSuccess { version ->
@@ -77,23 +100,18 @@ class SplashFragment : BaseFragment() {
                             .withMessage(R.string.dialog_ask_update)
                             .withPositiveButton(R.string.button_update) {
                                 onUpdate()
-                                finally()
                             }
                             .withNegativeButton(R.string.button_cancel) {
                                 onDismiss()
-                                finally()
                             }
                             .show()
                     }
                     else -> {
-                        // No need to update. Pass.
-                        finally()
+                        onPass()
                     }
                 }
             }.onError { e ->
-                // Request failed.
-                handleRetrofitException(e)
-                finally()
+                onFail(e)
             }
         }
 
