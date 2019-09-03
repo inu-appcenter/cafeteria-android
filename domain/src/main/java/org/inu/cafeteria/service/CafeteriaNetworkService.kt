@@ -1,10 +1,13 @@
 package org.inu.cafeteria.service
 
+import com.google.gson.JsonElement
+import org.inu.cafeteria.model.json.Cafeteria
 import org.inu.cafeteria.model.scheme.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /**
  * App-wide network service.
@@ -24,4 +27,10 @@ interface CafeteriaNetworkService {
 
     @GET("/notice.json")
     fun getNotice(): Call<Notice>
+
+    @GET("/food/{date}")
+    abstract fun getFoods(@Path("date") date: String): Call<JsonElement>
+
+    @GET("/cafecode.json")
+    abstract fun getCafeteria(): Call<JsonElement>
 }

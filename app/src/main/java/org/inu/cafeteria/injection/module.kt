@@ -1,11 +1,9 @@
 package org.inu.cafeteria.injection
 
 import org.inu.cafeteria.common.Navigator
+import org.inu.cafeteria.parser.CafeteriaParser
 import org.inu.cafeteria.repository.*
-import org.inu.cafeteria.usecase.ActivateBarcode
-import org.inu.cafeteria.usecase.GetVersion
-import org.inu.cafeteria.usecase.Login
-import org.inu.cafeteria.usecase.Logout
+import org.inu.cafeteria.usecase.*
 import org.koin.dsl.module
 
 val myModules = module {
@@ -28,6 +26,13 @@ val myModules = module {
     /*****************************
      * Repository
      *****************************/
+
+    /** Cafeteria Repository */
+    single {
+        CafeteriaRepositoryImpl(
+            networkService = get()
+        ) as CafeteriaRepository
+    }
 
     /** Login Repository */
     single {
@@ -63,6 +68,14 @@ val myModules = module {
         )
     }
 
+    /** Get Cafeteria */
+    single {
+        GetCafeteria(
+            cafeteriaRepo = get(),
+            parser = get()
+        )
+    }
+
     /** Get Version */
     single {
         GetVersion(
@@ -82,5 +95,15 @@ val myModules = module {
         Logout(
             loginRepo = get()
         )
+    }
+
+
+    /*****************************
+     * Parser
+     *****************************/
+
+    /** Cafeteria Parser */
+    single {
+        CafeteriaParser()
     }
 }

@@ -4,10 +4,9 @@ import android.content.Context
 import android.content.Intent
 import org.inu.cafeteria.R
 import org.inu.cafeteria.base.FailableComponent
-import org.inu.cafeteria.common.extension.baseActivity
 import org.inu.cafeteria.common.util.ThemedDialog
 import org.inu.cafeteria.feature.login.LoginActivity
-import org.inu.cafeteria.feature.main.CafeteriaActivity
+import org.inu.cafeteria.feature.main.MainActivity
 import org.inu.cafeteria.feature.splash.SplashActivity
 import org.koin.core.KoinComponent
 import timber.log.Timber
@@ -34,7 +33,7 @@ class Navigator(
 
     fun showMain() {
         startActivity(
-            CafeteriaActivity.callingIntent(context)
+            MainActivity.callingIntent(context)
         )
     }
 

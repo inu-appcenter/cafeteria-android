@@ -113,7 +113,7 @@ class LoginViewModel : BaseViewModel() {
     }
 
     /**
-     * Navigate to CafeteriaActivity and close current activity.
+     * Navigate to MainActivity and close current activity.
      */
     fun showMain(fragment: BaseFragment) {
         navigator.showMain()

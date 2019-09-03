@@ -9,7 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.cafeteria_activity.*
+import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.drawer.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.inu.cafeteria.R
@@ -17,25 +17,14 @@ import org.inu.cafeteria.common.base.SingleFragmentActivity
 import org.inu.cafeteria.common.extension.getViewModel
 import org.inu.cafeteria.common.extension.handleRetrofitException
 import org.inu.cafeteria.common.extension.setSupportActionBar
-import org.inu.cafeteria.common.util.Barcode
-import org.inu.cafeteria.databinding.CafeteriaActivityBinding
-import org.inu.cafeteria.exception.ServerNoResponseException
-import org.inu.cafeteria.model.BarcodeState
-import org.inu.cafeteria.model.scheme.ActivateBarcodeParams
-import org.inu.cafeteria.model.scheme.ActivateBarcodeParams.Companion.ACTIVATE_FALSE
-import org.inu.cafeteria.model.scheme.ActivateBarcodeParams.Companion.ACTIVATE_TRUE
-import org.inu.cafeteria.repository.LoginRepository
-import org.inu.cafeteria.repository.StudentInfoRepository
-import org.inu.cafeteria.usecase.ActivateBarcode
-import org.koin.android.ext.android.inject
-import timber.log.Timber
+import org.inu.cafeteria.databinding.MainActivityBinding
 
-class CafeteriaActivity : SingleFragmentActivity() {
+class MainActivity : SingleFragmentActivity() {
     override val fragment: Fragment = CafeteriaFragment()
     override val layoutId: Int? = null // Will not inflate view through Activity.setContentView
 
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var viewDataBinding: CafeteriaActivityBinding
+    private lateinit var viewDataBinding: MainActivityBinding
     private lateinit var toggle: ActionBarDrawerToggle
 
     private val drawerStartedOpen = {
@@ -100,11 +89,11 @@ class CafeteriaActivity : SingleFragmentActivity() {
     }
 
     private fun setViewDataBinding() {
-        viewDataBinding = DataBindingUtil.setContentView(this, R.layout.cafeteria_activity)
+        viewDataBinding = DataBindingUtil.setContentView(this, R.layout.main_activity)
 
         with(viewDataBinding) {
-            lifecycleOwner = this@CafeteriaActivity
-            mainViewModel = this@CafeteriaActivity.mainViewModel
+            lifecycleOwner = this@MainActivity
+            mainViewModel = this@MainActivity.mainViewModel
         }
     }
 
@@ -142,6 +131,6 @@ class CafeteriaActivity : SingleFragmentActivity() {
 
 
     companion object {
-        fun callingIntent(context: Context) = Intent(context, CafeteriaActivity::class.java)
+        fun callingIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 }
