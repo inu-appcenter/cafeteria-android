@@ -65,7 +65,7 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), Failable
     /**
      * Toggles the selected state for a particular view
      *
-     * If we are currently in selection mode (we have an active selection), then the state will
+     * If we are currently in selection mode (we have an activated selection), then the state will
      * toggle. If we are not in selection mode, then we will only toggle if [force]
      */
     protected fun toggleSelection(id: Long, force: Boolean = true): Boolean {

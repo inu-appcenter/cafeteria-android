@@ -3,9 +3,14 @@ package org.inu.cafeteria.repository
 import android.app.Activity
 import android.content.Context
 import androidx.core.content.edit
+import org.inu.cafeteria.model.scheme.ActivateBarcodeParams
+import org.inu.cafeteria.model.scheme.ActivateBarcodeResult
+import org.inu.cafeteria.service.CafeteriaNetworkService
+import retrofit2.Call
 
 class StudentInfoRepositoryImpl(
-    context: Context
+    context: Context,
+    private val networkService: CafeteriaNetworkService
 ) : StudentInfoRepository() {
 
     private val pref = context.getSharedPreferences(
@@ -13,11 +18,17 @@ class StudentInfoRepositoryImpl(
         Activity.MODE_PRIVATE
     )
 
+    override fun invalidate() {
+        setStudentId(null)
+        setBarcode(null)
+        setLoginToken(null)
+    }
+
     override fun getStudentId(): String? {
         return pref.getString(KEY_ID, EMPTY)
     }
     override fun setStudentId(id: String?) {
-        pref.edit {
+        pref.edit(true) {
             putString(KEY_ID, id)
         }
     }
@@ -26,7 +37,7 @@ class StudentInfoRepositoryImpl(
         return pref.getString(KEY_BARCODE, EMPTY)
     }
     override fun setBarcode(barcode: String?) {
-        pref.edit {
+        pref.edit(true) {
             putString(KEY_BARCODE, barcode)
         }
     }
@@ -36,9 +47,13 @@ class StudentInfoRepositoryImpl(
 
     }
     override fun setLoginToken(token: String?) {
-        pref.edit {
+        pref.edit(true) {
             putString(KEY_TOKEN, token)
         }
+    }
+
+    override fun activateBarcode(params: ActivateBarcodeParams): Call<ActivateBarcodeResult> {
+        return networkService.getActivateBarcodeResult(params)
     }
 
     companion object {

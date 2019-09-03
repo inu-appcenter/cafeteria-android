@@ -58,6 +58,16 @@ abstract class BaseActivity : AppCompatActivity(), Startable, Failable, Failable
         }
     }
 
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        startObservingFailables(failables)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        stopObservingFailables()
+    }
 
     /******************************
      * AS A Startable

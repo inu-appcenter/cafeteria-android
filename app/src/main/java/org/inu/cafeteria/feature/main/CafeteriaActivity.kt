@@ -3,43 +3,69 @@ package org.inu.cafeteria.feature.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.view.View
-import androidx.appcompat.app.ActionBar
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.cafeteria_activity.*
 import kotlinx.android.synthetic.main.drawer.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.inu.cafeteria.R
 import org.inu.cafeteria.common.base.SingleFragmentActivity
 import org.inu.cafeteria.common.extension.getViewModel
-import org.inu.cafeteria.common.extension.isVisible
+import org.inu.cafeteria.common.extension.handleRetrofitException
 import org.inu.cafeteria.common.extension.setSupportActionBar
+import org.inu.cafeteria.common.util.Barcode
 import org.inu.cafeteria.databinding.CafeteriaActivityBinding
+import org.inu.cafeteria.exception.ServerNoResponseException
 import org.inu.cafeteria.model.BarcodeState
+import org.inu.cafeteria.model.scheme.ActivateBarcodeParams
+import org.inu.cafeteria.model.scheme.ActivateBarcodeParams.Companion.ACTIVATE_FALSE
+import org.inu.cafeteria.model.scheme.ActivateBarcodeParams.Companion.ACTIVATE_TRUE
+import org.inu.cafeteria.repository.LoginRepository
+import org.inu.cafeteria.repository.StudentInfoRepository
+import org.inu.cafeteria.usecase.ActivateBarcode
+import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 class CafeteriaActivity : SingleFragmentActivity() {
     override val fragment: Fragment = CafeteriaFragment()
     override val layoutId: Int? = null // Will not inflate view through Activity.setContentView
 
-    private lateinit var drawerViewModel: DrawerViewModel
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var viewDataBinding: CafeteriaActivityBinding
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val onDrawerOpen = {
-        drawerViewModel.barcodeState.value = BarcodeState(isAvailable = true, isLoading = true, isNetworkDown = false)
+    private val drawerStartedOpen = {
+        with(mainViewModel) {
+            tryLoadingBarcode(
+                onSuccess = {
+                    barcode_image.setImageBitmap(it)
+                    barcode_image.invalidate()
+                },
+                onFail = ::handleActivateBarcodeFailure,
+                onNoBarcode = {
+                    fail(R.string.fail_no_barcode)
+                }
+            )
+        }
+    }
 
-        Handler().postDelayed({
-            drawerViewModel.barcodeState.value = BarcodeState(isAvailable = true, isLoading = false, isNetworkDown = false)
-        }, 500)
+    private val drawerClosed = {
+        with(mainViewModel) {
+            tryInvalidateBarcode(
+                onFail = ::handleRetrofitException,
+                onNoBarcode = {
+                    fail(R.string.fail_no_barcode)
+                }
+            )
+        }
+    }
 
-        Timber.i("Drawer opened.")
+    init {
+        failables += this
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +74,29 @@ class CafeteriaActivity : SingleFragmentActivity() {
         setViewDataBinding()
         setSupportActionBar(toolbar, title = false, upButton = false)
         setToggle()
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+
+        when (item.itemId) {
+            R.id.menu_logout -> {
+                mainViewModel.tryLogout(
+                    onSuccess = {
+                        mainViewModel.showLogin(this)
+                    },
+                    onFail = ::handleRetrofitException,
+                    onNoToken = { fail(R.string.fail_token_invalid, show = true) }
+                )
+            }
+        }
+
+        return true
     }
 
     private fun setViewModel() {
-        drawerViewModel = getViewModel()
+        mainViewModel = getViewModel()
+        failables += mainViewModel.failables
     }
 
     private fun setViewDataBinding() {
@@ -60,10 +104,14 @@ class CafeteriaActivity : SingleFragmentActivity() {
 
         with(viewDataBinding) {
             lifecycleOwner = this@CafeteriaActivity
-            drawerViewModel = this@CafeteriaActivity.drawerViewModel
+            mainViewModel = this@CafeteriaActivity.mainViewModel
         }
     }
 
+    /**
+     * Set drawer toggle.
+     * Drawer callbacks are set here.
+     */
     private fun setToggle() {
         toggle = object : ActionBarDrawerToggle(
             this,
@@ -77,7 +125,12 @@ class CafeteriaActivity : SingleFragmentActivity() {
 
                 if (newState == DrawerLayout.STATE_SETTLING &&
                     !root_layout.isDrawerOpen(GravityCompat.START)) {
-                    onDrawerOpen()
+                    drawerStartedOpen()
+                }
+
+                if (newState == DrawerLayout.STATE_IDLE &&
+                    !root_layout.isDrawerOpen(GravityCompat.START)) {
+                    drawerClosed()
                 }
             }
         }
@@ -86,6 +139,7 @@ class CafeteriaActivity : SingleFragmentActivity() {
 
         toggle.syncState()
     }
+
 
     companion object {
         fun callingIntent(context: Context) = Intent(context, CafeteriaActivity::class.java)

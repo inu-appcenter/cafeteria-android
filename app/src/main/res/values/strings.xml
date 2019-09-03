@@ -28,4 +28,7 @@
     <string name="button_login">LOG IN</string>
     <string name="ask_not_inu">인천대생이 아니신가요?</string>
     <string name="button_no_user_login">비회원 로그인</string>
+    <string name="fail_wrong_auth">Please check your ID and password.</string>
+    <string name="fail_token_invalid">Token is invalid.</string>
+    <string name="fail_no_barcode">No tag information.</string>
 </resources>

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="drawerViewModel"
-            type="org.inu.cafeteria.feature.main.DrawerViewModel" />
+            name="mainViewModel"
+            type="org.inu.cafeteria.feature.main.MainViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -43,7 +43,7 @@
 
         <!-- Drawer -->
         <include
-            app:drawerViewModel="@{drawerViewModel}"
+            app:mainViewModel="@{mainViewModel}"
             layout="@layout/drawer"
             android:layout_width="280dp"
             android:layout_height="match_parent"

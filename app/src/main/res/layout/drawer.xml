@@ -7,8 +7,8 @@
 
     <data>
         <variable
-            name="drawerViewModel"
-            type="org.inu.cafeteria.feature.main.DrawerViewModel" />
+            name="mainViewModel"
+            type="org.inu.cafeteria.feature.main.MainViewModel" />
     </data>
 
     <ScrollView
@@ -27,7 +27,7 @@
             android:background="@drawable/rounded_rectangle_outline_2dp"
             android:backgroundTint="?android:attr/divider"
             android:padding="24dp"
-            app:barcodeState="@{drawerViewModel.barcodeState}"
+            app:barcodeState="@{mainViewModel.barcodeState}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -57,7 +57,7 @@
 
                 <!-- The barcode -->
                 <ImageView
-                    android:id="@+id/barcode"
+                    android:id="@+id/barcode_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/desc_student_barcode"
@@ -130,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@{drawerViewModel.studentId}"
+                android:text="@{mainViewModel.studentId}"
                 android:textColor="@color/pointBlue"
                 android:textSize="@dimen/textToolbar"
                 android:textStyle="bold"

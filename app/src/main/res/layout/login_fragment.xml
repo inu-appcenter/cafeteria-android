@@ -44,7 +44,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/id"
+                    android:id="@+id/student_id"
                     style="@style/EditTextStyle"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
 
 
                 <EditText
-                    android:id="@+id/pw"
+                    android:id="@+id/password"
                     style="@style/EditTextStyle"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"

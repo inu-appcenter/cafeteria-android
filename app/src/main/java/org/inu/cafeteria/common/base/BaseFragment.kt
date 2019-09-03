@@ -32,7 +32,6 @@ abstract class BaseFragment : Fragment(), Startable, Failable, FailableContainer
     private var menu: Menu? = null
     fun getOptionsMenu(): Menu? = menu
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(optionMenuId != null)
@@ -64,6 +63,11 @@ abstract class BaseFragment : Fragment(), Startable, Failable, FailableContainer
         this.menu = menu
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        stopObservingFailables()
+    }
 
     /******************************
      * AS A Startable
