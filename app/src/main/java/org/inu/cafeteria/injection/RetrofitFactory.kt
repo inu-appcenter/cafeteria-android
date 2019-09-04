@@ -5,7 +5,7 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import okhttp3.OkHttpClient
-import org.inu.cafeteria.injection.Private.Companion.serverUrl
+import org.inu.cafeteria.repository.PrivateRepositoryImpl
 import org.inu.cafeteria.service.CafeteriaNetworkService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,8 +23,10 @@ class RetrofitFactory {
 
             val builder = Retrofit.Builder()
 
+            // You should implement your own PrivateRepository.
+            // @see [PrivateRepository]
             val retrofit = builder
-                .baseUrl(serverUrl)
+                .baseUrl(PrivateRepositoryImpl().getServerBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()

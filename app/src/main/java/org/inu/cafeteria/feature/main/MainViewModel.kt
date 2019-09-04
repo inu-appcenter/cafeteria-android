@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import org.inu.cafeteria.common.Navigator
 import org.inu.cafeteria.common.base.BaseActivity
 import org.inu.cafeteria.common.base.BaseViewModel
-import org.inu.cafeteria.common.extension.defaultNetworkErrorHandle
+import org.inu.cafeteria.common.extension.defaultDataErrorHandle
 import org.inu.cafeteria.common.util.Barcode
 import org.inu.cafeteria.exception.ServerNoResponseException
 import org.inu.cafeteria.model.BarcodeState
@@ -141,7 +141,7 @@ class MainViewModel : BaseViewModel() {
     fun handleActivateBarcodeFailure(e: Exception) {
         when (e) {
             is ServerNoResponseException -> barcodeState.value = BarcodeState(isNetworkDown = true)
-            else -> defaultNetworkErrorHandle(e)
+            else -> defaultDataErrorHandle(e)
         }
     }
 

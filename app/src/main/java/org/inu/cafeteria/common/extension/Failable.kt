@@ -11,9 +11,10 @@ import timber.log.Timber
 import java.io.IOException
 
 /**
- * Defines default retrofit failure handle routine.
+ * Defines default data failure handle.
+ * Covers all exceptions that can be thrown in repository.
  */
-fun Failable.defaultNetworkErrorHandle(e: Exception) {
+fun Failable.defaultDataErrorHandle(e: Exception) {
     when (e) {
         is ServerNoResponseException -> {
             fail(R.string.fail_server, show = true)
@@ -32,5 +33,5 @@ fun Failable.defaultNetworkErrorHandle(e: Exception) {
         }
     }
 
-    Timber.w("Retrofit failure: ${e::class.java.name}: ${e.message}")
+    Timber.w("Network failure: ${e::class.java.name}: ${e.message}")
 }

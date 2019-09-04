@@ -26,6 +26,13 @@ class CafeteriaRepositoryImpl(
     private val cafeteriaCache = Cache<List<Cafeteria>>()
     private val foodCache = Cache<List<FoodMenu>>()
 
+    override fun invalidateCache() {
+        cafeteriaCache.invalidate()
+        foodCache.invalidate()
+
+        Timber.i("All cache invalidated.")
+    }
+
     override fun getAllCafeteria(callback: DataCallback<List<Cafeteria>>) {
         if (cafeteriaCache.isValid) {
             cafeteriaCache.get()?.let {

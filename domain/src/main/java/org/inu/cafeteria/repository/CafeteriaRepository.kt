@@ -8,6 +8,8 @@ import org.inu.cafeteria.model.json.Cafeteria
  */
 abstract class CafeteriaRepository : Repository() {
 
+    abstract fun invalidateCache()
+
     abstract fun getAllCafeteria(callback: DataCallback<List<Cafeteria>>)
     abstract fun getAllFoodMenu(callback: DataCallback<List<FoodMenu>>)
 }

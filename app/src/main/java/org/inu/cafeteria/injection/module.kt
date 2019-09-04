@@ -9,6 +9,10 @@ import org.koin.dsl.module
 
 val myModules = module {
 
+    /*****************************
+     * General
+     *****************************/
+
     /** Navigator */
     single {
         Navigator(
@@ -42,6 +46,11 @@ val myModules = module {
         LoginRepositoryImpl(
             networkService = get()
         ) as LoginRepository
+    }
+
+    /** Private Repository */
+    single {
+        PrivateRepositoryImpl() as PrivateRepository
     }
 
     /** Student Info Repository */

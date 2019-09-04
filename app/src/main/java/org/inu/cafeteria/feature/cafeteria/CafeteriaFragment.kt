@@ -1,17 +1,15 @@
-package org.inu.cafeteria.feature.main
+package org.inu.cafeteria.feature.cafeteria
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 import org.inu.cafeteria.R
 import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.extension.getViewModel
+import org.inu.cafeteria.common.widget.ZoomOutPageTransformer
 import org.inu.cafeteria.databinding.CafeteriaFragmentBinding
-import org.inu.cafeteria.usecase.GetCafeteria
-import org.inu.cafeteria.usecase.GetFoodMenu
-import org.koin.core.inject
-import timber.log.Timber
 
 class CafeteriaFragment : BaseFragment() {
     override val optionMenuId: Int? = R.menu.menu_main
@@ -28,34 +26,6 @@ class CafeteriaFragment : BaseFragment() {
 
         cafeteriaViewModel = getViewModel()
         failables += cafeteriaViewModel.failables
-
-
-        // TODO: TEST
-        val getCafeteria: GetCafeteria by inject()
-
-        getCafeteria(Unit) {
-            it.onSuccess {
-                it.forEach {
-                    Timber.i("${it.key} : ${it.name}")
-                }
-            }
-        }
-
-        // TODO: TEST
-        val getFoodMenu: GetFoodMenu by inject()
-
-        getFoodMenu(Unit) {
-            it.onSuccess {
-                it.forEach {
-                    it.corners.forEach {
-                        Timber.i("${it.title}:")
-                        it.menu.forEach {
-                            Timber.i("$it")
-                        }
-                    }
-                }
-            }
-        }
     }
 
     override fun onCreateView(
@@ -65,16 +35,20 @@ class CafeteriaFragment : BaseFragment() {
     ): View? {
         return CafeteriaFragmentBinding
             .inflate(inflater)
-            .apply { vm = cafeteriaViewModel }
             .apply { lifecycleOwner = this@CafeteriaFragment }
             .apply { viewDataBinding = this }
+            .apply { vm = cafeteriaViewModel }
+            .apply { cafeteriaViewModel.loadAll(savedInstanceState == null) }
             .apply { initializeView(root) }
             .root
     }
 
-    fun initializeView(view: View) {
+    private fun initializeView(view: View) {
+        with(view.cafeteria_viewpager) {
+            setPageTransformer(false, ZoomOutPageTransformer(true))
+            offscreenPageLimit = 5
+        }
 
     }
-
 
 }

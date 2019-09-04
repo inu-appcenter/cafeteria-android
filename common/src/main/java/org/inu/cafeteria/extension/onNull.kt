@@ -1,6 +1,9 @@
 package org.inu.cafeteria.extension
 
-fun <T> T?.onNull(block: () ->Unit): T? {
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
+inline fun <T> T?.onNull(block: () ->Unit): T? {
     if (this == null) {
         block()
     }

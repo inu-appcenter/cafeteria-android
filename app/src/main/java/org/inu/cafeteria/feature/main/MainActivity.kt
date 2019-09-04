@@ -15,9 +15,10 @@ import kotlinx.android.synthetic.main.toolbar.*
 import org.inu.cafeteria.R
 import org.inu.cafeteria.common.base.SingleFragmentActivity
 import org.inu.cafeteria.common.extension.getViewModel
-import org.inu.cafeteria.common.extension.defaultNetworkErrorHandle
+import org.inu.cafeteria.common.extension.defaultDataErrorHandle
 import org.inu.cafeteria.common.extension.setSupportActionBar
 import org.inu.cafeteria.databinding.MainActivityBinding
+import org.inu.cafeteria.feature.cafeteria.CafeteriaFragment
 
 class MainActivity : SingleFragmentActivity() {
     override val fragment: Fragment = CafeteriaFragment()
@@ -45,7 +46,7 @@ class MainActivity : SingleFragmentActivity() {
     private val drawerClosed = {
         with(mainViewModel) {
             tryInvalidateBarcode(
-                onFail = ::defaultNetworkErrorHandle,
+                onFail = ::defaultDataErrorHandle,
                 onNoBarcode = {
                     fail(R.string.fail_no_barcode)
                 }
@@ -74,7 +75,7 @@ class MainActivity : SingleFragmentActivity() {
                     onSuccess = {
                         mainViewModel.showLogin(this)
                     },
-                    onFail = ::defaultNetworkErrorHandle,
+                    onFail = ::defaultDataErrorHandle,
                     onNoToken = { fail(R.string.fail_token_invalid, show = true) }
                 )
             }

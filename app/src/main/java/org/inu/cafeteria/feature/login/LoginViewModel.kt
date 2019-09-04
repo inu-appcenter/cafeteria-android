@@ -5,7 +5,7 @@ import org.inu.cafeteria.common.Navigator
 import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.base.BaseViewModel
 import org.inu.cafeteria.common.extension.finishActivity
-import org.inu.cafeteria.common.extension.defaultNetworkErrorHandle
+import org.inu.cafeteria.common.extension.defaultDataErrorHandle
 import org.inu.cafeteria.exception.ResponseFailException
 import org.inu.cafeteria.model.scheme.LoginParams
 import org.inu.cafeteria.model.scheme.LoginResult
@@ -83,7 +83,7 @@ class LoginViewModel : BaseViewModel() {
                 fail(R.string.fail_token_invalid, show = true)
                 Timber.w("Token is invalid. Invalidate all student data.")
             }
-            else -> defaultNetworkErrorHandle(e)
+            else -> defaultDataErrorHandle(e)
         }
     }
 
@@ -95,7 +95,7 @@ class LoginViewModel : BaseViewModel() {
             is ResponseFailException -> {
                 fail(R.string.fail_wrong_auth, show = true)
             }
-            else -> defaultNetworkErrorHandle(e)
+            else -> defaultDataErrorHandle(e)
         }
     }
 
