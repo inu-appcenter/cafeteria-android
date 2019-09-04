@@ -9,8 +9,11 @@ import timber.log.Timber
 
 class CafeteriaParser : Parser<List<Cafeteria>>() {
 
+    /**
+     * If any error on it, it will return null.
+     */
     override fun parse(json: JsonElement): List<Cafeteria>? {
-        return tryOrNull{
+        return tryOrNull {
             Gson().fromJson(json, Types.typeOf<List<Cafeteria>>())
         }
     }

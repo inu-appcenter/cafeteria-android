@@ -30,7 +30,8 @@ val myModules = module {
     /** Cafeteria Repository */
     single {
         CafeteriaRepositoryImpl(
-            networkService = get()
+            networkService = get(),
+            parser = get()
         ) as CafeteriaRepository
     }
 
@@ -71,8 +72,7 @@ val myModules = module {
     /** Get Cafeteria */
     single {
         GetCafeteria(
-            cafeteriaRepo = get(),
-            parser = get()
+            cafeteriaRepo = get()
         )
     }
 

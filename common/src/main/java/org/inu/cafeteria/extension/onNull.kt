@@ -1,6 +1,8 @@
 package org.inu.cafeteria.extension
 
 fun <T> T?.onNull(block: () ->Unit): T? {
-    block()
+    if (this == null) {
+        block()
+    }
     return this
 }

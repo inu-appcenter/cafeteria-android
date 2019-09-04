@@ -14,8 +14,8 @@ abstract class Repository : FailableComponent(), Startable {
     }
 
     data class DataCallback<T>(
+        val async: Boolean = true,
         val onSuccess: (T) -> Unit,
-        val onFail: (Exception) -> Unit,
-        val async: Boolean = true
+        val onFail: (Exception) -> Unit
     )
 }

@@ -33,4 +33,5 @@
     <string name="ask_not_inu">Not a member?</string>
     <string name="desc_login_to_see_tag">This feature requires student information. You can login to proceed.</string>
     <string name="fail_response_body_null">Response body is empty.</string>
+    <string name="fail_body_parse">Failed while parsing response body.</string>
 </resources>

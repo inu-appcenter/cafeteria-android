@@ -9,6 +9,7 @@ import org.inu.cafeteria.model.scheme.LoginResult
 import org.inu.cafeteria.model.scheme.LogoutParams
 import org.inu.cafeteria.model.scheme.LogoutResult
 import org.inu.cafeteria.repository.LoginRepository
+import org.inu.cafeteria.repository.Repository
 import java.io.IOException
 
 class Logout(
@@ -16,15 +17,17 @@ class Logout(
 ) : UseCase<LogoutParams, LogoutResult>() {
 
     override fun run(params: LogoutParams) = Result.of {
-        return@of try {
-            loginRepo.logout(params)
-                .execute()
-                .let { it.takeIf { it.isSuccessful } ?: throw ResponseFailException() }
-                .also { loginRepo.setLoginIn(false) }
-                .body()
-                ?: throw RuntimeException("Body is null.")
-        } catch (e: IOException) {
-            throw ServerNoResponseException()
-        }
+        var result: LogoutResult? = null
+        var failure: Exception? = null
+
+        loginRepo.logout(params, Repository.DataCallback(
+            async = false,
+            onSuccess = { result = it },
+            onFail = { failure = it }
+        ))
+
+        failure?.let { throw it }
+
+        return@of result!!
     }
 }

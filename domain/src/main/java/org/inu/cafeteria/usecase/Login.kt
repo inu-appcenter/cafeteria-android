@@ -1,5 +1,6 @@
 package org.inu.cafeteria.usecase
 
+import org.inu.cafeteria.base.Failable
 import org.inu.cafeteria.exception.ResponseFailException
 import org.inu.cafeteria.exception.ServerNoResponseException
 import org.inu.cafeteria.functional.Result
@@ -18,8 +19,17 @@ class Login(
 ) : UseCase<LoginParams, LoginResult>() {
 
     override fun run(params: LoginParams) = Result.of {
-        return@of loginRepo.login(params, Repository.DataCallback(
-            onSuccess =
+        var result: LoginResult? = null
+        var failure: Exception? = null
+
+        loginRepo.login(params, Repository.DataCallback(
+            async = false,
+            onSuccess = { result = it },
+            onFail = { failure = it }
         ))
+
+        failure?.let { throw it }
+
+        return@of result!!
     }
 }

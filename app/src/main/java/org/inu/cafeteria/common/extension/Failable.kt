@@ -1,7 +1,9 @@
 package org.inu.cafeteria.common.extension
 
+import com.google.gson.JsonParseException
 import org.inu.cafeteria.R
 import org.inu.cafeteria.base.Failable
+import org.inu.cafeteria.exception.BodyParseException
 import org.inu.cafeteria.exception.NullBodyException
 import org.inu.cafeteria.exception.ResponseFailException
 import org.inu.cafeteria.exception.ServerNoResponseException
@@ -22,7 +24,9 @@ fun Failable.defaultNetworkErrorHandle(e: Exception) {
         is NullBodyException -> {
             fail(R.string.fail_response_body_null, show = true)
         }
-        is JsonPa
+        is BodyParseException -> {
+            fail(R.string.fail_body_parse, show = true)
+        }
         else -> {
             fail(R.string.fail_unexpected, show = true)
         }

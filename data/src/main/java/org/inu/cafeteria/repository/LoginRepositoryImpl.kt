@@ -30,6 +30,9 @@ class LoginRepositoryImpl(
         return login
     }
 
+    /**
+     *
+     */
     override fun login(params: LoginParams, callback: DataCallback<LoginResult>) {
         networkService.getLoginResult(params).onResult(
             async = callback.async,

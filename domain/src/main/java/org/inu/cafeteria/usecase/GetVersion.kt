@@ -5,6 +5,9 @@ import org.inu.cafeteria.exception.ServerNoResponseException
 import org.inu.cafeteria.functional.Result
 import org.inu.cafeteria.interactor.UseCase
 import org.inu.cafeteria.model.VersionCompared
+import org.inu.cafeteria.model.scheme.LogoutResult
+import org.inu.cafeteria.model.scheme.Version
+import org.inu.cafeteria.repository.Repository
 import org.inu.cafeteria.repository.VersionRepository
 import java.io.IOException
 
@@ -18,26 +21,28 @@ class GetVersion(
 ) : UseCase<Unit, VersionCompared>() {
 
     /**
-     * Consider IOException as ServerNoResponseException.
+     * We want to know the current version and the latest version.
+     * This use case returns [VersionCompared] object if succeeded.
      */
     override fun run(params: Unit): Result<VersionCompared> = Result.of {
-        return@of try {
+        var versionResult: Version? = null
+        var failure: Exception? = null
 
-            val latestVersion = versionRepo.getLatestVersion()
-                .execute()
-                .let { it.takeIf { it.isSuccessful } ?: throw ResponseFailException() }
-                .body()
-                ?.android
-                ?.latest
-                ?: throw RuntimeException("Body is null.")
-
-            VersionCompared(
-                currentVersion = versionRepo.getCurrentVersion(),
-                latestVersion = latestVersion
+        versionRepo.getLatestVersion(
+            Repository.DataCallback(
+                async = false,
+                onSuccess = { versionResult = it },
+                onFail = { failure = it }
             )
+        )
 
-        } catch (e: IOException) {
-            throw ServerNoResponseException()
-        }
+        failure?.let { throw it }
+
+        val currentVersion = versionRepo.getCurrentVersion()
+
+        return@of VersionCompared(
+            currentVersion = currentVersion,
+            latestVersion = versionResult!!.android.latest
+        )
     }
 }
