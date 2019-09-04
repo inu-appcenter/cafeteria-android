@@ -21,8 +21,6 @@ class GetCafeteria(
             onFail = { failure = it }
         ))
 
-        Timber.i("AFTER EXECUTE, ARE THEY NULL? RESULT: ${result == null}, FAILURE: ${failure == null}")
-
         failure?.let { throw it }
 
         return@of result!!
