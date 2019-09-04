@@ -11,10 +11,10 @@ data class FoodMenu(
     val corners: List<Corner>
 ) {
     data class Corner(
-        val title: String,
-        val menu: List<String>,
-
         // Starts from zero.
-        val order: Int
+        val order: Int,
+
+        val title: String,
+        val menu: List<String>
     )
 }

@@ -50,4 +50,7 @@ dependencies {
 
     /** GSON */
     api "com.google.code.gson:gson:$gson_version"
+
+    /** Jsoup */
+    api "org.jsoup:jsoup:$jsoup_version"
 }

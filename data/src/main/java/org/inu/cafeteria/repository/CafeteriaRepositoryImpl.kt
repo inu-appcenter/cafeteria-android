@@ -2,6 +2,7 @@ package org.inu.cafeteria.repository
 
 import android.text.format.DateFormat
 import org.inu.cafeteria.exception.BodyParseException
+import org.inu.cafeteria.extension.getFormatedDate
 import org.inu.cafeteria.extension.onNull
 import org.inu.cafeteria.extension.onResult
 import org.inu.cafeteria.model.Cache
@@ -11,6 +12,9 @@ import org.inu.cafeteria.parser.CafeteriaParser
 import org.inu.cafeteria.parser.FoodMenuParser
 import org.inu.cafeteria.service.CafeteriaNetworkService
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class CafeteriaRepositoryImpl(
@@ -53,12 +57,38 @@ class CafeteriaRepositoryImpl(
             }
         }
 
-        val date = DateFormat.format("YYYYMMDD", Date()).toString()
+        val menuSupportCafeteria = mutableListOf<Int>()
 
-        networkService.getFoods(date).onResult(
+        // To parse the food menu, we need the list of
+        // cafeteria supporting food menu.
+        // Getting all cafeteria will be launched synchronously
+        // whatever the callback.async is, or this execution will pass
+        // the failure check below.
+        var failure: Exception? = null
+
+        getAllCafeteria(
+            DataCallback(
+                async = false,
+                onSuccess = { result ->
+                    menuSupportCafeteria.addAll(
+                        result
+                            .filter { cafeteria -> cafeteria.supportFoodMenu >= 0 }
+                            .map { cafeteria -> cafeteria.key }
+                    )
+                },
+                onFail = { failure = it}
+            )
+        )
+
+        failure?.let {
+            Timber.w("")
+            callback.onFail(it)
+        }
+
+        networkService.getFoods(Calendar.getInstance().getFormatedDate()).onResult(
             async = callback.async,
             onSuccess = { json ->
-                foodMenuParser.parse(json)?.let {
+                foodMenuParser.parse(json, menuSupportCafeteria)?.let {
                     callback.onSuccess(it)
                     foodCache.set(it)
                     Timber.i("Successfully fetched all food menus from server.")

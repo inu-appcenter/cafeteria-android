@@ -8,6 +8,7 @@ import org.inu.cafeteria.model.json.Cafeteria
 import org.inu.cafeteria.repository.CafeteriaRepository
 import org.inu.cafeteria.repository.Repository
 import org.inu.cafeteria.util.Types
+import org.jsoup.Jsoup
 import timber.log.Timber
 
 class FoodMenuParser : Parser<JsonElement, List<FoodMenu>>() {
@@ -67,44 +68,46 @@ class FoodMenuParser : Parser<JsonElement, List<FoodMenu>>() {
      */
     @SuppressWarnings("Unchecked cast")
     override fun parse(raw: JsonElement, params: Any?): List<FoodMenu>? {
-
         if (!Types.checkType(params, listOf<Int>())) {
             Timber.w("Params must be List<Int>.")
             return null
         }
 
-        val foodMenusByCafeteria = mutableListOf<FoodMenu>()
-
-        // Must success here.
         val availableCafeteria = params as List<Int>
 
+        Timber.i("NUMBER: ${params.joinToString()}")
+
+        val foodMenusByCafeteria = mutableListOf<FoodMenu>()
 
         return tryOrNull {
-            with(raw.asJsonObject) {
+            val root = raw.asJsonObject
 
-                availableCafeteria.forEach { cafeteriaNumber ->
-                    val corners = mutableListOf<FoodMenu.Corner>()
+            availableCafeteria.forEach { cafeteriaNumber ->
+                // Parse corners and add them
+                // to the foodMenusByCafeteria in every iteration.
 
-                    get(cafeteriaNumber.toString())
-                        .asJsonArray
-                        .forEach {
-                            with (it.asJsonObject) {
-                                val menus = mutableListOf<String>()
+                val corners = mutableListOf<FoodMenu.Corner>()
 
-                                val corner = FoodMenu.Corner(
-                                    title = get("TITLE").asString,
-                                    menu = menus,
-                                    order = get("order").asInt
-                                )
-                            }
-                        }
+                root.get(cafeteriaNumber.toString()).asJsonArray.forEach {
+                    // Parse a corner and add them to corners in every iteration.
 
+                    val cornerJson = it.asJsonObject
 
-                    foodMenusByCafeteria.add(FoodMenu(cafeteriaNumber, corners))
+                    val menuInHtml = cornerJson.get("MENU").asString.replace("<br>", "\n")
+
+                    val corner = FoodMenu.Corner(
+                        order = cornerJson.get("order").asInt,
+                        title = cornerJson.get("TITLE").asString,
+                        menu = Jsoup.parse(menuInHtml).text().split("\n")
+                    )
+
+                    corners.add(corner)
                 }
+
+                foodMenusByCafeteria.add(FoodMenu(cafeteriaNumber, corners))
             }
 
-            null
+            foodMenusByCafeteria
         }
     }
 }

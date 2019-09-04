@@ -9,6 +9,7 @@ import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.extension.getViewModel
 import org.inu.cafeteria.databinding.CafeteriaFragmentBinding
 import org.inu.cafeteria.usecase.GetCafeteria
+import org.inu.cafeteria.usecase.GetFoodMenu
 import org.koin.core.inject
 import timber.log.Timber
 
@@ -36,6 +37,22 @@ class CafeteriaFragment : BaseFragment() {
             it.onSuccess {
                 it.forEach {
                     Timber.i("${it.key} : ${it.name}")
+                }
+            }
+        }
+
+        // TODO: TEST
+        val getFoodMenu: GetFoodMenu by inject()
+
+        getFoodMenu(Unit) {
+            it.onSuccess {
+                it.forEach {
+                    it.corners.forEach {
+                        Timber.i("${it.title}:")
+                        it.menu.forEach {
+                            Timber.i("$it")
+                        }
+                    }
                 }
             }
         }

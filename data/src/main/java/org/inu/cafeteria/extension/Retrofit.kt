@@ -96,7 +96,7 @@ fun <T> Call<T>.onResult(
                     }
             } else {
                 onFail(ResponseFailException())
-                Timber.w("Response is success but body is null.")
+                Timber.w("Response is fail.")
             }
 
         } catch (e: IOException) {
