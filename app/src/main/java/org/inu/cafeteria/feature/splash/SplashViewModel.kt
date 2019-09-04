@@ -5,15 +5,13 @@ import org.inu.cafeteria.R
 import org.inu.cafeteria.common.Navigator
 import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.base.BaseViewModel
-import org.inu.cafeteria.common.extension.baseActivity
 import org.inu.cafeteria.common.extension.finishActivity
-import org.inu.cafeteria.common.extension.handleRetrofitException
+import org.inu.cafeteria.common.extension.defaultNetworkErrorHandle
 import org.inu.cafeteria.common.util.ThemedDialog
 import org.inu.cafeteria.exception.ServerNoResponseException
 import org.inu.cafeteria.model.VersionCompared
 import org.inu.cafeteria.usecase.GetVersion
 import org.inu.cafeteria.util.Notify
-import org.koin.android.ext.android.inject
 import org.koin.core.inject
 
 class SplashViewModel : BaseViewModel() {
@@ -73,7 +71,7 @@ class SplashViewModel : BaseViewModel() {
         when (e) {
             is ServerNoResponseException -> navigator.showServerDeadDialog()
             else -> {
-                handleRetrofitException(e)
+                defaultNetworkErrorHandle(e)
             }
         }
     }

@@ -12,4 +12,9 @@ abstract class Repository : FailableComponent(), Startable {
     override fun start() {
         Timber.v("${this::class.java.name} started.")
     }
+
+    data class DataCallback<T>(
+        val onSuccess: (T) -> Unit,
+        val onFail: (Exception) -> Unit
+    )
 }

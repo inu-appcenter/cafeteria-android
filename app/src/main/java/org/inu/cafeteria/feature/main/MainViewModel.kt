@@ -2,13 +2,10 @@ package org.inu.cafeteria.feature.main
 
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
-import org.inu.cafeteria.R
 import org.inu.cafeteria.common.Navigator
 import org.inu.cafeteria.common.base.BaseActivity
-import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.base.BaseViewModel
-import org.inu.cafeteria.common.extension.finishActivity
-import org.inu.cafeteria.common.extension.handleRetrofitException
+import org.inu.cafeteria.common.extension.defaultNetworkErrorHandle
 import org.inu.cafeteria.common.util.Barcode
 import org.inu.cafeteria.exception.ServerNoResponseException
 import org.inu.cafeteria.model.BarcodeState
@@ -18,7 +15,6 @@ import org.inu.cafeteria.repository.LoginRepository
 import org.inu.cafeteria.repository.StudentInfoRepository
 import org.inu.cafeteria.usecase.ActivateBarcode
 import org.inu.cafeteria.usecase.Logout
-import org.koin.android.ext.android.inject
 import org.koin.core.inject
 import timber.log.Timber
 
@@ -139,7 +135,7 @@ class MainViewModel : BaseViewModel() {
     fun handleActivateBarcodeFailure(e: Exception) {
         when (e) {
             is ServerNoResponseException -> barcodeState.value = BarcodeState(isNetworkDown = true)
-            else -> handleRetrofitException(e)
+            else -> defaultNetworkErrorHandle(e)
         }
     }
 

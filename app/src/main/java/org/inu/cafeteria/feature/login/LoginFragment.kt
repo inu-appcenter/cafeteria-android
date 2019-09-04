@@ -8,7 +8,6 @@ import kotlinx.android.synthetic.main.login_fragment.view.*
 import org.inu.cafeteria.R
 import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.extension.getViewModel
-import org.inu.cafeteria.common.extension.handleRetrofitException
 import org.inu.cafeteria.common.extension.hideKeyboard
 import timber.log.Timber
 

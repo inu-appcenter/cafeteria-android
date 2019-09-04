@@ -1,18 +1,16 @@
 package org.inu.cafeteria.feature.login
 
-import android.app.Activity
 import org.inu.cafeteria.R
 import org.inu.cafeteria.common.Navigator
 import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.base.BaseViewModel
 import org.inu.cafeteria.common.extension.finishActivity
-import org.inu.cafeteria.common.extension.handleRetrofitException
+import org.inu.cafeteria.common.extension.defaultNetworkErrorHandle
 import org.inu.cafeteria.exception.ResponseFailException
 import org.inu.cafeteria.model.scheme.LoginParams
 import org.inu.cafeteria.model.scheme.LoginResult
 import org.inu.cafeteria.repository.StudentInfoRepository
 import org.inu.cafeteria.usecase.Login
-import org.koin.android.ext.android.inject
 import org.koin.core.inject
 import timber.log.Timber
 
@@ -85,7 +83,7 @@ class LoginViewModel : BaseViewModel() {
                 fail(R.string.fail_token_invalid, show = true)
                 Timber.w("Token is invalid. Invalidate all student data.")
             }
-            else -> handleRetrofitException(e)
+            else -> defaultNetworkErrorHandle(e)
         }
     }
 
@@ -97,7 +95,7 @@ class LoginViewModel : BaseViewModel() {
             is ResponseFailException -> {
                 fail(R.string.fail_wrong_auth, show = true)
             }
-            else -> handleRetrofitException(e)
+            else -> defaultNetworkErrorHandle(e)
         }
     }
 
