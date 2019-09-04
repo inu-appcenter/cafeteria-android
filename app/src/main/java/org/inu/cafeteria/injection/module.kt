@@ -2,6 +2,7 @@ package org.inu.cafeteria.injection
 
 import org.inu.cafeteria.common.Navigator
 import org.inu.cafeteria.parser.CafeteriaParser
+import org.inu.cafeteria.parser.FoodMenuParser
 import org.inu.cafeteria.repository.*
 import org.inu.cafeteria.usecase.*
 import org.koin.dsl.module
@@ -31,7 +32,8 @@ val myModules = module {
     single {
         CafeteriaRepositoryImpl(
             networkService = get(),
-            parser = get()
+            cafeteriaParser = get(),
+            foodMenuParser = get()
         ) as CafeteriaRepository
     }
 
@@ -76,6 +78,13 @@ val myModules = module {
         )
     }
 
+    /** Get Food Menu */
+    single {
+        GetCafeteria(
+            cafeteriaRepo = get()
+        )
+    }
+
     /** Get Version */
     single {
         GetVersion(
@@ -105,5 +114,10 @@ val myModules = module {
     /** Cafeteria Parser */
     single {
         CafeteriaParser()
+    }
+
+    /** FoodMenu Parser */
+    single {
+        FoodMenuParser()
     }
 }

@@ -1,24 +1,30 @@
 package org.inu.cafeteria.repository
 
+import android.text.format.DateFormat
 import org.inu.cafeteria.exception.BodyParseException
 import org.inu.cafeteria.extension.onNull
 import org.inu.cafeteria.extension.onResult
 import org.inu.cafeteria.model.Cache
+import org.inu.cafeteria.model.FoodMenu
 import org.inu.cafeteria.model.json.Cafeteria
 import org.inu.cafeteria.parser.CafeteriaParser
+import org.inu.cafeteria.parser.FoodMenuParser
 import org.inu.cafeteria.service.CafeteriaNetworkService
 import timber.log.Timber
+import java.util.*
 
 class CafeteriaRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
-    private val parser: CafeteriaParser
+    private val cafeteriaParser: CafeteriaParser,
+    private val foodMenuParser: FoodMenuParser
 ) : CafeteriaRepository() {
 
-    private val cache = Cache<List<Cafeteria>>()
+    private val cafeteriaCache = Cache<List<Cafeteria>>()
+    private val foodCache = Cache<List<FoodMenu>>()
 
     override fun getAllCafeteria(callback: DataCallback<List<Cafeteria>>) {
-        if (cache.isValid) {
-            cache.get()?.let {
+        if (cafeteriaCache.isValid) {
+            cafeteriaCache.get()?.let {
                 callback.onSuccess(it)
                 Timber.i("Got all cafeteria from cache!")
                 return
@@ -28,13 +34,35 @@ class CafeteriaRepositoryImpl(
         networkService.getCafeteria().onResult(
             async = callback.async,
             onSuccess = { json ->
-                parser.parse(json)
-                    ?.let {
-                        callback.onSuccess(it)
-                        cache.set(it)
-                        Timber.i("Successfully fetched all cafeteria from server.")
-                    }
-                    .onNull { callback.onFail(BodyParseException()) }
+                cafeteriaParser.parse(json)?.let {
+                    callback.onSuccess(it)
+                    cafeteriaCache.set(it)
+                    Timber.i("Successfully fetched all cafeteria from server.")
+                }.onNull { callback.onFail(BodyParseException()) }
+            },
+            onFail = callback.onFail
+        )
+    }
+
+    override fun getAllFoodMenu(callback: DataCallback<List<FoodMenu>>) {
+        if (foodCache.isValid) {
+            foodCache.get()?.let {
+                callback.onSuccess(it)
+                Timber.i("Got all food menus from cache!")
+                return
+            }
+        }
+
+        val date = DateFormat.format("YYYYMMDD", Date()).toString()
+
+        networkService.getFoods(date).onResult(
+            async = callback.async,
+            onSuccess = { json ->
+                foodMenuParser.parse(json)?.let {
+                    callback.onSuccess(it)
+                    foodCache.set(it)
+                    Timber.i("Successfully fetched all food menus from server.")
+                }.onNull { callback.onFail(BodyParseException()) }
             },
             onFail = callback.onFail
         )
