@@ -2,6 +2,7 @@ package org.inu.cafeteria.repository
 
 import android.app.Activity
 import android.content.Context
+import org.inu.cafeteria.extension.onResult
 import org.inu.cafeteria.extension.onSuccess
 import org.inu.cafeteria.model.scheme.LoginParams
 import org.inu.cafeteria.model.scheme.LoginResult
@@ -29,11 +30,19 @@ class LoginRepositoryImpl(
         return login
     }
 
-    override fun login(params: LoginParams): Call<LoginResult> {
-        return networkService.getLoginResult(params)
+    override fun login(params: LoginParams, callback: DataCallback<LoginResult>) {
+        networkService.getLoginResult(params).onResult(
+            async = callback.async,
+            onSuccess = callback.onSuccess,
+            onFail = callback.onFail
+        )
     }
 
-    override fun logout(params: LogoutParams): Call<LogoutResult> {
-        return networkService.getLogoutResult(params)
+    override fun logout(params: LogoutParams, callback: DataCallback<LogoutResult>) {
+        networkService.getLogoutResult(params).onResult(
+            async = callback.async,
+            onSuccess = callback.onSuccess,
+            onFail = callback.onFail
+        )
     }
 }

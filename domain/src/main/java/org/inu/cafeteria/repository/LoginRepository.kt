@@ -11,6 +11,6 @@ abstract class LoginRepository : Repository() {
     abstract fun setLoginIn(isLoggedIn: Boolean)
     abstract fun isLoggedIn(): Boolean
 
-    abstract fun login(params: LoginParams): Call<LoginResult>
-    abstract fun logout(params: LogoutParams): Call<LogoutResult>
+    abstract fun login(params: LoginParams, callback: DataCallback<LoginResult>)
+    abstract fun logout(params: LogoutParams, callback: DataCallback<LogoutResult>)
 }
