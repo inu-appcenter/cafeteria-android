@@ -5,12 +5,12 @@ import com.google.gson.JsonElement
 import org.inu.cafeteria.extension.tryOrNull
 import org.inu.cafeteria.model.FoodMenu
 import org.inu.cafeteria.model.json.Cafeteria
+import org.inu.cafeteria.repository.CafeteriaRepository
+import org.inu.cafeteria.repository.Repository
 import org.inu.cafeteria.util.Types
 import timber.log.Timber
 
-class FoodMenuParser(
-    private val
-) : Parser<List<FoodMenu>>() {
+class FoodMenuParser : Parser<JsonElement, List<FoodMenu>>() {
 
     /**
      * We are trying to parse food menus for whole cafeteria.
@@ -22,68 +22,89 @@ class FoodMenuParser(
      * SINGLE JSON OBJECT with FIXED CAFETERIA NUMBER as a PROPERTY!!!
      * Even more, the menus are written HTML, not plain string. F**K
      *
-     * We need somthing like this:
+     * We need something like this:
      *
      * root: Array<FoodMenu>
      *  {
-     *    cafeteriaNumber: Int      =   0,
-     *    corners: Array<Corner>    =   {
-     *                                      {
-     *                                          title: String = "A corner"
-     *                                          menu: Array<String> = {
-     *                                              "something",
-     *                                              "delicious"
-     *                                          }
-     *                                          order: Int = 0
-     *                                      },
-     *                                      {
-     *                                          title: String = "B corner"
-     *                                          menu: Array<String> = {
-     *                                              "good",
-     *                                              "thing"
-     *                                          }
-     *                                          order: Int = 1
-     *                                      }
-     *                                  }
-     *  ,
-     *    cafeteriaNumber: Int      =   1,
-     *    corners: Array<Corner>    =   {
-     *                                      {
-     *                                          title: String = "A corner"
-     *                                          menu: Array<String> = {
-     *                                              "something",
-     *                                              "delicious"
-     *                                          }
-     *                                          order: Int = 0
-     *                                      },
-     *                                      {
-     *                                          title: String = "B corner"
-     *                                          menu: Array<String> = {
-     *                                              "good",
-     *                                              "thing"
-     *                                          }
-     *                                          order: Int = 1
-     *                                      }
-     *                                  }
+     *      {
+     *          cafeteriaNumber: Int      =   0,
+     *          corners: Array<Corner>    =   {
+     *                                             {
+     *                                                 title: String = "A corner"
+     *                                                 menu: Array<String> = {
+     *                                                     "something",
+     *                                                     "delicious"
+     *                                                 }
+     *                                                 order: Int = 0
+     *                                             },
+     *                                             {
+     *                                                 title: String = "B corner"
+     *                                                 menu: Array<String> = {
+     *                                                     "good",
+     *                                                     "thing"
+     *                                                 }
+     *                                                 order: Int = 1
+     *                                             }
+     *                                         }
+     *      },
+     *  .
+     *  .
+     *  .
+     *  }
      *
      * Just like that!
+     * To achieve that, we need to know which cafeteria supports food menu.
+     * Two ways:
+     *  - get it from field name consists of integer:
+     *      Can process by itself, but sucks.
+     *  - get list of cafeteria first from repository:
+     *      Need another repository but accurate.
+     *      Adaptable when cafeteria number changes.
+     *
+     * We go the former.
+     * It sucks but this is a parser
+     *
      */
-    override fun parse(json: JsonElement): List<FoodMenu>? {
+    @SuppressWarnings("Unchecked cast")
+    override fun parse(raw: JsonElement, params: Any?): List<FoodMenu>? {
+
+        if (!Types.checkType(params, listOf<Int>())) {
+            Timber.w("Params must be List<Int>.")
+            return null
+        }
+
+        val foodMenusByCafeteria = mutableListOf<FoodMenu>()
+
+        // Must success here.
+        val availableCafeteria = params as List<Int>
+
+
         return tryOrNull {
+            with(raw.asJsonObject) {
 
-            val foodMenuByCafeteria = mutableListOf<FoodMenu>()
+                availableCafeteria.forEach { cafeteriaNumber ->
+                    val corners = mutableListOf<FoodMenu.Corner>()
 
-            with (json.asJsonObject) {
-                get()
+                    get(cafeteriaNumber.toString())
+                        .asJsonArray
+                        .forEach {
+                            with (it.asJsonObject) {
+                                val menus = mutableListOf<String>()
+
+                                val corner = FoodMenu.Corner(
+                                    title = get("TITLE").asString,
+                                    menu = menus,
+                                    order = get("order").asInt
+                                )
+                            }
+                        }
+
+
+                    foodMenusByCafeteria.add(FoodMenu(cafeteriaNumber, corners))
+                }
             }
 
-
-
-
-
-
-
-            return@tryOrNull foodMenuByCafeteria
+            null
         }
     }
 }

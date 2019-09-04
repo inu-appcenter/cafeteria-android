@@ -72,8 +72,14 @@ class MainViewModel : BaseViewModel() {
                 result.onSuccess {
                     barcodeState.value = initialState.copy(isLoading = false)
                     onSuccess(Barcode.from(barcode))
-                }.onError(onFail)
+                    Timber.i("Barcode successfully activated.")
+                }.onError {
+                    onFail(it)
+                    Timber.w("Barcode activate failed.")
+                }
             }
+        } else {
+            Timber.i("Tried to load barcode but not logged in.")
         }
 
         Timber.i("Drawer started opening.")

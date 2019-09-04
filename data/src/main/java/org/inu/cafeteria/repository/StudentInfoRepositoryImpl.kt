@@ -3,6 +3,7 @@ package org.inu.cafeteria.repository
 import android.app.Activity
 import android.content.Context
 import androidx.core.content.edit
+import org.inu.cafeteria.extension.onResult
 import org.inu.cafeteria.model.scheme.ActivateBarcodeParams
 import org.inu.cafeteria.model.scheme.ActivateBarcodeResult
 import org.inu.cafeteria.service.CafeteriaNetworkService
@@ -52,8 +53,12 @@ class StudentInfoRepositoryImpl(
         }
     }
 
-    override fun activateBarcode(params: ActivateBarcodeParams): Call<ActivateBarcodeResult> {
-        return networkService.getActivateBarcodeResult(params)
+    override fun activateBarcode(params: ActivateBarcodeParams, callback: DataCallback<ActivateBarcodeResult>) {
+        networkService.getActivateBarcodeResult(params).onResult(
+            async = callback.async,
+            onSuccess = callback.onSuccess,
+            onFail = callback.onFail
+        )
     }
 
     companion object {

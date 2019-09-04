@@ -7,14 +7,14 @@ import org.inu.cafeteria.model.json.Cafeteria
 import org.inu.cafeteria.util.Types
 import timber.log.Timber
 
-class CafeteriaParser : Parser<List<Cafeteria>>() {
+class CafeteriaParser : Parser<JsonElement, List<Cafeteria>>() {
 
     /**
      * If any error on it, it will return null.
      */
-    override fun parse(json: JsonElement): List<Cafeteria>? {
+    override fun parse(raw: JsonElement, params: Any?): List<Cafeteria>? {
         return tryOrNull {
-            Gson().fromJson(json, Types.typeOf<List<Cafeteria>>())
+            Gson().fromJson(raw, Types.typeOf<List<Cafeteria>>())
         }
     }
 }

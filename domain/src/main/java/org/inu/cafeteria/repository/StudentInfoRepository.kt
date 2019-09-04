@@ -17,5 +17,5 @@ abstract class StudentInfoRepository : Repository() {
     abstract fun getLoginToken(): String?
     abstract fun setLoginToken(token: String?)
 
-    abstract fun activateBarcode(params: ActivateBarcodeParams): Call<ActivateBarcodeResult>
+    abstract fun activateBarcode(params: ActivateBarcodeParams, callback: DataCallback<ActivateBarcodeResult>)
 }

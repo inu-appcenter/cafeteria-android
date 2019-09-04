@@ -8,7 +8,6 @@ import retrofit2.Call
 
 abstract class LoginRepository : Repository() {
 
-    abstract fun setLoginIn(isLoggedIn: Boolean)
     abstract fun isLoggedIn(): Boolean
 
     abstract fun login(params: LoginParams, callback: DataCallback<LoginResult>)

@@ -80,7 +80,7 @@ val myModules = module {
 
     /** Get Food Menu */
     single {
-        GetCafeteria(
+        GetFoodMenu(
             cafeteriaRepo = get()
         )
     }

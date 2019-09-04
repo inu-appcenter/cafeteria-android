@@ -6,6 +6,8 @@ import org.inu.cafeteria.functional.Result
 import org.inu.cafeteria.interactor.UseCase
 import org.inu.cafeteria.model.scheme.ActivateBarcodeParams
 import org.inu.cafeteria.model.scheme.ActivateBarcodeResult
+import org.inu.cafeteria.model.scheme.LoginResult
+import org.inu.cafeteria.repository.Repository
 import org.inu.cafeteria.repository.StudentInfoRepository
 import java.io.IOException
 
@@ -14,14 +16,17 @@ class ActivateBarcode(
 ) : UseCase<ActivateBarcodeParams, ActivateBarcodeResult>() {
 
     override fun run(params: ActivateBarcodeParams) = Result.of {
-        return@of try {
-            studentInfoRepo.activateBarcode(params)
-                .execute()
-                .let { it.takeIf { it.isSuccessful } ?: throw ResponseFailException() }
-                .body()
-                ?: throw RuntimeException("Body is null.")
-        } catch (e: IOException) {
-            throw ServerNoResponseException()
-        }
+        var result: ActivateBarcodeResult? = null
+        var failure: Exception? = null
+
+        studentInfoRepo.activateBarcode(params, Repository.DataCallback(
+            async = false,
+            onSuccess = { result = it },
+            onFail = { failure = it }
+        ))
+
+        failure?.let { throw it }
+
+        return@of result!!
     }
 }

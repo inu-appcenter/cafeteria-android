@@ -26,6 +26,7 @@ class LoginFragment : BaseFragment() {
                 pw = pw,
                 auto = auto,
                 onSuccess = {
+                    Timber.i("Login succeeded with id and password.")
                     saveLoginResult(it, id)
                     showMain(this@LoginFragment)
                 },
@@ -44,7 +45,7 @@ class LoginFragment : BaseFragment() {
         viewModel = getViewModel {
             tryAutoLogin(
                 onPass = {
-                    Timber.i("No token available")
+                    Timber.i("No token available. Try login with id and password.")
                 },
                 onSuccess = {
                     Timber.i("Auto login succeeded.")

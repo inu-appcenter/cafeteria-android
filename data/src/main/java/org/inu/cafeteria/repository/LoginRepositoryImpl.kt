@@ -21,22 +21,17 @@ class LoginRepositoryImpl(
 
     private var login = false
 
-    override fun setLoginIn(isLoggedIn: Boolean) {
-        login = isLoggedIn
-        Timber.i("Login state update. Logged ${if (isLoggedIn) "in" else "out"}.")
-    }
-
     override fun isLoggedIn(): Boolean {
         return login
     }
 
-    /**
-     *
-     */
     override fun login(params: LoginParams, callback: DataCallback<LoginResult>) {
         networkService.getLoginResult(params).onResult(
             async = callback.async,
-            onSuccess = callback.onSuccess,
+            onSuccess = {
+                setLoginIn(true)
+                callback.onSuccess(it)
+            },
             onFail = callback.onFail
         )
     }
@@ -44,8 +39,16 @@ class LoginRepositoryImpl(
     override fun logout(params: LogoutParams, callback: DataCallback<LogoutResult>) {
         networkService.getLogoutResult(params).onResult(
             async = callback.async,
-            onSuccess = callback.onSuccess,
+            onSuccess = {
+                setLoginIn(false)
+                callback.onSuccess
+            },
             onFail = callback.onFail
         )
+    }
+
+    private fun setLoginIn(isLoggedIn: Boolean) {
+        login = isLoggedIn
+        Timber.i("Login state update. Logged ${if (isLoggedIn) "in" else "out"}.")
     }
 }
