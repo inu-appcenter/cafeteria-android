@@ -128,8 +128,6 @@ UseCase 안에서 예외가 발생한다면 자동으로 onError 콜백이 호�
 
 `Failable`의 구독은 `FailableHandler`의 생명 주기가 막 시작되었을 때에 그가 가진 failables의 각각 failure(LiveData의 형태)들을 구독하는 방식으로 구현됩니다.
 
-`Failable`의 구독은 `FailableHandler`의 생명 주기가 막 시작되었을 때에 그가 가진 failables의 각각 failure(LiveData의 형태)들을 구독하는 방식으로 구현됩니다.
-
 이렇게 함으로써 `Failable`을 상속받는 클래스는 언제 어디서든 문제가 생겼을 때에 `fail()` 메소드로 사용자에게 이를 전달할 수 있습니다.
 
 
