@@ -15,12 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Content -->
         <androidx.core.widget.NestedScrollView
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <!-- Food Corners -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/corners_list"
                 app:corners="@{vm.food}"
@@ -32,6 +34,44 @@
 
         </androidx.core.widget.NestedScrollView>
 
+        <!-- Empty View -->
+        <LinearLayout
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="100dp"
+            app:layout_anchor="@id/content"
+            app:layout_anchorGravity="center"
+            android:orientation="vertical">
+
+            <!-- Title -->
+            <TextView
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/textToolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:text="@string/title_no_menu"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+
+            <!-- Description -->
+            <TextView
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/textPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:text="@string/desc_no_menu"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <!-- Appbar Shadow -->
         <View
             android:id="@+id/toolbar_shadow"
             android:layout_width="match_parent"
@@ -39,6 +79,7 @@
             android:background="@drawable/ab_shadow"
             app:layout_anchor="@id/content" />
 
+        <!-- Appbar Layout -->
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
@@ -69,6 +110,19 @@
                     android:layout_marginTop="10dp"
                     app:layout_collapseMode="parallax"
                     tools:text="Cafeteria" />
+
+                <ImageView
+                    android:id="@+id/cancel_button"
+                    android:paddingTop="37dp"
+                    android:paddingBottom="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="15dp"
+                    android:tint="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|top"
+                    android:src="@drawable/ic_cancel_24dp"
+                    app:layout_collapseMode="pin" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 

@@ -91,7 +91,14 @@ class CafeteriaDetailFragment : BaseFragment() {
         }
 
         with(view.corners_list) {
+            cornersAdapter.emptyView = view.empty_view
             adapter = cornersAdapter
+        }
+
+        with(view.cancel_button) {
+            setOnClickListener {
+                activity?.onBackPressed()
+            }
         }
     }
 
@@ -113,6 +120,7 @@ class CafeteriaDetailFragment : BaseFragment() {
             )
         }
     }
+
 
     companion object {
         fun forCafeteria(cafeteria: Cafeteria): CafeteriaDetailFragment {

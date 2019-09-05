@@ -43,5 +43,7 @@
     <string name="title_logout">Logout</string>
     <string name="dialog_ask_logout">Do you want to logout?</string>
     <string name="button_logout">Logout</string>
+    <string name="title_no_menu">No menu found for today.</string>
+    <string name="desc_no_menu">This cafeteria might not offer the menu.\nOr it could be a temporal problem.\nPlease try again later.</string>
 
 </resources>

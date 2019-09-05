@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.inu.cafeteria.common.base.BaseViewModel
 import org.inu.cafeteria.common.extension.defaultDataErrorHandle
+import org.inu.cafeteria.extension.onNull
 import org.inu.cafeteria.model.FoodMenu
 import org.inu.cafeteria.model.json.Cafeteria
 import org.inu.cafeteria.repository.CafeteriaRepository
@@ -64,8 +65,13 @@ class CafeteriaDetailsViewModel : BaseViewModel() {
         getFoodMenu(Unit) { result ->
             result.onSuccess {list ->
                 cafeteria?.let {
-                    _food.value = list.find { it.cafeteriaNumber == cafeteria?.key }
-                    Timber.i("Successfully loaded all food menu.")
+                    val found = list.find { it.cafeteriaNumber == cafeteria?.key }
+                    _food.value = found
+
+                    found
+                        ?.let { Timber.i("Found food menu for the cafeteria and successfully set them.") }
+                        .onNull { Timber.i("Got all food menu but the one for this cafeteria.") }
+
                 } ?: Timber.w("Got food menu but failed to set food because cafeteria is not set.")
             }.onError { defaultDataErrorHandle(it) }
         }

@@ -32,4 +32,12 @@
     <string name="title_student_barcode">학생할인 바코드</string>
     <string name="warn_internet">인터넷 연결을 확인해주세요.</string>
     <string name="desc_login_to_see_tag">학생 할인은 로그인 후에 이용하실 수 있습니다.</string>
+    <string name="button_logout">로그아웃</string>
+    <string name="desc_no_menu">이 식당이 메뉴 정보를 제공하지 않는 것일 수 있습니다.\n또는 일시적인 문제일 수 있습니다.\n다음에 다시 시도해보세요.</string>
+    <string name="dialog_ask_logout">로그아웃 하시겠습니까?</string>
+    <string name="fail_body_parse">요청 결과를 처리하는 중 문제가 발생했습니다.</string>
+    <string name="fail_no_data_for_key">key에 해당하는 데이터가 없습니다.</string>
+    <string name="fail_response_body_null">요청 결과가 비어있습니다.</string>
+    <string name="title_logout">로그아웃</string>
+    <string name="title_no_menu">오늘 메뉴가 없습니다.</string>
 </resources>

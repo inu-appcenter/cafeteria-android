@@ -27,6 +27,7 @@ fun ImageView.loadUrlAndResumeEnterTransition(url: String, activity: FragmentAct
         .load(url)
         .fallback(R.drawable.no_img)
         .error(R.drawable.no_img)
+        .transition(DrawableTransitionOptions.withCrossFade())
         .into(target)
 }
 
