@@ -36,5 +36,11 @@
         <item name="android:transitionName">@string/cafeteria_transition_poster</item>
     </style>
 
+    <style name="DialogButton">
+        <item name="android:colorControlHighlight">@color/rippleLight</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
+
 </resources>
 

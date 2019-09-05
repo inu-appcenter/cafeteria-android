@@ -20,7 +20,7 @@
     <string name="desc_app_description">INU cafeteria</string>
     <string name="notify_not_implemented">This feature is not implemented yet :)</string>
     <string name="title_server_error">Server error</string>
-    <string name="dialog_server_not_respond">Server is not responding... :(</string>
+    <string name="dialog_server_not_respond">Server is not responding. It could be due to the network. Please try again later.</string>
     <string name="button_exit">Exit</string>
     <string name="hint_stuno">Student ID</string>
     <string name="hint_password">Password</string>
@@ -38,5 +38,8 @@
 
     <!-- Animations -->
     <string name="cafeteria_transition_poster" translatable="false">cafeteriaImageTransition</string>
+    <string name="title_logout">Logout</string>
+    <string name="dialog_ask_logout">Do you want to logout?</string>
+    <string name="button_logout">Logout</string>
 
 </resources>

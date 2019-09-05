@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.inu.cafeteria.R
+import org.inu.cafeteria.common.Navigator
 import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.extension.getViewModel
+import org.koin.core.inject
 
 /**
  * Display splash screen, while checking version.
  * Route activity launches this activity by default.
  */
 class SplashFragment : BaseFragment() {
+
+    private val navigator: Navigator by inject()
 
     private lateinit var viewModel: SplashViewModel
 
@@ -29,12 +33,18 @@ class SplashFragment : BaseFragment() {
 
     init {
         failables += this
+        failables += navigator
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = getViewModel()
+        viewModel = getViewModel {
+            // This action cannot be done inside view model because it needs activity.
+            onServerNoResponse = {
+                navigator.showServerDeadDialog(activity!!)
+            }
+        }
         failables += viewModel.failables
     }
 

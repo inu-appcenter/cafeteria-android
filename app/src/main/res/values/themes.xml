@@ -17,9 +17,9 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">true</item>
 
-        <item name="colorPrimary">@color/toolbarLight</item>
-        <item name="colorPrimaryDark">@color/statusBarLight</item>
-        <item name="colorAccent">@color/pointBlue</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
     </style>
 

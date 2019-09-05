@@ -41,7 +41,7 @@ class LoginRepositoryImpl(
             async = callback.async,
             onSuccess = {
                 setLoginIn(false)
-                callback.onSuccess
+                callback.onSuccess(it)
             },
             onFail = callback.onFail
         )

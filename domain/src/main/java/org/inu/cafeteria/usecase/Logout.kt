@@ -10,6 +10,7 @@ import org.inu.cafeteria.model.scheme.LogoutParams
 import org.inu.cafeteria.model.scheme.LogoutResult
 import org.inu.cafeteria.repository.LoginRepository
 import org.inu.cafeteria.repository.Repository
+import timber.log.Timber
 import java.io.IOException
 
 class Logout(

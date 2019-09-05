@@ -3,6 +3,8 @@ package org.inu.cafeteria.feature.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -17,18 +19,20 @@ import org.inu.cafeteria.common.base.SingleFragmentActivity
 import org.inu.cafeteria.common.extension.getViewModel
 import org.inu.cafeteria.common.extension.defaultDataErrorHandle
 import org.inu.cafeteria.common.extension.setSupportActionBar
+import org.inu.cafeteria.common.util.ThemedDialog
 import org.inu.cafeteria.databinding.MainActivityBinding
 import org.inu.cafeteria.feature.cafeteria.CafeteriaListFragment
 
 class MainActivity : SingleFragmentActivity() {
+
     override val fragment: Fragment = CafeteriaListFragment()
-    override val layoutId: Int? = null // Will not inflate view through Activity.setContentView
+    override val layoutId: Int? = null
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var viewDataBinding: MainActivityBinding
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val drawerStartedOpen = {
+    private val onDrawerStartedOpen = {
         with(mainViewModel) {
             tryLoadingBarcode(
                 onSuccess = {
@@ -43,15 +47,25 @@ class MainActivity : SingleFragmentActivity() {
         }
     }
 
-    private val drawerClosed = {
+    private val onDrawerClosed = {
         with(mainViewModel) {
             tryInvalidateBarcode(
-                onFail = ::defaultDataErrorHandle,
+                onFail = ::handleActivateBarcodeFailure,
                 onNoBarcode = {
                     fail(R.string.fail_no_barcode)
                 }
             )
         }
+    }
+
+    private val logout = {
+        mainViewModel.tryLogout(
+            onSuccess = {
+                mainViewModel.showLogin(this)
+            },
+            onFail = ::defaultDataErrorHandle,
+            onNoToken = { fail(R.string.fail_token_invalid, show = true) }
+        )
     }
 
     init {
@@ -66,18 +80,22 @@ class MainActivity : SingleFragmentActivity() {
         setToggle()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        MenuInflater(this).inflate(R.menu.menu_main, menu)
+        return true // Display the menu.
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         super.onOptionsItemSelected(item)
 
         when (item.itemId) {
             R.id.menu_logout -> {
-                mainViewModel.tryLogout(
-                    onSuccess = {
-                        mainViewModel.showLogin(this)
-                    },
-                    onFail = ::defaultDataErrorHandle,
-                    onNoToken = { fail(R.string.fail_token_invalid, show = true) }
-                )
+                ThemedDialog(this)
+                    .withTitle(R.string.title_logout)
+                    .withMessage(R.string.dialog_ask_logout)
+                    .withPositiveButton(R.string.button_logout) { logout() }
+                    .withNegativeButton(R.string.button_cancel)
+                logout()
             }
         }
 
@@ -115,12 +133,12 @@ class MainActivity : SingleFragmentActivity() {
 
                 if (newState == DrawerLayout.STATE_SETTLING &&
                     !root_layout.isDrawerOpen(GravityCompat.START)) {
-                    drawerStartedOpen()
+                    onDrawerStartedOpen()
                 }
 
                 if (newState == DrawerLayout.STATE_IDLE &&
                     !root_layout.isDrawerOpen(GravityCompat.START)) {
-                    drawerClosed()
+                    onDrawerClosed()
                 }
             }
         }

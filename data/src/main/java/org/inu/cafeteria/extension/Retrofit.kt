@@ -55,7 +55,7 @@ fun <T> Call<T>.onResult(
                             }
                             ?.let {
                                 onSuccess(it)
-                                Timber.w("Response success!")
+                                Timber.i("Response success!")
                             }
                     } else {
                         onFail(ResponseFailException())
@@ -92,7 +92,7 @@ fun <T> Call<T>.onResult(
                     }
                     ?.let {
                         onSuccess(it)
-                        Timber.w("Response success!")
+                        Timber.i("Response success!")
                     }
             } else {
                 onFail(ResponseFailException())

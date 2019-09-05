@@ -1,7 +1,9 @@
 package org.inu.cafeteria.common
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.view.WindowManager
 import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.FragmentActivity
@@ -42,8 +44,8 @@ class Navigator(
         )
     }
 
-    fun showServerDeadDialog() {
-        ThemedDialog(context)
+    fun showServerDeadDialog(activity: FragmentActivity) {
+        ThemedDialog(activity)
             .withTitle(R.string.title_server_error)
             .withMessage(R.string.dialog_server_not_respond)
             .withPositiveButton(R.string.button_exit) { exitProcess(0) }

@@ -60,7 +60,7 @@ class MainViewModel : BaseViewModel() {
         }
 
         val initialState = BarcodeState(
-            isAvailable = loginRepo.isLoggedIn(),
+            isLoggedIn = loginRepo.isLoggedIn(),
             isLoading = true,
             isNetworkDown = false
         )
@@ -100,12 +100,7 @@ class MainViewModel : BaseViewModel() {
         }
 
         if (loginRepo.isLoggedIn()) {
-            activateBarcode(
-                ActivateBarcodeParams(
-                    barcode,
-                    ActivateBarcodeParams.ACTIVATE_FALSE
-                )
-            ) { result ->
+            activateBarcode(ActivateBarcodeParams(barcode, ActivateBarcodeParams.ACTIVATE_FALSE)) { result ->
                 result.onError(onFail)
             }
         }
@@ -140,7 +135,7 @@ class MainViewModel : BaseViewModel() {
      */
     fun handleActivateBarcodeFailure(e: Exception) {
         when (e) {
-            is ServerNoResponseException -> barcodeState.value = BarcodeState(isNetworkDown = true)
+            is ServerNoResponseException -> barcodeState.value = barcodeState.value?.copy(isNetworkDown = true)
             else -> defaultDataErrorHandle(e)
         }
     }

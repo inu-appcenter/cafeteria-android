@@ -20,6 +20,8 @@ class SplashViewModel : BaseViewModel() {
     private val getVersion: GetVersion by inject()
     private val navigator: Navigator by inject()
 
+    var onServerNoResponse: () -> Unit = {}
+
     init {
         failables += this
         failables += getVersion
@@ -69,7 +71,7 @@ class SplashViewModel : BaseViewModel() {
      */
     fun handleVersionCheckFailure(e: Exception) {
         when (e) {
-            is ServerNoResponseException -> navigator.showServerDeadDialog()
+            is ServerNoResponseException -> onServerNoResponse()
             else -> {
                 defaultDataErrorHandle(e)
             }

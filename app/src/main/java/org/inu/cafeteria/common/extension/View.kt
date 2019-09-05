@@ -1,88 +1,13 @@
 package org.inu.cafeteria.common.extension
 
-import android.animation.LayoutTransition
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
-import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.os.Build
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.LayoutRes
-import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.target.CustomViewTarget
-import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.request.transition.Transition
-import org.inu.cafeteria.R
-import java.net.URL
 
 fun View.cancelTransition() {
     transitionName = null
-}
-
-var ViewGroup.animateLayoutChanges: Boolean
-    get() = layoutTransition != null
-    set(value) {
-        layoutTransition = if (value) LayoutTransition() else null
-    }
-
-fun ViewGroup.inflate(@LayoutRes layoutRes: Int): View =
-    LayoutInflater.from(context).inflate(layoutRes, this, false)
-
-fun ImageView.loadFromUrl(url: String) =
-    Glide.with(this.context.applicationContext)
-        .load(url)
-        .fallback(R.drawable.no_img)
-        .error(R.drawable.no_img)
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .into(this)
-
-fun ImageView.loadUrlAndPostponeEnterTransition(url: String, activity: FragmentActivity) {
-    val target: Target<Drawable> = ImageViewBaseTarget(this, activity)
-    Glide.with(context.applicationContext)
-        .load(url)
-        .fallback(R.drawable.no_img)
-        .error(R.drawable.no_img)
-        .into(target)
-}
-
-private class ImageViewBaseTarget (var imageView: ImageView, var activity: FragmentActivity)
-    : CustomViewTarget<ImageView, Drawable>(imageView) {
-
-    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-        imageView.setImageDrawable(resource)
-        activity.supportStartPostponedEnterTransition()
-    }
-
-    override fun onLoadFailed(errorDrawable: Drawable?) {
-        activity.supportStartPostponedEnterTransition()
-    }
-
-    override fun onResourceCleared(placeholder: Drawable?) {}
-}
-
-fun ImageView.setTint(color: Int) {
-    imageTintList = ColorStateList.valueOf(color)
-}
-
-fun ImageView.setTintRes(@ColorRes colorResId: Int) {
-    setTint(resources.getColor(colorResId, null))
-}
-
-fun ProgressBar.setTint(color: Int) {
-    indeterminateTintList = ColorStateList.valueOf(color)
-    progressTintList = ColorStateList.valueOf(color)
 }
 
 fun View.setBackgroundTint(color: Int) {
@@ -140,34 +65,4 @@ fun View.forwardTouches(parent: View) {
             else -> v.onTouchEvent(event)
         }
     }
-}
-
-fun ViewPager.addOnPageChangeListener(listener: (Int) -> Unit) {
-    addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-        override fun onPageSelected(position: Int) {
-            listener(position)
-        }
-    })
-}
-
-fun RecyclerView.scrapViews() {
-    val adapter = adapter
-    val layoutManager = layoutManager
-
-    this.adapter = null
-    this.layoutManager = null
-
-    this.adapter = adapter
-    this.layoutManager = layoutManager
-
-    adapter?.notifyDataSetChanged()
-}
-
-fun TextView.setBold(bold: Boolean) {
-    // TODO default value
-    this.setTypeface(this.typeface, if (bold) Typeface.BOLD else Typeface.NORMAL)
-}
-
-fun TextView.setTextColorRes(@ColorRes colorResId: Int) {
-    resources.getColor(colorResId, null)
 }
