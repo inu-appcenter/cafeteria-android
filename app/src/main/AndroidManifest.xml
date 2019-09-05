@@ -24,6 +24,7 @@
         <activity android:name=".feature.splash.SplashActivity" />
         <activity android:name=".feature.login.LoginActivity" />
         <activity android:name=".feature.main.MainActivity" />
+        <activity android:name=".feature.cafeteria.CafeteriaDetailActivity" />
 
 
     </application>

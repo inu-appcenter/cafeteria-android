@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Build
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,16 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+
+fun View.cancelTransition() {
+    transitionName = null
+}
 
 var ViewGroup.animateLayoutChanges: Boolean
     get() = layoutTransition != null
@@ -21,6 +30,20 @@ var ViewGroup.animateLayoutChanges: Boolean
         layoutTransition = if (value) LayoutTransition() else null
     }
 
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int): View =
+    LayoutInflater.from(context).inflate(layoutRes, this, false)
+
+fun ImageView.loadFromUrl(url: String) =
+    Glide.with(this.context.applicationContext)
+        .load(url)
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .into(this)
+
+fun ImageView.loadFromDrawable(@DrawableRes resId: Int) =
+    Glide.with(this.context.applicationContext)
+        .load(resId)
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .into(this)
 
 fun ImageView.setTint(color: Int) {
     imageTintList = ColorStateList.valueOf(color)

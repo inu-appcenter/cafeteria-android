@@ -18,10 +18,10 @@ import org.inu.cafeteria.common.extension.getViewModel
 import org.inu.cafeteria.common.extension.defaultDataErrorHandle
 import org.inu.cafeteria.common.extension.setSupportActionBar
 import org.inu.cafeteria.databinding.MainActivityBinding
-import org.inu.cafeteria.feature.cafeteria.CafeteriaFragment
+import org.inu.cafeteria.feature.cafeteria.CafeteriaListFragment
 
 class MainActivity : SingleFragmentActivity() {
-    override val fragment: Fragment = CafeteriaFragment()
+    override val fragment: Fragment = CafeteriaListFragment()
     override val layoutId: Int? = null // Will not inflate view through Activity.setContentView
 
     private lateinit var mainViewModel: MainViewModel

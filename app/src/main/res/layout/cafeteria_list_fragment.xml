@@ -7,34 +7,25 @@
     <data>
         <variable
             name="vm"
-            type="org.inu.cafeteria.feature.cafeteria.CafeteriaViewModel" />
+            type="org.inu.cafeteria.feature.cafeteria.CafeteriaListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Cafeteria -->
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/cafeteria_viewpager"
+        <!-- Cafeteria List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cafeteria_list"
+            app:cafeteria="@{vm.cafeteria}"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:cafeteria="@{vm.cafeteria}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.viewpager.widget.PagerTitleStrip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="30dp"
-                android:paddingBottom="10dp"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="@dimen/textToolbar" />
-
-        </androidx.viewpager.widget.ViewPager>
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/cafeteria_list_item"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

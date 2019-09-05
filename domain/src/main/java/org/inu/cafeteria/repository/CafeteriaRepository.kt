@@ -12,4 +12,7 @@ abstract class CafeteriaRepository : Repository() {
 
     abstract fun getAllCafeteria(callback: DataCallback<List<Cafeteria>>)
     abstract fun getAllFoodMenu(callback: DataCallback<List<FoodMenu>>)
+
+    abstract fun getCafeteriaByCafeteriaNumber(key: Int, callback: DataCallback<Cafeteria>)
+    abstract fun getFoodMenuByCafeteriaNumber(key: Int, callback: DataCallback<FoodMenu>)
 }

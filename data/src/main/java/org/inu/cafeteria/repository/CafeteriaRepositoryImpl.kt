@@ -2,6 +2,7 @@ package org.inu.cafeteria.repository
 
 import android.text.format.DateFormat
 import org.inu.cafeteria.exception.BodyParseException
+import org.inu.cafeteria.exception.DataNotFoundException
 import org.inu.cafeteria.extension.getFormatedDate
 import org.inu.cafeteria.extension.onNull
 import org.inu.cafeteria.extension.onResult
@@ -83,7 +84,7 @@ class CafeteriaRepositoryImpl(
                             .map { cafeteria -> cafeteria.key }
                     )
                 },
-                onFail = { failure = it}
+                onFail = { failure = it }
             )
         )
 
@@ -102,6 +103,38 @@ class CafeteriaRepositoryImpl(
                 }.onNull { callback.onFail(BodyParseException()) }
             },
             onFail = callback.onFail
+        )
+    }
+
+    override fun getCafeteriaByCafeteriaNumber(key: Int, callback: DataCallback<Cafeteria>) {
+        getAllCafeteria(
+            DataCallback(
+                async = callback.async,
+                onSuccess = {
+                    if (it.getOrNull(key) != null) {
+                        callback.onSuccess(it[key])
+                    } else {
+                        callback.onFail(DataNotFoundException())
+                    }
+                },
+                onFail = callback.onFail
+            )
+        )
+    }
+
+    override fun getFoodMenuByCafeteriaNumber(key: Int, callback: DataCallback<FoodMenu>) {
+        getAllFoodMenu(
+            DataCallback(
+                async = callback.async,
+                onSuccess = {
+                    if (it.getOrNull(key) != null) {
+                        callback.onSuccess(it[key])
+                    } else {
+                        callback.onFail(DataNotFoundException())
+                    }
+                },
+                onFail = callback.onFail
+            )
         )
     }
 }
