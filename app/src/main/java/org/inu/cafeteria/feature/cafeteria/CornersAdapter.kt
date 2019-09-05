@@ -1,8 +1,7 @@
 package org.inu.cafeteria.feature.cafeteria
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.food_list_item.view.*
+import kotlinx.android.synthetic.main.corner_list_item.view.*
 import org.inu.cafeteria.R
 import org.inu.cafeteria.common.base.BaseAdapter
 import org.inu.cafeteria.common.base.BaseViewHolder
@@ -12,7 +11,7 @@ import org.inu.cafeteria.model.FoodMenu
 class CornersAdapter : BaseAdapter<FoodMenu.Corner>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        val view = parent.inflate(R.layout.food_list_item)
+        val view = parent.inflate(R.layout.corner_list_item)
 
         return BaseViewHolder(view)
     }
@@ -26,7 +25,7 @@ class CornersAdapter : BaseAdapter<FoodMenu.Corner>() {
         }
 
         with(view.menu) {
-            text = item.menu.joinToString()
+            text = item.menu.joinToString(" ")
         }
     }
 }

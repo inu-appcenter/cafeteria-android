@@ -21,7 +21,7 @@ fun ImageView.loadFromUrl(url: String) =
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(this)
 
-fun ImageView.loadUrlAndPostponeEnterTransition(url: String, activity: FragmentActivity) {
+fun ImageView.loadUrlAndResumeEnterTransition(url: String, activity: FragmentActivity) {
     val target: Target<Drawable> = ImageViewBaseTarget(this, activity)
     Glide.with(context.applicationContext)
         .load(url)

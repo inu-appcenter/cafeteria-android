@@ -101,12 +101,14 @@ class CafeteriaDetailFragment : BaseFragment() {
      *
      * Nothing to do with data here.
      * View will be updated automatically.
+     *
+     * @param food the updated food menus per corners of this cafeteria.
      */
     private fun foodMenuUpdated(food: FoodMenu?) {
         activity?.let {
             // This is the situation where the first data fetch took place.
             // We need to set the cafeteria image, and postpone the transition.
-            cafeteria_image.loadUrlAndPostponeEnterTransition(
+            cafeteria_image.loadUrlAndResumeEnterTransition(
                 privateRepo.getServerBaseUrl().addUrl(detailsViewModel.cafeteria?.backgroundImagePath), it
             )
         }
