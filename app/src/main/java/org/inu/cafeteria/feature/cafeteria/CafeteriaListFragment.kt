@@ -52,8 +52,13 @@ class CafeteriaListFragment : BaseFragment() {
 
     private fun initializeView(view: View) {
         with(view.cafeteria_list) {
-            cafeteriaAdapter.clickListener = { itemView, cafeteria ->
-                navigator.showCafeteriaDetail(activity!!, cafeteria, itemView.cafeteria_image)
+            cafeteriaAdapter.clickListener = { view, item ->
+                navigator.showCafeteriaDetail(
+                    activity!!,
+                    item,
+                    view.cafeteria_image,
+                    view.cafeteria_title
+                )
             }
             adapter = cafeteriaAdapter
         }

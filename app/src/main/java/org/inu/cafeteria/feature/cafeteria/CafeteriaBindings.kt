@@ -2,8 +2,6 @@ package org.inu.cafeteria.feature.cafeteria
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
-import org.inu.cafeteria.extension.onNull
 import org.inu.cafeteria.model.FoodMenu
 import org.inu.cafeteria.model.json.Cafeteria
 import timber.log.Timber
@@ -26,14 +24,20 @@ fun setCafeteria(listView: RecyclerView, data: List<Cafeteria>?) {
     Timber.i("Cafeteria is updated.")
 }
 
-@BindingAdapter("food")
-fun setFood(pager: ViewPager, data: List<FoodMenu>?) {
+@BindingAdapter("corners")
+fun setCorners(listView: RecyclerView, data: FoodMenu?) {
     if (data == null) {
         Timber.i("Data is null.")
         return
     }
 
-    // pager.adapter = FoodPagerAdapter(data)
+    val adapter = listView.adapter as? CornersAdapter
+    if (adapter == null) {
+        Timber.w("Adapter not set.")
+        return
+    }
 
-    Timber.i("Food menu is updated.")
+    adapter.data = data.corners
+
+    Timber.i("Corners is(are) updated.")
 }

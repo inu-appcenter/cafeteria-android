@@ -19,6 +19,9 @@ class CafeteriaDetailsViewModel : BaseViewModel() {
     var cafeteria: Cafeteria? = null
         private set
 
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String> = _title
+
     private val _food = MutableLiveData<FoodMenu>()
     val food: LiveData<FoodMenu> = _food
 
@@ -32,6 +35,7 @@ class CafeteriaDetailsViewModel : BaseViewModel() {
     fun startWithCafeteria(cafeteria: Cafeteria?) {
         cafeteria?.let {
             this.cafeteria = it
+            _title.value = it.name
             Timber.i("Cafeteria is set.")
         } ?: Timber.i("Cafeteria is null.")
     }

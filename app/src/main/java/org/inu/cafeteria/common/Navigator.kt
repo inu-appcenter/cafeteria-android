@@ -3,9 +3,12 @@ package org.inu.cafeteria.common
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.fragment.app.FragmentActivity
 import org.inu.cafeteria.R
 import org.inu.cafeteria.base.FailableComponent
@@ -52,10 +55,14 @@ class Navigator(
             .show()
     }
 
-    fun showCafeteriaDetail(activity: FragmentActivity, cafeteria: Cafeteria, sharedImageView: ImageView) {
+    fun showCafeteriaDetail(activity: FragmentActivity, cafeteria: Cafeteria, sharedImageView: ImageView, sharedTextView: TextView) {
         val intent = CafeteriaDetailsActivity.callingIntent(activity, cafeteria)
+
+        val imageAnim = Pair.create(sharedImageView as View, sharedImageView.transitionName)
+        val titleAnim = Pair.create(sharedTextView as View, sharedTextView.transitionName)
+
         val activityOptions = ActivityOptionsCompat
-            .makeSceneTransitionAnimation(activity, sharedImageView, sharedImageView.transitionName)
+            .makeSceneTransitionAnimation(activity, imageAnim, titleAnim)
         activity.startActivity(intent, activityOptions.toBundle())
     }
 

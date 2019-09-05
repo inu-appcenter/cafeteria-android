@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.cafeteria_details_fragment.*
-import kotlinx.android.synthetic.main.cafeteria_details_fragment.view.cafeteria_image
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.cafeteria_details_fragment.view.*
 import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.extension.*
 import org.inu.cafeteria.databinding.CafeteriaDetailsFragmentBinding
@@ -14,7 +13,6 @@ import org.inu.cafeteria.model.FoodMenu
 import org.inu.cafeteria.model.json.Cafeteria
 import org.inu.cafeteria.repository.PrivateRepository
 import org.koin.core.inject
-import timber.log.Timber
 
 class CafeteriaDetailFragment : BaseFragment() {
 
@@ -24,10 +22,13 @@ class CafeteriaDetailFragment : BaseFragment() {
     private lateinit var detailsViewModel: CafeteriaDetailsViewModel
     private lateinit var viewDataBinding: CafeteriaDetailsFragmentBinding
 
+    private val cornersAdapter = CornersAdapter()
+
     init {
         failables += this
         failables += privateRepo
         failables += animator
+        failables += cornersAdapter
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +88,10 @@ class CafeteriaDetailFragment : BaseFragment() {
                     privateRepo.getServerBaseUrl().addUrl(detailsViewModel.cafeteria?.backgroundImagePath)
                 )
             }
+        }
+
+        with(view.corners_list) {
+            adapter = cornersAdapter
         }
     }
 

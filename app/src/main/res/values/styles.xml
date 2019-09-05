@@ -33,7 +33,14 @@
     <style name="CafeteriaImage">
         <item name="android:layout_width">match_parent</item>
         <item name="android:scaleType">centerCrop</item>
-        <item name="android:transitionName">@string/cafeteria_transition_poster</item>
+        <item name="android:transitionName">@string/cafeteria_transition_image</item>
+    </style>
+
+    <style name="CafeteriaTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:textSize">@dimen/textBig</item>
+        <item name="android:transitionName">@string/cafeteria_transition_title</item>
     </style>
 
     <style name="DialogButton">

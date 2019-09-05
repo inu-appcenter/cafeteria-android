@@ -37,7 +37,9 @@
     <string name="fail_no_data_for_key">Failed to get data. No data for the key.</string>
 
     <!-- Animations -->
-    <string name="cafeteria_transition_poster" translatable="false">cafeteriaImageTransition</string>
+    <string name="cafeteria_transition_image" translatable="false">cafeteriaImageTransition</string>
+    <string name="cafeteria_transition_title" translatable="false">cafeteriaTitleTransition</string>
+
     <string name="title_logout">Logout</string>
     <string name="dialog_ask_logout">Do you want to logout?</string>
     <string name="button_logout">Logout</string>
