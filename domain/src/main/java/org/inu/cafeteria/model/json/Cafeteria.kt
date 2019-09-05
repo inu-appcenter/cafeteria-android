@@ -1,6 +1,11 @@
 package org.inu.cafeteria.model.json
 
+import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import org.inu.cafeteria.extension.withNonNull
+import java.io.Serializable
 
 /**
  Real example here.
@@ -29,4 +34,4 @@ data class Cafeteria(
     @SerializedName("order") val order: Int,
     @SerializedName("img") val imagePath: String,
     @SerializedName("bgimg") val backgroundImagePath: String
-)
+) : Serializable

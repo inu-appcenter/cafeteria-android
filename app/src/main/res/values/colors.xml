@@ -28,4 +28,6 @@
     <color name="middleGray">#c5c5c5</color>
     <color name="heavyGray">#a0a0a0</color>
 
+    <color name="translucentBackground">#ED000000</color>
+
 </resources>

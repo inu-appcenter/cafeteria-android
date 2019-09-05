@@ -48,6 +48,11 @@ abstract class BaseActivity : AppCompatActivity(), Startable, Failable, Failable
         }
     }
 
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        startObservingFailables(failables)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -56,11 +61,6 @@ abstract class BaseActivity : AppCompatActivity(), Startable, Failable, Failable
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        startObservingFailables(failables)
     }
 
     override fun onDestroy() {

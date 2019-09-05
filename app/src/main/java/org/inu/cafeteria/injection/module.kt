@@ -1,6 +1,7 @@
 package org.inu.cafeteria.injection
 
 import org.inu.cafeteria.common.Navigator
+import org.inu.cafeteria.feature.cafeteria.CafeteriaDetailsAnimator
 import org.inu.cafeteria.parser.CafeteriaParser
 import org.inu.cafeteria.parser.FoodMenuParser
 import org.inu.cafeteria.repository.*
@@ -18,6 +19,11 @@ val myModules = module {
         Navigator(
             context = get()
         )
+    }
+
+    /** Cafeteria Details Animator */
+    single {
+        CafeteriaDetailsAnimator()
     }
 
     /** Network Service */

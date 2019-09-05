@@ -32,6 +32,10 @@ abstract class BaseFragment : Fragment(), Startable, Failable, FailableContainer
     private var menu: Menu? = null
     fun getOptionsMenu(): Menu? = menu
 
+    open fun onBackPressed() {}
+
+    internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(optionMenuId != null)

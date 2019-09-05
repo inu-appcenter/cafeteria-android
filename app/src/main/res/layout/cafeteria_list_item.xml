@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/cafeteria_image"
-        android:scaleType="centerCrop"
+        style="@style/CafeteriaImage"
         android:layout_width="0dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"

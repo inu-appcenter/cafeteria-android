@@ -4,6 +4,7 @@ import android.animation.LayoutTransition
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -15,10 +16,16 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.target.CustomViewTarget
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
+import org.inu.cafeteria.R
+import java.net.URL
 
 fun View.cancelTransition() {
     transitionName = null
@@ -36,14 +43,34 @@ fun ViewGroup.inflate(@LayoutRes layoutRes: Int): View =
 fun ImageView.loadFromUrl(url: String) =
     Glide.with(this.context.applicationContext)
         .load(url)
+        .fallback(R.drawable.no_img)
+        .error(R.drawable.no_img)
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(this)
 
-fun ImageView.loadFromDrawable(@DrawableRes resId: Int) =
-    Glide.with(this.context.applicationContext)
-        .load(resId)
-        .transition(DrawableTransitionOptions.withCrossFade())
-        .into(this)
+fun ImageView.loadUrlAndPostponeEnterTransition(url: String, activity: FragmentActivity) {
+    val target: Target<Drawable> = ImageViewBaseTarget(this, activity)
+    Glide.with(context.applicationContext)
+        .load(url)
+        .fallback(R.drawable.no_img)
+        .error(R.drawable.no_img)
+        .into(target)
+}
+
+private class ImageViewBaseTarget (var imageView: ImageView, var activity: FragmentActivity)
+    : CustomViewTarget<ImageView, Drawable>(imageView) {
+
+    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+        imageView.setImageDrawable(resource)
+        activity.supportStartPostponedEnterTransition()
+    }
+
+    override fun onLoadFailed(errorDrawable: Drawable?) {
+        activity.supportStartPostponedEnterTransition()
+    }
+
+    override fun onResourceCleared(placeholder: Drawable?) {}
+}
 
 fun ImageView.setTint(color: Int) {
     imageTintList = ColorStateList.valueOf(color)

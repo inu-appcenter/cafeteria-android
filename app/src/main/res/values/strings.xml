@@ -35,4 +35,8 @@
     <string name="fail_response_body_null">Response body is empty.</string>
     <string name="fail_body_parse">Failed while parsing response body.</string>
     <string name="fail_no_data_for_key">Failed to get data. No data for the key.</string>
+
+    <!-- Animations -->
+    <string name="cafeteria_transition_poster" translatable="false">cafeteriaImageTransition</string>
+
 </resources>
