@@ -48,22 +48,24 @@ fun <T> Call<T>.onResult(
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 try {
                     if (response.isSuccessful) {
-                        response.body()
-                            .onNull {
-                                onFail(NullBodyException())
-                                Timber.w("Response is success but body is null.")
-                            }
-                            ?.let {
-                                onSuccess(it)
-                                Timber.i("Response success!")
-                            }
+                        response.body()?.let {
+                            onSuccess(it)
+                            Timber.i("Response success!")
+                        }.onNull {
+                            onFail(NullBodyException())
+                            Timber.w("Response is success but body is null.")
+                        }
                     } else {
                         onFail(ResponseFailException())
                         Timber.w("Response is fail.")
                     }
+
                 } catch (e: Exception) {
                     onFail(e)
                     Timber.e("Unexpected exception in onResponse.")
+                } finally {
+                    // Don't forget to close a response body.
+                    response.raw().body()?.close()
                 }
             }
 
@@ -85,19 +87,20 @@ fun <T> Call<T>.onResult(
             val result = execute()
 
             if (result.isSuccessful) {
-                result.body()
-                    .onNull {
-                        onFail(NullBodyException())
-                        Timber.w("Response is success but body is null.")
-                    }
-                    ?.let {
-                        onSuccess(it)
-                        Timber.i("Response success!")
-                    }
+                result.body()?.let {
+                    onSuccess(it)
+                    Timber.i("Response success!")
+                }.onNull {
+                    onFail(NullBodyException())
+                    Timber.w("Response is success but body is null.")
+                }
             } else {
                 onFail(ResponseFailException())
                 Timber.w("Response is fail.")
             }
+
+            // Don't forget to close a response body.
+            result.raw().body()?.close()
 
         } catch (e: IOException) {
             onFail(ServerNoResponseException())

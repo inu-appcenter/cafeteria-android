@@ -2,9 +2,10 @@ package org.inu.cafeteria.feature.cafeteria
 
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.GestureDetectorCompat
+import androidx.core.widget.NestedScrollView
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.cafeteria_details_fragment.*
 import kotlinx.android.synthetic.main.cafeteria_details_fragment.view.*
 import org.inu.cafeteria.common.base.BaseFragment
@@ -14,6 +15,9 @@ import org.inu.cafeteria.model.FoodMenu
 import org.inu.cafeteria.model.json.Cafeteria
 import org.inu.cafeteria.repository.PrivateRepository
 import org.koin.core.inject
+import timber.log.Timber
+
+
 
 class CafeteriaDetailFragment : BaseFragment() {
 
