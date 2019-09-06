@@ -63,9 +63,6 @@ fun <T> Call<T>.onResult(
                 } catch (e: Exception) {
                     onFail(e)
                     Timber.e("Unexpected exception in onResponse.")
-                } finally {
-                    // Don't forget to close a response body.
-                    response.raw().body()?.close()
                 }
             }
 
@@ -98,9 +95,6 @@ fun <T> Call<T>.onResult(
                 onFail(ResponseFailException())
                 Timber.w("Response is fail.")
             }
-
-            // Don't forget to close a response body.
-            result.raw().body()?.close()
 
         } catch (e: IOException) {
             onFail(ServerNoResponseException())
