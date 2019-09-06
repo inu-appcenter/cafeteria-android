@@ -1,5 +1,6 @@
 package org.inu.cafeteria.feature.login
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +10,20 @@ import org.inu.cafeteria.R
 import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.extension.getViewModel
 import org.inu.cafeteria.common.extension.hideKeyboard
+import org.inu.cafeteria.common.extension.isVisible
+import org.inu.cafeteria.extension.withNonNull
 import timber.log.Timber
 
 class LoginFragment : BaseFragment() {
 
     private lateinit var viewModel: LoginViewModel
 
-    private val onLoginButtonClick = { view: View ->
-        val id = view.student_id.text.toString()
-        val pw = view.password.text.toString()
-        val auto = view.autologin.isChecked
+    private val onLoginButtonClick = { root: View ->
+        val id = root.student_id.text.toString()
+        val pw = root.password.text.toString()
+        val auto = root.autologin.isChecked
+
+        root.loading_layout.isVisible = true
 
         with(viewModel) {
             tryLoginWithIdAndPw(
@@ -26,11 +31,18 @@ class LoginFragment : BaseFragment() {
                 pw = pw,
                 auto = auto,
                 onSuccess = {
+                    root.loading_layout.isVisible = false
+
                     Timber.i("Login succeeded with id and password.")
                     saveLoginResult(it, id)
                     showMain(this@LoginFragment)
                 },
-                onFail = ::handleLoginFailure
+                onFail = {
+                    root.loading_layout.isVisible = false
+
+                    handleLoginFailure(it)
+                    Timber.i("Login failed.")
+                }
             )
         }
     }
@@ -73,16 +85,16 @@ class LoginFragment : BaseFragment() {
         }
 
         with(view.no_user_login) {
-            setOnClickListener {
-                viewModel.showMain(this@LoginFragment)
-            }
+            setOnClickListener { viewModel.showMain(this@LoginFragment) }
         }
 
         with(view.root_layout) {
-            setOnClickListener {
-                hideKeyboard()
+            setOnClickListener { hideKeyboard() }
+
+            withNonNull(background as? AnimationDrawable){
+                setExitFadeDuration(2000)
+                start()
             }
         }
-
     }
 }

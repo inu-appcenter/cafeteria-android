@@ -34,4 +34,6 @@
 
     <color name="translucentBackground">#ED000000</color>
 
+    <color name="dimmedBackground">#77000000</color>
+
 </resources>

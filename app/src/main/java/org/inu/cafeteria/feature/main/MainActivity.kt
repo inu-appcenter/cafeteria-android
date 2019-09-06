@@ -95,7 +95,7 @@ class MainActivity : SingleFragmentActivity() {
                     .withMessage(R.string.dialog_ask_logout)
                     .withPositiveButton(R.string.button_logout) { logout() }
                     .withNegativeButton(R.string.button_cancel)
-                logout()
+                    .show()
             }
         }
 

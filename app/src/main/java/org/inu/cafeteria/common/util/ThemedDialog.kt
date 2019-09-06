@@ -109,14 +109,20 @@ class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Tra
         with(positiveButton) {
             setVisible(buttonText != null)
             text = buttonText
-            setOnClickListener { onClick() }
+            setOnClickListener {
+                onClick()
+                dismiss()
+            }
         }
     }
     private fun setNegativeButton(buttonText: String?, onClick: () -> Unit = {}) {
         with(negativeButton) {
             setVisible(buttonText != null)
             text = buttonText
-            setOnClickListener { onClick() }
+            setOnClickListener {
+                onClick()
+                dismiss()
+            }
         }
     }
 
