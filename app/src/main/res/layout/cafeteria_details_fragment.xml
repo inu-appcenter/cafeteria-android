@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -14,6 +15,24 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <!--
+        ~ This ia an actual root layout combined with appbar layout
+        ~ inside a coordinator layout.
+
+        ~ The content layout should be overlapped by the empty view
+        ~ when having no data.
+        ~ An appbar, which has higher Z-index than the content,
+        ~ has a shadow covering the content.
+        ~ This is not a constraint layout, it is not easy to align
+        ~ the shadow right below the appbar.
+        ~ So the shadow takes its anchor at the appbar.
+        ~ At this point the shadow's center is vertically aligned
+        ~ with the appbar's bottom.
+        ~ Therefore a top half of the shadow will take place in the appbar.
+        ~ We don't want the shadow cover the appbar, so make the appbar
+        ~ have higher Z-index by declaring it after the shadow in this xml.
+        -->
 
         <!-- Content -->
         <androidx.core.widget.NestedScrollView
@@ -43,6 +62,12 @@
             app:layout_anchor="@id/content"
             app:layout_anchorGravity="center"
             android:orientation="vertical">
+
+            <!--
+            ~ This empty view has bottom padding 100dp.
+            ~ It is because it will look a bit off the center
+            ~ without the padding.
+            -->
 
             <!-- Title -->
             <TextView
@@ -90,16 +115,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                android:minHeight="@dimen/toolbarHeight">
+                android:minHeight="@dimen/collapsedToolbarHeight">
 
+                <!-- Cafeteria Title Image -->
                 <ImageView
                     android:id="@+id/cafeteria_image"
                     style="@style/CafeteriaImage"
-                    android:layout_height="240dp"
+                    android:contentDescription="@string/desc_cafeteria_image"
+                    android:layout_height="@dimen/expandedToolbarHeight"
                     android:layout_centerHorizontal="true"
                     app:layout_collapseMode="parallax"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
+                <!-- Cafeteria Title -->
                 <TextView
                     android:id="@+id/cafeteria_title"
                     style="@style/CafeteriaTitle"
@@ -111,12 +139,19 @@
                     app:layout_collapseMode="parallax"
                     tools:text="Cafeteria" />
 
+                <!--
+                ~ Cancel Button
+                ~ Because this is inside a coordinator layout,
+                ~ we need to calculate the god-damn padding by hand,
+                ~ See dp24IconPadding and dp24IconPaddingTop in dimens.xml
+                -->
                 <ImageView
                     android:id="@+id/cancel_button"
-                    android:paddingTop="37dp"
-                    android:paddingBottom="10dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="15dp"
+                    android:contentDescription="@string/desc_cancel_button"
+                    android:paddingTop="@dimen/dp24IconPaddingTop"
+                    android:paddingBottom="@dimen/dp24IconPadding"
+                    android:paddingStart="@dimen/dp24IconPadding"
+                    android:paddingEnd="@dimen/dp24IconPadding"
                     android:tint="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

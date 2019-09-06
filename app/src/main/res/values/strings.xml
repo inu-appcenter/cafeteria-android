@@ -45,5 +45,7 @@
     <string name="button_logout">Logout</string>
     <string name="title_no_menu">No menu found for today.</string>
     <string name="desc_no_menu">This cafeteria might not offer the menu.\nOr it could be a temporal problem.\nPlease try again later.</string>
+    <string name="desc_cafeteria_image">This is a cafeteria title image.</string>
+    <string name="desc_cancel_button">This is a cancel button.</string>
 
 </resources>

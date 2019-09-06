@@ -16,6 +16,11 @@
         android:layout_height="match_parent"
         android:background="?android:attr/windowBackground" >
 
+        <!--
+        ~ We put all of layout inside the scroll view
+        ~ in case of the contents getting bigger.
+        -->
+
         <!-- Student info -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/student_info_layout"
@@ -24,12 +29,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="38dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/rounded_rectangle_outline_2dp"
-            android:backgroundTint="?android:attr/divider"
             android:paddingStart="24dp"
             android:paddingTop="24dp"
             android:paddingEnd="24dp"
             android:paddingBottom="16dp"
+            android:background="@drawable/rounded_rectangle_outline_2dp"
+            android:backgroundTint="?android:attr/divider"
             app:barcodeState="@{mainViewModel.barcodeState}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

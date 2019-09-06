@@ -53,5 +53,20 @@
         <item name="android:paddingBottom">15dp</item>
     </style>
 
+    <style name="CardViewItem">
+        <item name="android:layout_marginTop">@dimen/cardViewMarginVertical</item>
+        <item name="android:layout_marginBottom">@dimen/cardViewMarginVertical</item>
+        <item name="android:layout_marginStart">@dimen/cardViewMarginHorizontal</item>
+        <item name="android:layout_marginEnd">@dimen/cardViewMarginHorizontal</item>
+        <item name="android:elevation">@dimen/cardViewElevation</item>
+    </style>
+
+    <style name="CardViewContent">
+        <item name="android:paddingTop">@dimen/cardViewItemPaddingVertical</item>
+        <item name="android:paddingBottom">@dimen/cardViewItemPaddingVertical</item>
+        <item name="android:paddingStart">@dimen/cardViewItemPaddingHorizontal</item>
+        <item name="android:paddingEnd">@dimen/cardViewItemPaddingHorizontal</item>
+    </style>
+
 </resources>
 

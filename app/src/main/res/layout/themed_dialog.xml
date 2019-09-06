@@ -66,7 +66,7 @@
 
             <Button
                 android:id="@+id/negative"
-                android:theme="@style/DialogButton"
+                style="@style/DialogButton"
                 android:background="?selectableItemBackground"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
 
             <Button
                 android:id="@+id/positive"
-                android:theme="@style/DialogButton"
+                style="@style/DialogButton"
                 android:background="?selectableItemBackground"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

@@ -1,7 +1,4 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-
-    <dimen name="bottom_sheet_peek_height">50dp</dimen>
 
     <dimen name="textBig">22sp</dimen>
     <dimen name="textPrimary">16sp</dimen>
@@ -9,6 +6,37 @@
     <dimen name="textTertiary">12sp</dimen>
     <dimen name="textToolbar">20sp</dimen>
 
+    <!-- Google's official status bar height. -->
+    <dimen name="statusBarHeight">24dp</dimen>
+
     <!-- Toolbar height including status bar. -->
     <dimen name="toolbarHeight">80dp</dimen>
+
+    <!-- Expanded height of a collapsing toolbar -->
+    <dimen name="expandedToolbarHeight">240dp</dimen>
+
+    <!-- Collapsed height of a collapsing toolbar -->
+    <dimen name="collapsedToolbarHeight">@dimen/toolbarHeight</dimen>
+
+    <!--
+    ~ Padding for placing 24dp drawable in vertical center of an appbar.
+    ~ 24dp(status bar height) + 28dp(half of toolbar height) - 12dp(half of drawable height)
+    ~ A drawable with this padding will look 16dp from the status bar.
+    -->
+    <dimen name="dp24IconPaddingTop">40dp</dimen>
+
+    <!--
+    ~ Padding for placing 24dp drawable inside an appbar with a same
+    ~ space at top and start/end corner.
+    -->
+    <dimen name="dp24IconPadding">16dp</dimen>
+
+    <dimen name="cardViewMarginHorizontal">8dp</dimen>
+    <dimen name="cardViewMarginVertical">4dp</dimen>
+
+    <dimen name="cardViewElevation">12dp</dimen>
+
+    <dimen name="cardViewItemPaddingHorizontal">15dp</dimen>
+    <dimen name="cardViewItemPaddingVertical">18dp</dimen>
+
 </resources>
