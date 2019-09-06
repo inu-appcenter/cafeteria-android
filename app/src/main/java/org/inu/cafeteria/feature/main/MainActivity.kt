@@ -40,9 +40,7 @@ class MainActivity : SingleFragmentActivity() {
                     barcode_image.invalidate()
                 },
                 onFail = ::handleActivateBarcodeFailure,
-                onNoBarcode = {
-                    fail(R.string.fail_no_barcode)
-                }
+                onNoBarcode = { fail(R.string.fail_no_barcode) }
             )
         }
     }
@@ -51,9 +49,7 @@ class MainActivity : SingleFragmentActivity() {
         with(mainViewModel) {
             tryInvalidateBarcode(
                 onFail = ::handleActivateBarcodeFailure,
-                onNoBarcode = {
-                    fail(R.string.fail_no_barcode)
-                }
+                onNoBarcode = { fail(R.string.fail_no_barcode) }
             )
         }
     }
@@ -131,14 +127,17 @@ class MainActivity : SingleFragmentActivity() {
             override fun onDrawerStateChanged(newState: Int) {
                 super.onDrawerStateChanged(newState)
 
-                if (newState == DrawerLayout.STATE_SETTLING &&
-                    !root_layout.isDrawerOpen(GravityCompat.START)) {
-                    onDrawerStartedOpen()
-                }
+                if (!root_layout.isDrawerOpen(GravityCompat.START)) {
+                    when (newState) {
+                        // When user opened drawer with button.
+                        DrawerLayout.STATE_SETTLING -> onDrawerStartedOpen()
 
-                if (newState == DrawerLayout.STATE_IDLE &&
-                    !root_layout.isDrawerOpen(GravityCompat.START)) {
-                    onDrawerClosed()
+                        // When user opened drawer by dragging.
+                        DrawerLayout.STATE_DRAGGING -> onDrawerStartedOpen()
+
+                        // When drawer completely closed.
+                        DrawerLayout.STATE_IDLE -> onDrawerClosed()
+                    }
                 }
             }
         }

@@ -55,9 +55,6 @@ dependencies {
     /** Persistent Cookie Jar */
     implementation "com.github.franmontiel:PersistentCookieJar:$cookiejar_version"
 
-    /** Barcode */
-    implementation "com.google.zxing:core:$zxing_version"
-
     /** Glide */
     implementation "com.github.bumptech.glide:glide:$glide_version"
 }

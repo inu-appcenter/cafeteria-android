@@ -8,9 +8,11 @@ import androidx.core.widget.NestedScrollView
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.cafeteria_details_fragment.*
 import kotlinx.android.synthetic.main.cafeteria_details_fragment.view.*
+import org.inu.cafeteria.R
 import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.extension.*
 import org.inu.cafeteria.databinding.CafeteriaDetailsFragmentBinding
+import org.inu.cafeteria.extension.onNull
 import org.inu.cafeteria.model.FoodMenu
 import org.inu.cafeteria.model.json.Cafeteria
 import org.inu.cafeteria.repository.PrivateRepository
@@ -89,9 +91,12 @@ class CafeteriaDetailFragment : BaseFragment() {
                 // And then load image again because the view has been destroyed.
                 animator.cancelTransition(this)
 
-                loadFromUrl(
-                    privateRepo.getServerBaseUrl().addUrl(detailsViewModel.cafeteria?.backgroundImagePath)
-                )
+                detailsViewModel
+                    .cafeteria
+                    ?.backgroundImagePath
+                    ?.takeIf { it.isNotBlank() }
+                    ?.also { loadFromUrl(privateRepo.getServerBaseUrl().addUrl(it)) }
+                    .onNull { loadFromDrawable(R.drawable.no_img) }
             }
         }
 
@@ -117,12 +122,17 @@ class CafeteriaDetailFragment : BaseFragment() {
      * @param food the updated food menus per corners of this cafeteria.
      */
     private fun foodMenuUpdated(food: FoodMenu?) {
-        activity?.let {
+        activity?.let { activity ->
             // This is the situation where the first data fetch took place.
             // We need to set the cafeteria image, and postpone the transition.
-            cafeteria_image.loadUrlAndResumeEnterTransition(
-                privateRepo.getServerBaseUrl().addUrl(detailsViewModel.cafeteria?.backgroundImagePath), it
-            )
+            with (cafeteria_image) {
+                detailsViewModel
+                    .cafeteria
+                    ?.backgroundImagePath
+                    ?.takeIf { it.isNotBlank() }
+                    ?.also { loadUrlAndResumeEnterTransition(privateRepo.getServerBaseUrl().addUrl(it), activity) }
+                    .onNull { loadDrawableAndResumeEnterTransition(R.drawable.no_img, activity) }
+            }
         }
     }
 

@@ -86,6 +86,11 @@ val myModules = module {
         )
     }
 
+    /** Create Barcode */
+    single {
+        CreateBarcode()
+    }
+
     /** Get Cafeteria */
     single {
         GetCafeteria(

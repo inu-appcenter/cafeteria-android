@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -30,6 +31,25 @@ fun ImageView.loadUrlAndResumeEnterTransition(url: String, activity: FragmentAct
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(target)
 }
+
+fun ImageView.loadFromDrawable(@DrawableRes resId: Int) =
+    Glide.with(context.applicationContext)
+        .load(resId)
+        .fallback(R.drawable.no_img)
+        .error(R.drawable.no_img)
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .into(this)
+
+fun ImageView.loadDrawableAndResumeEnterTransition(@DrawableRes resId: Int, activity: FragmentActivity) {
+    val target: Target<Drawable> = ImageViewBaseTarget(this, activity)
+    Glide.with(context.applicationContext)
+        .load(resId)
+        .fallback(R.drawable.no_img)
+        .error(R.drawable.no_img)
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .into(target)
+}
+
 
 /**
  * Base target class for an image view associated with activity transition.

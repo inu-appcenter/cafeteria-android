@@ -1,4 +1,4 @@
-package org.inu.cafeteria.common.util
+package org.inu.cafeteria.util
 
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -11,8 +11,13 @@ class Barcode {
         fun from(data: String, width: Int = WIDTH, height: Int = HEIGHT): Bitmap? {
 
             return tryOrNull {
-                val byteMap = MultiFormatWriter().encode(data, BarcodeFormat.CODE_128, WIDTH, HEIGHT)
-                val bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888)
+                val byteMap = MultiFormatWriter().encode(data, BarcodeFormat.CODE_128,
+                    WIDTH,
+                    HEIGHT
+                )
+                val bitmap = Bitmap.createBitmap(
+                    WIDTH,
+                    HEIGHT, Bitmap.Config.ARGB_8888)
 
                 for (i in 0 until WIDTH)
 

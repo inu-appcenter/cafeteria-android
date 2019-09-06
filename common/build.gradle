@@ -53,4 +53,7 @@ dependencies {
 
     /** Jsoup */
     api "org.jsoup:jsoup:$jsoup_version"
+
+    /** Barcode */
+    api "com.google.zxing:core:$zxing_version"
 }

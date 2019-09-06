@@ -1,12 +1,14 @@
 package org.inu.cafeteria.feature.main
 
 import android.graphics.Bitmap
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import org.inu.cafeteria.common.Navigator
 import org.inu.cafeteria.common.base.BaseActivity
 import org.inu.cafeteria.common.base.BaseViewModel
 import org.inu.cafeteria.common.extension.defaultDataErrorHandle
-import org.inu.cafeteria.common.util.Barcode
+import org.inu.cafeteria.util.Barcode
 import org.inu.cafeteria.exception.ServerNoResponseException
 import org.inu.cafeteria.model.BarcodeState
 import org.inu.cafeteria.model.scheme.ActivateBarcodeParams
@@ -14,18 +16,22 @@ import org.inu.cafeteria.model.scheme.LogoutParams
 import org.inu.cafeteria.repository.LoginRepository
 import org.inu.cafeteria.repository.StudentInfoRepository
 import org.inu.cafeteria.usecase.ActivateBarcode
+import org.inu.cafeteria.usecase.CreateBarcode
 import org.inu.cafeteria.usecase.Logout
 import org.koin.core.inject
 import timber.log.Timber
 
 class MainViewModel : BaseViewModel() {
     private val activateBarcode: ActivateBarcode by inject()
+    private val createBarcode: CreateBarcode by inject()
     private val logout: Logout by inject()
 
     private val navigator: Navigator by inject()
 
     private val loginRepo: LoginRepository by inject()
     private val studentInfoRepo: StudentInfoRepository by inject()
+
+    private val handler = Handler(Looper.getMainLooper())
 
     init {
         failables += this
@@ -70,9 +76,20 @@ class MainViewModel : BaseViewModel() {
         if (loginRepo.isLoggedIn()) {
             activateBarcode(ActivateBarcodeParams(barcode, ActivateBarcodeParams.ACTIVATE_TRUE)) { result ->
                 result.onSuccess {
-                    barcodeState.value = initialState.copy(isLoading = false)
-                    onSuccess(Barcode.from(barcode))
-                    Timber.i("Barcode successfully activated.")
+                    // Here, activation is succeeded.
+                    // Now we have to create a bitmap from the barcode.
+                    // It takes time so has to be done in background.
+                    // If succeeded, call onSuccess to set the image to the view.
+                    createBarcode(barcode) {
+                        it.onSuccess { bitmap ->
+                            barcodeState.value = initialState.copy(isLoading = false)
+                            onSuccess(bitmap)
+                            Timber.i("Barcode successfully activated.")
+                        }.onError { e ->
+                            onFail(e)
+                            Timber.i("Barcode activation succeeded but failed to create bitmap.")
+                        }
+                    }
                 }.onError {
                     onFail(it)
                     Timber.w("Barcode activate failed.")
