@@ -24,7 +24,7 @@ class CafeteriaDetailsViewModel : BaseViewModel() {
     val title: LiveData<String> = _title
 
     private val _food = MutableLiveData<FoodMenu>()
-    val food: LiveData<FoodMenu> = _food
+    val food: MutableLiveData<FoodMenu> = _food
 
     init {
         failables += this

@@ -30,8 +30,8 @@ abstract class FooterAdapter<T> : BaseAdapter<T>() {
 
     final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return if (viewType == TYPE_FOOTER) {
-            val view = parent.inflate(footerLayoutId)
-            footerView = view.apply { isVisible = data.isNotEmpty() }
+            val view = parent.inflate(footerLayoutId).apply { isVisible = data.isNotEmpty() }
+            footerView = view
             BaseViewHolder(view)
         } else {
             onCreateContentViewHolder(parent)

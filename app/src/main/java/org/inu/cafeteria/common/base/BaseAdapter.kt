@@ -40,10 +40,9 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), Failable
         set(value) {
             if (field === value) return
 
-            val diff = DiffUtil.calculateDiff(getDiffUtilCallback(field, value))
             field = value
-            diff.dispatchUpdatesTo(this)
-            onDatasetChanged()
+
+            notifyDataSetChanged()
 
             setEmptyView(value.isEmpty())
         }
@@ -63,40 +62,6 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), Failable
             field?.setVisible(data.isEmpty())
         }
 
-    private val selection = mutableListOf<Long>()
-    private val _selectionChanges = MutableLiveData<List<Long>>().apply { value = selection }
-    val selectionChanges: LiveData<List<Long>> = _selectionChanges
-
-
-    /**
-     * Toggles the selected state for a particular view
-     *
-     * If we are currently in selection mode (we have an activated selection), then the state will
-     * toggle. If we are not in selection mode, then we will only toggle if [force]
-     */
-    protected fun toggleSelection(id: Long, force: Boolean = true): Boolean {
-        if (!force && selection.isEmpty()) return false
-
-        when (selection.contains(id)) {
-            true -> selection.remove(id)
-            false -> selection.add(id)
-        }
-
-        _selectionChanges.value = selection
-
-        return true
-    }
-
-    protected fun isSelected(id: Long): Boolean {
-        return selection.contains(id)
-    }
-
-    fun clearSelection() {
-        selection.clear()
-        _selectionChanges.value = selection
-        notifyDataSetChanged()
-    }
-
     fun getItem(position: Int): T? {
         if (position < 0) {
             Timber.w("Trying to access index $position!!")
@@ -108,33 +73,5 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), Failable
 
     override fun getItemCount(): Int {
         return data.size
-    }
-
-    open fun onDatasetChanged() {}
-
-    /**
-     * Allows the adapter implementation to provide a custom DiffUtil.Callback
-     * If not, then the abstract implementation will be used
-     */
-    private fun getDiffUtilCallback(oldData: List<T>, newData: List<T>): DiffUtil.Callback {
-        return object : DiffUtil.Callback() {
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                    areItemsTheSame(oldData[oldItemPosition], newData[newItemPosition])
-
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-                    areContentsTheSame(oldData[oldItemPosition], newData[newItemPosition])
-
-            override fun getOldListSize() = oldData.size
-
-            override fun getNewListSize() = newData.size
-        }
-    }
-
-    protected open fun areItemsTheSame(old: T, new: T): Boolean {
-        return old == new
-    }
-
-    protected open fun areContentsTheSame(old: T, new: T): Boolean {
-        return old == new
     }
 }
