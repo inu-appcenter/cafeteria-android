@@ -2,6 +2,7 @@ package org.inu.cafeteria.common.base
 
 import android.content.Context
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -44,8 +45,13 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), Failable
             diff.dispatchUpdatesTo(this)
             onDatasetChanged()
 
-            emptyView?.setVisible(value.isEmpty())
+            setEmptyView(value.isEmpty())
         }
+
+    @CallSuper
+    protected open fun setEmptyView(isDataEmpty: Boolean) {
+        emptyView?.setVisible(isDataEmpty)
+    }
 
     /**
      * This view can be set, and the adapter will automatically control the visibility of this view

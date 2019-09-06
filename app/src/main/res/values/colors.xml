@@ -17,13 +17,11 @@
     <color name="toolbarSearchBackgroundLight">#0D000000</color>
 
     <color name="backgroundLight">@color/white</color>
-    <color name="backgroundLightGray">#EEEEEE</color>
+    <color name="backgroundLightGray">#FAFAFA</color>
 
     <color name="textPrimary">#262B31</color>
     <color name="textSecondary">#70808D</color>
     <color name="textTertiary">#B7B9C0</color>
-
-    <color name="bubbleLight">#EFF1F3</color>
 
     <color name="separatorLight">#FFDDDDDD</color>
 

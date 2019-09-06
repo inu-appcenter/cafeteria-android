@@ -39,4 +39,6 @@
     <dimen name="cardViewItemPaddingHorizontal">15dp</dimen>
     <dimen name="cardViewItemPaddingVertical">18dp</dimen>
 
+    <dimen name="toolbarTitleMarginTop">12dp</dimen>
+
 </resources>

@@ -47,5 +47,7 @@
     <string name="desc_no_menu">This cafeteria might not offer the menu.\nOr it could be a temporal problem.\nPlease try again later.</string>
     <string name="desc_cafeteria_image">This is a cafeteria title image.</string>
     <string name="desc_cancel_button">This is a cancel button.</string>
+    <string name="desc_menu_data">Food menu is offered by UICOOP. Might be inaccurate.</string>
+    <string name="desc_no_data">No data available.</string>
 
 </resources>

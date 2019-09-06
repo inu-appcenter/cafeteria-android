@@ -73,9 +73,9 @@ class FoodMenuParser : Parser<JsonElement, List<FoodMenu>>() {
             return null
         }
 
+        // This is safe.
+        // See CafeteriaRepositoryImpl.kt:68.
         val availableCafeteria = params as List<Int>
-
-        Timber.i("NUMBER: ${params.joinToString()}")
 
         val foodMenusByCafeteria = mutableListOf<FoodMenu>()
 
@@ -85,6 +85,8 @@ class FoodMenuParser : Parser<JsonElement, List<FoodMenu>>() {
             availableCafeteria.forEach { cafeteriaNumber ->
                 // Parse corners and add them
                 // to the foodMenusByCafeteria in every iteration.
+
+                Timber.v("Parsing cafeteria of number $cafeteriaNumber.")
 
                 val corners = mutableListOf<FoodMenu.Corner>()
 
@@ -100,6 +102,8 @@ class FoodMenuParser : Parser<JsonElement, List<FoodMenu>>() {
                         title = cornerJson.get("TITLE").asString,
                         menu = Jsoup.parse(menuInHtml).text().split("\n")
                     )
+
+                    Timber.v("Parsed corner ${corner.title}.")
 
                     corners.add(corner)
                 }
