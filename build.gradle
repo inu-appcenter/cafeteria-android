@@ -10,11 +10,11 @@ buildscript {
     ext.constraintlayout_version = '2.0.0-beta2'
     ext.lifecycle_version = '1.1.1'
     ext.material_version = '1.1.0-alpha10'
-    ext.retrofit_version = '2.4.0'
+    ext.retrofit_version = '2.6.1'
     ext.gson_version = '2.8.5'
     ext.cookiejar_version = 'v1.0.1'
-    ext.zxing_version = '3.2.1'
-    ext.jsoup_version = '1.11.3'
+    ext.zxing_version = '3.4.0'
+    ext.jsoup_version = '1.12.1'
     ext.glide_version = '4.9.0'
 
     repositories {

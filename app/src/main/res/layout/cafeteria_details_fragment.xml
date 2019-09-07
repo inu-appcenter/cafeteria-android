@@ -8,7 +8,7 @@
     <data>
         <variable
             name="vm"
-            type="org.inu.cafeteria.feature.cafeteria.CafeteriaDetailsViewModel" />
+            type="com.inu.cafeteria.feature.cafeteria.CafeteriaDetailsViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

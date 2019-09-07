@@ -6,7 +6,7 @@
     <data>
         <variable
             name="mainViewModel"
-            type="org.inu.cafeteria.feature.main.MainViewModel" />
+            type="com.inu.cafeteria.feature.main.MainViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout

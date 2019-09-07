@@ -8,7 +8,7 @@
     <data>
         <variable
             name="vm"
-            type="org.inu.cafeteria.feature.cafeteria.CafeteriaListViewModel" />
+            type="com.inu.cafeteria.feature.cafeteria.CafeteriaListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
