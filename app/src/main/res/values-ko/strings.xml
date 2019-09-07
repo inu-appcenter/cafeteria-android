@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+  ~
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ This work is licensed under the terms of the MIT license.
+  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  -->
+
 <resources>
     <string name="menu_ask">문의하기</string>
     <string name="menu_app_info">앱 정보</string>
@@ -51,6 +60,7 @@
     <string name="latest_version">최신 버전: %s</string>
     <string name="title_open_source_licenses">오픈소스 라이센스</string>
     <string name="latest_version_error">최신 버전을 알 수 없습니다.</string>
+    <string name="phase">%d기</string>
 
 
 </resources>
