@@ -74,7 +74,7 @@ class MainViewModel : BaseViewModel() {
         barcodeState.value = initialState
 
         if (loginRepo.isLoggedIn()) {
-            activateBarcode(ActivateBarcodeParams(barcode, ActivateBarcodeParams.ACTIVATE_TRUE)) { result ->
+            activateBarcode(ActivateBarcodeParams.ofActivating(barcode)) { result ->
                 result.onSuccess {
                     // Here, activation is succeeded.
                     // Now we have to create a bitmap from the barcode.
@@ -117,7 +117,7 @@ class MainViewModel : BaseViewModel() {
         }
 
         if (loginRepo.isLoggedIn()) {
-            activateBarcode(ActivateBarcodeParams(barcode, ActivateBarcodeParams.ACTIVATE_FALSE)) { result ->
+            activateBarcode(ActivateBarcodeParams.ofInvalidating(barcode)) { result ->
                 result.onError(onFail)
             }
         }

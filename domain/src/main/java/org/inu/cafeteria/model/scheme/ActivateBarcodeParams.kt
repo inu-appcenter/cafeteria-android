@@ -4,8 +4,16 @@ package org.inu.cafeteria.model.scheme
  * Scheme for activated barcode result.
  */
 data class ActivateBarcodeParams(
-    val barcode: String,    // The barcode to deal with
-    val activated: String    // Activate or not. Must be "1" or "0".
+    /**
+     * The barcode data to activate or not.
+     */
+    val barcode: String,
+
+    /**
+     * Whether to activate or not.
+     * Must be "1"(activate) or "0"(deactivate).
+     */
+    val activated: String
 ) {
     companion object {
         const val ACTIVATE_TRUE = "1"

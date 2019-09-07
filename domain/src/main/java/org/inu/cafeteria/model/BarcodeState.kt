@@ -1,6 +1,21 @@
 package org.inu.cafeteria.model
 
+/**
+ * Represents a barcode loading state.
+ */
 data class BarcodeState(
-    val isLoggedIn: Boolean = false,    // Logged in as a student?
-    val isLoading: Boolean = false,     // Is barcode loading?
-    val isNetworkDown: Boolean = false) // Is network or server down?
+    /**
+     * Logged in as a student?
+     */
+    val isLoggedIn: Boolean = false,
+
+    /**
+     * Is the barcode loading?
+     */
+    val isLoading: Boolean = false,
+
+    /**
+     * Is the network or the server down?
+     */
+    val isNetworkDown: Boolean = false
+)

@@ -111,7 +111,10 @@ class FoodMenuParser : Parser<JsonElement, List<FoodMenu>>() {
                 foodMenusByCafeteria.add(FoodMenu(cafeteriaNumber, corners))
             }
 
-            foodMenusByCafeteria
+            // Do sort here. Not there.
+            foodMenusByCafeteria.map { original ->
+                original.copy(corners = original.corners.sortedBy { it.order })
+            }
         }
     }
 }

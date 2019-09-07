@@ -14,7 +14,10 @@ class CafeteriaParser : Parser<JsonElement, List<Cafeteria>>() {
      */
     override fun parse(raw: JsonElement, params: Any?): List<Cafeteria>? {
         return tryOrNull {
-            Gson().fromJson(raw, Types.typeOf<List<Cafeteria>>())
+            // The Cafeteria scheme equals the server scheme.
+            // Just parse it using GSON.
+            Gson().fromJson<List<Cafeteria>>(raw, Types.typeOf<List<Cafeteria>>())
+                .sortedBy { it.order }
         }
     }
 }
