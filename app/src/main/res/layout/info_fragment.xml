@@ -15,18 +15,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true">
+    android:layout_height="match_parent">
+    
     <!--
-    ~ Setting descendantFocusability and focusableInTouchMode
-    ~ prevents the scroll view not starting from the top.
-    -->
-
+      ~ Set descendantFocusability to blockDescendants to prevent the scroll view not starting from the top.
+      ~ The problem is that recycler view inside the nested scroll view requests focus.
+      ~ We need to block it by blocking descendant focuses.
+      -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:descendantFocusability="blocksDescendants">
 
         <!-- Info Layout -->
         <androidx.constraintlayout.widget.ConstraintLayout
