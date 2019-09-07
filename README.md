@@ -20,6 +20,15 @@
 ## 개발자이신가요
 개발 문서는 [여기](docs/TECH.md)로
 
+## 업데이트 로그
+
+
+### 2019.9.7 - 3.0.0-beta01
+
+- 디자인 변경
+- 소스 다시 작성
+
+
 ## 스페셜 땡스 투
 
 - [훌륭한 레퍼런스](https://fernandocejas.com/2018/05/07/architecting-android-reloaded/) 제공해준 [Fernando Cejas](https://fernandocejas.com)
