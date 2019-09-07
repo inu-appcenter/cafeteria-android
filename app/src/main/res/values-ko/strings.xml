@@ -9,7 +9,6 @@
   -->
 
 <resources>
-    <string name="menu_ask">문의하기</string>
     <string name="menu_app_info">앱 정보</string>
     <string name="menu_logout">로그아웃</string>
     <string name="desc_for_the_discount">기숙사 식당 조식할인 시간,\n사범대 점심, 저녁시간에\n사용하실 수 있습니다.</string>

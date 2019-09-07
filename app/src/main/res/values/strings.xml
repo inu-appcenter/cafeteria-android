@@ -9,7 +9,6 @@
 
 <resources>
     <string name="app_name" translatable="false">INU Cafeteria</string>
-    <string name="menu_ask">Inquery</string>
     <string name="menu_app_info">App Info</string>
     <string name="menu_logout">Logout</string>
     <string name="desc_logo">This is a logo of this application.</string>

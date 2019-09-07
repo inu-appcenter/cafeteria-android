@@ -9,9 +9,7 @@
 
 <resources>
 
-    <dimen name="textBig">22sp</dimen>
     <dimen name="textToolbar">20sp</dimen>
-    <dimen name="textLarge">18sp</dimen>
     <dimen name="textPrimary">16sp</dimen>
     <dimen name="textSecondary">14sp</dimen>
     <dimen name="textTertiary">12sp</dimen>
