@@ -1,0 +1,134 @@
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
+package com.inu.cafeteria.feature.splash
+
+import android.app.Activity
+import com.inu.cafeteria.R
+import com.inu.cafeteria.common.Navigator
+import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.common.extension.defaultDataErrorHandle
+import com.inu.cafeteria.common.extension.finishActivity
+import com.inu.cafeteria.common.widget.ThemedDialog
+import com.inu.cafeteria.exception.ServerNoResponseException
+import com.inu.cafeteria.model.VersionCompared
+import com.inu.cafeteria.repository.VersionRepository
+import com.inu.cafeteria.usecase.GetVersion
+import org.koin.core.inject
+import timber.log.Timber
+
+class SplashViewModel : BaseViewModel() {
+
+    private val getVersion: GetVersion by inject()
+    private val navigator: Navigator by inject()
+
+    private val versionRepo: VersionRepository by inject()
+
+    var onServerNoResponse: () -> Unit = {}
+
+    init {
+        failables += this
+        failables += getVersion
+        failables += navigator
+        failables += versionRepo
+    }
+
+    /**
+     * Compare build version to the latest version(from the server).
+     * If update is needed, let user know it.
+     *
+     * @param onFail launched on server fault.
+     * @param onPass launched when no need to update.
+     * @param onUpdate launched when user pressed update button.
+     * @param onDismiss launched when user pressed cancel button.
+     */
+    fun tryCheckVersion(
+        activity: Activity,
+        onFail: (e: Exception) -> Unit,
+        onPass: () -> Unit,
+        onUpdate: () -> Unit,
+        onDismiss: () -> Unit
+    ) {
+
+        val getDialog = { version: VersionCompared ->
+            ThemedDialog(activity)
+                .withTitle(R.string.dialog_new_version, version.latestVersion)
+                .withMessage(R.string.dialog_ask_update)
+                .withCheckBox(R.string.desc_pass_this_version)
+                .withPositiveButton(R.string.button_update) { dismiss ->
+                    if (dismiss) {
+                        versionRepo.dismissVersion(version.latestVersion)
+                    }
+                    onUpdate()
+                }
+                .withNegativeButton(R.string.button_cancel) { dismiss ->
+                    if (dismiss) {
+                        versionRepo.dismissVersion(version.latestVersion)
+                    }
+                    onDismiss()
+                }
+        }
+
+        getVersion(Unit) {
+            it.onSuccess { versionCompared ->
+
+                Timber.i("Current version: ${versionCompared.currentVersion}")
+                Timber.i("Latest version: ${versionCompared.latestVersion}")
+                Timber.i("Ignored update: ${versionRepo.getDismissedVersion()}")
+
+                val thisVersionIsIgnoredByUser = versionRepo.getDismissedVersion() == versionCompared.latestVersion
+
+                if (versionCompared.needUpdate() && !thisVersionIsIgnoredByUser) {
+                    getDialog(versionCompared).show()
+                } else {
+                    onPass()
+                }
+
+            }.onError { e ->
+                onFail(e)
+            }
+        }
+    }
+
+    /**
+     * ServerNoResponseException is a special case, so it need to be
+     * handled carefully.
+     */
+    fun handleVersionCheckFailure(e: Exception) {
+        when (e) {
+            is ServerNoResponseException -> onServerNoResponse()
+            else -> {
+                defaultDataErrorHandle(e)
+            }
+        }
+    }
+
+    /**
+     * Navigate to LoginActivity and close current activity.
+     */
+    fun showLogin(fragment: BaseFragment) {
+        navigator.showLogin()
+        fragment.finishActivity()
+    }
+
+    fun goUpdate() {
+        navigator.showStore()
+        Timber.i("User is gone to the store.")
+    }
+}

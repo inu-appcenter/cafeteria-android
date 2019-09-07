@@ -1,36 +1,82 @@
-<?xml version="1.0"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<!--
+  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+  ~
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ This work is licensed under the terms of the MIT license.
+  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  -->
 
-    <style name="btn_default">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">#25ACE2</item>
-        <item name="android:textStyle">bold</item>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="AppThemeLight"/>
+
+    <!-- Text -->
+    <style name="TextPrimary">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">@dimen/textPrimary</item>
+        <item name="android:textColorLink">?android:attr/textColorPrimary</item>
+    </style>
+    <style name="TextSecondary">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textSize">@dimen/textSecondary</item>
+    </style>
+    <style name="TextTertiary">
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+        <item name="android:textSize">@dimen/textTertiary</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentStatus">true</item>
+    <style name="Toolbar" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textColorHint">#FFFFFF</item>
+        <item name="android:textSize">@dimen/textPrimary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
         <item name="android:textCursorDrawable">@null</item>
-        <item name="android:backgroundTint" tools:targetApi="lollipop">@android:color/white</item>
+        <item name="android:backgroundTint">@color/white</item>
     </style>
 
-    <style name="Transparent" parent="@style/Theme.AppCompat">
-        <!--Titlebar 없애는 옵션 (true : Titlebar x / false : Titlebar o)-->
-        <item name="windowNoTitle">true</item>
-        <!-- 투명정도를 나타내는 색-->
-        <item name="android:windowBackground">@color/whiteTransparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation</item>
-        <!--android:backgroundDimEnabled (true : 반투명 / false : 투명)-->
-        <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:windowFullscreen">true</item>
+    <style name="CafeteriaImage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:transitionName">@string/cafeteria_transition_image</item>
+    </style>
+
+    <style name="CafeteriaTitle">
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowRadius">8.0</item>
+        <item name="android:shadowDx">1.2</item>
+        <item name="android:shadowDy">1.2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:textSize">@dimen/textBig</item>
+        <item name="android:transitionName">@string/cafeteria_transition_title</item>
+    </style>
+
+    <style name="DialogButton">
+        <item name="android:colorControlHighlight">@color/rippleLight</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
+
+    <style name="CardViewItem">
+        <item name="android:layout_marginTop">@dimen/cardViewMarginVertical</item>
+        <item name="android:layout_marginBottom">@dimen/cardViewMarginVertical</item>
+        <item name="android:layout_marginStart">@dimen/cardViewMarginHorizontal</item>
+        <item name="android:layout_marginEnd">@dimen/cardViewMarginHorizontal</item>
+        <item name="android:elevation">@dimen/cardViewElevation</item>
+    </style>
+
+    <style name="CardViewContent">
+        <item name="android:paddingTop">@dimen/cardViewItemPaddingVertical</item>
+        <item name="android:paddingBottom">@dimen/cardViewItemPaddingVertical</item>
+        <item name="android:paddingStart">@dimen/cardViewItemPaddingHorizontal</item>
+        <item name="android:paddingEnd">@dimen/cardViewItemPaddingHorizontal</item>
     </style>
 
 </resources>
+

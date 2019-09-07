@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+  ~
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ This work is licensed under the terms of the MIT license.
+  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  -->
+
 <resources>
 
-    <!--하얀색, 투명도 80% (CC)-->
-    <color name="whiteTransparent">#80ffffff</color>
+    <color name="colorPrimary">@color/toolbarLight</color>
+    <color name="colorPrimaryDark">@color/statusBarLight</color>
+    <color name="colorAccent">@color/pointBlue</color>
 
-    <!--
-투명도
-100% — FF
-90% — E6
-80% — CC
-70% — B3
-60% — 99
-50% — 80
-40% — 66
-30% — 4D
-20% — 33
-10% — 1A
-0% — 00
--->
+    <color name="white">#FFFFFF</color>
+
+    <color name="rippleLight">#1f000000</color>
+
+    <color name="statusBarLight">#FFFFFF</color>
+
+    <color name="toolbarLight">#FFFFFF</color>
+
+    <color name="backgroundLight">@color/white</color>
+    <color name="backgroundLightGray">#FAFAFA</color>
+
+    <color name="textPrimary">#262B31</color>
+    <color name="textSecondary">#70808D</color>
+    <color name="textTertiary">#B7B9C0</color>
+
+    <color name="separatorLight">#FFDDDDDD</color>
 
     <color name="pointBlue">#38b1e4</color>
     <color name="lightGray">#e5e5e5</color>
-    <color name="middleGray">#c5c5c5</color>
-    <color name="heavyGray">#a0a0a0</color>
+
+    <color name="dimmedBackground">#77000000</color>
 
 </resources>

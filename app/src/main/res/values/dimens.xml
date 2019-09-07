@@ -1,0 +1,55 @@
+<!--
+  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+  ~
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ This work is licensed under the terms of the MIT license.
+  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  -->
+
+<resources>
+
+    <dimen name="textBig">22sp</dimen>
+    <dimen name="textPrimary">16sp</dimen>
+    <dimen name="textSecondary">14sp</dimen>
+    <dimen name="textTertiary">12sp</dimen>
+    <dimen name="textToolbar">20sp</dimen>
+
+    <!-- Google's official status bar height. -->
+
+    <!-- Toolbar height including status bar. -->
+    <dimen name="toolbarHeight">80dp</dimen>
+
+    <!-- Expanded height of a collapsing toolbar -->
+    <dimen name="expandedToolbarHeight">240dp</dimen>
+
+    <!-- Collapsed height of a collapsing toolbar -->
+    <dimen name="collapsedToolbarHeight">@dimen/toolbarHeight</dimen>
+
+    <!--
+    ~ Padding for placing 24dp drawable in vertical center of an appbar.
+    ~ 24dp(status bar height) + 28dp(half of toolbar height) - 12dp(half of drawable height)
+    ~ A drawable with this padding will look 16dp from the status bar.
+    -->
+    <dimen name="dp24IconPaddingTop">40dp</dimen>
+
+    <!--
+    ~ Padding for placing 24dp drawable inside an appbar with a same
+    ~ space at top and start/end corner.
+    -->
+    <dimen name="dp24IconPadding">16dp</dimen>
+
+    <dimen name="cardViewMarginHorizontal">8dp</dimen>
+    <dimen name="cardViewMarginVertical">4dp</dimen>
+
+    <dimen name="cardViewElevation">12dp</dimen>
+
+    <dimen name="cardViewItemPaddingHorizontal">15dp</dimen>
+    <dimen name="cardViewItemPaddingVertical">18dp</dimen>
+
+    <dimen name="toolbarTitleMarginTop">12dp</dimen>
+
+    <!-- Padding of sections in info fragment. -->
+    <dimen name="infoBlockPadding">16dp</dimen>
+
+</resources>

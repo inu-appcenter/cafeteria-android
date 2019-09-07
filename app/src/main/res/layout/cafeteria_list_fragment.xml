@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+  ~
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ This work is licensed under the terms of the MIT license.
+  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  -->
+
+<layout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.inu.cafeteria.feature.cafeteria.CafeteriaListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Cafeteria List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cafeteria_list"
+            app:cafeteria="@{vm.cafeteria}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/cafeteria_list_item"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

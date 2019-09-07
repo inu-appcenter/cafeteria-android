@@ -1,0 +1,65 @@
+<!--
+  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+  ~
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ This work is licensed under the terms of the MIT license.
+  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="129dp"
+    android:height="21dp"
+    android:viewportWidth="129"
+    android:viewportHeight="21">
+  <path
+      android:pathData="M96.647,5.424a7.397,7.397 0,0 0,-7.397 7.397v4.931a2.465,2.465 0,1 0,4.931 0v-4.93a2.466,2.466 0,0 1,2.466 -2.467,2.466 2.466,0 1,0 0,-4.931M104.045,7.89a2.466,2.466 0,1 0,0 -4.933,2.466 2.466,0 0,0 0,4.933"
+      android:fillColor="#FEFEFE"
+      android:fillType="evenOdd"/>
+  <group>
+    <clip-path android:pathData="M56.825,20.218L42.031,20.218L42.031,5.425h14.794z M 0,0"/>
+    <path
+        android:pathData="M54.36,10.356a2.466,2.466 0,0 0,-2.466 2.465,2.466 2.466,0 1,1 -2.466,-2.465 2.466,2.466 0,0 0,0 -4.932,7.397 7.397,0 1,0 7.397,7.397 2.466,2.466 0,0 0,-2.465 -2.465"
+        android:fillColor="#FEFEFE"
+        android:fillType="evenOdd"/>
+  </group>
+  <group>
+    <clip-path android:pathData="M86.473,20.218L71.678,20.218L71.678,5.425h14.795z M 0,0"/>
+    <path
+        android:pathData="M84.007,10.356a2.466,2.466 0,0 0,-2.466 2.465,2.466 2.466,0 1,1 -2.466,-2.465 2.466,2.466 0,0 0,0 -4.932,7.398 7.398,0 1,0 7.398,7.397 2.465,2.465 0,0 0,-2.466 -2.465"
+        android:fillColor="#FEFEFE"
+        android:fillType="evenOdd"/>
+  </group>
+  <group>
+    <clip-path android:pathData="M0,5.424L0,20.218h12.329L12.329,5.424z M 0,0"/>
+    <path
+        android:pathData="M9.863,15.288L7.398,15.288a2.466,2.466 0,0 1,0 -4.932h2.465a2.466,2.466 0,0 0,0 -4.932L7.397,5.424a7.398,7.398 0,0 0,0 14.795h2.466a2.466,2.466 0,0 0,2.466 -2.466,2.466 2.466,0 0,0 -2.466,-2.466"
+        android:fillColor="#FEFEFE"
+        android:fillType="evenOdd"/>
+  </group>
+  <group>
+    <clip-path android:pathData="M128.702,5.424L128.702,20.218L108.977,20.218L108.977,5.424h19.725z M 0,0"/>
+    <path
+        android:pathData="M116.373,15.288a2.466,2.466 0,1 1,0 -4.932,2.466 2.466,0 0,1 0,4.931m11.997,1.233a2.463,2.463 0,0 0,-2.133 -1.233,2.471 2.471,0 0,1 -2.466,-2.466 7.428,7.428 0,0 0,-0.41 -2.429,7.398 7.398,0 1,0 -6.988,9.827 7.379,7.379 0,0 0,5.561 -2.522,4.93 4.93,0 0,0 4.303,2.522 2.466,2.466 0,0 0,2.133 -3.7"
+        android:fillColor="#FEFEFE"
+        android:fillType="evenOdd"/>
+  </group>
+  <group>
+    <clip-path android:pathData="M12.329,0.492h29.703v19.726L12.329,20.218z M 0,0"/>
+    <path
+        android:pathData="M19.727,15.287a2.466,2.466 0,1 1,-0.001 -4.932,2.466 2.466,0 0,1 0,4.932m19.84,-9.863h-2.466L37.1,2.958a2.466,2.466 0,1 0,-4.932 0v9.863a2.466,2.466 0,0 1,-2.465 2.466c-0.016,0 -0.03,0.004 -0.046,0.004 -0.023,0 -0.045,-0.004 -0.068,-0.004a2.471,2.471 0,0 1,-2.466 -2.466A7.4,7.4 0,0 0,19.727 5.425a7.398,7.398 0,1 0,5.56 12.273,4.929 4.929,0 0,0 4.303,2.521c0.02,0 0.037,-0.005 0.057,-0.005 0.02,0 0.037,0.005 0.057,0.005h2.465a4.932,4.932 0,0 0,4.93 -4.874h0.002L37.101,10.355h2.465a2.46,2.46 0,0 0,1.745 -0.723,2.466 2.466,0 0,0 -1.745,-4.208"
+        android:fillColor="#FEFEFE"
+        android:fillType="evenOdd"/>
+  </group>
+  <group>
+    <clip-path android:pathData="M71.621,20.218L56.826,20.218L56.826,0.492L71.622,0.492v19.726z M 0,0"/>
+    <path
+        android:pathData="M70.899,16.01a2.458,2.458 0,0 0,-1.744 -0.723,2.466 2.466,0 0,1 -2.466,-2.466L66.689,2.958a2.465,2.465 0,0 0,-4.931 0v2.466L59.292,5.424a2.465,2.465 0,1 0,0 4.931h2.466L61.758,15.345h0.002a4.932,4.932 0,0 0,4.929 4.874h2.466a2.466,2.466 0,0 0,1.744 -4.208"
+        android:fillColor="#FEFEFE"
+        android:fillType="evenOdd"/>
+  </group>
+  <path
+      android:pathData="M103.95,10.356a2.465,2.465 0,0 0,-2.418 2.512l0.094,4.93a2.466,2.466 0,0 0,4.93 -0.093l-0.093,-4.93a2.465,2.465 0,0 0,-2.512 -2.419"
+      android:fillColor="#FEFEFE"
+      android:fillType="evenOdd"/>
+</vector>
