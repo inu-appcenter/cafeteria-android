@@ -7,6 +7,15 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria
 
 import android.content.Context
@@ -16,12 +25,10 @@ import androidx.test.rule.GrantPermissionRule
 import com.inu.cafeteria.injection.myModules
 import com.inu.cafeteria.usecase.GetVersion
 import org.junit.After
-
-import org.junit.Test
-import org.junit.runner.RunWith
-
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin

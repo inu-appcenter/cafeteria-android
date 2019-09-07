@@ -7,18 +7,27 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria.feature.cafeteria
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.cafeteria_list_fragment.view.*
-import kotlinx.android.synthetic.main.cafeteria_list_item.view.*
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.getViewModel
 import com.inu.cafeteria.databinding.CafeteriaListFragmentBinding
+import kotlinx.android.synthetic.main.cafeteria_list_fragment.view.*
+import kotlinx.android.synthetic.main.cafeteria_list_item.view.*
 import org.koin.core.inject
 import timber.log.Timber
 

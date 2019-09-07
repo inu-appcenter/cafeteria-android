@@ -16,7 +16,6 @@
     <dimen name="textToolbar">20sp</dimen>
 
     <!-- Google's official status bar height. -->
-    <dimen name="statusBarHeight">24dp</dimen>
 
     <!-- Toolbar height including status bar. -->
     <dimen name="toolbarHeight">80dp</dimen>
@@ -50,5 +49,7 @@
 
     <dimen name="toolbarTitleMarginTop">12dp</dimen>
 
-    <dimen name="infoBlockPadding">12dp</dimen>
+    <!-- Padding of sections in info fragment. -->
+    <dimen name="infoBlockPadding">16dp</dimen>
+
 </resources>

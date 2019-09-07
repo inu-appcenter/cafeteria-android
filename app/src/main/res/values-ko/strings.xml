@@ -36,7 +36,6 @@
     <string name="button_cancel">취소</string>
     <string name="ask_not_inu">인천대학생이 아니신가요?</string>
     <string name="button_login">로그인</string>
-    <string name="notify_not_implemented">이 기능은 아직 구현되지 않았습니다 :)</string>
     <string name="title_server_error">서버 오류</string>
     <string name="title_student_barcode">학생할인 바코드</string>
     <string name="warn_internet">인터넷 연결을 확인해주세요.</string>

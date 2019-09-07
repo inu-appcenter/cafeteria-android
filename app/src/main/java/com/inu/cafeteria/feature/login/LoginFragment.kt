@@ -7,6 +7,15 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria.feature.login
 
 import android.graphics.drawable.AnimationDrawable
@@ -14,13 +23,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.login_fragment.view.*
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.getViewModel
 import com.inu.cafeteria.common.extension.hideKeyboard
 import com.inu.cafeteria.common.extension.isVisible
 import com.inu.cafeteria.extension.withNonNull
+import kotlinx.android.synthetic.main.login_fragment.view.*
 import timber.log.Timber
 
 class LoginFragment : BaseFragment() {

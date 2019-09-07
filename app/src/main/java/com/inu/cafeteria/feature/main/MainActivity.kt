@@ -7,6 +7,15 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria.feature.main
 
 import android.content.Context
@@ -20,17 +29,17 @@ import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.android.synthetic.main.drawer.*
-import kotlinx.android.synthetic.main.toolbar.*
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.SingleFragmentActivity
-import com.inu.cafeteria.common.extension.getViewModel
 import com.inu.cafeteria.common.extension.defaultDataErrorHandle
+import com.inu.cafeteria.common.extension.getViewModel
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ThemedDialog
 import com.inu.cafeteria.databinding.MainActivityBinding
 import com.inu.cafeteria.feature.cafeteria.CafeteriaListFragment
+import kotlinx.android.synthetic.main.drawer.*
+import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : SingleFragmentActivity() {
 

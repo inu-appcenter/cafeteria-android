@@ -7,20 +7,32 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria.common
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.FragmentActivity
+import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.base.FailableComponent
 import com.inu.cafeteria.common.widget.ThemedDialog
 import com.inu.cafeteria.feature.cafeteria.CafeteriaDetailsActivity
+import com.inu.cafeteria.feature.info.InfoActivity
 import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
 import com.inu.cafeteria.feature.splash.SplashActivity
@@ -28,9 +40,6 @@ import com.inu.cafeteria.model.json.Cafeteria
 import org.koin.core.KoinComponent
 import timber.log.Timber
 import kotlin.system.exitProcess
-import android.net.Uri
-import com.inu.cafeteria.BuildConfig
-import com.inu.cafeteria.feature.info.InfoActivity
 
 
 /**

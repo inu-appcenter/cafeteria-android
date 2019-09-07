@@ -8,6 +8,15 @@
  */
 
 /**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
+/**
  * UseCase.kt
  *
  * Credits to Fernando Cejas.
@@ -18,8 +27,8 @@ package com.inu.cafeteria.interactor
 import android.os.Handler
 import android.os.Looper
 import com.inu.cafeteria.base.FailableComponent
-import timber.log.Timber
 import com.inu.cafeteria.functional.Result
+import timber.log.Timber
 
 /**
  * Abstract class for Use Case (Interactor in terms of Clean Architecture).

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
   ~
@@ -21,7 +20,7 @@
         android:contentDescription="@string/desc_cafeteria_image"
         style="@style/CafeteriaImage"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/toolbarHeight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

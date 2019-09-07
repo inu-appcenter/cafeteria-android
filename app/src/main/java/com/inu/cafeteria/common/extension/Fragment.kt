@@ -8,6 +8,15 @@
  */
 
 /**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
+/**
  * Fragment.kt
  *
  * Credits to Fernando Cejas.
@@ -28,9 +37,9 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider.Factory
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.single_fragment_activity.*
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.util.Notify
+import kotlinx.android.synthetic.main.single_fragment_activity.*
 
 /**
  * Do something in the middle of beginTransaction() and commit().
@@ -129,12 +138,6 @@ fun Fragment.setSupportActionBar(toolbar: Toolbar, title: Boolean = false, upBut
             setDisplayShowTitleEnabled(title)
             setDisplayHomeAsUpEnabled(upButton)
         }
-    }
-}
-
-fun Fragment.setTitle(title: String?) {
-    withNonNull(activity as? AppCompatActivity) {
-     //   findViewById<TextView>(R.id.toolbar_title)?.text = title TODO
     }
 }
 

@@ -7,12 +7,21 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria.feature.cafeteria
 
 import android.os.Bundle
-import android.view.*
-import kotlinx.android.synthetic.main.cafeteria_details_fragment.*
-import kotlinx.android.synthetic.main.cafeteria_details_fragment.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
@@ -21,6 +30,8 @@ import com.inu.cafeteria.extension.onNull
 import com.inu.cafeteria.model.FoodMenu
 import com.inu.cafeteria.model.json.Cafeteria
 import com.inu.cafeteria.repository.PrivateRepository
+import kotlinx.android.synthetic.main.cafeteria_details_fragment.*
+import kotlinx.android.synthetic.main.cafeteria_details_fragment.view.*
 import org.koin.core.inject
 
 
@@ -116,7 +127,7 @@ class CafeteriaDetailFragment : BaseFragment() {
     }
 
     /**
-     * Called when [CafeteriaDetailFragment.loadFoodMenu] is successfully done.
+     * Called when CafeteriaDetailFragment::loadFoodMenu is successfully done.
      * This method is called only when this fragment is first created.
      *
      * Nothing to do with data here.
@@ -137,6 +148,9 @@ class CafeteriaDetailFragment : BaseFragment() {
                     .onNull { loadDrawableAndResumeEnterTransition(R.drawable.no_img, activity) }
             }
         }
+
+        // To suppress damn warning.
+        food ?: return
     }
 
 

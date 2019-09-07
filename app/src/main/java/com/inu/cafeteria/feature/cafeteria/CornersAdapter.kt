@@ -7,15 +7,24 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria.feature.cafeteria
 
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.corner_list_item.view.*
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewHolder
 import com.inu.cafeteria.common.base.FooterAdapter
 import com.inu.cafeteria.common.extension.inflate
 import com.inu.cafeteria.model.FoodMenu
+import kotlinx.android.synthetic.main.corner_list_item.view.*
 
 class CornersAdapter : FooterAdapter<FoodMenu.Corner>() {
 

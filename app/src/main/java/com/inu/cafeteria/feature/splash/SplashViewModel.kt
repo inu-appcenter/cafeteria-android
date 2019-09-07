@@ -7,6 +7,15 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria.feature.splash
 
 import android.app.Activity
@@ -14,8 +23,8 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.base.BaseViewModel
-import com.inu.cafeteria.common.extension.finishActivity
 import com.inu.cafeteria.common.extension.defaultDataErrorHandle
+import com.inu.cafeteria.common.extension.finishActivity
 import com.inu.cafeteria.common.widget.ThemedDialog
 import com.inu.cafeteria.exception.ServerNoResponseException
 import com.inu.cafeteria.model.VersionCompared
