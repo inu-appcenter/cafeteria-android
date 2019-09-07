@@ -21,6 +21,7 @@ import timber.log.Timber
 import kotlin.system.exitProcess
 import android.net.Uri
 import com.inu.cafeteria.BuildConfig
+import com.inu.cafeteria.feature.info.InfoActivity
 
 
 /**
@@ -74,6 +75,19 @@ class Navigator(
 
         startActivity(intent)
     }
+
+    fun showUrl(url: String) {
+        startActivity(
+            Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url) }
+        )
+    }
+
+    fun showInfo() {
+        startActivity(
+            InfoActivity.callingIntent(context)
+        )
+    }
+
 
     private fun startActivity(intent: Intent) {
         // Recent versions Android requires this flag

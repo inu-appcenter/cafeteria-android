@@ -93,6 +93,9 @@ class MainActivity : SingleFragmentActivity() {
                     .withNegativeButton(R.string.button_cancel)
                     .show()
             }
+            R.id.menu_app_info -> {
+                mainViewModel.showInfo()
+            }
         }
 
         return true

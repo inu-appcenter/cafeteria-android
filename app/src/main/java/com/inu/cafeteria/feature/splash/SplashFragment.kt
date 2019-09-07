@@ -8,6 +8,7 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.getViewModel
+import com.inu.cafeteria.common.extension.inflate
 import org.koin.core.inject
 
 /**

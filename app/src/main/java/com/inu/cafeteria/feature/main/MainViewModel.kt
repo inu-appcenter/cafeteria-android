@@ -160,4 +160,8 @@ class MainViewModel : BaseViewModel() {
         navigator.showLogin()
         activity.finish()
     }
+
+    fun showInfo() {
+        navigator.showInfo()
+    }
 }
