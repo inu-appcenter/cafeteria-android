@@ -10,10 +10,11 @@
 <resources>
 
     <dimen name="textBig">22sp</dimen>
+    <dimen name="textToolbar">20sp</dimen>
+    <dimen name="textLarge">18sp</dimen>
     <dimen name="textPrimary">16sp</dimen>
     <dimen name="textSecondary">14sp</dimen>
     <dimen name="textTertiary">12sp</dimen>
-    <dimen name="textToolbar">20sp</dimen>
 
     <!-- Google's official status bar height. -->
 
@@ -42,14 +43,14 @@
     <dimen name="cardViewMarginHorizontal">8dp</dimen>
     <dimen name="cardViewMarginVertical">4dp</dimen>
 
-    <dimen name="cardViewElevation">12dp</dimen>
+    <dimen name="cardViewElevation">2dp</dimen>
 
     <dimen name="cardViewItemPaddingHorizontal">15dp</dimen>
-    <dimen name="cardViewItemPaddingVertical">18dp</dimen>
+    <dimen name="cardViewItemPaddingVertical">12dp</dimen>
 
     <dimen name="toolbarTitleMarginTop">12dp</dimen>
 
     <!-- Padding of sections in info fragment. -->
-    <dimen name="infoBlockPadding">16dp</dimen>
+    <dimen name="infoBlockPadding">18dp</dimen>
 
 </resources>

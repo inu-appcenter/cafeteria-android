@@ -9,59 +9,52 @@
   ~ For a copy, see <https://opensource.org/licenses/MIT>.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardViewItem"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
     <!--
-    ~ We wrap the text views with this card view for the good look,
-    ~ and wrap them with a parent layout for the spacing.
-    -->
+      ~ We wrap the text views with this card view for the good look,
+      ~ and wrap them with a parent layout for the spacing.
+      -->
 
-    <androidx.cardview.widget.CardView
-        style="@style/CardViewItem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <!-- Contents -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/CardViewContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <!-- Contents -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/CardViewContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/corner_title"
+            style="@style/TextPrimary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Corner Name" />
 
-            <TextView
-                android:id="@+id/corner_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/textToolbar"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Corner Name" />
+        <TextView
+            android:id="@+id/menu"
+            style="@style/TextPrimary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/corner_title"
+            tools:text="some thing delicious Lorem ipsum dolor amit and etc" />
 
-            <TextView
-                android:id="@+id/menu"
-                style="@style/TextPrimary"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/corner_title"
-                tools:text="some thing delicious Lorem ipsum dolor amit and etc" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

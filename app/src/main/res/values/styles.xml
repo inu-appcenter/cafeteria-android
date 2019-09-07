@@ -53,7 +53,7 @@
         <item name="android:shadowDy">1.2</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
-        <item name="android:textSize">@dimen/textBig</item>
+        <item name="android:textSize">@dimen/textToolbar</item>
         <item name="android:transitionName">@string/cafeteria_transition_title</item>
     </style>
 
@@ -68,7 +68,7 @@
         <item name="android:layout_marginBottom">@dimen/cardViewMarginVertical</item>
         <item name="android:layout_marginStart">@dimen/cardViewMarginHorizontal</item>
         <item name="android:layout_marginEnd">@dimen/cardViewMarginHorizontal</item>
-        <item name="android:elevation">@dimen/cardViewElevation</item>
+        <item name="cardElevation">@dimen/cardViewElevation</item>
     </style>
 
     <style name="CardViewContent">
@@ -76,6 +76,11 @@
         <item name="android:paddingBottom">@dimen/cardViewItemPaddingVertical</item>
         <item name="android:paddingStart">@dimen/cardViewItemPaddingHorizontal</item>
         <item name="android:paddingEnd">@dimen/cardViewItemPaddingHorizontal</item>
+    </style>
+
+    <style name="ShadowImageView">
+        <item name="android:background">@drawable/rounded_rectangle_75dp</item>
+        <item name="android:elevation">12dp</item>
     </style>
 
 </resources>

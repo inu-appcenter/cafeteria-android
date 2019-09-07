@@ -30,9 +30,6 @@
     <TextView
         android:id="@+id/cafeteria_title"
         style="@style/CafeteriaTitle"
-        android:textColor="?android:attr/textColorPrimaryInverse"
-        android:textSize="@dimen/textBig"
-        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

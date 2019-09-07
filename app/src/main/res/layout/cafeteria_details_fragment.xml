@@ -59,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
+                tools:listitem="@layout/corner_list_item"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </androidx.core.widget.NestedScrollView>
@@ -69,9 +70,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="100dp"
-            app:layout_anchor="@id/content"
+            app:layout_anchor="@+id/content"
             app:layout_anchorGravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:visibility="gone">
 
             <!--
             ~ This empty view has bottom padding 100dp.
@@ -82,7 +84,7 @@
             <!-- Title -->
             <TextView
                 android:textColor="@color/textSecondary"
-                android:textSize="@dimen/textToolbar"
+                android:textSize="@dimen/textPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -93,11 +95,10 @@
 
             <!-- Description -->
             <TextView
-                android:textColor="@color/textSecondary"
-                android:textSize="@dimen/textPrimary"
+                style="@style/TextSecondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="60dp"
                 android:text="@string/desc_no_menu"

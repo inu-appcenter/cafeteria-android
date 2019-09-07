@@ -34,14 +34,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
-            android:padding="24dp">
+            android:padding="@dimen/infoBlockPadding">
 
             <ImageView
                 android:id="@+id/logo"
+                style="@style/ShadowImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_marginTop="18dp"
                 android:contentDescription="@string/desc_logo"
-                android:elevation="36dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -111,7 +112,8 @@
 
             <TextView
                 android:id="@+id/license"
-                style="@style/TextTertiary"
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/textTertiary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
