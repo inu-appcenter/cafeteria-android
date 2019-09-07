@@ -23,6 +23,7 @@ class SplashFragment : BaseFragment() {
     private val checkVersion = {
         with(viewModel) {
             tryCheckVersion(
+                activity = activity!!,
                 onFail = ::handleVersionCheckFailure,
                 onPass = { showLogin(this@SplashFragment) },
                 onUpdate = ::goUpdate,

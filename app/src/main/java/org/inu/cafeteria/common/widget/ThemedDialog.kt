@@ -1,4 +1,4 @@
-package org.inu.cafeteria.common.util
+package org.inu.cafeteria.common.widget
 
 import android.app.Dialog
 import android.content.Context
@@ -6,6 +6,7 @@ import android.os.Bundle
 
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.annotation.StringRes
 import org.inu.cafeteria.R
@@ -20,6 +21,7 @@ class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Tra
     private lateinit var messageView: TextView
     private lateinit var positiveButton: Button
     private lateinit var negativeButton: Button
+    private lateinit var checkBox: CheckBox
 
     /**
      * Default values
@@ -28,6 +30,7 @@ class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Tra
     private val messageBuilder = StringBuilder()
     private var positive = DialogButton()
     private var negative = DialogButton()
+    private var checkBoxText: String? = null
 
     /**
      * This dialog has no builder.
@@ -42,6 +45,7 @@ class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Tra
         window!!.attributes = layoutParams
 
         setContentView(R.layout.themed_dialog)
+
         setView()
         fillView()
     }
@@ -51,6 +55,7 @@ class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Tra
         messageView = findViewById(R.id.message)
         positiveButton = findViewById(R.id.positive)
         negativeButton = findViewById(R.id.negative)
+        checkBox = findViewById(R.id.checkBox)
     }
 
     private fun fillView() {
@@ -58,6 +63,7 @@ class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Tra
         setMessage(messageBuilder.toString())
         setPositiveButton(positive.buttonText, positive.onClick)
         setNegativeButton(negative.buttonText, negative.onClick)
+        setCheckBox(checkBoxText)
     }
 
     fun withTitle(title: String?): ThemedDialog {
@@ -85,19 +91,26 @@ class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Tra
 
     fun withNewLine(): ThemedDialog = withMoreMessage("\n")
 
-    fun withPositiveButton(text: String?, listener: () -> Unit = {}): ThemedDialog {
+    fun withPositiveButton(text: String?, listener: (Boolean) -> Unit = {}): ThemedDialog {
         return this.apply {
             positive = DialogButton(text, listener)
         }
     }
-    fun withPositiveButton(@StringRes text: Int, listener: () -> Unit = {}) = withPositiveButton(context.getString(text), listener)
+    fun withPositiveButton(@StringRes text: Int, listener: (Boolean) -> Unit = {}) = withPositiveButton(context.getString(text), listener)
 
-    fun withNegativeButton(text: String?, listener: () -> Unit = {}): ThemedDialog {
+    fun withNegativeButton(text: String?, listener: (Boolean) -> Unit = {}): ThemedDialog {
         return this.apply {
             negative = DialogButton(text, listener)
         }
     }
-    fun withNegativeButton(@StringRes text: Int, listener: () -> Unit = {}) = withNegativeButton(context.getString(text), listener)
+    fun withNegativeButton(@StringRes text: Int, listener: (Boolean) -> Unit = {}) = withNegativeButton(context.getString(text), listener)
+
+    fun withCheckBox(text: String?): ThemedDialog {
+        return this.apply {
+            checkBoxText = text
+        }
+    }
+    fun withCheckBox(@StringRes text: Int) = withCheckBox(context.getString(text))
 
     private fun setTitle(title: String) {
         titleView.text = title
@@ -105,26 +118,32 @@ class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Tra
     private fun setMessage(message: String) {
         messageView.text = message
     }
-    private fun setPositiveButton(buttonText: String?, onClick: () -> Unit = {}) {
+    private fun setPositiveButton(buttonText: String?, onClick: (Boolean) -> Unit = {}) {
         with(positiveButton) {
             setVisible(buttonText != null)
             text = buttonText
             setOnClickListener {
-                onClick()
+                onClick(checkBox.isSelected)
                 dismiss()
             }
         }
     }
-    private fun setNegativeButton(buttonText: String?, onClick: () -> Unit = {}) {
+    private fun setNegativeButton(buttonText: String?, onClick: (Boolean) -> Unit = {}) {
         with(negativeButton) {
             setVisible(buttonText != null)
             text = buttonText
             setOnClickListener {
-                onClick()
+                onClick(checkBox.isSelected)
                 dismiss()
             }
         }
     }
+    private fun setCheckBox(checkBoxText: String?) {
+        with(checkBox) {
+            setVisible(checkBoxText != null)
+            text = checkBoxText
+        }
+    }
 
-    data class DialogButton(val buttonText: String? = null, val onClick: () -> Unit = {})
+    data class DialogButton(val buttonText: String? = null, val onClick: (Boolean) -> Unit = {})
 }

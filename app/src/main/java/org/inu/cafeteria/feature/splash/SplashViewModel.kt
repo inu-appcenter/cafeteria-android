@@ -1,5 +1,6 @@
 package org.inu.cafeteria.feature.splash
 
+import android.app.Activity
 import android.content.Context
 import org.inu.cafeteria.R
 import org.inu.cafeteria.common.Navigator
@@ -7,18 +8,21 @@ import org.inu.cafeteria.common.base.BaseFragment
 import org.inu.cafeteria.common.base.BaseViewModel
 import org.inu.cafeteria.common.extension.finishActivity
 import org.inu.cafeteria.common.extension.defaultDataErrorHandle
-import org.inu.cafeteria.common.util.ThemedDialog
+import org.inu.cafeteria.common.widget.ThemedDialog
 import org.inu.cafeteria.exception.ServerNoResponseException
 import org.inu.cafeteria.model.VersionCompared
+import org.inu.cafeteria.repository.VersionRepository
 import org.inu.cafeteria.usecase.GetVersion
 import org.inu.cafeteria.util.Notify
 import org.koin.core.inject
+import timber.log.Timber
 
 class SplashViewModel : BaseViewModel() {
 
-    private val context: Context by inject()
     private val getVersion: GetVersion by inject()
     private val navigator: Navigator by inject()
+
+    private val versionRepo: VersionRepository by inject()
 
     var onServerNoResponse: () -> Unit = {}
 
@@ -26,6 +30,7 @@ class SplashViewModel : BaseViewModel() {
         failables += this
         failables += getVersion
         failables += navigator
+        failables += versionRepo
     }
 
     /**
@@ -38,6 +43,7 @@ class SplashViewModel : BaseViewModel() {
      * @param onDismiss launched when user pressed cancel button.
      */
     fun tryCheckVersion(
+        activity: Activity,
         onFail: (e: Exception) -> Unit,
         onPass: () -> Unit,
         onUpdate: () -> Unit,
@@ -45,20 +51,39 @@ class SplashViewModel : BaseViewModel() {
     ) {
 
         val getDialog = { version: VersionCompared ->
-            ThemedDialog(context)
+            ThemedDialog(activity)
                 .withTitle(R.string.dialog_new_version, version.latestVersion)
                 .withMessage(R.string.dialog_ask_update)
-                .withPositiveButton(R.string.button_update, onUpdate)
-                .withNegativeButton(R.string.button_cancel, onDismiss)
+                .withCheckBox(R.string.desc_pass_this_version)
+                .withPositiveButton(R.string.button_update) { dismiss ->
+                    if (dismiss) {
+                        versionRepo.dismissVersion(version.latestVersion)
+                    }
+                    onUpdate()
+                }
+                .withNegativeButton(R.string.button_cancel) { dismiss ->
+                    if (dismiss) {
+                        versionRepo.dismissVersion(version.latestVersion)
+                    }
+                    onDismiss()
+                }
         }
 
         getVersion(Unit) {
-            it.onSuccess { version ->
-                if (version.needUpdate()) {
-                    getDialog(version).show()
+            it.onSuccess { versionCompared ->
+
+                Timber.i("Current version: ${versionCompared.currentVersion}")
+                Timber.i("Latest version: ${versionCompared.latestVersion}")
+                Timber.i("Ignored update: ${versionRepo.getDismissedVersion()}")
+
+                val thisVersionIsIgnoredByUser = versionRepo.getDismissedVersion() == versionCompared.latestVersion
+
+                if (versionCompared.needUpdate() && !thisVersionIsIgnoredByUser) {
+                    getDialog(versionCompared).show()
                 } else {
                     onPass()
                 }
+
             }.onError { e ->
                 onFail(e)
             }
@@ -87,6 +112,7 @@ class SplashViewModel : BaseViewModel() {
     }
 
     fun goUpdate() {
-        Notify(context).short(R.string.notify_not_implemented)
+        navigator.showStore()
+        Timber.i("User is gone to the store.")
     }
 }

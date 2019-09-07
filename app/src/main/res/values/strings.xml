@@ -49,5 +49,6 @@
     <string name="desc_cancel_button">This is a cancel button.</string>
     <string name="desc_menu_data">Food menu is offered by UICOOP. Might be inaccurate.</string>
     <string name="desc_no_data">No data available.</string>
+    <string name="desc_pass_this_version">Pass this version</string>
 
 </resources>

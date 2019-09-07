@@ -70,6 +70,7 @@ val myModules = module {
     /** Version Repository */
     single {
         VersionRepositoryImpl(
+            context = get(),
             networkService = get()
         ) as VersionRepository
     }

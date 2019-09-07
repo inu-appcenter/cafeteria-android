@@ -5,10 +5,13 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
+
     defaultConfig {
         applicationId "org.inu.cafeteria"
         minSdkVersion 24
         targetSdkVersion 28
+        versionCode 16
+        versionName "3.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

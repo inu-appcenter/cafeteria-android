@@ -19,7 +19,7 @@ import org.inu.cafeteria.common.base.SingleFragmentActivity
 import org.inu.cafeteria.common.extension.getViewModel
 import org.inu.cafeteria.common.extension.defaultDataErrorHandle
 import org.inu.cafeteria.common.extension.setSupportActionBar
-import org.inu.cafeteria.common.util.ThemedDialog
+import org.inu.cafeteria.common.widget.ThemedDialog
 import org.inu.cafeteria.databinding.MainActivityBinding
 import org.inu.cafeteria.feature.cafeteria.CafeteriaListFragment
 

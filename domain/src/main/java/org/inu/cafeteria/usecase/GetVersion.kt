@@ -12,7 +12,6 @@ import org.inu.cafeteria.repository.VersionRepository
 import java.io.IOException
 
 /**
- *
  * IOException: Server failure
  * RuntimeException: Unexpected failure
  */

@@ -50,23 +50,16 @@
 
         <CheckBox
             android:id="@+id/autologin"
+            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:textSize="@dimen/textSecondary"
+            android:text="@string/check_auto_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:buttonTint="@android:color/white"
             android:checked="true"
-            app:layout_constraintEnd_toStartOf="@+id/keep_logged_in"
+            android:buttonTint="?android:attr/textColorPrimaryInverse"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
-
-        <TextView
-            android:id="@+id/keep_logged_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/check_auto_login"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/autologin"
-            app:layout_constraintEnd_toEndOf="@+id/password" />
 
         <Button
             android:id="@+id/login"

@@ -29,8 +29,8 @@ interface CafeteriaNetworkService {
     fun getNotice(): Call<Notice>
 
     @GET("/food/{date}")
-    abstract fun getFoods(@Path("date") date: String): Call<JsonElement>
+    fun getFoods(@Path("date") date: String): Call<JsonElement>
 
     @GET("/cafecode.json")
-    abstract fun getCafeteria(): Call<JsonElement>
+    fun getCafeteria(): Call<JsonElement>
 }

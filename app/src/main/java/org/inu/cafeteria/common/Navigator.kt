@@ -1,10 +1,8 @@
 package org.inu.cafeteria.common
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityOptionsCompat
@@ -12,7 +10,7 @@ import androidx.core.util.Pair
 import androidx.fragment.app.FragmentActivity
 import org.inu.cafeteria.R
 import org.inu.cafeteria.base.FailableComponent
-import org.inu.cafeteria.common.util.ThemedDialog
+import org.inu.cafeteria.common.widget.ThemedDialog
 import org.inu.cafeteria.feature.cafeteria.CafeteriaDetailsActivity
 import org.inu.cafeteria.feature.login.LoginActivity
 import org.inu.cafeteria.feature.main.MainActivity
@@ -21,6 +19,9 @@ import org.inu.cafeteria.model.json.Cafeteria
 import org.koin.core.KoinComponent
 import timber.log.Timber
 import kotlin.system.exitProcess
+import android.net.Uri
+import org.inu.cafeteria.BuildConfig
+
 
 /**
  * Go everywhere.
@@ -64,6 +65,14 @@ class Navigator(
         val activityOptions = ActivityOptionsCompat
             .makeSceneTransitionAnimation(activity, imageAnim, titleAnim)
         activity.startActivity(intent, activityOptions.toBundle())
+    }
+
+    fun showStore() {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)
+        }
+
+        startActivity(intent)
     }
 
     private fun startActivity(intent: Intent) {

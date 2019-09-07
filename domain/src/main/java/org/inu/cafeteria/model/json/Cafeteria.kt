@@ -47,7 +47,8 @@ data class Cafeteria(
      * Background dimmed image path. Without base url.
      */
     @SerializedName("bgimg") val backgroundImagePath: String
-)
+
+) : Serializable
 
 /**
  * Example here.
