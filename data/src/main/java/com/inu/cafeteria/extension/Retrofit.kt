@@ -106,6 +106,7 @@ fun <T> Call<T>.onResult(
             }
 
         } catch (e: IOException) {
+            Timber.e(e)
             onFail(ServerNoResponseException())
             Timber.w("Server no responding.")
         } catch (e: Exception) {

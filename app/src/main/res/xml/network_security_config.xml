@@ -8,13 +8,6 @@
   ~ For a copy, see <https://opensource.org/licenses/MIT>.
   -->
 
-<shape
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-
-    <gradient
-        android:angle="90"
-        android:endColor="#77000000"
-        android:startColor="#00000000" />
-
-</shape>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
