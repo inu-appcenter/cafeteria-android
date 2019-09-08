@@ -12,7 +12,7 @@ package com.inu.cafeteria.repository
 import android.app.Activity
 import android.content.Context
 import androidx.core.content.edit
-import com.inu.cafeteria.BuildConfig
+import com.inu.cafeteria.common.BuildConfig
 import com.inu.cafeteria.extension.onResult
 import com.inu.cafeteria.model.Cache
 import com.inu.cafeteria.model.scheme.Version

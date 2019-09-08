@@ -7,21 +7,6 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
-/**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
- * This file is part of INU Cafeteria.
- *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
- */
-
-/**
- * Fragment.kt
- *
- * Credits to Fernando Cejas.
- * https://github.com/android10/Android-CleanArchitecture-Kotlin
- */
 package com.inu.cafeteria.common.extension
 
 import android.content.Context

@@ -7,15 +7,6 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
-/**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
- * This file is part of INU Cafeteria.
- *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
- */
-
 package com.inu.cafeteria.feature.splash
 
 import android.app.Activity
@@ -23,7 +14,6 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.base.BaseViewModel
-import com.inu.cafeteria.common.extension.defaultDataErrorHandle
 import com.inu.cafeteria.common.extension.finishActivity
 import com.inu.cafeteria.common.widget.ThemedDialog
 import com.inu.cafeteria.exception.ServerNoResponseException
@@ -41,6 +31,7 @@ class SplashViewModel : BaseViewModel() {
     private val versionRepo: VersionRepository by inject()
 
     var onServerNoResponse: () -> Unit = {}
+    var onUnknownError: (Exception) -> Unit = {}
 
     init {
         failables += this
@@ -114,7 +105,7 @@ class SplashViewModel : BaseViewModel() {
         when (e) {
             is ServerNoResponseException -> onServerNoResponse()
             else -> {
-                defaultDataErrorHandle(e)
+                onUnknownError(e)
             }
         }
     }

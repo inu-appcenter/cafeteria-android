@@ -18,8 +18,8 @@
     <string name="warn_internet">Please check the internet.</string>
     <string name="desc_student_barcode">This is a student tag.</string>
     <string name="desc_for_the_discount">For the discount at dining halls in dormitory and the college of education.</string>
-    <string name="fail_server">Could not communicate with server :(</string>
-    <string name="fail_response">Server request failed :(</string>
+    <string name="fail_server">Could not communicate with server.</string>
+    <string name="fail_response">Server request failed.</string>
     <string name="fail_unexpected">Unexpected error occurd.</string>
     <string name="dialog_new_version">New Version %s</string>
     <string name="dialog_ask_update">New version is available. Do you want to update?</string>
@@ -64,5 +64,7 @@
     <string name="latest_version">Latest Version: %s</string>
     <string name="latest_version_error">Could not find latest version.</string>
     <string name="phase">Phase %d</string>
+    <string name="title_unexpected_error">Unexpected Error</string>
+    <string name="title_fatal_error">Fatal Error</string>
 
 </resources>

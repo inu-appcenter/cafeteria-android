@@ -7,24 +7,6 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
-/**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
- * This file is part of INU Cafeteria.
- *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
- */
-
-/**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
- * This file is part of INU Cafeteria.
- *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
- */
-
 package com.inu.cafeteria.common
 
 import android.content.Context
@@ -51,7 +33,6 @@ import com.inu.cafeteria.model.json.Cafeteria
 import org.koin.core.KoinComponent
 import timber.log.Timber
 import kotlin.system.exitProcess
-
 
 /**
  * Go everywhere.
@@ -82,6 +63,14 @@ class Navigator(
         ThemedDialog(activity)
             .withTitle(R.string.title_server_error)
             .withMessage(R.string.dialog_server_not_respond)
+            .withPositiveButton(R.string.button_exit) { exitProcess(0) }
+            .show()
+    }
+
+    fun showFatalDialog(activity: FragmentActivity, e: Exception) {
+        ThemedDialog(activity)
+            .withTitle(R.string.title_fatal_error)
+            .withMessage(e.localizedMessage)
             .withPositiveButton(R.string.button_exit) { exitProcess(0) }
             .show()
     }
