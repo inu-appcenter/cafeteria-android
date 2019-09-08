@@ -30,7 +30,7 @@ android {
         versionName '3.0.0-beta02'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        archivesBaseName = "$applicationId-v$versionName($currentGitRevisionCount)"
+        archivesBaseName = "$applicationId-v$versionName-$currentGitRevisionCount"
     }
 
     buildTypes {
