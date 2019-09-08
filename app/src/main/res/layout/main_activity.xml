@@ -8,56 +8,45 @@
   ~ For a copy, see <https://opensource.org/licenses/MIT>.
   -->
 
-<layout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
-        <variable
-            name="mainViewModel"
-            type="com.inu.cafeteria.feature.main.MainViewModel" />
-    </data>
+    <!-- Toolbar -->
+    <include
+        android:id="@+id/toolbar_include"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/root_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white">
+    <!-- Fragment -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_include" >
 
-        <!-- Content -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    </FrameLayout>
 
-            <!-- Toolbar -->
-            <include
-                android:id="@+id/toolbar_include"
-                layout="@layout/toolbar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <!-- Button to spawn barcode -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/barcode_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_barcode_20dp" />
 
-            <!-- Fragment -->
-            <FrameLayout
-                android:id="@+id/fragment_container"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_include" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!-- Drawer -->
-        <include
-            app:mainViewModel="@{mainViewModel}"
-            layout="@layout/drawer"
-            android:layout_width="280dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start" />
-
-    </androidx.drawerlayout.widget.DrawerLayout>
-
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

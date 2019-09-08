@@ -1,0 +1,33 @@
+<!--
+  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+  ~
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ This work is licensed under the terms of the MIT license.
+  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M0,2h2v16h-2z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M6,2h3v16h-3z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M15,2h1v16h-1z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M4,2h1v16h-1z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M18,2h2v16h-2z"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M11,2h2v16h-2z"/>
+</vector>

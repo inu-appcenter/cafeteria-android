@@ -7,6 +7,15 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria.common.extension
 
 import android.app.Activity
@@ -15,6 +24,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
+import android.provider.Settings
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -73,4 +83,22 @@ fun Context.registerReceiver(action: String, onReceive: (intent: Intent?) -> Uni
             onReceive(intent)
         }
     }, IntentFilter(action))
+}
+
+/**
+ * @param brightness from 0 to 255
+ */
+fun Context.setBrightness(brightness: Int) {
+    if (Settings.System.canWrite(this)) {
+        val resolver = contentResolver
+        Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness)
+    }
+}
+
+/**
+ * @return from 0 th 255
+ */
+fun Context.getBrightness(): Int {
+    val resolver = contentResolver
+    return Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS)
 }

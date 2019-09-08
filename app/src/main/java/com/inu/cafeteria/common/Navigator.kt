@@ -16,11 +16,21 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria.common
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.Settings
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,6 +41,7 @@ import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.base.FailableComponent
 import com.inu.cafeteria.common.widget.ThemedDialog
+import com.inu.cafeteria.feature.barcode.BarcodeActivity
 import com.inu.cafeteria.feature.cafeteria.CafeteriaDetailsActivity
 import com.inu.cafeteria.feature.info.InfoActivity
 import com.inu.cafeteria.feature.login.LoginActivity
@@ -106,6 +117,19 @@ class Navigator(
         )
     }
 
+    fun showBarcode() {
+        startActivity(
+            BarcodeActivity.callingIntent(context)
+        )
+    }
+
+    fun requestSettingsPermission() {
+        startActivity(
+            Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS).apply {
+                data = Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+            }
+        )
+    }
 
     private fun startActivity(intent: Intent) {
         // Recent versions Android requires this flag

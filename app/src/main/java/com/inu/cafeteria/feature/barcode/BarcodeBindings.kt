@@ -16,13 +16,13 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
-package com.inu.cafeteria.feature.main
+package com.inu.cafeteria.feature.barcode
 
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.inu.cafeteria.common.extension.isVisible
 import com.inu.cafeteria.model.BarcodeState
-import kotlinx.android.synthetic.main.drawer.view.*
+import kotlinx.android.synthetic.main.barcode_fragment.view.*
 import timber.log.Timber
 
 @BindingAdapter("barcodeState")

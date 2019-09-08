@@ -35,7 +35,7 @@
     <string name="button_login">LOG IN</string>
     <string name="button_no_user_login">Without account</string>
     <string name="fail_wrong_auth">Please check your ID and password.</string>
-    <string name="fail_token_invalid">Token is invalid.</string>
+    <string name="fail_token_invalid">Please sign in again.</string>
     <string name="fail_no_barcode">No tag information.</string>
     <string name="ask_not_inu">Not a member?</string>
     <string name="desc_login_to_see_tag">This feature requires student information. You can login to proceed.</string>

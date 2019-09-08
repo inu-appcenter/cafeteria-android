@@ -12,6 +12,16 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppThemeLight"/>
 
+    <!-- Transparent Theme -->
+    <style name="Transparent" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
     <!-- Text -->
     <style name="TextPrimary">
         <item name="android:textColor">?android:attr/textColorPrimary</item>

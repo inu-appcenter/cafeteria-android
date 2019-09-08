@@ -51,4 +51,11 @@
     <!-- Padding of sections in info fragment. -->
     <dimen name="infoBlockPadding">18dp</dimen>
 
+    <dimen name="cafeteriaListItemHeight">70dp</dimen>
+
+    <dimen name="barcodeCardViewHorizontalMargin">24dp</dimen>
+
+    <dimen name="barcodeWidth">200dp</dimen>
+    <dimen name="barcodeHeight">120dp</dimen>
+
 </resources>

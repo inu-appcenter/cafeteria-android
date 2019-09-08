@@ -7,6 +7,15 @@
  * For a copy, see <https://opensource.org/licenses/MIT>.
  */
 
+/**
+ * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
+ *
+ * This file is part of INU Cafeteria.
+ *
+ * This work is licensed under the terms of the MIT license.
+ * For a copy, see <https://opensource.org/licenses/MIT>.
+ */
+
 package com.inu.cafeteria.common.widget
 
 import android.app.Dialog
@@ -21,7 +30,7 @@ import androidx.annotation.StringRes
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.extension.setVisible
 
-class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Translucent_NoTitleBar) {
+class ThemedDialog(context: Context) : Dialog(context, R.style.Transparent) {
 
     /**
      * View
@@ -48,9 +57,9 @@ class ThemedDialog(context: Context) : Dialog(context, android.R.style.Theme_Tra
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val layoutParams = WindowManager.LayoutParams()
+        val layoutParams = window!!.attributes
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
-        layoutParams.dimAmount = 0.8f
+        layoutParams.dimAmount = 0.6f
         window!!.attributes = layoutParams
 
         setContentView(R.layout.themed_dialog)

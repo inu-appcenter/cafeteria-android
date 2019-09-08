@@ -20,7 +20,7 @@
         android:contentDescription="@string/desc_cafeteria_image"
         style="@style/CafeteriaImage"
         android:layout_width="0dp"
-        android:layout_height="@dimen/toolbarHeight"
+        android:layout_height="@dimen/cafeteriaListItemHeight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

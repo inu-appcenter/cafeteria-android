@@ -20,8 +20,10 @@
     <!-- Dialog root layout -->
     <LinearLayout
         android:id="@+id/dialog_root_layout"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
         android:background="@drawable/rounded_rectangle_30dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -88,10 +90,10 @@
             <Button
                 android:id="@+id/negative"
                 style="@style/DialogButton"
-                android:background="?selectableItemBackground"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="?selectableItemBackground"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/textSecondary"
                 tools:text="Negative" />
@@ -99,10 +101,10 @@
             <Button
                 android:id="@+id/positive"
                 style="@style/DialogButton"
-                android:background="?selectableItemBackground"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="?selectableItemBackground"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/textSecondary"
                 tools:text="Positive" />
