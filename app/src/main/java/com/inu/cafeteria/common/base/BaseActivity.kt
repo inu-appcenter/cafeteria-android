@@ -9,10 +9,8 @@
 
 package com.inu.cafeteria.common.base
 
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +21,6 @@ import com.inu.cafeteria.base.FailableContainer
 import com.inu.cafeteria.base.FailableHandler
 import com.inu.cafeteria.base.Startable
 import com.inu.cafeteria.common.extension.observe
-import com.inu.cafeteria.common.extension.resolveThemeColor
 import com.inu.cafeteria.util.Notify
 import timber.log.Timber
 
@@ -38,23 +35,8 @@ import timber.log.Timber
  *
  * Use this activity's error handling only for non-fragment component.
  * The Fragment will handle all failures inside it itself.
- *
- * TODO: Bubble up failures and handle it.
  */
 abstract class BaseActivity : AppCompatActivity(), Startable, Failable, FailableContainer, FailableHandler {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // We can only set light nav bar on API 27 in attrs, but we can do it in API 26 here
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-        }
-
-        // Some devices don't let you modify android.R.attr.navigationBarColor
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.navigationBarColor = resolveThemeColor(android.R.attr.windowBackground)
-        }
-    }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
