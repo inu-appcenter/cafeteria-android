@@ -92,9 +92,9 @@ Kotlin을 사용합니다. Kotlin은 Java에 비해 상당한 이점을 가집�
 
 Master 브랜치는 항상 배포 가능한 코드를 포함합니다.
 
-릴리스는 Release Tag으로 구분합니다.
+릴리스는 release tag으로 구분합니다.
 
-새로운 기능을 추가할 때에는 feature-* 브랜치에서, 긴급한 버그 수정은 hotfix-* 브랜치에서 작업 후
+새로운 기능 추가는 feature-* 브랜치에서, 긴급한 버그 수정은 hotfix-* 브랜치에서 작업 후
 
 master 브랜치에 합칩니다.
 
