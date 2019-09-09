@@ -12,25 +12,19 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-static def getRevisionCount() {
-    return Integer.parseInt('git rev-list --count HEAD'.execute().text.trim())
-}
-
 android {
     compileSdkVersion 28
-
-    def currentGitRevisionCount = getRevisionCount()
 
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 28
 
         applicationId 'com.inu.cafeteria'
-        versionCode currentGitRevisionCount
-        versionName '3.0.0-beta02'
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        archivesBaseName = "$applicationId-v$versionName-$currentGitRevisionCount"
+        archivesBaseName = "$applicationId-v$versionName-$project.ext.versionCode"
     }
 
     buildTypes {
