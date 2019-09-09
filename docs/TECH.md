@@ -316,4 +316,4 @@ MIT 라이센스는 이 라이센스 하에 배포된 소프트웨어를 사용�
 
 ## 작성자
 
-[송병준](https://github.com/potados99)<potados99@gmail.com>
+[송병준](https://github.com/potados99) <potados99@gmail.com>
