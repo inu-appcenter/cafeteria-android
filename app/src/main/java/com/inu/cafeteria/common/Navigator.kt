@@ -92,6 +92,12 @@ class Navigator(
     }
 
     fun showCafeteriaDetail(activity: FragmentActivity, cafeteria: Cafeteria, sharedImageView: ImageView, sharedTextView: TextView) {
+        if (CafeteriaDetailsActivity.instantiated) {
+            // TODO move this feature into the CafeteriaDetailsActivity.
+            Timber.w("Cafeteria details activity is already instantiated!")
+            return
+        }
+
         val intent = CafeteriaDetailsActivity.callingIntent(activity, cafeteria)
 
         val imageAnim = Pair.create(sharedImageView as View, sharedImageView.transitionName)
