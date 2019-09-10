@@ -33,8 +33,6 @@ class LoginFragment : BaseFragment() {
         val pw = root.password.text.toString()
         val auto = root.autologin.isChecked
 
-        root.loading_layout.isVisible = true
-
         with(viewModel) {
             tryLoginWithIdAndPw(
                 id = id,
@@ -88,7 +86,6 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun initializeView(view: View) {
-
         with(view.loading_layout) {
             observe(viewModel.loginInProgress) {
                 it?.let {

@@ -9,6 +9,7 @@
 
 package com.inu.cafeteria.common.extension
 
+import android.app.Activity
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -29,5 +30,14 @@ fun AppCompatActivity.hideKeyboard() {
     view?.let { v ->
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(v.windowToken, 0)
+    }
+}
+
+fun Activity.dismissKeyboard() {
+    window.currentFocus?.let { focus ->
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(focus.windowToken, 0)
+
+        focus.clearFocus()
     }
 }

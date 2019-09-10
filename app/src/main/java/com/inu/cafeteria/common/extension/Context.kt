@@ -9,7 +9,6 @@
 
 package com.inu.cafeteria.common.extension
 
-import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -17,7 +16,6 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.provider.Settings
 import android.util.TypedValue
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
@@ -57,15 +55,6 @@ fun Context.makeToast(@StringRes res: Int, duration: Int = Toast.LENGTH_SHORT) {
 
 fun Context.makeToast(text: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, text, duration).show()
-}
-
-fun Activity.dismissKeyboard() {
-    window.currentFocus?.let { focus ->
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(focus.windowToken, 0)
-
-        focus.clearFocus()
-    }
 }
 
 fun Context.registerReceiver(action: String, onReceive: (intent: Intent?) -> Unit) {
