@@ -20,6 +20,7 @@ import com.inu.cafeteria.common.extension.finishActivity
 import com.inu.cafeteria.exception.ResponseFailException
 import com.inu.cafeteria.model.scheme.LoginParams
 import com.inu.cafeteria.model.scheme.LoginResult
+import com.inu.cafeteria.repository.LoginRepository
 import com.inu.cafeteria.repository.StudentInfoRepository
 import com.inu.cafeteria.usecase.Login
 import org.koin.core.inject
@@ -28,7 +29,9 @@ import timber.log.Timber
 class LoginViewModel : BaseViewModel() {
 
     private val login: Login by inject()
+
     private val studentInfoRepo: StudentInfoRepository by inject()
+    private val loginRepo: LoginRepository by inject()
 
     private val navigator: Navigator by inject()
 
@@ -44,6 +47,16 @@ class LoginViewModel : BaseViewModel() {
         failables += login
         failables += studentInfoRepo
         failables += navigator
+    }
+
+    fun passIfLoggedIn(fragment: BaseFragment): Boolean {
+        if (loginRepo.isLoggedIn()) {
+            Timber.i("Already logged in. Pass!")
+            showMain(fragment)
+            return true
+        }
+
+        return false
     }
 
     /**

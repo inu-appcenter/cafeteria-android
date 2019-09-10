@@ -29,6 +29,9 @@ import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.koin.android.ext.android.inject
 
+/**
+ * Manage student data here.
+ */
 class MainActivity : SingleFragmentActivity() {
 
     override val fragment: Fragment = CafeteriaListFragment()
@@ -46,6 +49,9 @@ class MainActivity : SingleFragmentActivity() {
             onFail = ::defaultDataErrorHandle,
             onNoToken = { fail(R.string.fail_token_invalid, show = true) }
         )
+
+        // Remove all user data even if the logout got failed.
+        mainViewModel.removeUserData()
     }
 
     init {
@@ -64,6 +70,8 @@ class MainActivity : SingleFragmentActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         MenuInflater(this).inflate(R.menu.menu_main, menu)
+        menu?.let(::initializeMenu)
+
         return true // Display the menu.
     }
 
@@ -71,16 +79,19 @@ class MainActivity : SingleFragmentActivity() {
         super.onOptionsItemSelected(item)
 
         when (item.itemId) {
+            R.id.menu_app_info -> {
+                mainViewModel.showInfo()
+            }
             R.id.menu_logout -> {
                 ThemedDialog(this)
                     .withTitle(R.string.title_logout)
                     .withMessage(R.string.dialog_ask_logout)
-                    .withPositiveButton(R.string.button_logout) { logout() }
+                    .withPositiveButton(R.string.button_confirm) { logout() }
                     .withNegativeButton(R.string.button_cancel)
                     .show()
             }
-            R.id.menu_app_info -> {
-                mainViewModel.showInfo()
+            R.id.menu_login -> {
+                mainViewModel.showLogin(this)
             }
         }
 
@@ -101,6 +112,10 @@ class MainActivity : SingleFragmentActivity() {
         }
     }
 
+    private fun initializeMenu(menu: Menu) {
+        menu.findItem(R.id.menu_logout)?.isVisible = loginRepo.isLoggedIn()
+        menu.findItem(R.id.menu_login)?.isVisible = loginRepo.isLoggedIn().not()
+    }
 
     companion object {
         fun callingIntent(context: Context) = Intent(context, MainActivity::class.java)

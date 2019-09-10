@@ -14,6 +14,17 @@ import com.inu.cafeteria.model.scheme.LoginResult
 import com.inu.cafeteria.model.scheme.LogoutParams
 import com.inu.cafeteria.model.scheme.LogoutResult
 
+/**
+ * This app login policy:
+ *
+ * At the first time user logged in, save student number and token given by server.
+ * If the user wants to be remembered, save the student number and token.
+ *
+ * When start method is called, isLoggedIn is set to false.
+ * On the other hand, all student info is deleted if no token exists.
+ *
+ * If repository is alive, login is alive.
+ */
 abstract class LoginRepository : Repository() {
 
     abstract fun isLoggedIn(): Boolean

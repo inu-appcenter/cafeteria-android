@@ -57,6 +57,10 @@ class MainViewModel : BaseViewModel() {
         studentInfoRepo.invalidate()
     }
 
+    fun removeUserData() {
+        studentInfoRepo.invalidate()
+    }
+
     fun showLogin(activity: BaseActivity) {
         navigator.showLogin()
         activity.finish()

@@ -14,6 +14,12 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
 
+    def generator = { String alphabet, int n ->
+        new Random().with {
+            (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+        }
+    }
+
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 28
@@ -27,6 +33,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "AES_KEY", "\"${generator((('A'..'Z')+('a'..'z')+('0'..'9')).join(), 12)}\""
+        }
+        debug {
+            buildConfigField "String", "AES_KEY", "\"I_AM_IRONMAN\""
         }
     }
 }
@@ -39,4 +50,7 @@ dependencies {
 
     implementation project(":common")
     implementation project(":domain")
+
+    /** AES Crypt */
+    api "com.scottyab:aescrypt:$aescrypt_version"
 }

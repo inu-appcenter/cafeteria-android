@@ -14,7 +14,16 @@ import com.inu.cafeteria.model.scheme.ActivateBarcodeResult
 
 abstract class StudentInfoRepository : Repository() {
 
+    /**
+     * Remove ALL student data.
+     */
     abstract fun invalidate()
+
+    /**
+     * Remove one-time login data.
+     * This does nothing if token exists.
+     */
+    abstract fun expire()
 
     abstract fun getStudentId(): String?
     abstract fun setStudentId(id: String?)

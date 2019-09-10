@@ -25,6 +25,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         archivesBaseName = "$applicationId-v$versionName-$project.ext.versionCode"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {

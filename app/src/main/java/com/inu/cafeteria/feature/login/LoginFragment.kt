@@ -21,10 +21,14 @@ import com.inu.cafeteria.common.extension.hideKeyboard
 import com.inu.cafeteria.common.extension.isVisible
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.extension.withNonNull
+import com.inu.cafeteria.repository.LoginRepository
 import kotlinx.android.synthetic.main.login_fragment.view.*
+import org.koin.core.inject
 import timber.log.Timber
 
 class LoginFragment : BaseFragment() {
+
+    private val loginRepo: LoginRepository by inject()
 
     private lateinit var viewModel: LoginViewModel
 
@@ -61,6 +65,11 @@ class LoginFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         viewModel = getViewModel {
+            // If already logged in, pass this screen.
+            if (passIfLoggedIn(this@LoginFragment)) {
+                return
+            }
+
             tryAutoLogin(
                 onNoToken = {
                     Timber.i("No token available. Try login with id and password.")

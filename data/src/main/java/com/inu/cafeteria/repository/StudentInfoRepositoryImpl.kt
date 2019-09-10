@@ -12,10 +12,14 @@ package com.inu.cafeteria.repository
 import android.app.Activity
 import android.content.Context
 import androidx.core.content.edit
+import com.inu.cafeteria.data.BuildConfig
 import com.inu.cafeteria.extension.onResult
+import com.inu.cafeteria.extension.tryOrNull
 import com.inu.cafeteria.model.scheme.ActivateBarcodeParams
 import com.inu.cafeteria.model.scheme.ActivateBarcodeResult
 import com.inu.cafeteria.service.CafeteriaNetworkService
+import com.scottyab.aescrypt.AESCrypt
+import timber.log.Timber
 
 class StudentInfoRepositoryImpl(
     context: Context,
@@ -27,38 +31,48 @@ class StudentInfoRepositoryImpl(
         Activity.MODE_PRIVATE
     )
 
+    init {
+        // This is executed for one time in its lifecycle.
+        // Uncleared student data should be purged early but for one time only.
+        expire()
+    }
+
     override fun invalidate() {
         setStudentId(null)
         setBarcode(null)
         setLoginToken(null)
+
+        Timber.i("Invalidated All user data.")
+    }
+
+    override fun expire() {
+        if (getLoginToken().isNullOrEmpty()) {
+            // Remove one-time login data.
+            invalidate()
+            Timber.i("Purged all user data.")
+        }
     }
 
     override fun getStudentId(): String? {
-        return pref.getString(KEY_ID, EMPTY)
+        return getString(KEY_ID)
     }
     override fun setStudentId(id: String?) {
-        pref.edit(true) {
-            putString(KEY_ID, id)
-        }
+        putString(KEY_ID, id)
     }
 
     override fun getBarcode(): String? {
-        return pref.getString(KEY_BARCODE, EMPTY)
+        return getString(KEY_BARCODE)
     }
     override fun setBarcode(barcode: String?) {
-        pref.edit(true) {
-            putString(KEY_BARCODE, barcode)
-        }
+        putString(KEY_BARCODE, barcode)
     }
 
     override fun getLoginToken(): String? {
-        return pref.getString(KEY_TOKEN, EMPTY)
+        return getString(KEY_TOKEN)
 
     }
     override fun setLoginToken(token: String?) {
-        pref.edit(true) {
-            putString(KEY_TOKEN, token)
-        }
+        putString(KEY_TOKEN, token)
     }
 
     override fun activateBarcode(params: ActivateBarcodeParams, callback: DataCallback<ActivateBarcodeResult>) {
@@ -67,6 +81,29 @@ class StudentInfoRepositoryImpl(
             onSuccess = callback.onSuccess,
             onFail = callback.onFail
         )
+    }
+
+    /**
+     * Get preference string.
+     */
+    private fun getString(key: String): String? {
+        return pref.getString(key, EMPTY)?.let {
+            // Decrypt only if it is not null.
+            tryOrNull { AESCrypt.decrypt(BuildConfig.AES_KEY, it) }
+        }
+    }
+
+    /**
+     * Set preference string.
+     */
+    private fun putString(key: String, value: String?) {
+        pref.edit(true) {
+            // Put it only when it is not null.
+            // Encrypting null is useless.
+            putString(key, value?.let {
+                tryOrNull { AESCrypt.encrypt(BuildConfig.AES_KEY, it) }
+            })
+        }
     }
 
     companion object {

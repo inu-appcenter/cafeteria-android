@@ -10,7 +10,7 @@
 <resources>
     <string name="app_name" translatable="false">INU Cafeteria</string>
     <string name="menu_app_info">App Info</string>
-    <string name="menu_logout">Logout</string>
+    <string name="menu_logout">Sign out</string>
     <string name="desc_logo">This is a logo of this application.</string>
     <string name="desc_close_drawer">Close drawer</string>
     <string name="desc_open_drawer">Open drawer</string>
@@ -32,7 +32,7 @@
     <string name="hint_stuno">Student ID</string>
     <string name="hint_password">Password</string>
     <string name="check_auto_login">Keep me logged in</string>
-    <string name="button_login">LOG IN</string>
+    <string name="button_login">Sign in</string>
     <string name="button_no_user_login">Without account</string>
     <string name="fail_wrong_auth">Please check your ID and password.</string>
     <string name="fail_token_invalid">Please sign in again.</string>
@@ -47,8 +47,8 @@
     <string name="cafeteria_transition_image" translatable="false">cafeteriaImageTransition</string>
     <string name="cafeteria_transition_title" translatable="false">cafeteriaTitleTransition</string>
 
-    <string name="title_logout">Logout</string>
-    <string name="dialog_ask_logout">Do you want to logout?</string>
+    <string name="title_logout">Sign out</string>
+    <string name="dialog_ask_logout">Do you want to sign out?</string>
     <string name="button_logout">Logout</string>
     <string name="title_no_menu">No menu found for today.</string>
     <string name="desc_no_menu">This cafeteria might not offer the menu.\nOr it could be a temporal problem.\nPlease try again later.</string>
@@ -67,5 +67,7 @@
     <string name="title_unexpected_error">Unexpected Error</string>
     <string name="title_fatal_error">Fatal Error</string>
     <string name="button_retry">Retry</string>
+    <string name="menu_login">Sign in</string>
+    <string name="button_confirm">Confirm</string>
 
 </resources>

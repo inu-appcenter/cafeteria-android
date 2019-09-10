@@ -54,7 +54,7 @@ class CafeteriaListFragment : BaseFragment() {
             .apply { viewDataBinding = this }
             .apply { vm = cafeteriaListViewModel }
             .apply { initializeView(root) }
-            .apply { cafeteriaListViewModel.loadAll(firstTimeCreated(savedInstanceState)) }
+            .apply { cafeteriaListViewModel.loadAll() }
             .root
     }
 
@@ -70,7 +70,6 @@ class CafeteriaListFragment : BaseFragment() {
             }
             adapter = cafeteriaAdapter
         }
-
 
         Timber.i("CafeteriaListFragment initialized.")
     }

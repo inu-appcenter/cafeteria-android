@@ -22,8 +22,13 @@
         android:id="@+id/menu_app_info"
         android:title="@string/menu_app_info"/>
 
+    <!-- Only for members -->
     <item
         android:id="@+id/menu_logout"
         android:title="@string/menu_logout"/>
 
+    <!-- Only for non members -->
+    <item
+        android:id="@+id/menu_login"
+        android:title="@string/menu_login" />
 </menu>
