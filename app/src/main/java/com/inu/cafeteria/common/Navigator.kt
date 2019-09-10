@@ -59,11 +59,27 @@ class Navigator(
         )
     }
 
-    fun showServerDeadDialog(activity: FragmentActivity) {
+    /**
+     * Explain user that the server or network is down.
+     * Only choose is to close the app.
+     */
+    fun showNoConnectionDialog(activity: FragmentActivity) {
         ThemedDialog(activity)
             .withTitle(R.string.title_server_error)
             .withMessage(R.string.dialog_server_not_respond)
             .withPositiveButton(R.string.button_exit) { exitProcess(0) }
+            .show()
+    }
+
+    /**
+     * Explain user that the server or network is down.
+     * Give user a chance to retry.
+     */
+    fun showNoConnectionDialog(activity: FragmentActivity, onRetry: () -> Unit) {
+        ThemedDialog(activity)
+            .withTitle(R.string.title_server_error)
+            .withMessage(R.string.dialog_server_not_respond)
+            .withPositiveButton(R.string.button_retry) { onRetry() }
             .show()
     }
 

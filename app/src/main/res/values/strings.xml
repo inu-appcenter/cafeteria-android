@@ -26,7 +26,7 @@
     <string name="button_update">Update</string>
     <string name="button_cancel">Cancel</string>
     <string name="desc_app_description">INU cafeteria</string>
-    <string name="title_server_error">Server error</string>
+    <string name="title_server_error">Server Error</string>
     <string name="dialog_server_not_respond">Server is not responding. It could be due to the network. Please try again later.</string>
     <string name="button_exit">Exit</string>
     <string name="hint_stuno">Student ID</string>
@@ -66,5 +66,6 @@
     <string name="phase">Phase %d</string>
     <string name="title_unexpected_error">Unexpected Error</string>
     <string name="title_fatal_error">Fatal Error</string>
+    <string name="button_retry">Retry</string>
 
 </resources>

@@ -19,6 +19,7 @@ import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.getViewModel
 import com.inu.cafeteria.common.extension.hideKeyboard
 import com.inu.cafeteria.common.extension.isVisible
+import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.extension.withNonNull
 import kotlinx.android.synthetic.main.login_fragment.view.*
 import timber.log.Timber
@@ -40,17 +41,15 @@ class LoginFragment : BaseFragment() {
                 pw = pw,
                 auto = auto,
                 onSuccess = {
-                    root.loading_layout.isVisible = false
-
                     Timber.i("Login succeeded with id and password.")
+
                     saveLoginResult(it, id)
                     showMain(this@LoginFragment)
                 },
                 onFail = {
-                    root.loading_layout.isVisible = false
+                    Timber.i("Login failed.")
 
                     handleLoginFailure(it)
-                    Timber.i("Login failed.")
                 }
             )
         }
@@ -65,7 +64,7 @@ class LoginFragment : BaseFragment() {
 
         viewModel = getViewModel {
             tryAutoLogin(
-                onPass = {
+                onNoToken = {
                     Timber.i("No token available. Try login with id and password.")
                 },
                 onSuccess = {
@@ -89,6 +88,16 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun initializeView(view: View) {
+
+        with(view.loading_layout) {
+            observe(viewModel.loginInProgress) {
+                it?.let {
+                    // Show loading UI while blocking touches to other objects.
+                    isVisible = it
+                }
+            }
+        }
+
         with(view.login) {
             setOnClickListener { onLoginButtonClick(view) }
         }

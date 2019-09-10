@@ -61,7 +61,7 @@ class SplashFragment : BaseFragment() {
 
         viewModel = getViewModel {
             // This action cannot be done inside view model because it needs activity.
-            onServerNoResponse = { navigator.showServerDeadDialog(activity!!) }
+            onNoConnection = { navigator.showNoConnectionDialog(activity!!, checkVersion) }
             onUnknownError = { navigator.showFatalDialog(activity!!, it) }
         }
         failables += viewModel.failables

@@ -18,6 +18,7 @@
 
     <!-- Login UI -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/login_ui_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
@@ -114,6 +115,8 @@
     <FrameLayout
         android:visibility="gone"
         android:id="@+id/loading_layout"
+        android:clickable="true"
+        android:focusable="true"
         android:background="@color/dimmedBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

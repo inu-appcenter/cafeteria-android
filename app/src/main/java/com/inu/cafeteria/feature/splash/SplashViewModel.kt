@@ -30,7 +30,7 @@ class SplashViewModel : BaseViewModel() {
 
     private val versionRepo: VersionRepository by inject()
 
-    var onServerNoResponse: () -> Unit = {}
+    var onNoConnection: () -> Unit = {}
     var onUnknownError: (Exception) -> Unit = {}
 
     init {
@@ -103,10 +103,8 @@ class SplashViewModel : BaseViewModel() {
      */
     fun handleVersionCheckFailure(e: Exception) {
         when (e) {
-            is ServerNoResponseException -> onServerNoResponse()
-            else -> {
-                onUnknownError(e)
-            }
+            is ServerNoResponseException -> onNoConnection()
+            else -> onUnknownError(e)
         }
     }
 

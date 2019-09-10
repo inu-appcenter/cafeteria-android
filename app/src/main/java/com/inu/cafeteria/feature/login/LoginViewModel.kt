@@ -9,6 +9,8 @@
 
 package com.inu.cafeteria.feature.login
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseFragment
@@ -30,6 +32,13 @@ class LoginViewModel : BaseViewModel() {
 
     private val navigator: Navigator by inject()
 
+    /**
+     * Represents login status.
+     * Fragment will observe this and take an adequate action.
+     */
+    private val _loginInProgress = MutableLiveData<Boolean>()
+    var loginInProgress: LiveData<Boolean> = _loginInProgress
+
     init {
         failables += this
         failables += login
@@ -40,24 +49,30 @@ class LoginViewModel : BaseViewModel() {
     /**
      * Try auto login.
      *
-     * @param onPass launched when no token saved.
+     * @param onNoToken launched when no token saved.
      * @param onSuccess launched when successfully login with token.
      * @param onFail launched when request failed.
      */
     fun tryAutoLogin(
-        onPass: () -> Unit,
+        onNoToken: () -> Unit,
         onSuccess: (LoginResult) -> Unit,
         onFail: (Exception) -> Unit
     ) {
+        _loginInProgress.value = true
+
         val token = studentInfoRepo.getLoginToken()
 
         if (token.isNullOrEmpty()) {
-            onPass()
+            onNoToken()
+            _loginInProgress.value = false
             return
         }
 
         login(LoginParams.ofUsingToken(token)) {
             it.onSuccess(onSuccess).onError(onFail)
+
+            // Finally
+            _loginInProgress.value = false
         }
     }
 
@@ -77,8 +92,13 @@ class LoginViewModel : BaseViewModel() {
         onSuccess: (LoginResult) -> Unit,
         onFail: (Exception) -> Unit
     ) {
+        _loginInProgress.value = true
+
         login(LoginParams.ofFirstLogin(id = id, pw = pw, save = auto)) {
             it.onSuccess(onSuccess).onError(onFail)
+
+            // Finally
+            _loginInProgress.value = false
         }
     }
 
