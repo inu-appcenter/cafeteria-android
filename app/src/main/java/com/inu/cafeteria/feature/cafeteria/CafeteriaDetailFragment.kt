@@ -10,6 +10,7 @@
 package com.inu.cafeteria.feature.cafeteria
 
 import android.os.Bundle
+import android.transition.ChangeBounds
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,13 @@ class CafeteriaDetailFragment : BaseFragment() {
         activity?.let {
             // Delay transition until we finished loading the image.
             animator.postponeEnterTransition(it)
+
+            // Set duration.
+            // This should be done in the callee activity.
+            it.window.sharedElementEnterTransition = ChangeBounds().apply {
+                startDelay = 0
+                duration = 200 /* TODO */
+            }
         }
 
         detailsViewModel = getViewModel {
@@ -78,11 +86,12 @@ class CafeteriaDetailFragment : BaseFragment() {
      */
     private fun initializeView(view: View, firstTimeCreated: Boolean) {
         if (firstTimeCreated) {
-            // This is a first time this fragment is create.
+            // This is a first time this fragment is created.
             // It is obvious that user just clicked the detail
             // and jumped into this fragment.
             // So load the food and then resume transition.
             detailsViewModel.loadFoodMenu()
+
         } else {
             // Do not show transition animation when the view is recreated.
             // Transition should only be shown at the first view creation.
@@ -143,6 +152,16 @@ class CafeteriaDetailFragment : BaseFragment() {
         food ?: return
     }
 
+    /**
+     * Invoked by parent activity, when swipe down gesture is detected.
+     *
+     */
+    fun onSwipeDown() {
+        val expanded = viewDataBinding.appbar.height - viewDataBinding.appbar.bottom == 0
+        if (expanded) {
+            activity?.onBackPressed()
+        }
+    }
 
     companion object {
         fun forCafeteria(cafeteria: Cafeteria): CafeteriaDetailFragment {

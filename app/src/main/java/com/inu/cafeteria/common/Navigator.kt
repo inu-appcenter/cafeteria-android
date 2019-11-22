@@ -93,7 +93,6 @@ class Navigator(
 
     fun showCafeteriaDetail(activity: FragmentActivity, cafeteria: Cafeteria, sharedImageView: ImageView, sharedTextView: TextView) {
         if (CafeteriaDetailsActivity.instantiated) {
-            // TODO move this feature into the CafeteriaDetailsActivity.
             Timber.w("Cafeteria details activity is already instantiated!")
             return
         }
@@ -105,6 +104,7 @@ class Navigator(
 
         val activityOptions = ActivityOptionsCompat
             .makeSceneTransitionAnimation(activity, imageAnim, titleAnim)
+
         activity.startActivity(intent, activityOptions.toBundle())
     }
 

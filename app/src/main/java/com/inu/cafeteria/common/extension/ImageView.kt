@@ -33,6 +33,7 @@ fun ImageView.loadFromUrl(url: String) =
 
 fun ImageView.loadUrlAndResumeEnterTransition(url: String, activity: FragmentActivity) {
     val target: Target<Drawable> = ImageViewBaseTarget(this, activity)
+
     Glide.with(context.applicationContext)
         .load(url)
         .fallback(R.drawable.no_img)

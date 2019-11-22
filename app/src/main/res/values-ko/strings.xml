@@ -11,7 +11,7 @@
 <resources>
     <string name="menu_app_info">앱 정보</string>
     <string name="menu_logout">로그아웃</string>
-    <string name="desc_for_the_discount">기숙사 식당 조식할인 시간,\n사범대 점심, 저녁시간에\n사용하실 수 있습니다.</string>
+    <string name="desc_for_the_discount">기숙사 식당 조식할인 시간,\n사범대 식당 점심, 저녁시간에\n사용하실 수 있습니다.</string>
     <string name="button_no_user_login">비회원 로그인</string>
     <string name="check_auto_login">자동 로그인</string>
     <string name="button_update">업데이트</string>

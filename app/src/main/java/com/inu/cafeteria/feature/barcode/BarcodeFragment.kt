@@ -56,6 +56,9 @@ class BarcodeFragment : BaseFragment() {
         with(barcodeViewModel) {
             tryActivatingBarcode(
                 onSuccess = {
+                    // The view must exist after barcode is made.
+                    barcode_image ?: return@tryActivatingBarcode
+
                     with(barcode_image) {
                         setImageBitmap(it)
                         invalidate()
