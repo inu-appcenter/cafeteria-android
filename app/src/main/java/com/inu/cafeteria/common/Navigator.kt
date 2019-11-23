@@ -12,7 +12,6 @@ package com.inu.cafeteria.common
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.provider.Settings
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -131,14 +130,6 @@ class Navigator(
     fun showBarcode() {
         startActivity(
             BarcodeActivity.callingIntent(context)
-        )
-    }
-
-    fun requestSettingsPermission() {
-        startActivity(
-            Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS).apply {
-                data = Uri.parse("package:" + BuildConfig.APPLICATION_ID)
-            }
         )
     }
 
