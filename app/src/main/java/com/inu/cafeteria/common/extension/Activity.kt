@@ -41,3 +41,20 @@ fun Activity.dismissKeyboard() {
         focus.clearFocus()
     }
 }
+
+/**
+ * @param brightness from 0 to 1
+ */
+fun Activity.setBrightness(brightness: Float) {
+    val params = window.attributes.apply {
+        screenBrightness = brightness
+    }
+    window.attributes = params
+}
+
+/**
+ * @return from 0 to 1
+ */
+fun Activity.getBrightness(): Float {
+    return window.attributes.screenBrightness
+}

@@ -9,7 +9,7 @@
 
 package com.inu.cafeteria.feature.barcode
 
-import android.content.Context
+import android.app.Activity
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -41,7 +41,7 @@ class BarcodeViewModel : BaseViewModel() {
     private val _studentId = MutableLiveData<String>()
     val studentId = _studentId
 
-    private var brightness = -1
+    private var brightness = -1.0f
 
     init {
         failables += this
@@ -168,19 +168,20 @@ class BarcodeViewModel : BaseViewModel() {
      * Make it bright!
      * @param brightness 0 ~ 255
      */
-    fun brightenScreen(context: Context) {
-        brightness = context.getBrightness()
-        context.setBrightness(255)
+    fun brightenScreen(activity: Activity?) {
+        activity?.let {
+            brightness = it.getBrightness()
+            it.setBrightness(1.0f)
+        }
     }
 
     /**
      * Return it back!
      */
-    fun restoreScreen(context: Context) {
+    fun restoreScreen(activity: Activity?) {
         // Do it only after the screen has been brightened.
-        brightness.takeIf { it != -1 }?.let {
-            context.setBrightness(it)
+        brightness.takeIf { it > 0f }?.let {
+            activity?.setBrightness(it)
         }
     }
-
 }

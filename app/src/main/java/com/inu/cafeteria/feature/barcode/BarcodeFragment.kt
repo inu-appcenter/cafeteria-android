@@ -63,7 +63,7 @@ class BarcodeFragment : BaseFragment() {
                         setImageBitmap(it)
                         invalidate()
                     }
-                    brightenScreen(context!!)
+                    brightenScreen(activity)
                 },
                 onFail = ::handleActivateBarcodeFailure,
                 onNoBarcode = { fail(R.string.fail_no_barcode) }
@@ -79,7 +79,7 @@ class BarcodeFragment : BaseFragment() {
                 onFail = ::handleActivateBarcodeFailure,
                 onNoBarcode = { fail(com.inu.cafeteria.R.string.fail_no_barcode) }
             )
-            brightenScreen(context!!)
+            restoreScreen(activity)
         }
     }
 
