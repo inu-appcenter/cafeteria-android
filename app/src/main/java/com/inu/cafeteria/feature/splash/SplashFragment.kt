@@ -20,14 +20,8 @@ import com.inu.cafeteria.common.extension.getViewModel
 import org.koin.core.inject
 
 /**
- * Display splash screen, while checking version.
+ * Display splash screen, while checking version and notices.
  * Route activity launches this activity by default.
- *
- * TODO: Explanation && Permission
- * We need to put some explanation on this app for user.
- * Also we need to ask for accessing settings.
- * This is required because a barcode feature
- * needs a bright screen.
  */
 class SplashFragment : BaseFragment() {
 
@@ -35,19 +29,38 @@ class SplashFragment : BaseFragment() {
 
     private lateinit var viewModel: SplashViewModel
 
-    private val checkVersion = {
+    private val checkVersion = { nextStep: () -> Unit ->
         with(viewModel) {
             tryCheckVersion(
                 activity = activity!!,
-                onFail = ::handleVersionCheckFailure,
-                onPass = { showLogin(this@SplashFragment) },
+                onFail = ::handleConnectionFailure,
+                onPass = nextStep,
                 onUpdate = {
-                    // Before moving to store, take next step to login.
-                    showLogin(this@SplashFragment)
+                    // Before moving to store, take a next step.
+                    nextStep()
                     goUpdate()
                 },
-                onDismiss = { showLogin(this@SplashFragment) }
+                onDismiss = nextStep
             )
+        }
+    }
+
+    private val checkNotices = { nextStep: () -> Unit ->
+        with(viewModel) {
+            tryShowNotice(
+                activity = activity!!,
+                onFail = ::handleConnectionFailure,
+                onPass = nextStep,
+                onConfirm = nextStep
+            )
+        }
+    }
+
+    private val routine = {
+        checkVersion {
+            checkNotices {
+                viewModel.showLogin(this)
+            }
         }
     }
 
@@ -61,7 +74,7 @@ class SplashFragment : BaseFragment() {
 
         viewModel = getViewModel {
             // This action cannot be done inside view model because it needs activity.
-            onNoConnection = { navigator.showNoConnectionDialog(activity!!, checkVersion) }
+            onNoConnection = { navigator.showNoConnectionDialog(activity!!, routine) }
             onUnknownError = { navigator.showFatalDialog(activity!!, it) }
         }
         failables += viewModel.failables
@@ -78,6 +91,6 @@ class SplashFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        checkVersion()
+        routine()
     }
 }

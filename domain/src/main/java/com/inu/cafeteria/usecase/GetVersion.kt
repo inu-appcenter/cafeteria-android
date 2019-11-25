@@ -16,10 +16,6 @@ import com.inu.cafeteria.model.scheme.Version
 import com.inu.cafeteria.repository.Repository
 import com.inu.cafeteria.repository.VersionRepository
 
-/**
- * IOException: Server failure
- * RuntimeException: Unexpected failure
- */
 class GetVersion(
     private val versionRepo: VersionRepository
 ) : UseCase<Unit, VersionCompared>() {

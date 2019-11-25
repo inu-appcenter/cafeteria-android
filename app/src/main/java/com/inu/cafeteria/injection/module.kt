@@ -84,6 +84,14 @@ val myModules = module {
         ) as VersionRepository
     }
 
+    /** Notice Repository */
+    single {
+        NoticeRepositoryImpl(
+            context = get(),
+            networkService = get()
+        ) as NoticeRepository
+    }
+
 
     /*****************************
      * Use Case
@@ -119,6 +127,13 @@ val myModules = module {
     single {
         GetVersion(
             versionRepo = get()
+        )
+    }
+
+    /** Get Notice */
+    single {
+        GetNotice(
+            noticeRepo = get()
         )
     }
 

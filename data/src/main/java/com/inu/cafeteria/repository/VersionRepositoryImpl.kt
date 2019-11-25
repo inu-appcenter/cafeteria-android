@@ -68,9 +68,7 @@ class VersionRepositoryImpl(
 
     companion object {
         private const val PREFERENCE_VERSION_INFO = "versionInfo"
-
         private const val KEY_DISMISSED_VERSION = "dismissedVersion"
-
         private const val EMPTY = ""
     }
 }

@@ -64,6 +64,7 @@
     <string name="button_retry">다시 시도</string>
     <string name="menu_login">로그인</string>
     <string name="button_confirm">확인</string>
+    <string name="desc_dont_show_again">다시 보지 않음</string>
 
 
 </resources>
