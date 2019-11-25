@@ -16,5 +16,14 @@ data class Notice(
     val all: PlatformNotice,
     val android: PlatformNotice
 ) {
-    data class PlatformNotice(val id: String, val title: String, val message: String)
+    data class PlatformNotice(val id: Long, val title: String, val message: String)
+
+    companion object {
+        fun emptyNotice(): Notice {
+            return Notice(
+                PlatformNotice(-1L, "", ""),
+                PlatformNotice(-1L, "", "")
+            )
+        }
+    }
 }

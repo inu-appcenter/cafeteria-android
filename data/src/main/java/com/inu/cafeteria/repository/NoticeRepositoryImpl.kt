@@ -49,19 +49,18 @@ class NoticeRepositoryImpl(
         )
     }
 
-    override fun dismissNotice(id: Long) {
+    override fun dismissNotice(type: DeviceType, id: Long) {
         pref.edit(true) {
-            putLong(KEY_DISMISSED_NOTICE_ID, id)
+            putLong(type.key, id)
         }
     }
 
-    override fun getDismissedNotice(): Long? {
-        return pref.getLong(KEY_DISMISSED_NOTICE_ID, EMPTY).takeIf { it != EMPTY }
+    override fun getDismissedNoticeId(type: DeviceType): Long? {
+        return pref.getLong(type.key, EMPTY).takeIf { it != EMPTY }
     }
 
     companion object {
         private const val PREFERENCE_NOTICE_INFO = "noticeInfo"
-        private const val KEY_DISMISSED_NOTICE_ID = "dismissedNoticeId"
         private const val EMPTY = -1L
     }
 }

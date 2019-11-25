@@ -69,5 +69,6 @@
     <string name="button_retry">Retry</string>
     <string name="menu_login">Sign in</string>
     <string name="button_confirm">Confirm</string>
+    <string name="desc_dont_show_again">Don\'t show again</string>
 
 </resources>

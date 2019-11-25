@@ -14,6 +14,11 @@ import com.inu.cafeteria.model.scheme.Notice
 abstract class NoticeRepository : Repository() {
     abstract fun getNotice(callback: DataCallback<Notice>)
 
-    abstract fun dismissNotice(id: Long)
-    abstract fun getDismissedNotice(): Long?
+    abstract fun dismissNotice(type: DeviceType, id: Long)
+    abstract fun getDismissedNoticeId(type: DeviceType): Long?
+
+    enum class DeviceType(val key: String) {
+        All("dismissedAllNoticeId"),
+        Android("dismissedAndroidNoticeId")
+    }
 }

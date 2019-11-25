@@ -29,24 +29,39 @@ class SplashFragment : BaseFragment() {
 
     private lateinit var viewModel: SplashViewModel
 
-    private val checkVersion = {
+    private val checkVersion = { nextStep: () -> Unit ->
         with(viewModel) {
             tryCheckVersion(
                 activity = activity!!,
                 onFail = ::handleConnectionFailure,
-                onPass = { showLogin(this@SplashFragment) },
+                onPass = nextStep,
                 onUpdate = {
-                    // Before moving to store, take next step to login.
-                    showLogin(this@SplashFragment)
+                    // Before moving to store, take a next step.
+                    nextStep()
                     goUpdate()
                 },
-                onDismiss = { showLogin(this@SplashFragment) }
+                onDismiss = nextStep
             )
         }
     }
 
-    private val checkNotices = {
+    private val checkNotices = { nextStep: () -> Unit ->
+        with(viewModel) {
+            tryShowNotice(
+                activity = activity!!,
+                onFail = ::handleConnectionFailure,
+                onPass = nextStep,
+                onConfirm = nextStep
+            )
+        }
+    }
 
+    private val routine = {
+        checkVersion {
+            checkNotices {
+                viewModel.showLogin(this)
+            }
+        }
     }
 
     init {
@@ -59,7 +74,7 @@ class SplashFragment : BaseFragment() {
 
         viewModel = getViewModel {
             // This action cannot be done inside view model because it needs activity.
-            onNoConnection = { navigator.showNoConnectionDialog(activity!!, checkVersion) }
+            onNoConnection = { navigator.showNoConnectionDialog(activity!!, routine) }
             onUnknownError = { navigator.showFatalDialog(activity!!, it) }
         }
         failables += viewModel.failables
@@ -76,6 +91,6 @@ class SplashFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        checkVersion()
+        routine()
     }
 }

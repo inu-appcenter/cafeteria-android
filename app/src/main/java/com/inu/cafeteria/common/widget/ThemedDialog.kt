@@ -12,7 +12,6 @@ package com.inu.cafeteria.common.widget
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.CheckBox
@@ -132,7 +131,7 @@ class ThemedDialog(context: Context) : Dialog(context, R.style.Transparent) {
             setVisible(buttonText != null)
             text = buttonText
             setOnClickListener {
-                onClick(checkBox.isSelected)
+                onClick(checkBox.isChecked)
                 dismiss()
             }
         }
@@ -142,7 +141,7 @@ class ThemedDialog(context: Context) : Dialog(context, R.style.Transparent) {
             setVisible(buttonText != null)
             text = buttonText
             setOnClickListener {
-                onClick(checkBox.isSelected)
+                onClick(checkBox.isChecked)
                 dismiss()
             }
         }
