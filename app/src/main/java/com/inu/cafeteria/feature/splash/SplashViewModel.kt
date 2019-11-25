@@ -153,10 +153,14 @@ class SplashViewModel : BaseViewModel() {
         // So we need a callback.
         getNotice(Unit) {
             it.onSuccess { notice ->
-                val showAllNotice = noticeRepo.getDismissedNoticeId(NoticeRepository.DeviceType.All) != notice.all.id && notice.all.id > 0
-                val showAndroidNotice = noticeRepo.getDismissedNoticeId(NoticeRepository.DeviceType.Android) != notice.android.id && notice.android.id > 0
+                val allNoticeIgnored = noticeRepo.getDismissedNoticeId(NoticeRepository.DeviceType.All) == notice.all.id
+                val showAllNotice = !allNoticeIgnored && notice.all.id > 0
 
-                Timber.i("$showAllNotice(${noticeRepo.getDismissedNoticeId(NoticeRepository.DeviceType.All)}), $showAndroidNotice(${noticeRepo.getDismissedNoticeId(NoticeRepository.DeviceType.Android)})")
+                val androidNoticeIgnored = noticeRepo.getDismissedNoticeId(NoticeRepository.DeviceType.Android) == notice.android.id
+                val showAndroidNotice = !androidNoticeIgnored && notice.android.id > 0
+
+                Timber.i("Show notice for all? $showAllNotice. Notice id is ${notice.all.id}, ignored? $allNoticeIgnored.")
+                Timber.i("Show notice for android? $showAndroidNotice. Notice id is ${notice.android.id}, ignored? $androidNoticeIgnored.")
 
                 if (showAllNotice && showAndroidNotice) {
                     // First
