@@ -71,7 +71,6 @@ class FoodMenuParser : Parser<JsonElement, List<FoodMenu>>() {
      * It sucks but this is a parser
      *
      */
-    @SuppressWarnings("Unchecked cast")
     override fun parse(raw: JsonElement, params: Any?): List<FoodMenu>? {
         if (!Types.checkType(params, listOf<Int>())) {
             Timber.w("Params must be List<Int>.")
@@ -80,6 +79,7 @@ class FoodMenuParser : Parser<JsonElement, List<FoodMenu>>() {
 
         // This is safe.
         // See CafeteriaRepositoryImpl.kt:68.
+        @Suppress("UNCHECKED_CAST")
         val availableCafeteria = params as List<Int>
 
         val foodMenusByCafeteria = mutableListOf<FoodMenu>()
