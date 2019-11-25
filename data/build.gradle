@@ -35,9 +35,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             buildConfigField "String", "AES_KEY", "\"${generator((('A'..'Z')+('a'..'z')+('0'..'9')).join(), 12)}\""
+            buildConfigField "String", "BASE_URL", env_production
         }
         debug {
-            buildConfigField "String", "AES_KEY", "\"I_AM_IRONMAN\""
+            buildConfigField "String", "AES_KEY", key_test
+            buildConfigField "String", "BASE_URL", env_test
         }
     }
 }
