@@ -20,14 +20,8 @@ import com.inu.cafeteria.common.extension.getViewModel
 import org.koin.core.inject
 
 /**
- * Display splash screen, while checking version.
+ * Display splash screen, while checking version and notices.
  * Route activity launches this activity by default.
- *
- * TODO: Explanation && Permission
- * We need to put some explanation on this app for user.
- * Also we need to ask for accessing settings.
- * This is required because a barcode feature
- * needs a bright screen.
  */
 class SplashFragment : BaseFragment() {
 
@@ -39,7 +33,7 @@ class SplashFragment : BaseFragment() {
         with(viewModel) {
             tryCheckVersion(
                 activity = activity!!,
-                onFail = ::handleVersionCheckFailure,
+                onFail = ::handleConnectionFailure,
                 onPass = { showLogin(this@SplashFragment) },
                 onUpdate = {
                     // Before moving to store, take next step to login.
@@ -49,6 +43,10 @@ class SplashFragment : BaseFragment() {
                 onDismiss = { showLogin(this@SplashFragment) }
             )
         }
+    }
+
+    private val checkNotices = {
+
     }
 
     init {

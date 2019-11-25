@@ -56,7 +56,6 @@ class SplashViewModel : BaseViewModel() {
         onUpdate: () -> Unit,
         onDismiss: () -> Unit
     ) {
-
         val getDialog = { version: VersionCompared ->
             ThemedDialog(activity)
                 .withTitle(R.string.dialog_new_version, version.latestVersion)
@@ -97,11 +96,15 @@ class SplashViewModel : BaseViewModel() {
         }
     }
 
+
+
+
+
     /**
      * ServerNoResponseException is a special case, so it need to be
      * handled carefully.
      */
-    fun handleVersionCheckFailure(e: Exception) {
+    fun handleConnectionFailure(e: Exception) {
         when (e) {
             is ServerNoResponseException -> onNoConnection()
             else -> onUnknownError(e)
