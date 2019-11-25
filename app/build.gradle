@@ -30,7 +30,6 @@ android {
 
     buildTypes {
         release {
-            debuggable true
             minifyEnabled false // This option is very problematic.
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
