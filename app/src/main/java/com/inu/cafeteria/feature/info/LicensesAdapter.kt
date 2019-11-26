@@ -37,7 +37,6 @@ class LicensesAdapter : BaseAdapter<OpenSourceSoftware>() {
 
         with(view.source_url) {
             text = item.sourceCodeReference
-            setOnClickListener { navigator.showUrl(item.sourceCodeReference) }
         }
 
         with(view.copyright) {
@@ -46,7 +45,6 @@ class LicensesAdapter : BaseAdapter<OpenSourceSoftware>() {
 
         with(view.license) {
             text = item.licenseName
-            setOnClickListener { navigator.showUrl(item.licenseReference) }
         }
     }
 }
