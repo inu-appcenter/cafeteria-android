@@ -69,7 +69,7 @@ class InfoFragment : BaseFragment() {
                 thisAppLicense.contact)
         }
 
-        // Diaplay authors of this app.
+        // Display authors of this app.
         with(view.authors) {
             adapter = AuthorsAdapter().apply {
                 data = thisAppAuthors
