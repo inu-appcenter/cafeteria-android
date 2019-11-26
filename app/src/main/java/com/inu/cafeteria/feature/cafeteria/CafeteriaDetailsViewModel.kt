@@ -72,7 +72,7 @@ class CafeteriaDetailsViewModel : BaseViewModel() {
         }
 
         getFoodMenu(Unit) { result ->
-            result.onSuccess {list ->
+            result.onSuccess { list ->
                 cafeteria?.let {
                     val found = list.find { it.cafeteriaNumber == cafeteria?.key }
                     _food.value = found
