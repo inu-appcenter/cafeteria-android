@@ -32,15 +32,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- Contents -->
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="18dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="18dp"
-
-            android:layout_marginBottom="4dp"
-            android:orientation="vertical">
+            android:layout_marginBottom="4dp">
 
             <!-- Title -->
             <TextView
@@ -51,6 +49,9 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/textPrimary"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Title" />
 
             <!-- Message -->
@@ -58,10 +59,14 @@
                 android:id="@+id/message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/textSecondary"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/title"
+                app:layout_constraintTop_toBottomOf="@+id/title"
                 tools:text="Message." />
 
             <!-- CheckBox -->
@@ -70,11 +75,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
+                android:layout_margin="-10dp"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/textSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/message"
                 tools:text="Check something" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Separator -->
         <View
