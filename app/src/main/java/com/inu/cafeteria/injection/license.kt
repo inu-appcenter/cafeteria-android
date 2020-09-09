@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.injection
@@ -21,6 +31,7 @@ import com.inu.cafeteria.model.OpenSourceSoftware
  * License of this app.
  * This app is open source and we NEED to add license.
  */
+
 val thisAppLicense = OpenSourceSoftware(
     name = "INU Cafeteria",
     contact = "inuappcenter@gmail.com",
@@ -34,6 +45,7 @@ val thisAppLicense = OpenSourceSoftware(
 /**
  * Open source software used in this app.
  */
+
 val openSourceLicenses = listOf(
 
     OpenSourceSoftware(

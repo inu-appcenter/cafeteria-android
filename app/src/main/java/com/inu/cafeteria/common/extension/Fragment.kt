@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.common.extension
@@ -29,12 +39,14 @@ import kotlinx.android.synthetic.main.single_fragment_activity.*
 /**
  * Do something in the middle of beginTransaction() and commit().
  */
+
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) =
     beginTransaction().func().commit()
 
 /**
  * Do something in the middle of beginTransaction() and commitNow().
  */
+
 inline fun FragmentManager.inImmediateTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
     beginTransaction().func().commitNow()
 }
@@ -43,6 +55,7 @@ inline fun FragmentManager.inImmediateTransaction(func: FragmentTransaction.() -
 /**
  * Show only one fragment.
  */
+
 inline fun FragmentManager.showOnly(predicate: (Fragment) -> Boolean): Boolean  {
     inTransaction {
         fragments.forEach {
@@ -64,6 +77,7 @@ inline fun FragmentManager.showOnly(predicate: (Fragment) -> Boolean): Boolean  
 /**
  * Add multiple fragments. (Collection)
  */
+
 fun FragmentTransaction.addAll(@IdRes containerViewId: Int, fragments: Collection<Fragment>) {
     fragments.forEach {
         add(containerViewId, it)
@@ -73,6 +87,7 @@ fun FragmentTransaction.addAll(@IdRes containerViewId: Int, fragments: Collectio
 /**
  * Add multiple fragments. (Array)
  */
+
 fun FragmentTransaction.addAll(@IdRes containerViewId: Int, fragments: Array<out Fragment>) {
     fragments.forEach {
         add(containerViewId, it)
@@ -82,6 +97,7 @@ fun FragmentTransaction.addAll(@IdRes containerViewId: Int, fragments: Array<out
 /**
  * Get ViewModel of the fragment with SingleUseCaseViewModelFactory.
  */
+
 inline fun <reified T : ViewModel> Fragment.getViewModel(factory: Factory, body: T.() -> Unit = {}): T {
     return ViewModelProviders.of(this, factory).get(T::class.java).apply(body)
 }
@@ -89,6 +105,7 @@ inline fun <reified T : ViewModel> Fragment.getViewModel(factory: Factory, body:
 /**
  * Get ViewModel of the fragment without SingleUseCaseViewModelFactory.
  */
+
 inline fun <reified T : ViewModel> Fragment.getViewModel(body: T.() -> Unit = {}): T {
     return ViewModelProviders.of(this).get(T::class.java).apply(body)
 }
@@ -97,6 +114,7 @@ inline fun <reified T : ViewModel> Fragment.getViewModel(body: T.() -> Unit = {}
  * For Activity.
  * Get ViewModel of the fragment with SingleUseCaseViewModelFactory.
  */
+
 inline fun <reified T : ViewModel> FragmentActivity.getViewModel(factory: Factory, body: T.() -> Unit = {}): T {
     return ViewModelProviders.of(this, factory).get(T::class.java).apply(body)
 }
@@ -105,6 +123,7 @@ inline fun <reified T : ViewModel> FragmentActivity.getViewModel(factory: Factor
  * For Activity
  * Get ViewModel of the fragment without SingleUseCaseViewModelFactory.
  */
+
 inline fun <reified T : ViewModel> FragmentActivity.getViewModel(body: T.() -> Unit = {}): T {
     return ViewModelProviders.of(this).get(T::class.java).apply(body)
 }

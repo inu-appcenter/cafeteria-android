@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.feature.barcode
@@ -65,7 +75,8 @@ class BarcodeViewModel : BaseViewModel() {
      * @param onFail any failure.
      * @param onNoBarcode no valid barcode found in local.
      */
-    fun tryActivatingBarcode(
+
+fun tryActivatingBarcode(
         onSuccess: (Bitmap?) -> Unit,
         onFail: (e: Exception) -> Unit,
         onNoBarcode: () -> Unit  // No barcode
@@ -133,7 +144,8 @@ class BarcodeViewModel : BaseViewModel() {
      * @param onFail any Failure.
      * @param onNoBarcode when no barcode available in local.
      */
-    fun tryInvalidatingBarcode(
+
+fun tryInvalidatingBarcode(
         onFail: (e: Exception) -> Unit,
         onNoBarcode: () -> Unit  // No barcode
     ) {
@@ -157,7 +169,8 @@ class BarcodeViewModel : BaseViewModel() {
     /**
      * Barcode activation specific error handling.
      */
-    fun handleActivateBarcodeFailure(e: Exception) {
+
+fun handleActivateBarcodeFailure(e: Exception) {
         when (e) {
             is ServerNoResponseException -> _barcodeState.value = barcodeState.value?.copy(isNetworkDown = true)
             else -> defaultDataErrorHandle(e)
@@ -168,7 +181,8 @@ class BarcodeViewModel : BaseViewModel() {
      * Make it bright!
      * @param brightness 0 ~ 255
      */
-    fun brightenScreen(activity: Activity?) {
+
+fun brightenScreen(activity: Activity?) {
         activity?.let {
             brightness = it.getBrightness()
             it.setBrightness(1.0f)
@@ -178,7 +192,8 @@ class BarcodeViewModel : BaseViewModel() {
     /**
      * Return it back!
      */
-    fun restoreScreen(activity: Activity?) {
+
+fun restoreScreen(activity: Activity?) {
         // Do it only after the screen has been brightened.
         brightness.takeIf { it > 0f }?.let {
             activity?.setBrightness(it)

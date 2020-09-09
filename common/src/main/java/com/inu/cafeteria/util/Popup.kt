@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.util
@@ -20,6 +30,7 @@ import androidx.annotation.StringRes
  * 메소드 체인으로 Dialog를 만들어서 띄울 수 있습니다.
  * 아니면 static 메소드를 사용하여 바로 띄울 수도 있습니다.
  */
+
 class Popup(private val context: Context?) {
 
     private val dialogBuilder = AlertDialog.Builder(context).apply {
@@ -82,7 +93,8 @@ class Popup(private val context: Context?) {
          * 위의 것들이 귀찮을 때에 아주 빠르게 쓸 수 있는 간단한 함수입니다.
          * 컨텍스트와 내용을 받아서 다이얼로그를 만들어서 띄웁니다.
          */
-        fun show(context: Context, message: String) {
+
+fun show(context: Context, message: String) {
             AlertDialog.Builder(context).apply {
                 setPositiveButton("OK", null)
                 setMessage(message)

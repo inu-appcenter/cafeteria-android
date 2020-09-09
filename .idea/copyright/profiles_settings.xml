@@ -1,11 +1,24 @@
 <component name="CopyrightManager">
-  <settings default="android">
+  <settings default="gpl3">
     <module2copyright>
-      <element module="Project Files" copyright="android" />
+      <element module="Project Files" copyright="gpl3" />
     </module2copyright>
+    <LanguageOptions name="Groovy">
+      <option name="fileTypeOverride" value="3" />
+      <option name="separateBefore" value="true" />
+      <option name="lenBefore" value="2" />
+    </LanguageOptions>
+    <LanguageOptions name="JAVA">
+      <option name="fileTypeOverride" value="3" />
+      <option name="separateBefore" value="true" />
+      <option name="lenBefore" value="2" />
+    </LanguageOptions>
     <LanguageOptions name="Kotlin">
       <option name="fileTypeOverride" value="3" />
       <option name="separateBefore" value="true" />
+      <option name="lenBefore" value="2" />
+    </LanguageOptions>
+    <LanguageOptions name="__TEMPLATE__">
       <option name="lenBefore" value="2" />
     </LanguageOptions>
   </settings>

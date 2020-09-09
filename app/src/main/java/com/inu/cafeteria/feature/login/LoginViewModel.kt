@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.feature.login
@@ -39,7 +49,8 @@ class LoginViewModel : BaseViewModel() {
      * Represents login status.
      * Fragment will observe this and take an adequate action.
      */
-    private val _loginInProgress = MutableLiveData<Boolean>()
+
+private val _loginInProgress = MutableLiveData<Boolean>()
     var loginInProgress: LiveData<Boolean> = _loginInProgress
 
     init {
@@ -66,7 +77,8 @@ class LoginViewModel : BaseViewModel() {
      * @param onSuccess launched when successfully login with token.
      * @param onFail launched when request failed.
      */
-    fun tryAutoLogin(
+
+fun tryAutoLogin(
         onNoToken: () -> Unit,
         onSuccess: (LoginResult) -> Unit,
         onFail: (Exception) -> Unit
@@ -98,7 +110,8 @@ class LoginViewModel : BaseViewModel() {
      * @param onSuccess launched when successfully logged in.
      * @param onFail launched when request failed.
      */
-    fun tryLoginWithIdAndPw(
+
+fun tryLoginWithIdAndPw(
         id: String,
         pw: String,
         auto: Boolean,
@@ -118,7 +131,8 @@ class LoginViewModel : BaseViewModel() {
     /**
      * We need to invalidate stored student id if we failed to auto login.
      */
-    fun handleAutoLoginFailure(e: Exception) {
+
+fun handleAutoLoginFailure(e: Exception) {
         when (e) {
             is ResponseFailException -> {
                 studentInfoRepo.invalidate()
@@ -132,7 +146,8 @@ class LoginViewModel : BaseViewModel() {
     /**
      * Handle login failures.
      */
-    fun handleLoginFailure(e: Exception) {
+
+fun handleLoginFailure(e: Exception) {
         when (e) {
             is ResponseFailException -> {
                 fail(R.string.fail_wrong_auth, show = true)
@@ -144,7 +159,8 @@ class LoginViewModel : BaseViewModel() {
     /**
      * Save token and barcode obtained from successful login.
      */
-    fun saveLoginResult(result: LoginResult, id: String) {
+
+fun saveLoginResult(result: LoginResult, id: String) {
         with(studentInfoRepo) {
             setStudentId(id)
             setLoginToken(result.token)
@@ -155,7 +171,8 @@ class LoginViewModel : BaseViewModel() {
     /**
      * Navigate to MainActivity and close current activity.
      */
-    fun showMain(fragment: BaseFragment) {
+
+fun showMain(fragment: BaseFragment) {
         navigator.showMain()
         fragment.finishActivity()
     }

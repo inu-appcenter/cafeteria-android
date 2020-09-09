@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.injection
@@ -24,19 +34,22 @@ val myModules = module {
      *****************************/
 
     /** Navigator */
-    single {
+
+single {
         Navigator(
             context = get()
         )
     }
 
     /** Cafeteria Details Animator */
-    single {
+
+single {
         CafeteriaDetailsAnimator()
     }
 
     /** Network Service */
-    single {
+
+single {
         RetrofitFactory.createCafeteriaNetworkService(
             context = get()
         )
@@ -48,7 +61,8 @@ val myModules = module {
      *****************************/
 
     /** Cafeteria Repository */
-    single {
+
+single {
         CafeteriaRepositoryImpl(
             networkService = get(),
             cafeteriaParser = get(),
@@ -57,19 +71,22 @@ val myModules = module {
     }
 
     /** Login Repository */
-    single {
+
+single {
         LoginRepositoryImpl(
             networkService = get()
         ) as LoginRepository
     }
 
     /** Private Repository */
-    single {
+
+single {
         PrivateRepositoryImpl() as PrivateRepository
     }
 
     /** Student Info Repository */
-    single {
+
+single {
         StudentInfoRepositoryImpl(
             context = get(),
             networkService = get()
@@ -77,7 +94,8 @@ val myModules = module {
     }
 
     /** Version Repository */
-    single {
+
+single {
         VersionRepositoryImpl(
             context = get(),
             networkService = get()
@@ -85,7 +103,8 @@ val myModules = module {
     }
 
     /** Notice Repository */
-    single {
+
+single {
         NoticeRepositoryImpl(
             context = get(),
             networkService = get()
@@ -98,54 +117,62 @@ val myModules = module {
      *****************************/
 
     /** Activate Barcode */
-    single {
+
+single {
         ActivateBarcode(
             studentInfoRepo = get()
         )
     }
 
     /** Create Barcode */
-    single {
+
+single {
         CreateBarcode()
     }
 
     /** Get Cafeteria */
-    single {
+
+single {
         GetCafeteria(
             cafeteriaRepo = get()
         )
     }
 
     /** Get Food Menu */
-    single {
+
+single {
         GetFoodMenu(
             cafeteriaRepo = get()
         )
     }
 
     /** Get Version */
-    single {
+
+single {
         GetVersion(
             versionRepo = get()
         )
     }
 
     /** Get Notice */
-    single {
+
+single {
         GetNotice(
             noticeRepo = get()
         )
     }
 
     /** Login */
-    single {
+
+single {
         Login(
             loginRepo = get()
         )
     }
 
     /** Logout */
-    single {
+
+single {
         Logout(
             loginRepo = get()
         )
@@ -157,12 +184,14 @@ val myModules = module {
      *****************************/
 
     /** Cafeteria Parser */
-    single {
+
+single {
         CafeteriaParser()
     }
 
     /** FoodMenu Parser */
-    single {
+
+single {
         FoodMenuParser()
     }
 }

@@ -1,10 +1,20 @@
-/*
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
+/**
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 apply plugin: 'com.android.application'
@@ -65,26 +75,33 @@ dependencies {
     implementation project(":data")
 
     /** Koin Test */
-    androidTestImplementation "org.koin:koin-test:$koin_version"
+
+androidTestImplementation "org.koin:koin-test:$koin_version"
 
     /** RecyclerView */
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+
+implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
 
     /** ConstraintLayout */
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+
+implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
 
     /** ViewModel */
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+
+implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
 
     /** Material */
-    implementation "com.google.android.material:material:$material_version"
+
+implementation "com.google.android.material:material:$material_version"
 
     /** Persistent Cookie Jar */
-    implementation "com.github.franmontiel:PersistentCookieJar:$cookiejar_version"
+
+implementation "com.github.franmontiel:PersistentCookieJar:$cookiejar_version"
 
     /** Glide */
-    implementation "com.github.bumptech.glide:glide:$glide_version"
+
+implementation "com.github.bumptech.glide:glide:$glide_version"
     implementation 'androidx.core:core-ktx:1.5.0-alpha02'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

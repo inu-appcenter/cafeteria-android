@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.common
@@ -36,6 +46,7 @@ import kotlin.system.exitProcess
 /**
  * Go everywhere.
  */
+
 class Navigator(
     private val context: Context
 ) : FailableComponent(), KoinComponent {
@@ -62,7 +73,8 @@ class Navigator(
      * Explain user that the server or network is down.
      * Only choose is to close the app.
      */
-    fun showNoConnectionDialog(activity: FragmentActivity) {
+
+fun showNoConnectionDialog(activity: FragmentActivity) {
         ThemedDialog(activity)
             .withTitle(R.string.title_server_error)
             .withMessage(R.string.dialog_server_not_respond)
@@ -74,7 +86,8 @@ class Navigator(
      * Explain user that the server or network is down.
      * Give user a chance to retry.
      */
-    fun showNoConnectionDialog(activity: FragmentActivity, onRetry: () -> Unit) {
+
+fun showNoConnectionDialog(activity: FragmentActivity, onRetry: () -> Unit) {
         ThemedDialog(activity)
             .withTitle(R.string.title_server_error)
             .withMessage(R.string.dialog_server_not_respond)

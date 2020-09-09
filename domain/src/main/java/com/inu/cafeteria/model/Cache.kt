@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.model
@@ -12,6 +22,7 @@ package com.inu.cafeteria.model
 /**
  * A simple cache class for storing fetched data.
  */
+
 class Cache<T> {
     private var cache: T? = null
     private var valid: Boolean = false
@@ -19,7 +30,8 @@ class Cache<T> {
     /**
      * It means 'is this the valid projection of the server data?'
      */
-    val isValid: Boolean get() { return valid }
+
+val isValid: Boolean get() { return valid }
 
     /**
      * Get data inside the cache.
@@ -30,7 +42,8 @@ class Cache<T> {
      *
      * @throws IllegalStateException
      */
-    fun get(): T? {
+
+fun get(): T? {
         isValid.takeIf { it } ?: throw IllegalStateException("Cannot access a cache in an invalid state.")
 
         return cache
@@ -44,7 +57,8 @@ class Cache<T> {
      * But it is still valid. Because the cache is projecting the real data on server.
      * So Calling this method will ALWAYS set the cache as valid.
      */
-    fun set(value: T?) {
+
+fun set(value: T?) {
         cache = value
         valid = true
     }
@@ -52,7 +66,8 @@ class Cache<T> {
     /**
      * Invalidate the cache.
      */
-    fun invalidate() {
+
+fun invalidate() {
         clear()
         valid = false
     }
@@ -61,7 +76,8 @@ class Cache<T> {
      * Set the cache to null.
      * This method is internal only, must be called with setting [isValid].
      */
-    private fun clear() {
+
+private fun clear() {
         cache = null
     }
 }

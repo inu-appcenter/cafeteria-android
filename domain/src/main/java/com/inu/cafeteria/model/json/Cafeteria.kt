@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.model.json
@@ -17,41 +27,49 @@ import java.io.Serializable
 /**
  * Represents a single cafeteria.
  */
+
 data class Cafeteria(
     /**
      * The root key for identifying a cafeteria.
      */
-    @SerializedName("no") val key: Int,
+
+@SerializedName("no") val key: Int,
 
     /**
      * The name of the cafeteria.
      */
-    @SerializedName("name") val name: String,
+
+@SerializedName("name") val name: String,
 
     /**
      * If -1, it does not support food menu.
      */
-    @SerializedName("menu") val supportFoodMenu: Int,
+
+@SerializedName("menu") val supportFoodMenu: Int,
 
     /**
      * Whether or not the cafeteria supports alarm.
      */
-    @SerializedName("alarm") val alarm: Boolean,
+
+@SerializedName("alarm") val alarm: Boolean,
 
     /**
      * The order the server wants the cafeteria be shown to user.
      */
-    @SerializedName("order") val order: Int,
+
+@SerializedName("order") val order: Int,
 
     /**
      * Foreground image path. Without base url.
      */
-    @SerializedName("img") val imagePath: String,
+
+@SerializedName("img") val imagePath: String,
 
     /**
      * Background dimmed image path. Without base url.
      */
-    @SerializedName("bgimg") val backgroundImagePath: String
+
+@SerializedName("bgimg") val backgroundImagePath: String
 
 ) : Serializable
 

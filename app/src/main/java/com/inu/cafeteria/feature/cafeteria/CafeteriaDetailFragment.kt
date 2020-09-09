@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.feature.cafeteria
@@ -55,7 +65,8 @@ class CafeteriaDetailFragment : BaseFragment() {
             it.window.sharedElementEnterTransition = ChangeBounds().apply {
                 startDelay = 0
                 duration = 200 /* TODO */
-            }
+
+}
         }
 
         detailsViewModel = getViewModel {
@@ -84,7 +95,8 @@ class CafeteriaDetailFragment : BaseFragment() {
      *
      * If it is first created, cancel the transition.
      */
-    private fun initializeView(view: View, firstTimeCreated: Boolean) {
+
+private fun initializeView(view: View, firstTimeCreated: Boolean) {
         if (firstTimeCreated) {
             // This is a first time this fragment is created.
             // It is obvious that user just clicked the detail
@@ -134,7 +146,8 @@ class CafeteriaDetailFragment : BaseFragment() {
      *
      * @param food the updated food menus per corners of this cafeteria.
      */
-    private fun foodMenuUpdated(food: FoodMenu?) {
+
+private fun foodMenuUpdated(food: FoodMenu?) {
         activity?.let { activity ->
             // This is the situation where the first data fetch took place.
             // We need to set the cafeteria image, and postpone the transition.
@@ -156,7 +169,8 @@ class CafeteriaDetailFragment : BaseFragment() {
      * Invoked by parent activity, when swipe down gesture is detected.
      *
      */
-    fun onSwipeDown() {
+
+fun onSwipeDown() {
         val expanded = viewDataBinding.appbar.height - viewDataBinding.appbar.bottom == 0
         if (expanded) {
             activity?.onBackPressed()
