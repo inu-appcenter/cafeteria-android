@@ -19,8 +19,6 @@
 
 package com.inu.cafeteria.repository
 
-import com.inu.cafeteria.base.FailableComponent
-import com.inu.cafeteria.base.Startable
 import timber.log.Timber
 
 /**
@@ -28,11 +26,7 @@ import timber.log.Timber
  * initialization and error handling.
  */
 
-abstract class Repository : FailableComponent(), Startable {
-    override fun start() {
-        Timber.v("${this::class.java.name} started.")
-    }
-
+abstract class Repository {
     /**
      * Callback passed to repository when requesting some data.
      * Usefull when fetching data from network or DB.

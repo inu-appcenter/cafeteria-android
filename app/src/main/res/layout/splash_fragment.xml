@@ -18,45 +18,42 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/img_bg_3"
-    tools:context=".feature.splash.SplashActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Logo layout -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45">
+        android:background="?android:attr/colorPrimary"
+        tools:context=".feature.splash.SplashActivity">
 
-        <ImageView
-            android:contentDescription="@string/desc_logo"
-            android:layout_width="match_parent"
+        <!-- Logo layout -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/img_logo" />
-
-        <TextView
-            android:textColor="?android:attr/textColorPrimaryInverse"
-            android:textSize="@dimen/textSecondary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
-            android:padding="10dp"
-            android:text="@string/desc_app_description" />
+            android:orientation="vertical"
+            android:weightSum="5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.45">
 
-    </LinearLayout>
+            <TextView
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="@dimen/textSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="@string/desc_app_description" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

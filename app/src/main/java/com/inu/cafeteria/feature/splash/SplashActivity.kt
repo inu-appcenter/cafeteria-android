@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment
 import com.inu.cafeteria.common.base.SingleFragmentActivity
 
 class SplashActivity : SingleFragmentActivity() {
+
     override val fragment: Fragment = SplashFragment()
 
     companion object {

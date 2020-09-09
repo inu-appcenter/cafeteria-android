@@ -21,7 +21,6 @@ package com.inu.cafeteria.interactor
 
 import android.os.Handler
 import android.os.Looper
-import com.inu.cafeteria.base.FailableComponent
 import com.inu.cafeteria.functional.Result
 import timber.log.Timber
 
@@ -30,7 +29,7 @@ import timber.log.Timber
  * Any use case in this application should implement this.
  */
 
-abstract class UseCase<in Params, out Type> : FailableComponent() {
+abstract class UseCase<in Params, out Type> {
     abstract fun run(params: Params): Result<Type>
 
     /**

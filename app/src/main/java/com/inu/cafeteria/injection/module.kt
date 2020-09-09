@@ -20,7 +20,6 @@
 package com.inu.cafeteria.injection
 
 import com.inu.cafeteria.common.Navigator
-import com.inu.cafeteria.feature.cafeteria.CafeteriaDetailsAnimator
 import com.inu.cafeteria.parser.CafeteriaParser
 import com.inu.cafeteria.parser.FoodMenuParser
 import com.inu.cafeteria.repository.*
@@ -35,21 +34,15 @@ val myModules = module {
 
     /** Navigator */
 
-single {
+    single {
         Navigator(
             context = get()
         )
     }
 
-    /** Cafeteria Details Animator */
-
-single {
-        CafeteriaDetailsAnimator()
-    }
-
     /** Network Service */
 
-single {
+    single {
         RetrofitFactory.createCafeteriaNetworkService(
             context = get()
         )
@@ -62,7 +55,7 @@ single {
 
     /** Cafeteria Repository */
 
-single {
+    single {
         CafeteriaRepositoryImpl(
             networkService = get(),
             cafeteriaParser = get(),
@@ -72,7 +65,7 @@ single {
 
     /** Login Repository */
 
-single {
+    single {
         LoginRepositoryImpl(
             networkService = get()
         ) as LoginRepository
@@ -80,13 +73,13 @@ single {
 
     /** Private Repository */
 
-single {
+    single {
         PrivateRepositoryImpl() as PrivateRepository
     }
 
     /** Student Info Repository */
 
-single {
+    single {
         StudentInfoRepositoryImpl(
             context = get(),
             networkService = get()
@@ -95,7 +88,7 @@ single {
 
     /** Version Repository */
 
-single {
+    single {
         VersionRepositoryImpl(
             context = get(),
             networkService = get()
@@ -104,7 +97,7 @@ single {
 
     /** Notice Repository */
 
-single {
+    single {
         NoticeRepositoryImpl(
             context = get(),
             networkService = get()
@@ -118,7 +111,7 @@ single {
 
     /** Activate Barcode */
 
-single {
+    single {
         ActivateBarcode(
             studentInfoRepo = get()
         )
@@ -126,13 +119,13 @@ single {
 
     /** Create Barcode */
 
-single {
+    single {
         CreateBarcode()
     }
 
     /** Get Cafeteria */
 
-single {
+    single {
         GetCafeteria(
             cafeteriaRepo = get()
         )
@@ -140,7 +133,7 @@ single {
 
     /** Get Food Menu */
 
-single {
+    single {
         GetFoodMenu(
             cafeteriaRepo = get()
         )
@@ -148,7 +141,7 @@ single {
 
     /** Get Version */
 
-single {
+    single {
         GetVersion(
             versionRepo = get()
         )
@@ -156,7 +149,7 @@ single {
 
     /** Get Notice */
 
-single {
+    single {
         GetNotice(
             noticeRepo = get()
         )
@@ -164,7 +157,7 @@ single {
 
     /** Login */
 
-single {
+    single {
         Login(
             loginRepo = get()
         )
@@ -172,7 +165,7 @@ single {
 
     /** Logout */
 
-single {
+    single {
         Logout(
             loginRepo = get()
         )
@@ -185,13 +178,13 @@ single {
 
     /** Cafeteria Parser */
 
-single {
+    single {
         CafeteriaParser()
     }
 
     /** FoodMenu Parser */
 
-single {
+    single {
         FoodMenuParser()
     }
 }

@@ -17,16 +17,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.base
+package com.inu.cafeteria.feature.main
 
-/**
- * A component that has Failable inside.
- */
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.inu.cafeteria.common.base.BaseFragment
 
-interface FailableContainer {
-    /**
-     * List of failables to handle.
-     */
+class MainFragment : BaseFragment() {
 
-val failables: MutableList<Failable>
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 }
