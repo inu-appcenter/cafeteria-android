@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/item_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/section_vertical_margin"
+    android:layout_marginBottom="@dimen/section_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/cafeteria_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/section_horizontal_margin"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_big"
+        android:textColor="#000"
+        tools:text="Section A" />
+
+    <ImageButton
+        android:id="@+id/more_button"
+        android:contentDescription="@string/desc_more_button"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintTop_toTopOf="@id/cafeteria_name"
+        app:layout_constraintBottom_toBottomOf="@id/cafeteria_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/section_horizontal_margin"
+        android:background="@drawable/ic_arrow_forward_24px" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/menu_page_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cafeteria_name"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/section_page_horizontal_padding"
+        android:paddingEnd="@dimen/section_page_horizontal_padding"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/menu_page" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,6 +75,7 @@
     <string name="menu_login">로그인</string>
     <string name="button_confirm">확인</string>
     <string name="desc_dont_show_again">다시 보지 않음</string>
+    <string name="desc_more_button">더보기 버튼입니다.</string>
 
 
 </resources>
