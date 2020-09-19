@@ -25,8 +25,8 @@ import com.inu.cafeteria.entities.Menu
 data class MenuView(
     val availableAt: Int,
     val foods: String,
+    val price: Int?,
     val calorie: Int?,
-    val price: Int?
 ) {
     companion object {
         fun fromCornerAndMenu(corner: Corner, menu: Menu): MenuView =

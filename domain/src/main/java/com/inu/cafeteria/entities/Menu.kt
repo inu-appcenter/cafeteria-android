@@ -21,6 +21,6 @@ package com.inu.cafeteria.entities
 
 data class Menu(
     val foods: List<String>,
-    val calorie: Int?,
     val price: Int?,
+    val calorie: Int?
 )

@@ -29,5 +29,5 @@ abstract class CafeteriaRepository : Repository {
 
     abstract fun invalidateCache()
 
-    abstract fun getAllCafeteria(): List<Cafeteria>
+    abstract fun getAllCafeteria(date: String? = null): List<Cafeteria>
 }

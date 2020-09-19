@@ -23,8 +23,8 @@ import com.google.gson.annotations.SerializedName
 
 data class MenuResult(
     val foods: String,
-    val calorie: Int,
     val price: Int,
+    val calorie: Int,
 
     @SerializedName("corner-id") val cornerId: Int
 )

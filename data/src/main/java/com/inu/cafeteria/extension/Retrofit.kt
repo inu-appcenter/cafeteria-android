@@ -64,7 +64,7 @@ fun <T> Call<T>.onResult(
          * Go async
          */
 
-enqueue(object: Callback<T> {
+        enqueue(object: Callback<T> {
 
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 try {
@@ -102,7 +102,7 @@ enqueue(object: Callback<T> {
          * Go sync
          */
 
-try {
+        try {
             val result = execute()
 
             if (result.isSuccessful) {
@@ -126,5 +126,28 @@ try {
             onFail(e)
             Timber.e("Unexpected exception during synchronous execute..")
         }
+    }
+}
+
+fun <T> Call<T>.getOrNull(): T? {
+    try {
+        val result = execute()
+        return if (result.isSuccessful) {
+            val body = result.body()
+            body.also {
+                it?.let { Timber.i("Response success!") }
+                    ?.onNull { Timber.w("Response is success but body is null.") }
+            }
+        } else {
+            Timber.w("Response is fail.")
+            null
+        }
+    } catch (e: IOException) {
+        Timber.e(e)
+        Timber.w("Server no responding.")
+        return null
+    } catch (e: Exception) {
+        Timber.e("Unexpected exception during synchronous execute..")
+        return null
     }
 }
