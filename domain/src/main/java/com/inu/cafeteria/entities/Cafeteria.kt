@@ -22,7 +22,7 @@ package com.inu.cafeteria.entities
 data class Cafeteria(
     val id: Int,
     val name: String,
-    val displayName: String,
+    val displayName: String?,
     val supportMenu: Boolean,
     val supportDiscount: Boolean,
     val supportNotification: Boolean,

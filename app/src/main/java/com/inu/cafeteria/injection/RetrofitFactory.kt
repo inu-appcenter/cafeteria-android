@@ -42,10 +42,8 @@ class RetrofitFactory {
 
             val builder = Retrofit.Builder()
 
-            // You should implement your own PrivateRepository.
-            // @see [PrivateRepository]
             val retrofit = builder
-                .baseUrl(PrivateRepositoryImpl().getServerBaseUrl())
+                .baseUrl("https://api.inu-cafeteria.app")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()

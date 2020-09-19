@@ -19,7 +19,8 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -35,7 +36,9 @@
             android:id="@+id/cafeteria_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            cafeteria="@{vm.cafeteria}"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            cafeteria="@{vm.cafeteria}"
+            tools:listitem="@layout/cafeteria"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

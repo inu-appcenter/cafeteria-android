@@ -139,6 +139,7 @@ fun <T> Call<T>.getOrNull(): T? {
                     ?.onNull { Timber.w("Response is success but body is null.") }
             }
         } else {
+            Timber.w(result.errorBody()?.string())
             Timber.w("Response is fail.")
             null
         }

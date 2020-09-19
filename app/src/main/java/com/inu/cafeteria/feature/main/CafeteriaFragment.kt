@@ -28,6 +28,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
+import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 
 class CafeteriaFragment : BaseFragment() {
 
@@ -47,14 +48,24 @@ class CafeteriaFragment : BaseFragment() {
         return CafeteriaFragmentBinding
             .inflate(inflater, container, false)
             .apply { lifecycleOwner = this@CafeteriaFragment }
+            .apply { initializeView(root) }
             .apply { vm = viewModel }
             .root
     }
 
+    private fun initializeView(view: View) {
+        with(view.cafeteria_recycler) {
+            adapter = CafeteriaAdapter()
+        }
+    }
+
     companion object {
+        @JvmStatic
         @BindingAdapter("cafeteria")
-        fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaView>) {
-            (view.adapter as? CafeteriaAdapter)?.cafeteria = cafeteria
+        fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaView>?) {
+            cafeteria?.let {
+                (view.adapter as? CafeteriaAdapter)?.cafeteria = it
+            }
         }
     }
 }

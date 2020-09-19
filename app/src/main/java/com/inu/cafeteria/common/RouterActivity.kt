@@ -41,7 +41,7 @@ class RouterActivity : AppCompatActivity(), KoinComponent {
 
         // Do other things before the normal routine.
 
-        navigator.showSplash()
+        navigator.showMain()
 
         finish()
     }

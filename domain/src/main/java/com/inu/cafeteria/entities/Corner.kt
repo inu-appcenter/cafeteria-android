@@ -22,7 +22,7 @@ package com.inu.cafeteria.entities
 data class Corner(
     val id: Int,
     val name: String,
-    val displayName: String,
+    val displayName: String?,
     val availableAt: Int,
 
     val menus: List<Menu>

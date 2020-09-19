@@ -19,6 +19,7 @@
 
 package com.inu.cafeteria.feature.main
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -43,7 +44,7 @@ class CafeteriaViewModel : BaseViewModel() {
     private fun handleCafeteria(allCafeteria: List<Cafeteria>) {
         val result = allCafeteria.map { cafeteria ->
             CafeteriaView(
-                name = cafeteria.displayName,
+                name = cafeteria.displayName ?: cafeteria.name,
                 wholeMenus = cafeteria.corners.map { corner ->
                     corner.menus.map { menu ->
                         MenuView.fromCornerAndMenu(corner, menu)
