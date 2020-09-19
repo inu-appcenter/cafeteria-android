@@ -22,3 +22,13 @@ package com.inu.cafeteria.extension
 fun Int.has(bit: Int): Boolean {
     return this.and(bit) == bit
 }
+
+fun Int.forEachBits(indexRange: IntRange, action: (bit: Int) -> Any?) {
+    indexRange.forEach { bitIndex ->
+        this.getBitAt(bitIndex).takeIf { it != 0 }?.let(action)
+    }
+}
+
+fun Int.getBitAt(index: Int): Int {
+    return this.and(1.shl(index))
+}

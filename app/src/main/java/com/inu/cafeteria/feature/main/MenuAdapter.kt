@@ -32,7 +32,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.TheViewHolder>() {
 
         fun bind(menu: MenuView) {
             with(itemView) {
-                available_at.setAvailableTime(menu.availableAt)
+                available_at.setAvailableTime(7)
                 foods.text = menu.foods
                 corner_name.text = menu.cornerName
                 price.text = String.format("%,d원", menu.price)

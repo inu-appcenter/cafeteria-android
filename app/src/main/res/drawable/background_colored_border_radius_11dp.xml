@@ -18,26 +18,14 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center">
-
-    <include
-        android:id="@+id/single_view"
-        layout="@layout/squircle_single"
-        android:visibility="gone"/>
-
-    <include
-        android:id="@+id/double_view"
-        layout="@layout/squircle_double"
-        android:visibility="gone"/>
-
-    <include
-        android:id="@+id/triple_view"
-        layout="@layout/squircle_triple"
-        android:visibility="gone"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke
+        android:width="3dp"
+        android:color="?android:attr/windowBackground"/>
+    <corners android:radius="11dp" />
+    <padding
+        android:bottom="2dp"
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp" />
+</shape>

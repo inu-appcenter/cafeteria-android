@@ -33,7 +33,7 @@ data class MenuView(
         fun fromCornerAndMenu(corner: Corner, menu: Menu): MenuView =
             MenuView(
                 availableAt = corner.availableAt,
-                cornerName = corner.displayName ?: corner.name,
+                cornerName = if (corner.displayName.isNullOrBlank()) corner.name else corner.displayName ?: "-",
                 foods = menu.foods.joinToString(", "),
                 calorie = menu.calorie,
                 price = menu.price

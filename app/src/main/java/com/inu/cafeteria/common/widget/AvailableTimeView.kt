@@ -20,13 +20,13 @@
 package com.inu.cafeteria.common.widget
 
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.inu.cafeteria.R
+import com.inu.cafeteria.extension.forEachBits
 import com.inu.cafeteria.extension.has
 
 class AvailableTimeView(
@@ -44,9 +44,37 @@ class AvailableTimeView(
     }
 
     fun setAvailableTime(availableTimes: Int) {
-        findViewById<View>(R.id.breakfast).visibility = makeItVisibleOrNotFor(BREAKFAST, availableTimes)
-        findViewById<View>(R.id.lunch).visibility = makeItVisibleOrNotFor(LUNCH, availableTimes)
-        findViewById<View>(R.id.dinner).visibility = makeItVisibleOrNotFor(DINNER, availableTimes)
+        val layout = selectProperLayout(availableTimes.countOneBits())
+
+        val imageViewsIterator = listOf<ImageView?>(
+            layout.findViewById(R.id.squircle_slot_0),
+            layout.findViewById(R.id.squircle_slot_1),
+            layout.findViewById(R.id.squircle_slot_2)
+        ).iterator()
+
+        availableTimes.forEachBits((0..2)) { time ->
+            imageViewsIterator.next()?.setImageResource(getImageForTime(time))
+        }
+    }
+
+    private fun getImageForTime(time: Int): Int {
+        return when (time) {
+            BREAKFAST -> R.drawable.morning
+            LUNCH -> R.drawable.day
+            DINNER -> R.drawable.night
+            else -> R.drawable.no_img
+        }
+    }
+
+    private fun selectProperLayout(howMany: Int): ConstraintLayout {
+        val layouts = listOf<ConstraintLayout>(
+            findViewById<ConstraintLayout>(R.id.single_view),
+            findViewById<ConstraintLayout>(R.id.double_view),
+            findViewById<ConstraintLayout>(R.id.triple_view)
+        ).apply { forEach { it.visibility = GONE } }
+
+        return if (howMany in 1..3) { layouts[howMany-1] } else { layouts[0] }
+            .apply { visibility = VISIBLE }
     }
 
     private fun makeItVisibleOrNotFor(time: Int, availableTimes: Int) =
