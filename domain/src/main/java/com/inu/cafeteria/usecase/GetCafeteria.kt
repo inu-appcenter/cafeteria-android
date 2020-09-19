@@ -29,6 +29,6 @@ class GetCafeteria(
 ) : UseCase<Unit, List<Cafeteria>>() {
 
     override fun run(params: Unit) = Result.of {
-        cafeteriaRepo.getAllCafeteria()
+        cafeteriaRepo.getAllCafeteria("20200918")
     }
 }

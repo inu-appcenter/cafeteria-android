@@ -49,4 +49,8 @@
     <color name="themeBlue">#00D0FF</color>
     <color name="themeRed">#FF2841</color>
 
+    <color name="breakfast">#FC4B00</color>
+    <color name="lunch">#FD9A2B</color>
+    <color name="dinner">#166F9F</color>
+
 </resources>

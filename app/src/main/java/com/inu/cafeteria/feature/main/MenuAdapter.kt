@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
+import kotlinx.android.synthetic.main.menu.view.*
 
 class MenuAdapter : RecyclerView.Adapter<MenuAdapter.TheViewHolder>() {
 
@@ -29,9 +30,13 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.TheViewHolder>() {
     class TheViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         constructor(parent: ViewGroup) : this(LayoutInflater.from(parent.context).inflate(R.layout.menu, parent, false))
 
-        fun bind(content: MenuView) {
+        fun bind(menu: MenuView) {
             with(itemView) {
-
+                available_at.setAvailableTime(menu.availableAt)
+                foods.text = menu.foods
+                corner_name.text = menu.cornerName
+                price.text = String.format("%,d원", menu.price)
+                calorie.text = String.format("%,dkcal", menu.calorie)
             }
         }
     }

@@ -20,22 +20,27 @@
 package com.inu.cafeteria.common.widget
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import com.inu.cafeteria.R
 import com.inu.cafeteria.extension.has
 
-class AvailableTimeView(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
+class AvailableTimeView(
+    context: Context,
+    attributeSet: AttributeSet
+) : LinearLayout(context, attributeSet) {
 
     init {
         initView()
     }
 
     private fun initView() {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.available_time_view, this)
+        inflate(context, R.layout.available_time_view, this)
+        setAvailableTime(if (isInEditMode) 7 else 0)
     }
 
     fun setAvailableTime(availableTimes: Int) {
