@@ -40,7 +40,7 @@
             app:cardElevation="0dp">
 
             <ImageView
-                android:id="@+id/squircle_slot_2"
+                android:id="@+id/squircle_slot_1"
                 android:contentDescription="@string/app_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -66,7 +66,7 @@
             app:cardElevation="0dp">
 
             <ImageView
-                android:id="@+id/squircle_slot_1"
+                android:id="@+id/squircle_slot_2"
                 android:contentDescription="@string/app_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

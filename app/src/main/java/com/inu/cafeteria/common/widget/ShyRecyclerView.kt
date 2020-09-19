@@ -29,7 +29,7 @@ import kotlin.math.abs
 import kotlin.math.tan
 
 /**
- * This RecyclerView allows vertical scroll only when scroll angle is stiff (over 60 degree).
+ * This RecyclerView allows vertical scroll only when scroll angle is steep (over 60 degree).
  * Otherwise, the scroll event will not be consumed.
  */
 class ShyRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
