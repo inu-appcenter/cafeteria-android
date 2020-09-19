@@ -31,7 +31,7 @@ class Cache<T> {
      * It means 'is this the valid projection of the server data?'
      */
 
-val isValid: Boolean get() { return valid }
+    val isValid: Boolean get() { return valid }
 
     /**
      * Get data inside the cache.
@@ -43,7 +43,7 @@ val isValid: Boolean get() { return valid }
      * @throws IllegalStateException
      */
 
-fun get(): T? {
+    fun get(): T? {
         isValid.takeIf { it } ?: throw IllegalStateException("Cannot access a cache in an invalid state.")
 
         return cache
@@ -58,7 +58,7 @@ fun get(): T? {
      * So Calling this method will ALWAYS set the cache as valid.
      */
 
-fun set(value: T?) {
+    fun set(value: T?) {
         cache = value
         valid = true
     }
@@ -67,7 +67,7 @@ fun set(value: T?) {
      * Invalidate the cache.
      */
 
-fun invalidate() {
+    fun invalidate() {
         clear()
         valid = false
     }
@@ -77,7 +77,7 @@ fun invalidate() {
      * This method is internal only, must be called with setting [isValid].
      */
 
-private fun clear() {
+    private fun clear() {
         cache = null
     }
 }

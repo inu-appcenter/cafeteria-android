@@ -20,8 +20,6 @@
 package com.inu.cafeteria.injection
 
 import com.inu.cafeteria.common.Navigator
-import com.inu.cafeteria.parser.CafeteriaParser
-import com.inu.cafeteria.parser.FoodMenuParser
 import com.inu.cafeteria.repository.*
 import com.inu.cafeteria.usecase.*
 import org.koin.dsl.module
@@ -58,8 +56,6 @@ val myModules = module {
     single {
         CafeteriaRepositoryImpl(
             networkService = get(),
-            cafeteriaParser = get(),
-            foodMenuParser = get()
         ) as CafeteriaRepository
     }
 
@@ -131,22 +127,6 @@ val myModules = module {
         )
     }
 
-    /** Get Corners */
-
-    single {
-        GetCorners(
-            cafeteriaRepo = get()
-        )
-    }
-
-    /** Get Food Menu */
-
-    single {
-        GetMenus(
-            cafeteriaRepo = get()
-        )
-    }
-
     /** Get Version */
 
     single {
@@ -177,22 +157,5 @@ val myModules = module {
         Logout(
             loginRepo = get()
         )
-    }
-
-
-    /*****************************
-     * Parser
-     *****************************/
-
-    /** Cafeteria Parser */
-
-    single {
-        CafeteriaParser()
-    }
-
-    /** FoodMenu Parser */
-
-    single {
-        FoodMenuParser()
     }
 }

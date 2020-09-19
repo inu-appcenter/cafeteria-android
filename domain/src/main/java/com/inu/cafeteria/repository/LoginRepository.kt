@@ -36,10 +36,10 @@ import com.inu.cafeteria.model.scheme.LogoutResult
  * If repository is alive, login is alive.
  */
 
-abstract class LoginRepository : Repository() {
+abstract class LoginRepository {
 
     abstract fun isLoggedIn(): Boolean
 
-    abstract fun login(params: LoginParams, callback: DataCallback<LoginResult>)
-    abstract fun logout(params: LogoutParams, callback: DataCallback<LogoutResult>)
+    abstract fun login(params: LoginParams, callback: Repository.DataCallback<LoginResult>)
+    abstract fun logout(params: LogoutParams, callback: Repository.DataCallback<LogoutResult>)
 }

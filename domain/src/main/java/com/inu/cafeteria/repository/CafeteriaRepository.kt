@@ -21,13 +21,7 @@ package com.inu.cafeteria.repository
 
 import com.inu.cafeteria.entities.Cafeteria
 
-/**
- * This repository use callback model.
- */
-
 abstract class CafeteriaRepository : Repository {
-
-    abstract fun invalidateCache()
 
     abstract fun getAllCafeteria(date: String? = null): List<Cafeteria>
 }

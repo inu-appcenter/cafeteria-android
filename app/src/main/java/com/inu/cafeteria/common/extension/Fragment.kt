@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelLazy
 import androidx.lifecycle.ViewModelProvider.Factory
@@ -33,6 +35,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.util.Notify
 import kotlinx.android.synthetic.main.single_fragment_activity.*
+
+/**
+ * Do something in the middle of beginTransaction() and commitNow().
+ */
+inline fun FragmentManager.inImmediateTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
+    beginTransaction().func().commitNow()
+}
 
 /**
  * Get ViewModel of the fragment with SingleUseCaseViewModelFactory.

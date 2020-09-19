@@ -21,8 +21,8 @@ package com.inu.cafeteria.repository
 
 import com.inu.cafeteria.model.scheme.Notice
 
-abstract class NoticeRepository : Repository() {
-    abstract fun getNotice(callback: DataCallback<Notice>)
+abstract class NoticeRepository : Repository {
+    abstract fun getNotice(callback: Repository.DataCallback<Notice>)
 
     abstract fun dismissNotice(type: DeviceType, id: Long)
     abstract fun getDismissedNoticeId(type: DeviceType): Long?

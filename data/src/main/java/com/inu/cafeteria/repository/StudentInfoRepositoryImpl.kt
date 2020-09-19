@@ -85,7 +85,7 @@ class StudentInfoRepositoryImpl(
         putString(KEY_TOKEN, token)
     }
 
-    override fun activateBarcode(params: ActivateBarcodeParams, callback: DataCallback<ActivateBarcodeResult>) {
+    override fun activateBarcode(params: ActivateBarcodeParams, callback: Repository.DataCallback<ActivateBarcodeResult>) {
         networkService.getActivateBarcodeResult(params).onResult(
             async = callback.async,
             onSuccess = callback.onSuccess,
@@ -97,7 +97,7 @@ class StudentInfoRepositoryImpl(
      * Get preference string.
      */
 
-private fun getString(key: String): String? {
+    private fun getString(key: String): String? {
         return pref.getString(key, EMPTY)?.let {
             // Decrypt only if it is not null.
             tryOrNull { AESCrypt.decrypt(BuildConfig.AES_KEY, it) }
@@ -108,7 +108,7 @@ private fun getString(key: String): String? {
      * Set preference string.
      */
 
-private fun putString(key: String, value: String?) {
+    private fun putString(key: String, value: String?) {
         pref.edit(true) {
             // Put it only when it is not null.
             // Encrypting null is useless.

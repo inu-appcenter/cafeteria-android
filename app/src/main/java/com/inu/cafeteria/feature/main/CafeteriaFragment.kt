@@ -23,12 +23,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.common.extension.getViewModel
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
 
-class MainFragment : BaseFragment() {
+class CafeteriaFragment : BaseFragment() {
 
     private val viewModel: CafeteriaViewModel by viewModels()
 
@@ -45,8 +46,15 @@ class MainFragment : BaseFragment() {
     ): View? {
         return CafeteriaFragmentBinding
             .inflate(inflater, container, false)
-            .apply { lifecycleOwner = this@MainFragment }
+            .apply { lifecycleOwner = this@CafeteriaFragment }
             .apply { vm = viewModel }
             .root
+    }
+
+    companion object {
+        @BindingAdapter("cafeteria")
+        fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaView>) {
+            (view.adapter as? CafeteriaAdapter)?.cafeteria = cafeteria
+        }
     }
 }

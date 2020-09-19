@@ -23,37 +23,16 @@ import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.Corner
 import com.inu.cafeteria.entities.Menu
 import com.inu.cafeteria.extension.getOrNull
-import com.inu.cafeteria.model.Cache
 import com.inu.cafeteria.model.scheme.CafeteriaResult
 import com.inu.cafeteria.model.scheme.CornerResult
 import com.inu.cafeteria.model.scheme.MenuResult
-import com.inu.cafeteria.parser.CafeteriaParser
-import com.inu.cafeteria.parser.FoodMenuParser
 import com.inu.cafeteria.service.CafeteriaNetworkService
-import timber.log.Timber
 
 class CafeteriaRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
-    private val cafeteriaParser: CafeteriaParser,
-    private val foodMenuParser: FoodMenuParser
 ) : CafeteriaRepository() {
 
-    private val cafeteriaCache = Cache<List<Cafeteria>>()
-
-    override fun invalidateCache() {
-        cafeteriaCache.invalidate()
-
-        Timber.i("All cache invalidated.")
-    }
-
     override fun getAllCafeteria(date: String?): List<Cafeteria> {
-        if (cafeteriaCache.isValid) {
-            cafeteriaCache.get()?.let {
-                Timber.i("Got all cafeteria from cache!")
-                return it
-            }
-        }
-
         val cafeteria = networkService.getCafeteria().getOrNull() ?: return listOf()
         val corners = networkService.getCorners().getOrNull() ?: return listOf()
         val menus = networkService.getMenus(date).getOrNull() ?: return listOf()

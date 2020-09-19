@@ -56,7 +56,7 @@ class VersionRepositoryImpl(
         return BuildConfig.VERSION_NAME
     }
 
-    override fun getLatestVersion(callback: DataCallback<Version>) {
+    override fun getLatestVersion(callback: Repository.DataCallback<Version>) {
         if (versionCache.isValid) {
             versionCache.get()?.let {
                 callback.onSuccess(it)

@@ -21,7 +21,7 @@ package com.inu.cafeteria.repository
 
 import com.inu.cafeteria.model.scheme.Version
 
-abstract class VersionRepository : Repository() {
+abstract class VersionRepository : Repository {
     /**
      * Dismiss update popup of this version.
      */
@@ -35,5 +35,5 @@ abstract fun dismissVersion(version: String)
 abstract fun getDismissedVersion(): String?
 
     abstract fun getCurrentVersion(): String
-    abstract fun getLatestVersion(callback: DataCallback<Version>)
+    abstract fun getLatestVersion(callback: Repository.DataCallback<Version>)
 }

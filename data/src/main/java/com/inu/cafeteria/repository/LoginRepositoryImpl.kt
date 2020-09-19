@@ -37,7 +37,7 @@ class LoginRepositoryImpl(
         return login
     }
 
-    override fun login(params: LoginParams, callback: DataCallback<LoginResult>) {
+    override fun login(params: LoginParams, callback: Repository.DataCallback<LoginResult>) {
         networkService.getLoginResult(params).onResult(
             async = callback.async,
             onSuccess = {
@@ -48,7 +48,7 @@ class LoginRepositoryImpl(
         )
     }
 
-    override fun logout(params: LogoutParams, callback: DataCallback<LogoutResult>) {
+    override fun logout(params: LogoutParams, callback: Repository.DataCallback<LogoutResult>) {
         networkService.getLogoutResult(params).onResult(
             async = callback.async,
             onSuccess = {

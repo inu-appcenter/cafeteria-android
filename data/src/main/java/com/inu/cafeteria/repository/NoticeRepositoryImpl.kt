@@ -40,7 +40,7 @@ class NoticeRepositoryImpl(
 
     private val noticeCache = Cache<Notice>()
 
-    override fun getNotice(callback: DataCallback<Notice>) {
+    override fun getNotice(callback: Repository.DataCallback<Notice>) {
         if (noticeCache.isValid) {
             noticeCache.get()?.let {
                 callback.onSuccess(it)

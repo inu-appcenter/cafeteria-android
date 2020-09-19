@@ -23,7 +23,6 @@ import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
 import com.inu.cafeteria.repository.CafeteriaRepository
-import com.inu.cafeteria.repository.Repository
 
 class GetCafeteria(
     private val cafeteriaRepo: CafeteriaRepository
