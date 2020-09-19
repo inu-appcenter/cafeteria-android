@@ -28,14 +28,14 @@ data class ActivateBarcodeParams(
      * The barcode data to activate or not.
      */
 
-val barcode: String,
+    val barcode: String,
 
     /**
      * Whether to activate or not.
      * Must be "1"(activate) or "0"(deactivate).
      */
 
-val activated: String
+    val activated: String
 ) {
     companion object {
         const val ACTIVATE_TRUE = "1"

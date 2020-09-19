@@ -17,32 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.usecase
+package com.inu.cafeteria.feature.main
 
-import com.inu.cafeteria.functional.Result
-import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.model.FoodMenu
-import com.inu.cafeteria.repository.CafeteriaRepository
-import com.inu.cafeteria.repository.Repository
+import com.inu.cafeteria.entities.Corner
+import com.inu.cafeteria.entities.Menu
 
-class GetFoodMenu(
-    private val cafeteriaRepo: CafeteriaRepository
-) : UseCase<Unit, List<FoodMenu>>() {
-
-    override fun run(params: Unit) = Result.of {
-        var result: List<FoodMenu>? = null
-        var failure: Exception? = null
-
-        cafeteriaRepo.getAllFoodMenu(
-            Repository.DataCallback(
-                async = false,
-                onSuccess = { result = it },
-                onFail = { failure = it }
+data class MenuView(
+    val availableAt: Int,
+    val foods: String,
+    val calorie: Int?,
+    val price: Int?
+) {
+    companion object {
+        fun fromCornerAndMenu(corner: Corner, menu: Menu): MenuView =
+            MenuView(
+                availableAt = corner.availableAt,
+                foods = menu.foods.joinToString(", "),
+                calorie = menu.calorie,
+                price = menu.price
             )
-        )
-
-        failure?.let { throw it }
-
-        return@of result!!
     }
 }

@@ -15,7 +15,7 @@ class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHold
     private val menuPagePool = RecyclerView.RecycledViewPool()
     private val menuPool = RecyclerView.RecycledViewPool()
 
-    var cafeteria: List<String> = listOf()
+    var cafeteria: List<CafeteriaView> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -53,15 +53,16 @@ class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHold
             }
         }
 
-        fun bind(content: String) {
+        fun bind(cafeteria: CafeteriaView) {
             with(itemView) {
+                cafeteria_name.text = cafeteria.name
 
                 more_button.setOnClickListener {
                     Toast.makeText(context, "Not implemented!", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            menuPageAdapter.wholeMenus = listOf("Hello", "World", "Lorem", "Ipsum", "Dolor")
+            menuPageAdapter.wholeMenus = cafeteria.wholeMenus
         }
     }
 }

@@ -17,17 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.model.scheme
 
-import com.inu.cafeteria.entities.Cafeteria
+import com.google.gson.annotations.SerializedName
 
-/**
- * This repository use callback model.
- */
-
-abstract class CafeteriaRepository : Repository {
-
-    abstract fun invalidateCache()
-
-    abstract fun getAllCafeteria(): List<Cafeteria>
-}
+data class CornerResult(
+    val id: Int,
+    val name: String,
+    @SerializedName("display-name") val displayName: String,
+    @SerializedName("available-at") val availableAt: Int,
+    @SerializedName("cafeteria-id") val cafeteriaId: Int
+)

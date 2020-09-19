@@ -36,7 +36,7 @@ abstract class UseCase<in Params, out Type> {
      * Use thread instead of coroutine because it ruins Realm.
      */
 
-operator fun invoke(params: Params, onResult: (Result<Type>) -> Unit = {}) {
+    operator fun invoke(params: Params, onResult: (Result<Type>) -> Unit = {}) {
         Thread {
             try {
                 Timber.v("UseCase running on ${Thread.currentThread().name}")

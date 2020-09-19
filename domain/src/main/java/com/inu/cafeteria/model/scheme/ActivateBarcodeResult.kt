@@ -32,5 +32,5 @@ data class ActivateBarcodeResult(
      * That is defined in the server logic.
      */
 
-val active: String
+    val active: String
 )

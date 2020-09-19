@@ -30,5 +30,5 @@ import org.koin.core.inject
 
 abstract class BaseViewModel : ViewModel(), KoinComponent {
 
-    private val mContext: Context by inject()
+    protected val mContext: Context by inject()
 }

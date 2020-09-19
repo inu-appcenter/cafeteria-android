@@ -17,17 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.common.extension
 
-import com.inu.cafeteria.entities.Cafeteria
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 
-/**
- * This repository use callback model.
- */
-
-abstract class CafeteriaRepository : Repository {
-
-    abstract fun invalidateCache()
-
-    abstract fun getAllCafeteria(): List<Cafeteria>
+inline fun <reified T : ViewModel> ViewModelStoreOwner.getViewModel(): T {
+    return ViewModelProvider(this).get(T::class.java)
 }

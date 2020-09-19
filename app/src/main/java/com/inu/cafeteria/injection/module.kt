@@ -131,10 +131,18 @@ val myModules = module {
         )
     }
 
+    /** Get Corners */
+
+    single {
+        GetCorners(
+            cafeteriaRepo = get()
+        )
+    }
+
     /** Get Food Menu */
 
     single {
-        GetFoodMenu(
+        GetMenus(
             cafeteriaRepo = get()
         )
     }

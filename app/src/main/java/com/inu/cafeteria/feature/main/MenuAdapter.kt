@@ -8,7 +8,7 @@ import com.inu.cafeteria.R
 
 class MenuAdapter : RecyclerView.Adapter<MenuAdapter.TheViewHolder>() {
 
-    var pagedMenus: List<String> = listOf()
+    var pagedMenus: List<MenuView> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -29,7 +29,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.TheViewHolder>() {
     class TheViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         constructor(parent: ViewGroup) : this(LayoutInflater.from(parent.context).inflate(R.layout.menu, parent, false))
 
-        fun bind(content: String) {
+        fun bind(content: MenuView) {
             with(itemView) {
 
             }

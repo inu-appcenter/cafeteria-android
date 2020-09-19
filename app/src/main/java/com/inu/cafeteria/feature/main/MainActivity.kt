@@ -21,8 +21,13 @@ package com.inu.cafeteria.feature.main
 
 import android.content.Context
 import android.content.Intent
+import androidx.fragment.app.Fragment
+import com.inu.cafeteria.common.base.BaseActivity
+import com.inu.cafeteria.common.base.SingleFragmentActivity
 
-class MainActivity {
+class MainActivity : SingleFragmentActivity() {
+
+    override val fragment: Fragment = MainFragment()
 
     companion object {
         fun callingIntent(context: Context) = Intent(context, MainActivity::class.java)

@@ -17,17 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.entities
 
-import com.inu.cafeteria.entities.Cafeteria
+data class Corner(
+    val id: Int,
+    val name: String,
+    val displayName: String,
+    val availableAt: Int,
 
-/**
- * This repository use callback model.
- */
-
-abstract class CafeteriaRepository : Repository {
-
-    abstract fun invalidateCache()
-
-    abstract fun getAllCafeteria(): List<Cafeteria>
-}
+    val menus: List<Menu>
+)

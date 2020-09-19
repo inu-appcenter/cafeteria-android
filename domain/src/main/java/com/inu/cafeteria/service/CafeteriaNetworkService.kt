@@ -50,6 +50,6 @@ interface CafeteriaNetworkService {
     @GET("/food/{date}")
     fun getFoods(@Path("date") date: String): Call<JsonElement>
 
-    @GET("/cafecode.json")
+    @GET("/cafeteria")
     fun getCafeteria(): Call<JsonElement>
 }

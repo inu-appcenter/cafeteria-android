@@ -11,11 +11,10 @@ import kotlin.math.ceil
 import kotlin.math.min
 
 class MenuPageAdapter(
-    private val menuPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool(),
-    private val stackSize: Int = 3,
+    private val menuPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool()
 ) : RecyclerView.Adapter<MenuPageAdapter.PropPageViewHolder>() {
 
-    var wholeMenus: List<String> = listOf()
+    var wholeMenus: List<MenuView> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -26,7 +25,7 @@ class MenuPageAdapter(
     }
 
     override fun onBindViewHolder(holder: PropPageViewHolder, position: Int) {
-        fun paginateProps(pageNumber: Int): List<String> {
+        fun paginateProps(pageNumber: Int): List<MenuView> {
             val indexStart = pageNumber * stackSize
             val indexEnd = min(indexStart + stackSize - 1, wholeMenus.size - 1)
 
@@ -58,8 +57,12 @@ class MenuPageAdapter(
             }
         }
 
-        fun bind(pagedProps: List<String>) {
-            menuAdapter.pagedMenus = pagedProps
+        fun bind(pagedMenus: List<MenuView>) {
+            menuAdapter.pagedMenus = pagedMenus
         }
+    }
+
+    companion object {
+        private const val stackSize: Int = 3
     }
 }

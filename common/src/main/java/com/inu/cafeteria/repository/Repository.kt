@@ -19,14 +19,12 @@
 
 package com.inu.cafeteria.repository
 
-import timber.log.Timber
-
 /**
  * Base class of Repository defining default action of
  * initialization and error handling.
  */
 
-abstract class Repository {
+interface Repository {
     /**
      * Callback passed to repository when requesting some data.
      * Usefull when fetching data from network or DB.
@@ -44,7 +42,7 @@ abstract class Repository {
      * @param onFail on failure or unexpected exception.
      */
 
-data class DataCallback<T>(
+    data class DataCallback<T>(
         val async: Boolean = true,
         val onSuccess: (T) -> Unit,
         val onFail: (Exception) -> Unit

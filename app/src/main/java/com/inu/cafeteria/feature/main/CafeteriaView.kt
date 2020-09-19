@@ -17,17 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.feature.main
 
-import com.inu.cafeteria.entities.Cafeteria
-
-/**
- * This repository use callback model.
- */
-
-abstract class CafeteriaRepository : Repository {
-
-    abstract fun invalidateCache()
-
-    abstract fun getAllCafeteria(): List<Cafeteria>
-}
+data class CafeteriaView(
+    val name: String,
+    val wholeMenus: List<MenuView>
+)

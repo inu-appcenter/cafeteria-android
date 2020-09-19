@@ -23,15 +23,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.extension.getViewModel
+import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
 
 class MainFragment : BaseFragment() {
+
+    private val viewModel: CafeteriaViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.fetch()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return CafeteriaFragmentBinding
+            .inflate(inflater, container, false)
+            .apply { lifecycleOwner = this@MainFragment }
+            .apply { vm = viewModel }
+            .root
     }
 }
