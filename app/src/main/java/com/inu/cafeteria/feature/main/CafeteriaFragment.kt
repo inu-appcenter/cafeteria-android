@@ -54,7 +54,6 @@ class CafeteriaFragment : BaseFragment() {
 
     private fun initializeView(view: View) {
         with(view.cafeteria_recycler) {
-            isNestedScrollingEnabled = false
             adapter = CafeteriaAdapter().apply { onClickMore = viewModel::viewMore }
         }
     }

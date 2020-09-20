@@ -47,8 +47,6 @@ class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHold
 
         private fun setChildRecyclerView() {
             with(itemView.menu_page_recycler) {
-                isNestedScrollingEnabled = false
-
                 adapter = menuPageAdapter
 
                 setRecycledViewPool(menuPagePool)

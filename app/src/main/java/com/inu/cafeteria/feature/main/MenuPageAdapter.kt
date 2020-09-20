@@ -50,8 +50,6 @@ class MenuPageAdapter(
 
         private fun setChildRecyclerView() {
             with(itemView.menu_recycler) {
-                isNestedScrollingEnabled = false
-
                 adapter = menuAdapter
 
                 setRecycledViewPool(menuPool)
