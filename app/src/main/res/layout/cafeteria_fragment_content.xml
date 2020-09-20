@@ -31,7 +31,7 @@
     </data>
 
     <!-- Content -->
-    <com.inu.cafeteria.common.widget.HorizontalScrollFirstRecyclerView
+    <com.inu.cafeteria.common.widget.ShyRecyclerView
         android:id="@+id/cafeteria_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
