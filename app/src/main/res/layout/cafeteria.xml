@@ -38,11 +38,12 @@
         android:id="@+id/menu_page_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/element_margin"
+        android:paddingStart="@dimen/section_page_horizontal_padding"
+        android:paddingEnd="@dimen/section_page_horizontal_padding"
         app:layout_constraintTop_toBottomOf="@id/cafeteria_name"
         android:clipToPadding="false"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/section_page_horizontal_padding"
-        android:paddingEnd="@dimen/section_page_horizontal_padding"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/menu_page" />
 
