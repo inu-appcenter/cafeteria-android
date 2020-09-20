@@ -44,13 +44,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.splash.SplashActivity" />
-        <activity android:name=".feature.login.LoginActivity" />
         <activity android:name=".feature.main.MainActivity" />
-        <activity android:name=".feature.cafeteria.CafeteriaDetailsActivity" />
-        <activity android:name=".feature.info.InfoActivity" />
-        <activity android:name=".feature.barcode.BarcodeActivity"
-            android:theme="@style/Transparent"/>
-
     </application>
 
 </manifest>
