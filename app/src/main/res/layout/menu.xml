@@ -26,7 +26,7 @@
         android:textSize="@dimen/textSecondary"
         android:textColor="@color/textPrimary"
         android:textStyle="bold"
-        tools:text="학식은, 맛없어, 퉤퉤, 메롱, 헤헤, 졸려, 자구싶다, 히" />
+        tools:text="학식은, 맛없어, 퉤퉤, 메롱, 헤헤, 졸려, 집가고싶다, 히히" />
 
     <TextView
         style="@style/NotImportantTextView"

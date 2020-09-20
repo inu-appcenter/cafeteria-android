@@ -32,7 +32,7 @@ import kotlin.math.tan
  * This RecyclerView allows vertical scroll only when scroll angle is steep (over 60 degree).
  * Otherwise, the scroll event will not be consumed.
  */
-class ShyRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
+class HorizontalScrollFirstRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
 
     private val gestureDetector = GestureDetector(context, YScrollDetector())
 

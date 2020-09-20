@@ -117,11 +117,16 @@
     </style>
 
     <!-- Toolbar -->
+
     <style name="Toolbar">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:background">?attr/barBackground</item>
         <item name="titleTextAppearance">@style/ToolbarText</item>
+    </style>
+    <style name="CustomToolbar" parent="Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="android:contentInsetStart">0dp</item>
     </style>
     <style name="ToolbarText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:background">@null</item>

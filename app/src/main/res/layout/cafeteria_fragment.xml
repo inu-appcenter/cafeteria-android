@@ -36,33 +36,51 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="?android:attr/windowBackground"
-            android:theme="@style/ThemeOverlay.AppCompat.Light">
+            android:backgroundTint="?android:attr/windowBackground">
 
                 <androidx.appcompat.widget.Toolbar
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    android:id="@+id/toolbar_home"/>
+                    style="@style/CustomToolbar"
+                    android:id="@+id/toolbar_home"
+                    app:layout_scrollFlags="scroll|enterAlways">
 
-                <TextView
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:src="@drawable/img_logo"
+                        android:scaleType="fitCenter"
+                        app:tint="@color/textPrimary" />
+
+                </androidx.appcompat.widget.Toolbar>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_below="@id/toolbar_home"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="YEAHEYAHDATETEXT"
-                    android:textSize="@dimen/textTitle"
-                    android:textColor="@color/textPrimary"/>
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="(대충 날짜 선택하는 UI)"
+                        android:textSize="@dimen/textTitle"
+                        android:textColor="@color/textPrimary"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Content -->
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.inu.cafeteria.common.widget.ShyRecyclerView
+            <com.inu.cafeteria.common.widget.HorizontalScrollFirstRecyclerView
                 android:id="@+id/cafeteria_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
