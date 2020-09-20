@@ -17,25 +17,32 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
-
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/available_time_view_size"
-    android:layout_height="@dimen/available_time_view_size"
-    android:background="@drawable/single_squircle_border">
+    android:layout_height="@dimen/available_time_view_size">
 
-    <androidx.cardview.widget.CardView
-        style="@style/CircularImageHolder"
-        app:cardCornerRadius="@dimen/single_squircle_radius">
+    <FrameLayout
+        android:layout_width="@dimen/available_time_view_size"
+        android:layout_height="@dimen/available_time_view_size"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/single_squircle_border">
 
-        <ImageView
-            style="@style/CircularInnerImage"
-            android:id="@+id/squircle_slot_0"
-            android:contentDescription="@string/desc_single_squircle"
-            tools:src="@drawable/morning" />
+        <androidx.cardview.widget.CardView
+            style="@style/CircularImageHolder"
+            app:cardCornerRadius="@dimen/single_squircle_radius">
 
-    </androidx.cardview.widget.CardView>
+            <ImageView
+                style="@style/CircularInnerImage"
+                android:id="@+id/squircle_slot_0"
+                android:contentDescription="@string/desc_single_squircle"
+                tools:src="@drawable/morning" />
 
-</FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
