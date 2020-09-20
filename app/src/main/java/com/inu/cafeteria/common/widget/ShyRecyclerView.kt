@@ -34,13 +34,25 @@ import kotlin.math.tan
  */
 class ShyRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
 
+    private val gestureDetector = GestureDetector(context, YScrollDetector())
+
+    // Pass scroll event to child view if scroll angle lower than this.
+    private val verticalScrollThresholdAngleDegree = 70.0
+    private val diffRatioThreshold = tan(Math.toRadians(verticalScrollThresholdAngleDegree))
 
     override fun onInterceptTouchEvent(e: MotionEvent?): Boolean {
-        if (e?.action == MotionEvent.ACTION_POINTER_UP) {
-            parent?.requestDisallowInterceptTouchEvent(true)
-        }
-
-        return false
+        return super.onInterceptTouchEvent(e) && e != null && gestureDetector.onTouchEvent(e)
     }
 
+    inner class YScrollDetector : SimpleOnGestureListener() {
+        // Return false if scroll angle low
+        override fun onScroll(
+            e1: MotionEvent?,
+            e2: MotionEvent?,
+            distanceX: Float,
+            distanceY: Float
+        ): Boolean {
+            return abs(distanceY) / abs(distanceX) > diffRatioThreshold
+        }
+    }
 }

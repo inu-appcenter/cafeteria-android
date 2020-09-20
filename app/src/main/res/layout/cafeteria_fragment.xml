@@ -62,8 +62,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:nestedScrollingEnabled="false"
+            <com.inu.cafeteria.common.widget.ShyRecyclerView
                 android:id="@+id/cafeteria_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
