@@ -18,32 +18,24 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:padding="2.5dp">
+    android:layout_width="@dimen/available_time_view_size"
+    android:layout_height="@dimen/available_time_view_size"
+    android:background="@drawable/single_squircle_border">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp">
+        style="@style/CircularImageHolder"
+        app:cardCornerRadius="@dimen/single_squircle_radius">
 
         <ImageView
+            style="@style/CircularInnerImage"
             android:id="@+id/squircle_slot_0"
-            android:contentDescription="@string/app_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/img_bg_1" />
+            android:contentDescription="@string/desc_single_squircle"
+            tools:src="@drawable/morning" />
 
     </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

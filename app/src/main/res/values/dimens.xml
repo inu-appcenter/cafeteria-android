@@ -81,5 +81,19 @@
     <dimen name="text_big">22sp</dimen>
     <dimen name="text_medium">16sp</dimen>
 
+    <dimen name="element_margin">8dp</dimen>
+    <dimen name="separator_margin">16dp</dimen>
+
+
+    <!-- AvailableTimeView specific -->
+    <dimen name="available_time_view_size">50dp</dimen>
+
+    <dimen name="single_squircle_radius">20dp</dimen>
+    <dimen name="double_squircle_radius">13dp</dimen>
+    <dimen name="triple_squircle_radius">11dp</dimen>
+
+    <dimen name="single_squircle_size">50dp</dimen>
+    <dimen name="double_squircle_size">33dp</dimen>
+    <dimen name="triple_squircle_size">28dp</dimen>
 
 </resources>

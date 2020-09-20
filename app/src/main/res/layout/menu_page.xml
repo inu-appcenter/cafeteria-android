@@ -8,5 +8,5 @@
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/page_horizontal_margin"
     android:layout_marginEnd="@dimen/page_horizontal_margin"
-    tools:listitem="@layout/menu"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    tools:listitem="@layout/menu" />

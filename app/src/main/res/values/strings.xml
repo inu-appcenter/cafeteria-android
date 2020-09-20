@@ -81,5 +81,8 @@
     <string name="button_confirm">Confirm</string>
     <string name="desc_dont_show_again">Don\'t show again</string>
     <string name="desc_more_button">More button</string>
+    <string name="desc_single_squircle">An icon consisting of one image.</string>
+    <string name="desc_double_squircle">An icon consisting of two images.</string>
+    <string name="desc_triple_squircle">An icon consisting of three images.</string>
 
 </resources>
