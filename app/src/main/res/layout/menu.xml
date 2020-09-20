@@ -29,6 +29,7 @@
         tools:text="학식은, 맛없어, 퉤퉤, 메롱, 헤헤, 졸려, 자구싶다, 히" />
 
     <TextView
+        style="@style/NotImportantTextView"
         android:id="@+id/corner_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,9 +37,6 @@
         app:layout_constraintTop_toBottomOf="@id/foods"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/available_at"
-        android:ellipsize="end"
-        android:lines="1"
-        android:maxWidth="100dp"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/textSecondary"
         tools:text="2코너다아아" />

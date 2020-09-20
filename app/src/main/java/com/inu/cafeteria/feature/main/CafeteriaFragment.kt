@@ -44,22 +44,21 @@ class CafeteriaFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return CafeteriaFragmentBinding
-            .inflate(inflater, container, false)
-            .apply { lifecycleOwner = this@CafeteriaFragment }
-            .apply { initializeView(root) }
-            .apply { vm = viewModel }
-            .root
-    }
+    ): View? = CafeteriaFragmentBinding
+        .inflate(inflater, container, false)
+        .apply { lifecycleOwner = this@CafeteriaFragment }
+        .apply { initializeView(root) }
+        .apply { vm = viewModel }
+        .root
 
     private fun initializeView(view: View) {
         with(view.cafeteria_recycler) {
-            adapter = CafeteriaAdapter()
+            adapter = CafeteriaAdapter().apply { onClickMore = viewModel::viewMore }
         }
     }
 
     companion object {
+
         @JvmStatic
         @BindingAdapter("cafeteria")
         fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaView>?) {

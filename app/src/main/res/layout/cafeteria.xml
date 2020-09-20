@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="@dimen/section_horizontal_margin"
         android:textStyle="bold"
-        android:textSize="@dimen/text_big"
+        android:textSize="@dimen/textTitle"
         android:textColor="#000"
         tools:text="Section A" />
 
@@ -25,13 +25,14 @@
         android:id="@+id/more_button"
         android:contentDescription="@string/desc_more_button"
         android:layout_width="0dp"
-        android:layout_height="28dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="@dimen/section_horizontal_margin"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintTop_toTopOf="@id/cafeteria_name"
         app:layout_constraintBottom_toBottomOf="@id/cafeteria_name"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/section_horizontal_margin"
-        android:background="@drawable/ic_arrow_forward_24px" />
+        android:src="@drawable/ic_arrow_forward_24px"
+        android:background="?android:attr/selectableItemBackground"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/menu_page_recycler"

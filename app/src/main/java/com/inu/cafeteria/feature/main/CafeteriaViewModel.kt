@@ -44,6 +44,7 @@ class CafeteriaViewModel : BaseViewModel() {
     private fun handleCafeteria(allCafeteria: List<Cafeteria>) {
         val result = allCafeteria.map { cafeteria ->
             CafeteriaView(
+                id = cafeteria.id,
                 name = cafeteria.displayName ?: cafeteria.name,
                 wholeMenus = cafeteria.corners.map { corner ->
                     corner.menus.map { menu ->
@@ -58,5 +59,9 @@ class CafeteriaViewModel : BaseViewModel() {
 
     private fun handleFailure(e: Exception) {
         Toast.makeText(mContext, e.message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun viewMore(cafeteriaView: CafeteriaView) {
+
     }
 }

@@ -23,7 +23,7 @@
     <style name="AppThemeLight" parent="AppBaseThemeLight" />
 
     <!-- Light theme -->
-    <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.NoActionBar">item>
+    <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:divider">@color/separatorLight</item>
         <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentTransitions">true</item>
@@ -31,15 +31,14 @@
         <item name="android:textColorSecondary">@color/textSecondary</item>
         <item name="android:textColorTertiary">@color/textTertiary</item>
 
-        <item name="android:fitsSystemWindows">false</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <item name="colorPrimary">@color/themeBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/themeRed</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
+
+        <item name="barBackground">@color/backgroundLight</item>
     </style>
 
 </resources>

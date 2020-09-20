@@ -17,10 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.main
+package com.inu.cafeteria.common.navigation
 
-data class CafeteriaView(
-    val id: Int,
-    val name: String,
-    val wholeMenus: List<MenuView>
-)
+import com.inu.cafeteria.R
+
+val rootDestinations = intArrayOf(R.id.home_dest, R.id.discount_dest)

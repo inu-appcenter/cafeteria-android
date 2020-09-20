@@ -76,6 +76,12 @@
     <string name="button_confirm">확인</string>
     <string name="desc_dont_show_again">다시 보지 않음</string>
     <string name="desc_more_button">더보기 버튼입니다.</string>
+    <string name="desc_single_squircle">이미지 세 개로 이루어진 아이콘입니다.</string>
+    <string name="desc_double_squircle">이미지 두 개로 이루어진 아이콘입니다.</string>
+    <string name="desc_triple_squircle">이미지 한 개로 이루어진 아이콘입니다.</string>
+    <string name="notify_press_again_to_exit">뒤로 가기 버튼을 한 번 더 두르면 앱이 종료됩니다.</string>
+    <string name="title_menus">식단</string>
+    <string name="title_discount">할인</string>
 
 
 </resources>

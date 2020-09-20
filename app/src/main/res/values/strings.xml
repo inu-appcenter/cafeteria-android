@@ -84,5 +84,8 @@
     <string name="desc_single_squircle">An icon consisting of one image.</string>
     <string name="desc_double_squircle">An icon consisting of two images.</string>
     <string name="desc_triple_squircle">An icon consisting of three images.</string>
+    <string name="notify_press_again_to_exit">Press again to exit app.</string>
+    <string name="title_menus">Menus</string>
+    <string name="title_discount">Discount</string>
 
 </resources>

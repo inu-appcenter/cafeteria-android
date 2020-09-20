@@ -15,6 +15,8 @@ class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHold
     private val menuPagePool = RecyclerView.RecycledViewPool()
     private val menuPool = RecyclerView.RecycledViewPool()
 
+    var onClickMore: (CafeteriaView) -> Any? = {}
+
     var cafeteria: List<CafeteriaView> = listOf()
         set(value) {
             field = value
@@ -58,7 +60,7 @@ class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHold
                 cafeteria_name.text = cafeteria.name
 
                 more_button.setOnClickListener {
-                    Toast.makeText(context, "Not implemented!", Toast.LENGTH_SHORT).show()
+                    onClickMore(cafeteria)
                 }
             }
 

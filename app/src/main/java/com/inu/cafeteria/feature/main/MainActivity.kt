@@ -21,12 +21,38 @@ package com.inu.cafeteria.feature.main
 
 import android.content.Context
 import android.content.Intent
-import androidx.fragment.app.Fragment
-import com.inu.cafeteria.common.base.SingleFragmentActivity
+import com.inu.cafeteria.R
+import com.inu.cafeteria.common.base.NavigationActivity
+import com.inu.cafeteria.common.base.NavigationHostFragment
+import com.inu.cafeteria.common.navigation.rootDestinations
 
-class MainActivity : SingleFragmentActivity() {
+class MainActivity : NavigationActivity() {
 
-    override val fragment: Fragment = CafeteriaFragment()
+    override val menuRes: Int = R.menu.bottom_menu
+    override val layoutRes: Int = R.layout.main_activity
+    override val mainPagerRes: Int = R.id.main_pager
+    override val bottomNavRes: Int = R.id.bottom_nav
+
+    override val fragmentArguments: List<NavigationHostFragment.Arguments> = listOf(
+
+        /** Home */
+        NavigationHostFragment.createArguments(
+            layoutRes = R.layout.content_home_base,
+            toolbarId = R.id.toolbar_home,
+            navHostId = R.id.nav_host_home,
+            tabItemId = R.id.tab_home,
+            rootDests = rootDestinations
+        ),
+
+        /** Discount */
+        NavigationHostFragment.createArguments(
+            layoutRes = R.layout.content_discount_base,
+            toolbarId = R.id.toolbar_discount,
+            navHostId = R.id.nav_host_discount,
+            tabItemId = R.id.tab_discount,
+            rootDests = rootDestinations
+        )
+    )
 
     companion object {
         fun callingIntent(context: Context) = Intent(context, MainActivity::class.java)
