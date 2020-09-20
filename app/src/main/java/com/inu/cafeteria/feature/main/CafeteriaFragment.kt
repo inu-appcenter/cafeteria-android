@@ -21,6 +21,7 @@ package com.inu.cafeteria.feature.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
@@ -53,6 +54,7 @@ class CafeteriaFragment : BaseFragment() {
 
     private fun initializeView(view: View) {
         with(view.cafeteria_recycler) {
+            isNestedScrollingEnabled = false
             adapter = CafeteriaAdapter().apply { onClickMore = viewModel::viewMore }
         }
     }

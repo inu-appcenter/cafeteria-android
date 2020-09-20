@@ -28,42 +28,52 @@
             type="com.inu.cafeteria.feature.main.CafeteriaViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <!-- Toolbar -->
-        <androidx.appcompat.widget.Toolbar
-            style="@style/Toolbar"
-            android:id="@+id/toolbar_home"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?android:attr/windowBackground"
+            android:theme="@style/ThemeOverlay.AppCompat.Light">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    android:id="@+id/toolbar_home"/>
+
+                <TextView
+                    android:layout_below="@id/toolbar_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="YEAHEYAHDATETEXT"
+                    android:textSize="@dimen/textTitle"
+                    android:textColor="@color/textPrimary"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Content -->
-        <com.inu.cafeteria.common.widget.ShyRecyclerView
-            android:id="@+id/cafeteria_recycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_home"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            cafeteria="@{vm.cafeteria}"
-            tools:listitem="@layout/cafeteria"/>
 
-        <!-- Toolbar shadow -->
-        <View
-            android:id="@+id/toolbar_shadow"
-            android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:background="@drawable/shadow"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_home"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cafeteria_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                cafeteria="@{vm.cafeteria}"
+                tools:listitem="@layout/cafeteria"/>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
 

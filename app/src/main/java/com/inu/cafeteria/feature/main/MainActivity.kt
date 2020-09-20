@@ -38,7 +38,7 @@ class MainActivity : NavigationActivity() {
         /** Home */
         NavigationHostFragment.createArguments(
             layoutRes = R.layout.content_home_base,
-            toolbarId = R.id.toolbar_home,
+            toolbarId = -1, // Un-managed toolbar.
             navHostId = R.id.nav_host_home,
             tabItemId = R.id.tab_home,
             rootDests = rootDestinations

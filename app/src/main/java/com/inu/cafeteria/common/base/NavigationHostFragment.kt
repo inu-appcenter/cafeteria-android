@@ -50,10 +50,10 @@ class NavigationHostFragment : Fragment() {
 
     private fun parseArguments() {
         arguments?.let {
-            layoutRes = it.getInt(KEY_LAYOUT)
-            toolbarId = it.getInt(KEY_TOOLBAR)
-            navHostId = it.getInt(KEY_NAV_HOST)
-            tabItemId = it.getInt(KEY_TAB_ITEM)
+            layoutRes = it.getInt(KEY_LAYOUT, -1)
+            toolbarId = it.getInt(KEY_TOOLBAR, -1)
+            navHostId = it.getInt(KEY_NAV_HOST, -1)
+            tabItemId = it.getInt(KEY_TAB_ITEM, -1)
             appBarConfig = it.getIntArray(KEY_ROOT_DEST)?.let { destinations ->
                 AppBarConfiguration(destinations.toSet())
             } ?: return
@@ -73,9 +73,9 @@ class NavigationHostFragment : Fragment() {
     }
 
     private fun setUpToolbarAndNavController() =
-        NavigationUI.setupWithNavController(getToolbar(), getNavController(), appBarConfig)
+        getToolbar()?.let { NavigationUI.setupWithNavController(it, getNavController(), appBarConfig) }
 
-    private fun getToolbar(): Toolbar = requireActivity().findViewById(toolbarId)
+    private fun getToolbar(): Toolbar? = if (toolbarId != -1) requireActivity().findViewById(toolbarId) else null
 
     private fun getNavController(): NavController = requireActivity().findNavController(navHostId)
 

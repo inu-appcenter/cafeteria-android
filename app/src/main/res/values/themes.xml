@@ -32,6 +32,7 @@
         <item name="android:textColorTertiary">@color/textTertiary</item>
 
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">?android:attr/windowBackground</item>
 
         <item name="colorPrimary">@color/themeBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

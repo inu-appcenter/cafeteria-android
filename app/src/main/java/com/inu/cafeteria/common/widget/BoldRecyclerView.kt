@@ -21,6 +21,7 @@ package com.inu.cafeteria.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.GestureDetector
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.MotionEvent
@@ -32,15 +33,31 @@ import kotlin.math.tan
  * This RecyclerView allows vertical scroll only when scroll angle is steep (over 60 degree).
  * Otherwise, the scroll event will not be consumed.
  */
-class ShyRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
+class BoldRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
 
+    private val gestureDetector = GestureDetector(context, YScrollDetector())
+
+    // Pass scroll event to child view if scroll angle lower than this.
+    private val verticalScrollThresholdAngleDegree = 60.0
+    private val diffRatioThreshold = tan(Math.toRadians(verticalScrollThresholdAngleDegree))
 
     override fun onInterceptTouchEvent(e: MotionEvent?): Boolean {
-        if (e?.action == MotionEvent.ACTION_POINTER_UP) {
-            parent?.requestDisallowInterceptTouchEvent(true)
-        }
-
-        return false
+        val result = super.onInterceptTouchEvent(e) && e != null && gestureDetector.onTouchEvent(e)
+        return result
     }
 
+    inner class YScrollDetector : SimpleOnGestureListener() {
+        // Return false if scroll angle low
+        override fun onScroll(
+            e1: MotionEvent?,
+            e2: MotionEvent?,
+            distanceX: Float,
+            distanceY: Float
+        ): Boolean {
+            val angle = abs(distanceY) / abs(distanceX)
+            Log.d("!!!!!!!!!!!!", angle.toString());
+
+            return angle < diffRatioThreshold
+        }
+    }
 }

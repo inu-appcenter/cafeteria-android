@@ -1,6 +1,7 @@
 package com.inu.cafeteria.feature.main
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -46,6 +47,8 @@ class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHold
 
         private fun setChildRecyclerView() {
             with(itemView.menu_page_recycler) {
+                isNestedScrollingEnabled = false
+
                 adapter = menuPageAdapter
 
                 setRecycledViewPool(menuPagePool)

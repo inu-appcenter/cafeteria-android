@@ -21,26 +21,13 @@ package com.inu.cafeteria.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.GestureDetector
-import android.view.GestureDetector.SimpleOnGestureListener
-import android.view.MotionEvent
-import androidx.recyclerview.widget.RecyclerView
-import kotlin.math.abs
-import kotlin.math.tan
 
-/**
- * This RecyclerView allows vertical scroll only when scroll angle is steep (over 60 degree).
- * Otherwise, the scroll event will not be consumed.
- */
-class ShyRecyclerView(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
+class ChildHorizontalRecyclerView : MainVerticalRecyclerView {
+    constructor(context: Context) : this(context, null)
 
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    override fun onInterceptTouchEvent(e: MotionEvent?): Boolean {
-        if (e?.action == MotionEvent.ACTION_POINTER_UP) {
-            parent?.requestDisallowInterceptTouchEvent(true)
-        }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-        return false
-    }
-
+    override fun requestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
 }
