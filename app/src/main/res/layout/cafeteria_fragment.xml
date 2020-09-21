@@ -44,7 +44,7 @@
                     <!-- Logo in the toolbar -->
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="16dp"
+                        android:layout_height="@dimen/logo_height"
                         android:scaleType="fitCenter"
                         android:src="@drawable/logo_new"
                         android:contentDescription="@string/desc_logo" />
@@ -52,65 +52,23 @@
                 </androidx.appcompat.widget.Toolbar>
 
             <!-- Date selection tab bar -->
-            <com.google.android.material.tabs.TabLayout
-                android:layout_below="@id/toolbar_home"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabIndicator="@drawable/tab_indicator"
-                app:tabIndicatorColor="?attr/barSelectedTextColor"
-                app:tabTextColor="?attr/barTextColor"
-                app:tabSelectedTextColor="?attr/barSelectedTextColor"
-                app:tabRippleColor="@null"
-                app:tabMode="fixed"
-                app:tabIndicatorFullWidth="false"
-                app:tabIndicatorHeight="3dp"
-                app:tabTextAppearance="@style/TabBarText">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="오늘" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="내일" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="모레" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="글피" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="그글피" />
-
-            </com.google.android.material.tabs.TabLayout>
+            <include layout="@layout/date_selection_tab_bar" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Content -->
         <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            style="@style/FullSizedView"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.inu.cafeteria.common.widget.ShyRecyclerView
+                style="@style/FullSizedView"
                 android:id="@+id/cafeteria_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 cafeteria="@{vm.cafeteria}"
                 tools:listitem="@layout/cafeteria"/>
 
         </androidx.core.widget.NestedScrollView>
-
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

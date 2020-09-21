@@ -95,4 +95,7 @@
     <dimen name="double_squircle_size">33dp</dimen>
     <dimen name="triple_squircle_size">28dp</dimen>
 
+    <!-- Logo -->
+    <dimen name="logo_height">16dp</dimen>
+
 </resources>

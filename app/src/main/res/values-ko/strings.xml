@@ -82,6 +82,11 @@
     <string name="notify_press_again_to_exit">뒤로 가기 버튼을 한 번 더 두르면 앱이 종료됩니다.</string>
     <string name="title_menus">식단</string>
     <string name="title_discount">할인</string>
+    <string name="item_today">오늘</string>
+    <string name="item_today2">내일</string>
+    <string name="item_today3">모레</string>
+    <string name="item_today4">글피</string>
+    <string name="item_today5">그글피</string>
 
 
 </resources>

@@ -87,5 +87,10 @@
     <string name="notify_press_again_to_exit">Press again to exit app.</string>
     <string name="title_menus">Menus</string>
     <string name="title_discount">Discount</string>
+    <string name="item_today">Today</string>
+    <string name="item_today2">Tomorrow</string>
+    <string name="item_today3">Today+2</string>
+    <string name="item_today4">Today+3</string>
+    <string name="item_today5">Today+4</string>
 
 </resources>

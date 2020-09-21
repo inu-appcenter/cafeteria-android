@@ -98,15 +98,27 @@
         <item name="android:elevation">12dp</item>
     </style>
 
-    <style name="CircularImageHolder">
+
+    <style name="FullSizedView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="HorizontallyFullSizedView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FitSizedView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="CircularImageHolder" parent="FullSizedView">
         <item name="cardElevation">0dp</item>
     </style>
 
-    <style name="CircularInnerImage">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+    <style name="CircularInnerImage" parent="FullSizedView">
         <item name="android:scaleType">centerCrop</item>
     </style>
 
@@ -117,15 +129,12 @@
     </style>
 
     <!-- AppBar -->
-    <style name="AppBar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="AppBar" parent="HorizontallyFullSizedView">
         <item name="android:background">?attr/barBackground</item>
     </style>
 
     <!-- Toolbar -->
-    <style name="Toolbar">
-        <item name="android:layout_width">match_parent</item>
+    <style name="Toolbar" parent="HorizontallyFullSizedView">
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:background">?attr/barBackground</item>
         <item name="titleTextAppearance">@style/ToolbarText</item>
@@ -149,12 +158,24 @@
 
 
     <!-- BottomNavigation -->
-    <style name="BottomNavigation">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="BottomNavigation" parent="HorizontallyFullSizedView">
         <item name="android:background">?attr/barBackground</item>
         <item name="itemIconTint">?attr/barSelectedTextColor</item>
         <item name="itemTextColor">?attr/barSelectedTextColor</item>
     </style>
+    
+    <!-- TabLayout -->
+    <style name="TabLayout" parent="HorizontallyFullSizedView">
+        <item name="tabIndicator">@drawable/tab_indicator</item>
+        <item name="tabIndicatorColor">?attr/barSelectedTextColor</item>
+        <item name="tabTextColor">?attr/barTextColor</item>
+        <item name="tabSelectedTextColor">?attr/barSelectedTextColor</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="tabTextAppearance">@style/TabBarText</item>
+    </style>
+
 </resources>
 
