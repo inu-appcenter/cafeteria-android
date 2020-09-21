@@ -17,20 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.usecase
+package com.inu.cafeteria.extension
 
-import com.inu.cafeteria.entities.Cafeteria
-import com.inu.cafeteria.extension.format
-import com.inu.cafeteria.functional.Result
-import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.repository.CafeteriaRepository
+import java.text.SimpleDateFormat
 import java.util.*
 
-class GetCafeteria(
-    private val cafeteriaRepo: CafeteriaRepository
-) : UseCase<Date, List<Cafeteria>>() {
+fun Date.format(formatString: String = "yyyyMMdd"): String {
+    val dateFormat = SimpleDateFormat(formatString, Locale.getDefault())
+    return dateFormat.format(this)
+}
 
-    override fun run(params: Date) = Result.of {
-        cafeteriaRepo.getAllCafeteria(params.format("yyyyMMdd"))
+fun Date.afterDays(days: Int): Date {
+    val cal = Calendar.getInstance().apply {
+        time = this@afterDays
     }
+
+    cal.add(Calendar.DATE, days)
+
+    return cal.time
 }

@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import kotlinx.android.synthetic.main.menu_page.view.*
+import timber.log.Timber
 import kotlin.math.ceil
 import kotlin.math.min
 
 class MenuPageAdapter(
     private val menuPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool()
-) : RecyclerView.Adapter<MenuPageAdapter.PropPageViewHolder>() {
+) : RecyclerView.Adapter<MenuPageAdapter.MenuPageViewHolder>() {
 
     var wholeMenus: List<MenuView> = listOf()
         set(value) {
@@ -20,11 +21,11 @@ class MenuPageAdapter(
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropPageViewHolder {
-        return PropPageViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuPageViewHolder {
+        return MenuPageViewHolder(parent)
     }
 
-    override fun onBindViewHolder(holder: PropPageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MenuPageViewHolder, position: Int) {
         fun paginateProps(pageNumber: Int): List<MenuView> {
             val indexStart = pageNumber * stackSize
             val indexEnd = min(indexStart + stackSize - 1, wholeMenus.size - 1)
@@ -39,13 +40,14 @@ class MenuPageAdapter(
         return ceil(wholeMenus.size.toDouble()/stackSize).toInt()
     }
 
-    inner class PropPageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class MenuPageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         constructor(parent: ViewGroup) : this(LayoutInflater.from(parent.context).inflate(R.layout.menu_page, parent, false))
 
         private val menuAdapter = MenuAdapter()
 
         init {
             setChildRecyclerView()
+            Timber.i("Inflate Menu Page!")
         }
 
         private fun setChildRecyclerView() {
@@ -53,7 +55,6 @@ class MenuPageAdapter(
                 adapter = menuAdapter
 
                 setRecycledViewPool(menuPool)
-                (layoutManager as LinearLayoutManager).recycleChildrenOnDetach = true
             }
         }
 

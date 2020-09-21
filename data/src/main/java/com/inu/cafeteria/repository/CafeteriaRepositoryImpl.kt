@@ -22,22 +22,35 @@ package com.inu.cafeteria.repository
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.Corner
 import com.inu.cafeteria.entities.Menu
+import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.extension.getOrNull
+import com.inu.cafeteria.util.Cache
 import com.inu.cafeteria.model.scheme.CafeteriaResult
 import com.inu.cafeteria.model.scheme.CornerResult
 import com.inu.cafeteria.model.scheme.MenuResult
 import com.inu.cafeteria.service.CafeteriaNetworkService
+import java.util.*
 
 class CafeteriaRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
 ) : CafeteriaRepository() {
 
+    private val cache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
+
     override fun getAllCafeteria(date: String?): List<Cafeteria> {
+        getFromCache(date)?.let{ return it }
+
         val cafeteria = networkService.getCafeteria().getOrNull() ?: return listOf()
         val corners = networkService.getCorners().getOrNull() ?: return listOf()
         val menus = networkService.getMenus(date).getOrNull() ?: return listOf()
 
-        return ResultGatherer(cafeteria, corners, menus).combine()
+        return ResultGatherer(cafeteria, corners, menus).combine().also {
+            cache[date ?: Date().format("yyyyMMdd")] = it
+        }
+    }
+
+    private fun getFromCache(date: String?): List<Cafeteria>? {
+        return cache[date]
     }
 
     class ResultGatherer(

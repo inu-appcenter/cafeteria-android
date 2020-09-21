@@ -21,6 +21,7 @@
 <com.google.android.material.tabs.TabLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/TabLayout"
+    android:id="@+id/date_selector"
     android:layout_below="@id/toolbar_home">
 
     <com.google.android.material.tabs.TabItem

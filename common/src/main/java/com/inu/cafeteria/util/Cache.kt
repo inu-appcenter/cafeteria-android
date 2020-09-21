@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model
+package com.inu.cafeteria.util
 
 /**
  * A simple cache class for storing fetched data.

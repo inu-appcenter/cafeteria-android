@@ -22,7 +22,9 @@ package com.inu.cafeteria.interactor
 import android.os.Handler
 import android.os.Looper
 import com.inu.cafeteria.functional.Result
+import kotlinx.coroutines.*
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Abstract class for Use Case (Interactor in terms of Clean Architecture).
@@ -32,20 +34,15 @@ import timber.log.Timber
 abstract class UseCase<in Params, out Type> {
     abstract fun run(params: Params): Result<Type>
 
-    /**
-     * Use thread instead of coroutine because it ruins Realm.
-     */
-
     operator fun invoke(params: Params, onResult: (Result<Type>) -> Unit = {}) {
-        Thread {
-            try {
-                Timber.v("UseCase running on ${Thread.currentThread().name}")
-                val result = run(params)
-                Handler(Looper.getMainLooper()).post { onResult(result) }
-            } catch (e: Exception) {
-                Timber.w("Exception inside another thread.")
-                Timber.w(e)
-            }
-        }.start()
+
+        val job = CoroutineScope(Dispatchers.IO).async {
+            Timber.v("UseCase ${this::class.java.name} running on ${Thread.currentThread().name}")
+            run(params)
+        }
+
+        MainScope().launch {
+            onResult(job.await())
+        }
     }
 }

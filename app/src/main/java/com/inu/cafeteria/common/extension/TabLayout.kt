@@ -17,20 +17,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.usecase
+package com.inu.cafeteria.common.extension
 
-import com.inu.cafeteria.entities.Cafeteria
-import com.inu.cafeteria.extension.format
-import com.inu.cafeteria.functional.Result
-import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.repository.CafeteriaRepository
-import java.util.*
+import com.google.android.material.tabs.TabLayout
 
-class GetCafeteria(
-    private val cafeteriaRepo: CafeteriaRepository
-) : UseCase<Date, List<Cafeteria>>() {
+fun TabLayout.onTabSelect(action: (TabLayout.Tab?) -> Any?) {
+    clearOnTabSelectedListeners()
+    addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            action(tab)
+        }
 
-    override fun run(params: Date) = Result.of {
-        cafeteriaRepo.getAllCafeteria(params.format("yyyyMMdd"))
-    }
+        override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {}
+    })
 }

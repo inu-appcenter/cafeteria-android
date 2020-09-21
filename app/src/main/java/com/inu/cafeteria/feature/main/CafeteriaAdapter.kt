@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import kotlinx.android.synthetic.main.cafeteria.view.*
+import timber.log.Timber
 
 class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHolder>() {
 
@@ -43,6 +44,7 @@ class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHold
 
         init {
             setChildRecyclerView()
+            Timber.i("Inflate Cafeteria!")
         }
 
         private fun setChildRecyclerView() {
@@ -50,7 +52,6 @@ class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHold
                 adapter = menuPageAdapter
 
                 setRecycledViewPool(menuPagePool)
-                (layoutManager as LinearLayoutManager).recycleChildrenOnDetach = true
 
                 PagerSnapHelper().attachToRecyclerView(this)
             }

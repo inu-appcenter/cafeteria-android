@@ -24,7 +24,7 @@ import android.content.Context
 import androidx.core.content.edit
 import com.inu.cafeteria.common.BuildConfig
 import com.inu.cafeteria.extension.onResult
-import com.inu.cafeteria.model.Cache
+import com.inu.cafeteria.util.Cache
 import com.inu.cafeteria.model.scheme.Version
 import com.inu.cafeteria.service.CafeteriaNetworkService
 import timber.log.Timber

@@ -19,14 +19,15 @@
 
 package com.inu.cafeteria.feature.main
 
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Cafeteria
+import com.inu.cafeteria.extension.afterDays
 import com.inu.cafeteria.usecase.GetCafeteria
 import org.koin.core.inject
+import java.util.*
 
 class CafeteriaViewModel : BaseViewModel() {
 
@@ -35,8 +36,14 @@ class CafeteriaViewModel : BaseViewModel() {
     private val _cafeteria = MutableLiveData<List<CafeteriaView>>()
     val cafeteria: LiveData<List<CafeteriaView>> = _cafeteria
 
-    fun fetch() {
-        getCafeteria(Unit) {
+    fun onSelectDateTab(tabPosition: Int) {
+        val targetDate = Date().afterDays(tabPosition)
+
+        fetch(targetDate)
+    }
+
+    private fun fetch(date: Date = Date()) {
+        getCafeteria(date) {
             it.onSuccess(::handleCafeteria).onError(::handleFailure)
         }
     }
@@ -61,7 +68,7 @@ class CafeteriaViewModel : BaseViewModel() {
         Toast.makeText(mContext, e.message, Toast.LENGTH_SHORT).show()
     }
 
-    fun viewMore(cafeteriaView: CafeteriaView) {
-
+    fun onViewMore(cafeteriaView: CafeteriaView) {
+        Toast.makeText(mContext, "Not implemented yet :)", Toast.LENGTH_SHORT).show()
     }
 }

@@ -20,16 +20,19 @@
 package com.inu.cafeteria.feature.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.extension.onTabSelect
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
 import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
+import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
 
 class CafeteriaFragment : BaseFragment() {
 
@@ -38,7 +41,7 @@ class CafeteriaFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.fetch()
+        viewModel.onSelectDateTab(0)
     }
 
     override fun onCreateView(
@@ -54,7 +57,13 @@ class CafeteriaFragment : BaseFragment() {
 
     private fun initializeView(view: View) {
         with(view.cafeteria_recycler) {
-            adapter = CafeteriaAdapter().apply { onClickMore = viewModel::viewMore }
+            adapter = CafeteriaAdapter().apply { onClickMore = viewModel::onViewMore }
+        }
+
+        with(view.date_selector) {
+            onTabSelect {
+                it?.let { viewModel.onSelectDateTab(it.position)}
+            }
         }
     }
 

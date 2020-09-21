@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import kotlinx.android.synthetic.main.menu.view.*
+import timber.log.Timber
 
 class MenuAdapter : RecyclerView.Adapter<MenuAdapter.TheViewHolder>() {
 
@@ -29,6 +30,10 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.TheViewHolder>() {
 
     class TheViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         constructor(parent: ViewGroup) : this(LayoutInflater.from(parent.context).inflate(R.layout.menu, parent, false))
+
+        init {
+            Timber.i("Inflate Menu!")
+        }
 
         fun bind(menu: MenuView) {
             with(itemView) {
