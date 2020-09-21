@@ -23,6 +23,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="vm"
             type="com.inu.cafeteria.feature.main.CafeteriaViewModel" />
@@ -66,9 +67,15 @@
                 android:id="@+id/cafeteria_recycler"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 cafeteria="@{vm.cafeteria}"
+                android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}"
                 tools:listitem="@layout/cafeteria"/>
 
         </androidx.core.widget.NestedScrollView>
+
+        <!-- Loading view -->
+        <ProgressBar
+            style="@style/NonFunctionalProgressBar"
+            android:visibility="@{vm.loading ? View.VISIBLE : View.GONE}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -177,5 +177,12 @@
         <item name="tabTextAppearance">@style/TabBarText</item>
     </style>
 
+    <!-- Loading progress bar -->
+    <style name="NonFunctionalProgressBar" parent="FitSizedView">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTint">?android:attr/colorPrimary</item>
+    </style>
+
 </resources>
 

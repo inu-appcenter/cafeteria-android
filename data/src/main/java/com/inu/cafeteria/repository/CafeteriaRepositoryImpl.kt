@@ -24,33 +24,54 @@ import com.inu.cafeteria.entities.Corner
 import com.inu.cafeteria.entities.Menu
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.extension.getOrNull
-import com.inu.cafeteria.util.Cache
 import com.inu.cafeteria.model.scheme.CafeteriaResult
 import com.inu.cafeteria.model.scheme.CornerResult
 import com.inu.cafeteria.model.scheme.MenuResult
 import com.inu.cafeteria.service.CafeteriaNetworkService
+import com.inu.cafeteria.util.Cache
 import java.util.*
 
 class CafeteriaRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
 ) : CafeteriaRepository() {
 
-    private val cache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
+    // Results returned from getAllCafeteria will be saved here.
+    private val savedReturnValues: MutableMap<String, List<Cafeteria>> = mutableMapOf()
+
+    // These have app-wide lifecycle. Fetch runs only for once.
+    private val cafeteriaCache = Cache<List<CafeteriaResult>>().apply { set(null) }
+    private val cornerCache = Cache<List<CornerResult>>().apply { set(null) }
 
     override fun getAllCafeteria(date: String?): List<Cafeteria> {
-        getFromCache(date)?.let{ return it }
+        findFromPreviousReturnValues(date)?.let{ return it }
 
-        val cafeteria = networkService.getCafeteria().getOrNull() ?: return listOf()
-        val corners = networkService.getCorners().getOrNull() ?: return listOf()
-        val menus = networkService.getMenus(date).getOrNull() ?: return listOf()
+        val cafeteria = cachedFetch(cafeteriaCache) {
+            networkService.getCafeteria().getOrNull()
+        } ?: return listOf()
+
+        val corners = cachedFetch(cornerCache) {
+            networkService.getCorners().getOrNull()
+        } ?: return listOf()
+
+        val menus = networkService.getMenus(date).getOrNull()
+            ?: return listOf()
 
         return ResultGatherer(cafeteria, corners, menus).combine().also {
-            cache[date ?: Date().format("yyyyMMdd")] = it
+            saveReturnValue(date, it)
         }
     }
 
-    private fun getFromCache(date: String?): List<Cafeteria>? {
-        return cache[date]
+    private fun findFromPreviousReturnValues(date: String?): List<Cafeteria>? {
+        return savedReturnValues[date]
+    }
+
+    private fun <T> cachedFetch(cache: Cache<T>, fetch: () -> T?): T? {
+        return cache.get()
+            ?: fetch()?.also(cache::set)
+    }
+
+    private fun saveReturnValue(date: String?, data: List<Cafeteria>) {
+        savedReturnValues[date ?: Date().format("yyyyMMdd")] = data
     }
 
     class ResultGatherer(

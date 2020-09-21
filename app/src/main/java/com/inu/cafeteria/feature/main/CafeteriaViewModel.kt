@@ -36,6 +36,9 @@ class CafeteriaViewModel : BaseViewModel() {
     private val _cafeteria = MutableLiveData<List<CafeteriaView>>()
     val cafeteria: LiveData<List<CafeteriaView>> = _cafeteria
 
+    private val _loading = MutableLiveData<Boolean>(true)
+    val loading: LiveData<Boolean> = _loading
+
     fun onSelectDateTab(tabPosition: Int) {
         val targetDate = Date().afterDays(tabPosition)
 
@@ -43,8 +46,12 @@ class CafeteriaViewModel : BaseViewModel() {
     }
 
     private fun fetch(date: Date = Date()) {
+        _loading.value = true
+
         getCafeteria(date) {
             it.onSuccess(::handleCafeteria).onError(::handleFailure)
+
+            _loading.value = false
         }
     }
 

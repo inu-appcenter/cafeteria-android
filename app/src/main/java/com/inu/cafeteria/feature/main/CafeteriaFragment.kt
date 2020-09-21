@@ -20,14 +20,12 @@
 package com.inu.cafeteria.feature.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.tabs.TabLayout
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.onTabSelect
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
@@ -37,6 +35,8 @@ import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
 class CafeteriaFragment : BaseFragment() {
 
     private val viewModel: CafeteriaViewModel by viewModels()
+
+    private lateinit var animator: PageSwapAnimator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,12 +58,46 @@ class CafeteriaFragment : BaseFragment() {
     private fun initializeView(view: View) {
         with(view.cafeteria_recycler) {
             adapter = CafeteriaAdapter().apply { onClickMore = viewModel::onViewMore }
+            animator = PageSwapAnimator(this)
         }
 
         with(view.date_selector) {
             onTabSelect {
-                it?.let { viewModel.onSelectDateTab(it.position)}
+                it?.let {
+                    viewModel.onSelectDateTab(it.position)
+                    animator.onNewTabSelected(it.position)
+                }
             }
+        }
+    }
+
+    /**
+     * Do an animation like that of page swapping.
+     * This executes an in-place animation with a single view.
+     */
+    class PageSwapAnimator(private val animationTarget: View) {
+
+        private var currentSelectedTabPosition = 0
+
+        fun onNewTabSelected(newlySelectedTabPosition: Int) {
+            with(animationTarget) {
+                alpha = 0f
+                x += -30f * getWhichDirectionToSwipe(newlySelectedTabPosition)
+                animate().alpha(1f).x(0f)
+            }
+        }
+
+        private fun getWhichDirectionToSwipe(newlySelectedTabPosition: Int): Int {
+            val theAnswer = when {
+                newlySelectedTabPosition > currentSelectedTabPosition -> -1
+                newlySelectedTabPosition < currentSelectedTabPosition -> +1
+                else -> 0
+            }
+
+            currentSelectedTabPosition = newlySelectedTabPosition
+
+            // -1: left, 1: right.
+            return theAnswer
         }
     }
 
