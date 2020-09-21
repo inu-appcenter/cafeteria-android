@@ -116,8 +116,14 @@
         <item name="maxWidth">100dp</item>
     </style>
 
-    <!-- Toolbar -->
+    <!-- AppBar -->
+    <style name="AppBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?attr/barBackground</item>
+    </style>
 
+    <!-- Toolbar -->
     <style name="Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
@@ -136,5 +142,19 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- TabBar -->
+    <style name="TabBarText">
+        <item name="android:textSize">@dimen/textSecondary</item>
+    </style>
+
+
+    <!-- BottomNavigation -->
+    <style name="BottomNavigation">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?attr/barBackground</item>
+        <item name="itemIconTint">?attr/barSelectedTextColor</item>
+        <item name="itemTextColor">?attr/barSelectedTextColor</item>
+    </style>
 </resources>
 

@@ -18,8 +18,13 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<resources>
-    <attr name="barBackground" format="reference" />
-    <attr name="barTextColor" format="reference" />
-    <attr name="barSelectedTextColor" format="reference" />
-</resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/white" />
+    <corners
+        android:radius="1dp"
+        android:topLeftRadius="6dp"
+        android:topRightRadius="6dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp"
+        />
+</shape>

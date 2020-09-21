@@ -40,6 +40,8 @@
         <item name="selectableItemBackground">@drawable/ripple</item>
 
         <item name="barBackground">@color/backgroundLight</item>
+        <item name="barTextColor">@color/textSecondary</item>
+        <item name="barSelectedTextColor">@drawable/bar_item_color</item>
     </style>
 
 </resources>

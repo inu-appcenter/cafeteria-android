@@ -32,45 +32,66 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Toolbar -->
+        <!-- Toolbar group -->
         <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="?android:attr/windowBackground">
+            style="@style/AppBar">
 
                 <androidx.appcompat.widget.Toolbar
                     style="@style/CustomToolbar"
                     android:id="@+id/toolbar_home"
                     app:layout_scrollFlags="scroll|enterAlways">
 
+                    <!-- Logo in the toolbar -->
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:src="@drawable/img_logo"
+                        android:layout_height="16dp"
                         android:scaleType="fitCenter"
-                        app:tint="@color/textPrimary" />
+                        android:src="@drawable/logo_new"
+                        android:contentDescription="@string/desc_logo" />
 
                 </androidx.appcompat.widget.Toolbar>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_below="@id/toolbar_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <!-- Date selection tab bar -->
+            <com.google.android.material.tabs.TabLayout
+                android:layout_below="@id/toolbar_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicator="@drawable/tab_indicator"
+                app:tabIndicatorColor="?attr/barSelectedTextColor"
+                app:tabTextColor="?attr/barTextColor"
+                app:tabSelectedTextColor="?attr/barSelectedTextColor"
+                app:tabRippleColor="@null"
+                app:tabMode="fixed"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="3dp"
+                app:tabTextAppearance="@style/TabBarText">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:text="(대충 날짜 선택하는 UI)"
-                        android:textSize="@dimen/textTitle"
-                        android:textColor="@color/textPrimary"/>
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="오늘" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="내일" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="모레" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="글피" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="그글피" />
+
+            </com.google.android.material.tabs.TabLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
