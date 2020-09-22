@@ -20,16 +20,16 @@
 package com.inu.cafeteria.feature.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.cooltechworks.views.shimmer.ShimmerRecyclerView
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.onTabSelect
+import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
+import kotlinx.android.synthetic.main.cafeteria_fragment.*
 import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
 
@@ -39,11 +39,12 @@ class CafeteriaFragment : BaseFragment() {
 
     private lateinit var animator: PageSwapAnimator
 
+    override val optionMenuId: Int? = R.menu.cafeteria_menu
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel.preFetch(5)
-        viewModel.onSelectDateTab(0)
     }
 
     override fun onCreateView(
@@ -58,6 +59,8 @@ class CafeteriaFragment : BaseFragment() {
         .root
 
     private fun initializeView(view: View) {
+        setSupportActionBar(view.toolbar_home)
+
         with(view.cafeteria_recycler) {
             adapter = CafeteriaAdapter().apply { onClickMore = viewModel::onViewMore }
             animator = PageSwapAnimator(this)
@@ -71,7 +74,21 @@ class CafeteriaFragment : BaseFragment() {
                 }
             }
         }
+
+        with(view.logo_image) {
+            alpha = 0f
+            animate().alpha(1f)
+        }
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.onSelectDateTab(0)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) =
+        viewModel.onClickOptionMenu(item.itemId)
 
     /**
      * Do an animation like that of page swapping.

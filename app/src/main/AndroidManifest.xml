@@ -45,6 +45,7 @@
         </activity>
         <activity android:name=".feature.splash.SplashActivity" />
         <activity android:name=".feature.main.MainActivity" />
+        <activity android:name=".feature.sorting.SortingActivity" />
     </application>
 
 </manifest>

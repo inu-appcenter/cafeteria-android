@@ -92,5 +92,6 @@
     <string name="item_today3">Today+2</string>
     <string name="item_today4">Today+3</string>
     <string name="item_today5">Today+4</string>
+    <string name="menu_change_order">Change order</string>
 
 </resources>

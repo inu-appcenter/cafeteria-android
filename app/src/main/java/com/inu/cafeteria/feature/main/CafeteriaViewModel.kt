@@ -19,9 +19,14 @@
 
 package com.inu.cafeteria.feature.main
 
+import android.os.Handler
+import android.os.Looper
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.inu.cafeteria.R
+import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.afterDays
@@ -33,6 +38,7 @@ import java.util.*
 class CafeteriaViewModel : BaseViewModel() {
 
     private val getCafeteria: GetCafeteria by inject()
+    private val navigator: Navigator by inject()
 
     private val _cafeteria = MutableLiveData<List<CafeteriaView>>()
     val cafeteria: LiveData<List<CafeteriaView>> = _cafeteria
@@ -98,7 +104,17 @@ class CafeteriaViewModel : BaseViewModel() {
         //
         // However it doesn't matter because we can pre-fetch all data(number of them are fixed!).
 
-        _loading.value = false
+        Handler(Looper.getMainLooper()).postDelayed({
+            _loading.value = false
+        }, 250)
+    }
+
+    fun onClickOptionMenu(menuItemId: Int): Boolean {
+        when(menuItemId) {
+            R.id.menu_change_order -> navigator.showSorting();
+        }
+
+        return true
     }
 
     private fun handleCafeteria(allCafeteria: List<Cafeteria>) {

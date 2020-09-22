@@ -79,13 +79,13 @@ val Fragment.appContext: Context get() = activity?.applicationContext!!
 
 val Fragment.supportActionBar: ActionBar? get() = (activity as? AppCompatActivity)?.supportActionBar
 
-fun Fragment.setSupportActionBar(toolbar: Toolbar, title: Boolean = false, upButton: Boolean = false) {
+fun Fragment.setSupportActionBar(toolbar: Toolbar, showTitle: Boolean = false, showUpButton: Boolean = false) {
     withNonNull(activity as? AppCompatActivity) {
         setSupportActionBar(toolbar)
 
         withNonNull(supportActionBar) {
-            setDisplayShowTitleEnabled(title)
-            setDisplayHomeAsUpEnabled(upButton)
+            setDisplayShowTitleEnabled(showTitle)
+            setDisplayHomeAsUpEnabled(showUpButton)
         }
     }
 }
