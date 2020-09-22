@@ -37,7 +37,8 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.TheViewHolder>() {
 
         fun bind(menu: MenuView) {
             with(itemView) {
-                available_at.setAvailableTime(7)
+                // TODO
+                available_at.setAvailableTime((1..7).random())
                 corner_name.text = menu.cornerName
                 price.text = String.format("%,d원", menu.price)
                 calorie.text = String.format("%,dkcal", menu.calorie)
