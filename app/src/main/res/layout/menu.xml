@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@id/foods"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/available_at"
-        android:textColor="@color/textSecondary"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="@dimen/textSecondary"
         tools:text="2코너다아아" />
 
@@ -49,17 +49,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/foods"
-        android:textStyle="bold"
+        android:textColor="?android:attr/textColorSecondary"
         tools:text="3,500원" />
 
     <TextView
         android:id="@+id/calorie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/separator_margin"
         app:layout_constraintEnd_toStartOf="@id/price"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/foods"
-        android:layout_marginEnd="@dimen/separator_margin"
+        android:textColor="?android:attr/textColorSecondary"
         tools:text="361kcal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
