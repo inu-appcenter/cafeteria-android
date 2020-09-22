@@ -66,9 +66,9 @@
                 style="@style/FullSizedView"
                 android:id="@+id/cafeteria_recycler"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                cafeteria="@{vm.cafeteria}"
                 android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}"
-                tools:listitem="@layout/cafeteria"/>
+                cafeteria="@{vm.cafeteria}"
+                tools:listitem="@layout/cafeteria" />
 
         </androidx.core.widget.NestedScrollView>
 

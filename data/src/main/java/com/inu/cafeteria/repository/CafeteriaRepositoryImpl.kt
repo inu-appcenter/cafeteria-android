@@ -29,22 +29,18 @@ import com.inu.cafeteria.model.scheme.CornerResult
 import com.inu.cafeteria.model.scheme.MenuResult
 import com.inu.cafeteria.service.CafeteriaNetworkService
 import com.inu.cafeteria.util.Cache
+import timber.log.Timber
 import java.util.*
 
 class CafeteriaRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
 ) : CafeteriaRepository() {
 
-    // Results returned from getAllCafeteria will be saved here.
-    private val savedReturnValues: MutableMap<String, List<Cafeteria>> = mutableMapOf()
-
     // These have app-wide lifecycle. Fetch runs only for once.
     private val cafeteriaCache = Cache<List<CafeteriaResult>>().apply { set(null) }
     private val cornerCache = Cache<List<CornerResult>>().apply { set(null) }
 
     override fun getAllCafeteria(date: String?): List<Cafeteria> {
-        findFromPreviousReturnValues(date)?.let{ return it }
-
         val cafeteria = cachedFetch(cafeteriaCache) {
             networkService.getCafeteria().getOrNull()
         } ?: return listOf()
@@ -56,22 +52,12 @@ class CafeteriaRepositoryImpl(
         val menus = networkService.getMenus(date).getOrNull()
             ?: return listOf()
 
-        return ResultGatherer(cafeteria, corners, menus).combine().also {
-            saveReturnValue(date, it)
-        }
+        return ResultGatherer(cafeteria, corners, menus).combine()
     }
 
-    private fun findFromPreviousReturnValues(date: String?): List<Cafeteria>? {
-        return savedReturnValues[date]
-    }
-
+    @Synchronized
     private fun <T> cachedFetch(cache: Cache<T>, fetch: () -> T?): T? {
-        return cache.get()
-            ?: fetch()?.also(cache::set)
-    }
-
-    private fun saveReturnValue(date: String?, data: List<Cafeteria>) {
-        savedReturnValues[date ?: Date().format("yyyyMMdd")] = data
+        return cache.get() ?: fetch()?.also(cache::set)
     }
 
     class ResultGatherer(

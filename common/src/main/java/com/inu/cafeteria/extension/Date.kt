@@ -24,6 +24,7 @@ import java.util.*
 
 fun Date.format(formatString: String = "yyyyMMdd"): String {
     val dateFormat = SimpleDateFormat(formatString, Locale.getDefault())
+
     return dateFormat.format(this)
 }
 

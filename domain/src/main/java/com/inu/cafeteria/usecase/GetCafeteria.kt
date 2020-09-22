@@ -28,9 +28,9 @@ import java.util.*
 
 class GetCafeteria(
     private val cafeteriaRepo: CafeteriaRepository
-) : UseCase<Date, List<Cafeteria>>() {
+) : UseCase<String, List<Cafeteria>>() {
 
-    override fun run(params: Date) = Result.of {
-        cafeteriaRepo.getAllCafeteria(params.format("yyyyMMdd"))
+    override fun run(params: String) = Result.of {
+        cafeteriaRepo.getAllCafeteria(params)
     }
 }

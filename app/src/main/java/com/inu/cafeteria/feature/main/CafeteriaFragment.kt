@@ -26,6 +26,7 @@ import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.onTabSelect
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
@@ -41,6 +42,7 @@ class CafeteriaFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.preFetch(5)
         viewModel.onSelectDateTab(0)
     }
 

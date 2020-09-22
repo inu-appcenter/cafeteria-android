@@ -43,6 +43,7 @@ class Cache<T> {
      * @throws IllegalStateException
      */
 
+    @Synchronized
     fun get(): T? {
         isValid.takeIf { it } ?: throw IllegalStateException("Cannot access a cache in an invalid state.")
 
@@ -58,6 +59,7 @@ class Cache<T> {
      * So Calling this method will ALWAYS set the cache as valid.
      */
 
+    @Synchronized
     fun set(value: T?) {
         cache = value
         valid = true
