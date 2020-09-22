@@ -83,6 +83,7 @@
     <dimen name="prop_vertical_margin">8dp</dimen>
     <dimen name="element_margin">8dp</dimen>
     <dimen name="separator_margin">16dp</dimen>
+    <dimen name="left_margin_until_text">58dp</dimen>
 
     <!-- AvailableTimeView -->
     <dimen name="available_time_view_size">50dp</dimen>

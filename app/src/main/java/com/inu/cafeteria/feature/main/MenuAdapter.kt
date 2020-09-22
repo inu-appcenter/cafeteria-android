@@ -38,10 +38,17 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.TheViewHolder>() {
         fun bind(menu: MenuView) {
             with(itemView) {
                 available_at.setAvailableTime(7)
-                foods.text = menu.foods
                 corner_name.text = menu.cornerName
                 price.text = String.format("%,d원", menu.price)
                 calorie.text = String.format("%,dkcal", menu.calorie)
+
+                // TODO: dirty. clean it.
+                with(foods) {
+                    maxLines = 2
+                    text = menu.foods
+                }
+
+                setOnClickListener { foods.maxLines = 5 }
             }
         }
     }
