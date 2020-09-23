@@ -53,16 +53,8 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}"
             cafeteriaToReorder="@{vm.cafeteria}"
+            isLoading="@{vm.loading}"
             tools:listitem="@layout/cafeteria_reorder_item" />
-
-        <include
-            layout="@layout/empty_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_sort"
-            app:layout_constraintBottom_toTopOf="@id/reset_button" />
 
         <!-- Reset button -->
         <Button
@@ -77,14 +69,24 @@
             android:backgroundTint="?android:attr/colorPrimary"
             android:onClick="@{v -> vm.resetOrder()}"/>
 
+        <!-- Empty view -->
+        <include
+            layout="@layout/empty_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_sort"
+            app:layout_constraintBottom_toTopOf="@id/reset_button" />
+
         <!-- Loading view -->
         <ProgressBar
             style="@style/NonFunctionalProgressBar"
+            android:id="@+id/loading_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="@{vm.loading ? View.VISIBLE : View.GONE}" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <!-- Toolbar shadow -->
         <View

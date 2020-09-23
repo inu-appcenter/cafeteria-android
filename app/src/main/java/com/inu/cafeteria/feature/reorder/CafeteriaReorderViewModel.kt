@@ -66,17 +66,6 @@ class CafeteriaReorderViewModel : BaseViewModel() {
     }
 
     private fun finishLoading() {
-        // God damn point: Even if the network job is finished and the result arrived,
-        // we have to wait for a few more moments before we show up the cafeteria_recycler.
-        // Otherwise it will slow down UI rendering.
-        // We needed to right like below:
-        //
-        // Handler(Looper.getMainLooper()).postDelayed({
-        //     _loading.value = false
-        // }, 250)
-        //
-        // However it doesn't matter because we can pre-fetch all data(number of them are fixed!).
-
         _loading.value = false
     }
 
