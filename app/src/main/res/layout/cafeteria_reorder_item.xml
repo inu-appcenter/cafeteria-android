@@ -25,7 +25,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/cafeteria_horizontal_margin"
-    android:paddingVertical="@dimen/cafeteria_vertical_margin">
+    android:paddingVertical="@dimen/cafeteria_vertical_margin"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/cafeteria_name"

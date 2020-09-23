@@ -35,6 +35,8 @@
     <color name="backgroundLight">@color/white</color>
     <color name="backgroundLightGray">#FAFAFA</color>
 
+    <color name="selectedItemBackground">#DDDDDDDD</color>
+
     <color name="textPrimary">#262B31</color>
     <color name="textSecondary">#70808D</color>
     <color name="textTertiary">#B7B9C0</color>

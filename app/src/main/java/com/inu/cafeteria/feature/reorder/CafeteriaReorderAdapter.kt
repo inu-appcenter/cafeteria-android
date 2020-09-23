@@ -19,14 +19,17 @@
 
 package com.inu.cafeteria.feature.reorder
 
+import android.graphics.Color
 import android.view.MotionEvent
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
 import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
+import com.inu.cafeteria.common.widget.ItemTouchHelperViewHolder
 import kotlinx.android.synthetic.main.cafeteria.view.cafeteria_name
 import kotlinx.android.synthetic.main.cafeteria_reorder_item.view.*
 import java.util.*
@@ -38,12 +41,10 @@ class CafeteriaReorderAdapter
     private var touchHelper: ItemTouchHelper? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        BaseViewHolder(parent, R.layout.cafeteria_reorder_item).also(::setTouchListener)
+        ReorderViewHolder(parent, R.layout.cafeteria_reorder_item).also(::setTouchListener)
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        with(holder.containerView.cafeteria_name) {
-            text = getItem(position)?.displayName
-        }
+        (holder as ReorderViewHolder).bind(getItem(position))
     }
 
     override fun onSetItemTouchHelper(itemTouchHelper: ItemTouchHelper) {
@@ -77,6 +78,24 @@ class CafeteriaReorderAdapter
                 touchHelper?.startDrag(viewHolder)
             }
             false
+        }
+    }
+
+    class ReorderViewHolder(parent: ViewGroup, @LayoutRes layoutId: Int)
+        : BaseViewHolder(parent, layoutId), ItemTouchHelperViewHolder {
+
+        fun bind(item: CafeteriaReorderView?) {
+            with(containerView.cafeteria_name) {
+                text = item?.displayName
+            }
+        }
+
+        override fun onItemSelected() {
+            containerView.setBackgroundResource(R.color.selectedItemBackground)
+        }
+
+        override fun onItemClear() {
+            containerView.setBackgroundColor(0)
         }
     }
 }
