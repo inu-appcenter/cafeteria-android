@@ -24,6 +24,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MotionEventCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
@@ -31,9 +32,9 @@ import kotlinx.android.synthetic.main.cafeteria.view.cafeteria_name
 import kotlinx.android.synthetic.main.cafeteria_reorder_item.view.*
 import java.util.*
 
-class CafeteriaReorderAdapter(
-    private val onStartDrag: (viewHolder: RecyclerView.ViewHolder) -> Any?
-) : RecyclerView.Adapter<CafeteriaReorderAdapter.CafeteriaSortViewHolder>(), ItemTouchHelperAdapter {
+class CafeteriaReorderAdapter
+    : RecyclerView.Adapter<CafeteriaReorderAdapter.CafeteriaSortViewHolder>(),
+    ItemTouchHelperAdapter {
 
     var cafeteria: MutableList<CafeteriaReorderView> = mutableListOf()
         set(value) {
@@ -41,12 +42,14 @@ class CafeteriaReorderAdapter(
             notifyDataSetChanged()
         }
 
+    private var touchHelper: ItemTouchHelper? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CafeteriaSortViewHolder {
         return CafeteriaSortViewHolder(parent).also {
             it.itemView.handle.setOnTouchListener { v, event ->
                 v.performClick()
                 if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-                    onStartDrag(it)
+                    touchHelper?.startDrag(it)
                 }
                 false
             }
@@ -59,6 +62,10 @@ class CafeteriaReorderAdapter(
 
     override fun getItemCount(): Int {
         return cafeteria.size
+    }
+
+    override fun onSetItemTouchHelper(itemTouchHelper: ItemTouchHelper) {
+        touchHelper = itemTouchHelper
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
@@ -76,8 +83,8 @@ class CafeteriaReorderAdapter(
     }
 
     override fun onItemDismiss(position: Int) {
-        cafeteria.removeAt(position);
-        notifyItemRemoved(position);
+        cafeteria.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     inner class CafeteriaSortViewHolder(view: View) : RecyclerView.ViewHolder(view) {

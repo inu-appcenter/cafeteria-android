@@ -19,7 +19,11 @@
 
 package com.inu.cafeteria.common.widget
 
+import androidx.recyclerview.widget.ItemTouchHelper
+
 interface ItemTouchHelperAdapter {
+    fun onSetItemTouchHelper(itemTouchHelper: ItemTouchHelper)
+
     fun onItemMove(fromPosition: Int, toPosition: Int): Boolean
     fun onItemDismiss(position: Int)
 }

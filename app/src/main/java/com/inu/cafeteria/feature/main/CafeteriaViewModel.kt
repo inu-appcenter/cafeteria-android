@@ -29,20 +29,24 @@ import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.afterDays
+import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.usecase.GetCafeteria
+import com.inu.cafeteria.usecase.GetCafeteriaOrder
 import org.koin.core.inject
 import java.util.*
 
 class CafeteriaViewModel : BaseViewModel() {
 
     private val getCafeteria: GetCafeteria by inject()
+    private val getCafeteriaOrder: GetCafeteriaOrder by inject()
+
     private val navigator: Navigator by inject()
 
     private val _cafeteria = MutableLiveData<List<CafeteriaView>>()
     val cafeteria: LiveData<List<CafeteriaView>> = _cafeteria
 
-    private val _loading = MutableLiveData<Boolean>(true)
+    private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
 
     private val cafeteriaCache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
@@ -117,7 +121,15 @@ class CafeteriaViewModel : BaseViewModel() {
     }
 
     private fun handleCafeteria(allCafeteria: List<Cafeteria>) {
-        val result = allCafeteria.map { cafeteria ->
+        getCafeteriaOrder(Unit) {
+            it.onSuccess{ orderedIds ->
+                handleCafeteriaOrdered(allCafeteria.applyOrder(orderedIds) { id })
+            }.onError(::handleFailure)
+        }
+    }
+
+    private fun handleCafeteriaOrdered(allCafeteriaOrdered: List<Cafeteria>) {
+        val result = allCafeteriaOrdered.map { cafeteria ->
             CafeteriaView(
                 id = cafeteria.id,
                 name = cafeteria.displayName ?: cafeteria.name,

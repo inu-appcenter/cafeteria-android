@@ -135,6 +135,22 @@ val myModules = module {
         )
     }
 
+    /** Get Cafeteria order */
+
+    single {
+        GetCafeteriaOrder(
+            cafeteriaRepo = get()
+        )
+    }
+
+    /** Set Cafeteria order */
+
+    single {
+        SetCafeteriaOrder(
+            cafeteriaRepo = get()
+        )
+    }
+
     /** Get Version */
 
     single {

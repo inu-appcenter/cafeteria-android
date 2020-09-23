@@ -24,12 +24,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Cafeteria
+import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.usecase.GetCafeteriaOnly
+import com.inu.cafeteria.usecase.GetCafeteriaOrder
+import com.inu.cafeteria.usecase.SetCafeteriaOrder
 import org.koin.core.inject
+import timber.log.Timber
 
 class CafeteriaReorderViewModel : BaseViewModel() {
 
     private val getCafeteriaOnly: GetCafeteriaOnly by inject()
+    private val getCafeteriaOrder: GetCafeteriaOrder by inject()
+    private val setCafeteriaOrder: SetCafeteriaOrder by inject()
 
     private val _cafeteria = MutableLiveData<List<CafeteriaReorderView>>()
     val cafeteria: LiveData<List<CafeteriaReorderView>> = _cafeteria
@@ -40,8 +46,21 @@ class CafeteriaReorderViewModel : BaseViewModel() {
         }
     }
 
+    fun onChangeOrder(orderedIds: Array<Int>) {
+        Timber.i(orderedIds.joinToString(", "))
+        setCafeteriaOrder(orderedIds)
+    }
+
     private fun handleCafeteria(allCafeteria: List<Cafeteria>) {
-        val result = allCafeteria.map { cafeteria ->
+        getCafeteriaOrder(Unit) {
+            it.onSuccess{ orderedIds ->
+                handleCafeteriaOrdered(allCafeteria.applyOrder(orderedIds) { id })
+            }.onError(::handleFailure)
+        }
+    }
+
+    private fun handleCafeteriaOrdered(allCafeteriaOrdered: List<Cafeteria>) {
+        val result = allCafeteriaOrdered.map { cafeteria ->
             CafeteriaReorderView(
                 id = cafeteria.id,
                 displayName = cafeteria.displayName ?: cafeteria.name,

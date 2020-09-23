@@ -36,6 +36,9 @@ class CafeteriaRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
 ) : CafeteriaRepository() {
 
+    // TODO
+    private var orders: Array<Int> = arrayOf()
+
     // These have app-wide lifecycle. Fetch runs only for once.
     private val cafeteriaCache = Cache<List<CafeteriaResult>>()
     private val cornerCache = Cache<List<CornerResult>>()
@@ -76,6 +79,15 @@ class CafeteriaRepositoryImpl(
     @Synchronized
     private fun <T> cachedFetch(cache: Cache<T>, fetch: () -> T?): T? {
         return (if (cache.isValid) cache.get() else null) ?: fetch()?.also(cache::set)
+    }
+
+    override fun getOrder(): Array<Int> {
+        return orders.takeIf { it.isNotEmpty() }
+            ?: getCafeteriaOnly().map { it.id }.toTypedArray()
+    }
+
+    override fun setOrder(orderedIds: Array<Int>) {
+        orders = orderedIds
     }
 
     class ResultGatherer(

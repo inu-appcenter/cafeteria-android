@@ -25,50 +25,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.setSupportActionBar
-import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
+import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
 import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
 
 class CafeteriaReorderFragment : BaseFragment() {
 
     private val viewModel: CafeteriaReorderViewModel by viewModels()
-    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
-        override fun isLongPressDragEnabled(): Boolean {
-            return true
-        }
 
-        override fun isItemViewSwipeEnabled(): Boolean {
-            return true
+    private val adapterWrapper =
+        ReorderableAdapterWrapper(CafeteriaReorderAdapter()) { adapter ->
+            viewModel.onChangeOrder(adapter.cafeteria.map { it.id }.toTypedArray())
         }
-
-        override fun getMovementFlags(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder
-        ): Int {
-            val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-            val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-            return makeMovementFlags(dragFlags, swipeFlags)
-        }
-
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            (adapter as ItemTouchHelperAdapter).onItemMove(viewHolder.adapterPosition, target.adapterPosition);
-            return true
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            (adapter as ItemTouchHelperAdapter).onItemDismiss(viewHolder.adapterPosition)
-        }
-    })
-
-    private val adapter: CafeteriaReorderAdapter = CafeteriaReorderAdapter(itemTouchHelper::startDrag)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,8 +54,7 @@ class CafeteriaReorderFragment : BaseFragment() {
 
     private fun initializeView(view: View) {
         with(view.cafeteria_sort_recycler) {
-            adapter = this@CafeteriaReorderFragment.adapter
-            itemTouchHelper.attachToRecyclerView(this)
+            adapterWrapper.setWithRecyclerView(this)
         }
 
         setSupportActionBar(view.toolbar_sort, showTitle = true, showUpButton = true)

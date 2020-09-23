@@ -29,7 +29,6 @@ import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.onTabSelect
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
-import kotlinx.android.synthetic.main.cafeteria_fragment.*
 import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
 
@@ -37,7 +36,7 @@ class CafeteriaFragment : BaseFragment() {
 
     private val viewModel: CafeteriaViewModel by viewModels()
 
-    private lateinit var animator: PageSwapAnimator
+    private lateinit var pagingManager: PagingManager
 
     override val optionMenuId: Int? = R.menu.cafeteria_menu
 
@@ -63,14 +62,14 @@ class CafeteriaFragment : BaseFragment() {
 
         with(view.cafeteria_recycler) {
             adapter = CafeteriaAdapter().apply { onClickMore = viewModel::onViewMore }
-            animator = PageSwapAnimator(this)
+            pagingManager = PagingManager(this)
         }
 
         with(view.date_selector) {
             onTabSelect {
                 it?.let {
                     viewModel.onSelectDateTab(it.position)
-                    animator.onNewTabSelected(it.position)
+                    pagingManager.onNewTabSelected(it.position)
                 }
             }
         }
@@ -81,10 +80,10 @@ class CafeteriaFragment : BaseFragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
-        viewModel.onSelectDateTab(0)
+        viewModel.onSelectDateTab(pagingManager.getCurrentlySelectedTabPosition())
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
@@ -94,9 +93,11 @@ class CafeteriaFragment : BaseFragment() {
      * Do an animation like that of page swapping.
      * This executes an in-place animation with a single view.
      */
-    class PageSwapAnimator(private val animationTarget: View) {
+    class PagingManager(private val animationTarget: View) {
 
         private var currentSelectedTabPosition = 0
+
+        fun getCurrentlySelectedTabPosition() = currentSelectedTabPosition
 
         fun onNewTabSelected(newlySelectedTabPosition: Int) {
             with(animationTarget) {
