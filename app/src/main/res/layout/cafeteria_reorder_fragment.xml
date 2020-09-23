@@ -26,7 +26,7 @@
     <data>
         <variable
             name="vm"
-            type="com.inu.cafeteria.feature.sorting.SortingViewModel" />
+            type="com.inu.cafeteria.feature.reorder.CafeteriaReorderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,8 +51,8 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar_sort"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            cafeteriaToSort="@{vm.cafeteria}"
-            tools:listitem="@layout/cafeteria_sort_item" />
+            cafeteriaToReorder="@{vm.cafeteria}"
+            tools:listitem="@layout/cafeteria_reorder_item" />
 
         <!-- Toolbar shadow -->
         <View

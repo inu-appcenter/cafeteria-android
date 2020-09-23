@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.sorting
+package com.inu.cafeteria.feature.reorder
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,12 +30,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
-import com.inu.cafeteria.databinding.SortingFragmentBinding
-import kotlinx.android.synthetic.main.sorting_fragment.view.*
+import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
+import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
 
-class SortingFragment : BaseFragment() {
+class CafeteriaReorderFragment : BaseFragment() {
 
-    private val viewModel: SortingViewModel by viewModels()
+    private val viewModel: CafeteriaReorderViewModel by viewModels()
     private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
         override fun isLongPressDragEnabled(): Boolean {
             return true
@@ -68,22 +68,22 @@ class SortingFragment : BaseFragment() {
         }
     })
 
-    private val adapter: SortingAdapter = SortingAdapter(itemTouchHelper::startDrag)
+    private val adapter: CafeteriaReorderAdapter = CafeteriaReorderAdapter(itemTouchHelper::startDrag)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = SortingFragmentBinding
+    ): View? = CafeteriaReorderFragmentBinding
         .inflate(inflater, container, false)
-        .apply { lifecycleOwner = this@SortingFragment }
+        .apply { lifecycleOwner = this@CafeteriaReorderFragment }
         .apply { initializeView(root) }
         .apply { vm = viewModel }
         .root
 
     private fun initializeView(view: View) {
         with(view.cafeteria_sort_recycler) {
-            adapter = this@SortingFragment.adapter
+            adapter = this@CafeteriaReorderFragment.adapter
             itemTouchHelper.attachToRecyclerView(this)
         }
 
@@ -99,10 +99,10 @@ class SortingFragment : BaseFragment() {
     companion object {
 
         @JvmStatic
-        @BindingAdapter("cafeteriaToSort")
-        fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaSortView>?) {
+        @BindingAdapter("cafeteriaToReorder")
+        fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaReorderView>?) {
             cafeteria?.let {
-                (view.adapter as? SortingAdapter)?.cafeteria = it.toMutableList()
+                (view.adapter as? CafeteriaReorderAdapter)?.cafeteria = it.toMutableList()
             }
         }
     }

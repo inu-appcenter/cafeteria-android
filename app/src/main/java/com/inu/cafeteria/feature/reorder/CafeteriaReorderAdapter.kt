@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.sorting
+package com.inu.cafeteria.feature.reorder
 
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -27,16 +27,15 @@ import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
-import kotlinx.android.synthetic.main.cafeteria.view.*
 import kotlinx.android.synthetic.main.cafeteria.view.cafeteria_name
-import kotlinx.android.synthetic.main.cafeteria_sort_item.view.*
+import kotlinx.android.synthetic.main.cafeteria_reorder_item.view.*
 import java.util.*
 
-class SortingAdapter(
+class CafeteriaReorderAdapter(
     private val onStartDrag: (viewHolder: RecyclerView.ViewHolder) -> Any?
-) : RecyclerView.Adapter<SortingAdapter.CafeteriaSortViewHolder>(), ItemTouchHelperAdapter {
+) : RecyclerView.Adapter<CafeteriaReorderAdapter.CafeteriaSortViewHolder>(), ItemTouchHelperAdapter {
 
-    var cafeteria: MutableList<CafeteriaSortView> = mutableListOf()
+    var cafeteria: MutableList<CafeteriaReorderView> = mutableListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -82,15 +81,9 @@ class SortingAdapter(
     }
 
     inner class CafeteriaSortViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        constructor(parent: ViewGroup) : this(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.cafeteria_sort_item,
-                parent,
-                false
-            )
-        )
+        constructor(parent: ViewGroup) : this(LayoutInflater.from(parent.context).inflate(R.layout.cafeteria_reorder_item, parent, false))
 
-        fun bind(item: CafeteriaSortView) {
+        fun bind(item: CafeteriaReorderView) {
             with(itemView.cafeteria_name) {
                 text = item.displayName
             }

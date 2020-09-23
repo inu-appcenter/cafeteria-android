@@ -17,9 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.sorting
+package com.inu.cafeteria.feature.reorder
 
-data class CafeteriaSortView(
+data class CafeteriaReorderView(
     val id: Int,
     val displayName: String
 )

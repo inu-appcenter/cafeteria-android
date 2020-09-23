@@ -17,24 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.sorting
+package com.inu.cafeteria.feature.reorder
 
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Cafeteria
-import com.inu.cafeteria.feature.main.CafeteriaView
-import com.inu.cafeteria.feature.main.MenuView
 import com.inu.cafeteria.usecase.GetCafeteriaOnly
 import org.koin.core.inject
 
-class SortingViewModel : BaseViewModel() {
+class CafeteriaReorderViewModel : BaseViewModel() {
 
     private val getCafeteriaOnly: GetCafeteriaOnly by inject()
 
-    private val _cafeteria = MutableLiveData<List<CafeteriaSortView>>()
-    val cafeteria: LiveData<List<CafeteriaSortView>> = _cafeteria
+    private val _cafeteria = MutableLiveData<List<CafeteriaReorderView>>()
+    val cafeteria: LiveData<List<CafeteriaReorderView>> = _cafeteria
 
     fun fetch() {
         getCafeteriaOnly(Unit) {
@@ -44,7 +42,7 @@ class SortingViewModel : BaseViewModel() {
 
     private fun handleCafeteria(allCafeteria: List<Cafeteria>) {
         val result = allCafeteria.map { cafeteria ->
-            CafeteriaSortView(
+            CafeteriaReorderView(
                 id = cafeteria.id,
                 displayName = cafeteria.displayName ?: cafeteria.name,
             )

@@ -27,7 +27,7 @@ import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.widget.ThemedDialog
 import com.inu.cafeteria.feature.main.MainActivity
-import com.inu.cafeteria.feature.sorting.SortingActivity
+import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
 import com.inu.cafeteria.feature.splash.SplashActivity
 import org.koin.core.KoinComponent
 import timber.log.Timber
@@ -63,7 +63,7 @@ class Navigator(
 
     fun showSorting() {
         startActivity(
-            SortingActivity.callingIntent(context)
+            CafeteriaReorderActivity.callingIntent(context)
         )
     }
 

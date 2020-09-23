@@ -24,23 +24,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/element_margin">
+    android:paddingHorizontal="@dimen/cafeteria_horizontal_margin"
+    android:paddingVertical="@dimen/cafeteria_vertical_margin">
 
     <TextView
-        style="@style/TextPrimary"
         android:id="@+id/cafeteria_name"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/handle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="@dimen/textTitle"
+        android:textColor="@color/textPrimary"
+        android:textStyle="bold"
         tools:text="학생식당" />
 
     <ImageView
         android:id="@+id/handle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -87,7 +87,6 @@
     <string name="item_today3">모레</string>
     <string name="item_today4">글피</string>
     <string name="item_today5">그글피</string>
-    <string name="menu_change_order">순서 변경</string>
-
+    <string name="title_reorder">순서 변경</string>
 
 </resources>

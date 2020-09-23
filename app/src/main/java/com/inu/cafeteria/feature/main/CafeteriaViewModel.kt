@@ -21,7 +21,6 @@ package com.inu.cafeteria.feature.main
 
 import android.os.Handler
 import android.os.Looper
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -111,7 +110,7 @@ class CafeteriaViewModel : BaseViewModel() {
 
     fun onClickOptionMenu(menuItemId: Int): Boolean {
         when(menuItemId) {
-            R.id.menu_change_order -> navigator.showSorting();
+            R.id.menu_reorder -> navigator.showSorting();
         }
 
         return true

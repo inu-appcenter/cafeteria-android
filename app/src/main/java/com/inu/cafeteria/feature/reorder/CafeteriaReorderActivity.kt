@@ -17,18 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.sorting
+package com.inu.cafeteria.feature.reorder
 
 import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.inu.cafeteria.common.base.SingleFragmentActivity
 
-class SortingActivity : SingleFragmentActivity() {
+class CafeteriaReorderActivity : SingleFragmentActivity() {
 
-    override val fragment: Fragment = SortingFragment()
+    override val fragment: Fragment = CafeteriaReorderFragment()
 
     companion object {
-        fun callingIntent(context: Context) = Intent(context, SortingActivity::class.java)
+        fun callingIntent(context: Context) = Intent(context, CafeteriaReorderActivity::class.java)
     }
 }
