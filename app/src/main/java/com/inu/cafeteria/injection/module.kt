@@ -151,6 +151,14 @@ val myModules = module {
         )
     }
 
+    /** Reset Cafeteria order */
+
+    single {
+        ResetCafeteriaOrder(
+            cafeteriaRepo = get()
+        )
+    }
+
     /** Get Version */
 
     single {

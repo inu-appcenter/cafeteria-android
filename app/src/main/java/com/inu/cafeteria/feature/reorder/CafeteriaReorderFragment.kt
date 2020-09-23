@@ -38,7 +38,7 @@ class CafeteriaReorderFragment : BaseFragment() {
 
     private val adapterWrapper =
         ReorderableAdapterWrapper(CafeteriaReorderAdapter()) { adapter ->
-            viewModel.onChangeOrder(adapter.cafeteria.map { it.id }.toTypedArray())
+            viewModel.onChangeOrder(adapter.data.map { it.id }.toTypedArray())
         }
 
     override fun onCreateView(
@@ -60,8 +60,8 @@ class CafeteriaReorderFragment : BaseFragment() {
         setSupportActionBar(view.toolbar_sort, showTitle = true, showUpButton = true)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
         viewModel.fetch()
     }
@@ -72,7 +72,7 @@ class CafeteriaReorderFragment : BaseFragment() {
         @BindingAdapter("cafeteriaToReorder")
         fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaReorderView>?) {
             cafeteria?.let {
-                (view.adapter as? CafeteriaReorderAdapter)?.cafeteria = it.toMutableList()
+                (view.adapter as? CafeteriaReorderAdapter)?.data = it.toMutableList()
             }
         }
     }

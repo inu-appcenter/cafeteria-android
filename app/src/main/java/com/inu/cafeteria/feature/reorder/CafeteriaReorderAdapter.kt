@@ -27,41 +27,27 @@ import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.base.BaseAdapter
+import com.inu.cafeteria.common.base.BaseViewHolder
 import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
+import com.inu.cafeteria.feature.main.CafeteriaView
 import kotlinx.android.synthetic.main.cafeteria.view.cafeteria_name
 import kotlinx.android.synthetic.main.cafeteria_reorder_item.view.*
 import java.util.*
 
 class CafeteriaReorderAdapter
-    : RecyclerView.Adapter<CafeteriaReorderAdapter.CafeteriaSortViewHolder>(),
+    : BaseAdapter<CafeteriaReorderView>(),
     ItemTouchHelperAdapter {
-
-    var cafeteria: MutableList<CafeteriaReorderView> = mutableListOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     private var touchHelper: ItemTouchHelper? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CafeteriaSortViewHolder {
-        return CafeteriaSortViewHolder(parent).also {
-            it.itemView.handle.setOnTouchListener { v, event ->
-                v.performClick()
-                if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-                    touchHelper?.startDrag(it)
-                }
-                false
-            }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        BaseViewHolder(parent, R.layout.cafeteria_reorder_item).also(::setTouchListener)
+
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        with(holder.containerView.cafeteria_name) {
+            text = getItem(position)?.displayName
         }
-    }
-
-    override fun onBindViewHolder(holder: CafeteriaSortViewHolder, position: Int) {
-        holder.bind(cafeteria[position])
-    }
-
-    override fun getItemCount(): Int {
-        return cafeteria.size
     }
 
     override fun onSetItemTouchHelper(itemTouchHelper: ItemTouchHelper) {
@@ -71,11 +57,11 @@ class CafeteriaReorderAdapter
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {
-                Collections.swap(cafeteria, i, i + 1)
+                Collections.swap(data, i, i + 1)
             }
         } else {
             for (i in fromPosition downTo toPosition + 1) {
-                Collections.swap(cafeteria, i, i - 1)
+                Collections.swap(data, i, i - 1)
             }
         }
         notifyItemMoved(fromPosition, toPosition)
@@ -83,17 +69,17 @@ class CafeteriaReorderAdapter
     }
 
     override fun onItemDismiss(position: Int) {
-        cafeteria.removeAt(position)
+        data.removeAt(position)
         notifyItemRemoved(position)
     }
 
-    inner class CafeteriaSortViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        constructor(parent: ViewGroup) : this(LayoutInflater.from(parent.context).inflate(R.layout.cafeteria_reorder_item, parent, false))
-
-        fun bind(item: CafeteriaReorderView) {
-            with(itemView.cafeteria_name) {
-                text = item.displayName
+    private fun setTouchListener(viewHolder: BaseViewHolder) {
+        viewHolder.containerView.handle.setOnTouchListener { v, event ->
+            v.performClick()
+            if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+                touchHelper?.startDrag(viewHolder)
             }
+            false
         }
     }
 }

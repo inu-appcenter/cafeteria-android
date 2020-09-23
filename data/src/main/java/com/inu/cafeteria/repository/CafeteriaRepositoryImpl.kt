@@ -82,12 +82,15 @@ class CafeteriaRepositoryImpl(
     }
 
     override fun getOrder(): Array<Int> {
-        return orders.takeIf { it.isNotEmpty() }
-            ?: getCafeteriaOnly().map { it.id }.toTypedArray()
+        return orders
     }
 
     override fun setOrder(orderedIds: Array<Int>) {
         orders = orderedIds
+    }
+
+    override fun resetOrder() {
+        orders = getCafeteriaOnly().map { it.id }.toTypedArray()
     }
 
     class ResultGatherer(

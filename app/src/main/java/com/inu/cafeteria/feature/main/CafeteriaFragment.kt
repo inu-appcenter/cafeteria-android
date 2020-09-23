@@ -34,11 +34,10 @@ import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
 
 class CafeteriaFragment : BaseFragment() {
 
-    private val viewModel: CafeteriaViewModel by viewModels()
-
-    private lateinit var pagingManager: PagingManager
-
     override val optionMenuId: Int? = R.menu.cafeteria_menu
+
+    private val viewModel: CafeteriaViewModel by viewModels()
+    private lateinit var pagingManager: PagingManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

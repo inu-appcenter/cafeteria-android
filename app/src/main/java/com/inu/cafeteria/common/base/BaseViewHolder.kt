@@ -19,10 +19,17 @@
 
 package com.inu.cafeteria.common.base
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
+import com.inu.cafeteria.R
 import kotlinx.android.extensions.LayoutContainer
 
 open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
+    constructor(parent: ViewGroup, @LayoutRes layoutId: Int)
+            : this(LayoutInflater.from(parent.context).inflate(layoutId, parent, false))
+
     override val containerView: View = view
 }

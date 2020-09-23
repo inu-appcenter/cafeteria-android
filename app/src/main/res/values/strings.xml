@@ -93,5 +93,6 @@
     <string name="item_today4">Today+3</string>
     <string name="item_today5">Today+4</string>
     <string name="title_reorder">Reorder</string>
+    <string name="action_reset">Reset</string>
 
 </resources>

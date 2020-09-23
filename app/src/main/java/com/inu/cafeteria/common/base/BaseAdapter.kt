@@ -36,7 +36,7 @@ import timber.log.Timber
 abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), KoinComponent {
     private val mContext: Context by inject()
 
-    var data: List<T> = ArrayList()
+    var data: MutableList<T> = ArrayList()
         set(value) {
             if (field === value) return
 
@@ -57,7 +57,7 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), KoinComp
      * based on the data
      */
 
-var emptyView: View? = null
+    var emptyView: View? = null
         set(value) {
             field = value
             field?.setVisible(data.isEmpty())

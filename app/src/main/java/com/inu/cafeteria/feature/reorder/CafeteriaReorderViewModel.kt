@@ -19,6 +19,8 @@
 
 package com.inu.cafeteria.feature.reorder
 
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,6 +29,7 @@ import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.usecase.GetCafeteriaOnly
 import com.inu.cafeteria.usecase.GetCafeteriaOrder
+import com.inu.cafeteria.usecase.ResetCafeteriaOrder
 import com.inu.cafeteria.usecase.SetCafeteriaOrder
 import org.koin.core.inject
 import timber.log.Timber
@@ -36,14 +39,47 @@ class CafeteriaReorderViewModel : BaseViewModel() {
     private val getCafeteriaOnly: GetCafeteriaOnly by inject()
     private val getCafeteriaOrder: GetCafeteriaOrder by inject()
     private val setCafeteriaOrder: SetCafeteriaOrder by inject()
+    private val resetCafeteriaOrder: ResetCafeteriaOrder by inject()
 
+    // Will be passed to the recycler view. One direction.
     private val _cafeteria = MutableLiveData<List<CafeteriaReorderView>>()
     val cafeteria: LiveData<List<CafeteriaReorderView>> = _cafeteria
 
+    // Will be passed to the loading view and the recycler view. One direction.
+    private val _loading = MutableLiveData(true)
+    val loading: LiveData<Boolean> = _loading
+
     fun fetch() {
+        startLoading()
+
         getCafeteriaOnly(Unit) {
             it.onSuccess(::handleCafeteria).onError(::handleFailure)
         }
+    }
+
+    fun resetOrder() {
+        resetCafeteriaOrder(Unit) {
+            fetch()
+        }
+    }
+
+    private fun startLoading() {
+        _loading.value = true
+    }
+
+    private fun finishLoading() {
+        // God damn point: Even if the network job is finished and the result arrived,
+        // we have to wait for a few more moments before we show up the cafeteria_recycler.
+        // Otherwise it will slow down UI rendering.
+        // We needed to right like below:
+        //
+        // Handler(Looper.getMainLooper()).postDelayed({
+        //     _loading.value = false
+        // }, 250)
+        //
+        // However it doesn't matter because we can pre-fetch all data(number of them are fixed!).
+
+        _loading.value = false
     }
 
     fun onChangeOrder(orderedIds: Array<Int>) {
@@ -68,9 +104,13 @@ class CafeteriaReorderViewModel : BaseViewModel() {
         }
 
         this._cafeteria.value = result
+
+        finishLoading()
     }
 
     private fun handleFailure(e: Exception) {
         Toast.makeText(mContext, e.message, Toast.LENGTH_SHORT).show()
+
+        finishLoading()
     }
 }
