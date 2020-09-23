@@ -36,31 +36,41 @@ import timber.log.Timber
 abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), KoinComponent {
     private val mContext: Context by inject()
 
-    var data: MutableList<T> = ArrayList()
+    var isLoading: Boolean = true
+        set(value) {
+            field = value
+            updatePeripheralViews()
+        }
+
+    var data: List<T> = ArrayList()
         set(value) {
             if (field === value) return
-
             field = value
 
             notifyDataSetChanged()
-
-            setEmptyView(value.isEmpty())
+            updatePeripheralViews()
         }
 
     @CallSuper
-    protected open fun setEmptyView(isDataEmpty: Boolean) {
-        emptyView?.setVisible(isDataEmpty)
+    protected open fun updatePeripheralViews() {
+        emptyView?.setVisible(data.isEmpty() && !isLoading)
+        loadingView?.setVisible(isLoading)
     }
 
     /**
      * This view can be set, and the adapter will automatically control the visibility of this view
      * based on the data
      */
-
     var emptyView: View? = null
         set(value) {
             field = value
-            field?.setVisible(data.isEmpty())
+            updatePeripheralViews()
+        }
+
+    var loadingView: View? = null
+        set(value) {
+            field = value
+            updatePeripheralViews()
         }
 
     fun getItem(position: Int): T? {

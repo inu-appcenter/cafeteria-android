@@ -19,18 +19,14 @@
 
 package com.inu.cafeteria.feature.reorder
 
-import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
 import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
-import com.inu.cafeteria.feature.main.CafeteriaView
 import kotlinx.android.synthetic.main.cafeteria.view.cafeteria_name
 import kotlinx.android.synthetic.main.cafeteria_reorder_item.view.*
 import java.util.*
@@ -69,7 +65,8 @@ class CafeteriaReorderAdapter
     }
 
     override fun onItemDismiss(position: Int) {
-        data.removeAt(position)
+        data = data.minusElement(data[position])
+        updatePeripheralViews()
         notifyItemRemoved(position)
     }
 

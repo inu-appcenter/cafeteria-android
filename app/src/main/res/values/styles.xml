@@ -135,7 +135,7 @@
 
     <!-- Toolbar -->
     <style name="Toolbar" parent="HorizontallyFullSizedView">
-        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:layout_height">?android:attr/actionBarSize</item>
         <item name="android:background">?attr/barBackground</item>
         <item name="titleTextAppearance">@style/ToolbarText</item>
     </style>

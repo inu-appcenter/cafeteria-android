@@ -1,56 +1,37 @@
 package com.inu.cafeteria.feature.main
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.base.BaseAdapter
+import com.inu.cafeteria.common.base.BaseViewHolder
 import kotlinx.android.synthetic.main.menu.view.*
 import timber.log.Timber
 
-class MenuAdapter : RecyclerView.Adapter<MenuAdapter.TheViewHolder>() {
+class MenuAdapter : BaseAdapter<MenuView>() {
 
-    var pagedMenus: List<MenuView> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+        Timber.d("Inflate Menu!")
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheViewHolder {
-        return TheViewHolder(parent)
+        return BaseViewHolder(parent, R.layout.menu)
     }
 
-    override fun onBindViewHolder(holder: TheViewHolder, position: Int) {
-        holder.bind(pagedMenus[position])
-    }
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        val menu = getItem(position) ?: return
 
-    override fun getItemCount(): Int {
-        return pagedMenus.size
-    }
+        with(holder.containerView) {
+            // TODO
+            available_at.setAvailableTime((1..7).random())
+            corner_name.text = menu.cornerName
+            price.text = kotlin.String.format("%,d원", menu.price)
+            calorie.text = kotlin.String.format("%,dkcal", menu.calorie)
 
-    class TheViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        constructor(parent: ViewGroup) : this(LayoutInflater.from(parent.context).inflate(R.layout.menu, parent, false))
-
-        init {
-            Timber.i("Inflate Menu!")
-        }
-
-        fun bind(menu: MenuView) {
-            with(itemView) {
-                // TODO
-                available_at.setAvailableTime((1..7).random())
-                corner_name.text = menu.cornerName
-                price.text = String.format("%,d원", menu.price)
-                calorie.text = String.format("%,dkcal", menu.calorie)
-
-                // TODO: dirty. clean it.
-                with(foods) {
-                    maxLines = 2
-                    text = menu.foods
-                }
-
-                setOnClickListener { foods.maxLines = 5 }
+            // TODO: dirty. clean it.
+            with(foods) {
+                maxLines = 2
+                text = menu.foods
             }
+
+            setOnClickListener { foods.maxLines = 5 }
         }
     }
 }

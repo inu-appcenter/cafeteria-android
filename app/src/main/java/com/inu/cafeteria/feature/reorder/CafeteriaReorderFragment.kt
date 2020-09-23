@@ -31,6 +31,7 @@ import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
 import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
+import kotlinx.android.synthetic.main.empty_view.view.*
 
 class CafeteriaReorderFragment : BaseFragment() {
 
@@ -55,6 +56,7 @@ class CafeteriaReorderFragment : BaseFragment() {
     private fun initializeView(view: View) {
         with(view.cafeteria_sort_recycler) {
             adapterWrapper.setWithRecyclerView(this)
+            adapterWrapper.adapter.emptyView = view.empty_view
         }
 
         setSupportActionBar(view.toolbar_sort, showTitle = true, showUpButton = true)

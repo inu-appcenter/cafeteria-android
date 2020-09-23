@@ -43,11 +43,9 @@ class CafeteriaViewModel : BaseViewModel() {
 
     private val navigator: Navigator by inject()
 
-    // Will be passed to the recycler view. One direction.
     private val _cafeteria = MutableLiveData<List<CafeteriaView>>()
     val cafeteria: LiveData<List<CafeteriaView>> = _cafeteria
 
-    // Will be passed to the loading view and the recycler view. One direction.
     private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
 
@@ -70,20 +68,18 @@ class CafeteriaViewModel : BaseViewModel() {
     private fun daysAfter(days: Int): String = Date().afterDays(days).format()
 
     private fun fetch(date: String = daysAfter(0)) {
+        startLoading()
+
         getFromCache(date)?.let {
             handleCafeteria(it)
             return
         }
-
-        startLoading()
 
         getCafeteria(date) { result ->
             result
                 .onSuccess { saveToCache(date, it) }
                 .onSuccess(::handleCafeteria)
                 .onError(::handleFailure)
-
-            finishLoading()
         }
     }
 
@@ -97,7 +93,7 @@ class CafeteriaViewModel : BaseViewModel() {
         _loading.value = true
     }
 
-    private fun finishLoading() {
+    private fun finishLoading(slowly: Boolean) {
         // God damn point: Even if the network job is finished and the result arrived,
         // we have to wait for a few more moments before we show up the cafeteria_recycler.
         // Otherwise it will slow down UI rendering.
@@ -111,7 +107,7 @@ class CafeteriaViewModel : BaseViewModel() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             _loading.value = false
-        }, 250)
+        }, if (slowly) 250 else 0)
     }
 
     fun onClickOptionMenu(menuItemId: Int): Boolean {
@@ -144,10 +140,14 @@ class CafeteriaViewModel : BaseViewModel() {
         }
 
         this._cafeteria.value = result
+
+        finishLoading(slowly = allCafeteriaOrdered.isNotEmpty())
     }
 
     private fun handleFailure(e: Exception) {
         Toast.makeText(mContext, e.message, Toast.LENGTH_SHORT).show()
+
+        finishLoading(slowly = false)
     }
 
     fun onViewMore(cafeteriaView: CafeteriaView) {

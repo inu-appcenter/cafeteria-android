@@ -89,5 +89,6 @@
     <string name="item_today5">그글피</string>
     <string name="title_reorder">순서 변경</string>
     <string name="action_reset">재설정</string>
+    <string name="no_information">정보가 없어요 ㅠㅠ</string>
 
 </resources>

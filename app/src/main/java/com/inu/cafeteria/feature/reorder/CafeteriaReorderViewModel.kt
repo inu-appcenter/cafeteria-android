@@ -41,11 +41,9 @@ class CafeteriaReorderViewModel : BaseViewModel() {
     private val setCafeteriaOrder: SetCafeteriaOrder by inject()
     private val resetCafeteriaOrder: ResetCafeteriaOrder by inject()
 
-    // Will be passed to the recycler view. One direction.
     private val _cafeteria = MutableLiveData<List<CafeteriaReorderView>>()
     val cafeteria: LiveData<List<CafeteriaReorderView>> = _cafeteria
 
-    // Will be passed to the loading view and the recycler view. One direction.
     private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
 

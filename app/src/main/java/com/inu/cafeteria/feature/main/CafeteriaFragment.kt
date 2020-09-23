@@ -31,6 +31,7 @@ import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
 import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
+import kotlinx.android.synthetic.main.empty_view.view.*
 
 class CafeteriaFragment : BaseFragment() {
 
@@ -60,7 +61,11 @@ class CafeteriaFragment : BaseFragment() {
         setSupportActionBar(view.toolbar_home)
 
         with(view.cafeteria_recycler) {
-            adapter = CafeteriaAdapter().apply { onClickMore = viewModel::onViewMore }
+            adapter = CafeteriaAdapter().apply {
+                onClickMore = viewModel::onViewMore
+                emptyView = view.empty_view
+                loadingView = view.loading_view
+            }
             pagingManager = PagingManager(this)
         }
 
@@ -126,8 +131,14 @@ class CafeteriaFragment : BaseFragment() {
         @BindingAdapter("cafeteria")
         fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaView>?) {
             cafeteria?.let {
-                (view.adapter as? CafeteriaAdapter)?.cafeteria = it
+                (view.adapter as? CafeteriaAdapter)?.data = it
             }
+        }
+
+        @JvmStatic
+        @BindingAdapter("isLoading")
+        fun setLoading(view: RecyclerView, isLoading: Boolean?) {
+            (view.adapter as? CafeteriaAdapter)?.isLoading = isLoading ?: true
         }
     }
 }

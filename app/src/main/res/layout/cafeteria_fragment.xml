@@ -35,6 +35,7 @@
 
         <!-- Toolbar group -->
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             style="@style/AppBar">
 
                 <androidx.appcompat.widget.Toolbar
@@ -55,7 +56,8 @@
                 </androidx.appcompat.widget.Toolbar>
 
             <!-- Date selection tab bar -->
-            <include layout="@layout/date_selection_tab_bar" />
+            <include
+                layout="@layout/date_selection_tab_bar" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -68,16 +70,24 @@
                 style="@style/FullSizedView"
                 android:id="@+id/cafeteria_recycler"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}"
                 cafeteria="@{vm.cafeteria}"
+                isLoading="@{vm.loading}"
                 tools:listitem="@layout/cafeteria" />
 
         </androidx.core.widget.NestedScrollView>
 
+        <!-- Empty view -->
+        <include
+            layout="@layout/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar_home"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
         <!-- Loading view -->
         <ProgressBar
-            style="@style/NonFunctionalProgressBar"
-            android:visibility="@{vm.loading ? View.VISIBLE : View.GONE}" />
+            android:id="@+id/loading_view"
+            style="@style/NonFunctionalProgressBar" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

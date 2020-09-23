@@ -1,50 +1,36 @@
 package com.inu.cafeteria.feature.main
 
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.base.BaseAdapter
+import com.inu.cafeteria.common.base.BaseViewHolder
 import kotlinx.android.synthetic.main.cafeteria.view.*
 import timber.log.Timber
 
-class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHolder>() {
+class CafeteriaAdapter : BaseAdapter<CafeteriaView>() {
 
     private val menuPagePool = RecyclerView.RecycledViewPool()
     private val menuPool = RecyclerView.RecycledViewPool()
 
     var onClickMore: (CafeteriaView) -> Any? = {}
 
-    var cafeteria: List<CafeteriaView> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CafeteriaViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return CafeteriaViewHolder(parent)
     }
 
-    override fun onBindViewHolder(holder: CafeteriaViewHolder, position: Int) {
-        holder.bind(cafeteria[position])
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        (holder as CafeteriaViewHolder).bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return cafeteria.size
-    }
-
-    inner class CafeteriaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        constructor(parent: ViewGroup) : this(LayoutInflater.from(parent.context).inflate(R.layout.cafeteria, parent, false))
+    inner class CafeteriaViewHolder(parent: ViewGroup) : BaseViewHolder(parent, R.layout.cafeteria) {
 
         private val menuPageAdapter = MenuPageAdapter(menuPool)
 
         init {
+            Timber.d("Inflate Cafeteria!")
             setChildRecyclerView()
-            Timber.i("Inflate Cafeteria!")
         }
 
         private fun setChildRecyclerView() {
@@ -57,7 +43,9 @@ class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHold
             }
         }
 
-        fun bind(cafeteria: CafeteriaView) {
+        fun bind(cafeteria: CafeteriaView?) {
+            cafeteria ?: return
+
             with(itemView) {
                 cafeteria_name.text = cafeteria.name
 
@@ -66,7 +54,7 @@ class CafeteriaAdapter : RecyclerView.Adapter<CafeteriaAdapter.CafeteriaViewHold
                 }
             }
 
-            menuPageAdapter.wholeMenus = cafeteria.wholeMenus
+            menuPageAdapter.data = cafeteria.wholeMenus
         }
     }
 }

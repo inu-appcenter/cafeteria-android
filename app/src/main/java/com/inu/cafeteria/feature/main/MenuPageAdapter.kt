@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.base.BaseAdapter
+import com.inu.cafeteria.common.base.BaseViewHolder
 import kotlinx.android.synthetic.main.menu_page.view.*
 import timber.log.Timber
 import kotlin.math.ceil
@@ -15,47 +17,34 @@ import kotlin.math.min
 
 class MenuPageAdapter(
     private val menuPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool()
-) : RecyclerView.Adapter<MenuPageAdapter.MenuPageViewHolder>() {
+) : BaseAdapter<MenuView>() {
 
-    var wholeMenus: List<MenuView> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuPageViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return MenuPageViewHolder(parent)
     }
 
-    override fun onBindViewHolder(holder: MenuPageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         fun paginateProps(pageNumber: Int): List<MenuView> {
             val indexStart = pageNumber * stackSize
-            val indexEnd = min(indexStart + stackSize - 1, wholeMenus.size - 1)
+            val indexEnd = min(indexStart + stackSize - 1, data.size - 1)
 
-            return wholeMenus.slice(indexStart..indexEnd)
+            return data.slice(indexStart..indexEnd)
         }
 
-        holder.bind(paginateProps(position))
+        (holder as MenuPageViewHolder).bind(paginateProps(position))
     }
 
     override fun getItemCount(): Int {
-        return ceil(wholeMenus.size.toDouble() / stackSize).toInt()
+        return ceil(data.size.toDouble() / stackSize).toInt()
     }
 
-    inner class MenuPageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        constructor(parent: ViewGroup) : this(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.menu_page,
-                parent,
-                false
-            )
-        )
+    inner class MenuPageViewHolder(parent: ViewGroup) : BaseViewHolder(parent, R.layout.menu_page) {
 
         private val menuAdapter = MenuAdapter()
 
         init {
+            Timber.d("Inflate Menu Page!")
             setChildRecyclerView()
-            Timber.i("Inflate Menu Page!")
         }
 
         private fun setChildRecyclerView() {
@@ -75,7 +64,7 @@ class MenuPageAdapter(
         }
 
         fun bind(pagedMenus: List<MenuView>) {
-            menuAdapter.pagedMenus = pagedMenus
+            menuAdapter.data = pagedMenus
         }
     }
 
