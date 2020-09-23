@@ -25,6 +25,7 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.onTabSelect
 import com.inu.cafeteria.common.extension.setSupportActionBar
@@ -138,7 +139,7 @@ class CafeteriaFragment : BaseFragment() {
         @JvmStatic
         @BindingAdapter("isLoading")
         fun setLoading(view: RecyclerView, isLoading: Boolean?) {
-            (view.adapter as? CafeteriaAdapter)?.isLoading = isLoading ?: true
+            (view.adapter as? BaseAdapter<*>)?.isLoading = isLoading ?: true
         }
     }
 }

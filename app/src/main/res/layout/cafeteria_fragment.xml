@@ -70,6 +70,7 @@
                 style="@style/FullSizedView"
                 android:id="@+id/cafeteria_recycler"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}"
                 cafeteria="@{vm.cafeteria}"
                 isLoading="@{vm.loading}"
                 tools:listitem="@layout/cafeteria" />

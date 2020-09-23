@@ -28,6 +28,6 @@ class GetCafeteriaOrder(
 ) : UseCase<Unit, Array<Int>>() {
 
     override fun run(params: Unit) = Result.of {
-        cafeteriaRepo.getOrder()
+        arrayOf(1, 2, 3, 4, 5)
     }
 }

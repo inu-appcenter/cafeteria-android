@@ -72,6 +72,7 @@ class CafeteriaViewModel : BaseViewModel() {
 
         getFromCache(date)?.let {
             handleCafeteria(it)
+            finishLoading(slowly = false)
             return
         }
 
@@ -112,7 +113,7 @@ class CafeteriaViewModel : BaseViewModel() {
 
     fun onClickOptionMenu(menuItemId: Int): Boolean {
         when(menuItemId) {
-            R.id.menu_reorder -> navigator.showSorting();
+            R.id.menu_reorder -> navigator.showSorting()
         }
 
         return true
@@ -141,7 +142,7 @@ class CafeteriaViewModel : BaseViewModel() {
 
         this._cafeteria.value = result
 
-        finishLoading(slowly = allCafeteriaOrdered.isNotEmpty())
+        finishLoading(slowly = result.isNotEmpty())
     }
 
     private fun handleFailure(e: Exception) {
