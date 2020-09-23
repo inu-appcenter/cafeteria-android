@@ -127,6 +127,14 @@ val myModules = module {
         )
     }
 
+    /** Get Cafeteria only */
+
+    single {
+        GetCafeteriaOnly(
+            cafeteriaRepo = get()
+        )
+    }
+
     /** Get Version */
 
     single {

@@ -49,7 +49,7 @@
     <View
         android:id="@+id/toolbar_shadow"
         android:layout_width="0dp"
-        android:layout_height="8dp"
+        android:layout_height="4dp"
         android:background="@drawable/shadow"
         app:layout_constraintTop_toBottomOf="@id/toolbar_discount"
         app:layout_constraintStart_toStartOf="parent"

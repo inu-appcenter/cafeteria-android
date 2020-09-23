@@ -37,8 +37,8 @@ class CafeteriaRepositoryImpl(
 ) : CafeteriaRepository() {
 
     // These have app-wide lifecycle. Fetch runs only for once.
-    private val cafeteriaCache = Cache<List<CafeteriaResult>>().apply { set(null) }
-    private val cornerCache = Cache<List<CornerResult>>().apply { set(null) }
+    private val cafeteriaCache = Cache<List<CafeteriaResult>>()
+    private val cornerCache = Cache<List<CornerResult>>()
 
     override fun getAllCafeteria(date: String?): List<Cafeteria> {
         val cafeteria = cachedFetch(cafeteriaCache) {
@@ -55,9 +55,27 @@ class CafeteriaRepositoryImpl(
         return ResultGatherer(cafeteria, corners, menus).combine()
     }
 
+    override fun getCafeteriaOnly(): List<Cafeteria> {
+        val cafeteria = cachedFetch(cafeteriaCache) {
+            networkService.getCafeteria().getOrNull()
+        } ?: return listOf()
+
+        return cafeteria.map {
+            Cafeteria(
+                id = it.id,
+                name = it.name,
+                displayName = it.displayName,
+                supportMenu = it.supportMenu,
+                supportDiscount = it.supportDiscount,
+                supportNotification = it.supportNotification,
+                corners = listOf()
+            )
+        }
+    }
+
     @Synchronized
     private fun <T> cachedFetch(cache: Cache<T>, fetch: () -> T?): T? {
-        return cache.get() ?: fetch()?.also(cache::set)
+        return (if (cache.isValid) cache.get() else null) ?: fetch()?.also(cache::set)
     }
 
     class ResultGatherer(

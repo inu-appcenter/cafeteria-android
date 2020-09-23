@@ -17,12 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.common.widget
 
-import com.inu.cafeteria.entities.Cafeteria
+import androidx.recyclerview.widget.RecyclerView
 
-abstract class CafeteriaRepository : Repository {
-
-    abstract fun getAllCafeteria(date: String? = null): List<Cafeteria>
-    abstract fun getCafeteriaOnly(): List<Cafeteria>
+interface ItemDragListener {
+    fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
 }

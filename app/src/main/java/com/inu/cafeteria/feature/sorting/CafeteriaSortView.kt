@@ -17,12 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.feature.sorting
 
-import com.inu.cafeteria.entities.Cafeteria
-
-abstract class CafeteriaRepository : Repository {
-
-    abstract fun getAllCafeteria(date: String? = null): List<Cafeteria>
-    abstract fun getCafeteriaOnly(): List<Cafeteria>
-}
+data class CafeteriaSortView(
+    val id: Int,
+    val displayName: String
+)

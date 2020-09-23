@@ -23,27 +23,87 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.inu.cafeteria.R
+import androidx.databinding.BindingAdapter
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.setSupportActionBar
+import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
 import com.inu.cafeteria.databinding.SortingFragmentBinding
 import kotlinx.android.synthetic.main.sorting_fragment.view.*
 
 class SortingFragment : BaseFragment() {
 
+    private val viewModel: SortingViewModel by viewModels()
+    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
+        override fun isLongPressDragEnabled(): Boolean {
+            return true
+        }
+
+        override fun isItemViewSwipeEnabled(): Boolean {
+            return true
+        }
+
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ): Int {
+            val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+            val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+            return makeMovementFlags(dragFlags, swipeFlags)
+        }
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            (adapter as ItemTouchHelperAdapter).onItemMove(viewHolder.adapterPosition, target.adapterPosition);
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            (adapter as ItemTouchHelperAdapter).onItemDismiss(viewHolder.adapterPosition)
+        }
+    })
+
+    private val adapter: SortingAdapter = SortingAdapter(itemTouchHelper::startDrag)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        SortingFragmentBinding
-            .inflate(inflater, container, false)
-            .apply { initializeView(root) }
-            .root
+    ): View? = SortingFragmentBinding
+        .inflate(inflater, container, false)
+        .apply { lifecycleOwner = this@SortingFragment }
+        .apply { initializeView(root) }
+        .apply { vm = viewModel }
+        .root
 
     private fun initializeView(view: View) {
-        setSupportActionBar(view.toolbar_sort, showTitle = true, showUpButton = true)
+        with(view.cafeteria_sort_recycler) {
+            adapter = this@SortingFragment.adapter
+            itemTouchHelper.attachToRecyclerView(this)
+        }
 
-        view.toolbar_sort.setTitle(R.string.ask_not_inu)
+        setSupportActionBar(view.toolbar_sort, showTitle = true, showUpButton = true)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.fetch()
+    }
+
+    companion object {
+
+        @JvmStatic
+        @BindingAdapter("cafeteriaToSort")
+        fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaSortView>?) {
+            cafeteria?.let {
+                (view.adapter as? SortingAdapter)?.cafeteria = it.toMutableList()
+            }
+        }
     }
 }
