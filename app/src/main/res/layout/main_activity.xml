@@ -38,10 +38,10 @@
     <View
         android:layout_width="0dp"
         android:layout_height="4dp"
-        android:background="@drawable/shadow_reversed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav" />
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        android:background="@drawable/shadow_reversed" />
 
     <!-- Bottom nav -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
