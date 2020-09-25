@@ -21,41 +21,58 @@ package com.inu.cafeteria.feature.main
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.onTabSelect
 import com.inu.cafeteria.common.extension.setSupportActionBar
+import com.inu.cafeteria.common.extension.withinAlphaAnimation
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
+import com.inu.cafeteria.extension.afterDays
+import com.inu.cafeteria.extension.format
+import com.inu.cafeteria.extension.withNonNull
 import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
 import kotlinx.android.synthetic.main.empty_view.view.*
+import timber.log.Timber
+import java.util.*
 
 class CafeteriaFragment : BaseFragment() {
 
     override val optionMenuId: Int? = R.menu.cafeteria_menu
 
     private val viewModel: CafeteriaViewModel by viewModels()
-    private lateinit var pagingManager: PagingManager
+    private val pagingManager = PagingManager()
+    private var persistentView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.preFetch(5)
+        viewModel.apply {
+            preFetch(5)
+
+            observe(moreClickEvent) {
+                it?.let(::showCafeteriaDetails)
+            }
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = CafeteriaFragmentBinding
+    ): View? = persistentView ?: CafeteriaFragmentBinding
         .inflate(inflater, container, false)
         .apply { lifecycleOwner = this@CafeteriaFragment }
         .apply { initializeView(root) }
         .apply { vm = viewModel }
+        .apply { persistentView = root }
         .root
 
     private fun initializeView(view: View) {
@@ -67,7 +84,8 @@ class CafeteriaFragment : BaseFragment() {
                 emptyView = view.empty_view
                 loadingView = view.loading_view
             }
-            pagingManager = PagingManager(this)
+
+            pagingManager.animationTarget = this
         }
 
         with(view.date_selector) {
@@ -88,28 +106,43 @@ class CafeteriaFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.onSelectDateTab(pagingManager.getCurrentlySelectedTabPosition())
+        view?.cafeteria_recycler?.withinAlphaAnimation(0f, 1f) {
+            viewModel.onSelectDateTab(pagingManager.getCurrentlySelectedTabPosition())
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
         viewModel.onClickOptionMenu(item.itemId)
 
+    private fun showCafeteriaDetails(cafeteria: CafeteriaView) {
+        val bundle = bundleOf(
+            "cafeteriaId" to cafeteria.id,
+            "date" to Date().afterDays(pagingManager.getCurrentlySelectedTabPosition()).format()
+        )
+
+        findNavController().navigate(R.id.action_cafeteria_detail, bundle)
+    }
+
     /**
      * Do an animation like that of page swapping.
      * This executes an in-place animation with a single view.
      */
-    class PagingManager(private val animationTarget: View) {
+    class PagingManager {
 
         private var currentSelectedTabPosition = 0
+
+        var animationTarget: View? = null
 
         fun getCurrentlySelectedTabPosition() = currentSelectedTabPosition
 
         fun onNewTabSelected(newlySelectedTabPosition: Int) {
-            with(animationTarget) {
+            withNonNull(animationTarget) {
                 alpha = 0f
                 x += -30f * getWhichDirectionToSwipe(newlySelectedTabPosition)
                 animate().alpha(1f).x(0f)
             }
+
+            currentSelectedTabPosition = newlySelectedTabPosition
         }
 
         private fun getWhichDirectionToSwipe(newlySelectedTabPosition: Int): Int {
@@ -118,8 +151,6 @@ class CafeteriaFragment : BaseFragment() {
                 newlySelectedTabPosition < currentSelectedTabPosition -> +1
                 else -> 0
             }
-
-            currentSelectedTabPosition = newlySelectedTabPosition
 
             // -1: left, 1: right.
             return theAnswer

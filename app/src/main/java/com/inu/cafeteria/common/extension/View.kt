@@ -22,6 +22,8 @@ package com.inu.cafeteria.common.extension
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 
@@ -84,5 +86,17 @@ fun View.forwardTouches(parent: View) {
 
             else -> v.onTouchEvent(event)
         }
+    }
+}
+
+fun <T: View> T?.withinAlphaAnimation(from: Float, to: Float, delay: Long = 0, action: T?.() -> Unit = {}) {
+    this?.let {
+        alpha = from
+    }
+
+    action(this)
+
+    this?.let {
+        Handler(Looper.getMainLooper()).postDelayed({ animate().alpha(1f) }, delay)
     }
 }

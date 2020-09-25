@@ -17,18 +17,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/**
- * Lifecycle.kt
- *
- * Credits to Fernando Cejas.
- * https://github.com/android10/Android-CleanArchitecture-Kotlin
- */
+package com.inu.cafeteria.util
 
-package com.inu.cafeteria.common.extension
+class PairedCache<K, V> {
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
+    private val caches = mutableMapOf<K, Cache<V>>()
 
-fun <T: Any?, L: LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -> Unit) =
-    liveData.observe(this, Observer(body))
+    fun isValid(key: K): Boolean {
+        return caches[key]?.isValid ?: false
+    }
+
+    @Synchronized
+    fun get(key: K): V? {
+        isValid(key).takeIf { it } ?: throw IllegalStateException("Cannot access a cache in an invalid state.")
+
+        return caches[key]?.get()
+    }
+
+    @Synchronized
+    fun set(key: K, value: V) {
+        (caches[key] ?: Cache()).apply {
+            set(value)
+            caches[key] = this
+        }
+    }
+}

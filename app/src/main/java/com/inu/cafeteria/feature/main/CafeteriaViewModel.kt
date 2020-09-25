@@ -33,6 +33,7 @@ import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.usecase.GetCafeteria
 import com.inu.cafeteria.usecase.GetCafeteriaOrder
+import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
 import java.util.*
 
@@ -50,6 +51,8 @@ class CafeteriaViewModel : BaseViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     private val cafeteriaCache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
+
+    val moreClickEvent = SingleLiveEvent<CafeteriaView>()
 
     fun preFetch(howMany: Int) {
         (0 until howMany).map(::daysAfter).forEach { date ->
@@ -152,6 +155,6 @@ class CafeteriaViewModel : BaseViewModel() {
     }
 
     fun onViewMore(cafeteriaView: CafeteriaView) {
-        Toast.makeText(mContext, "Not implemented yet :)", Toast.LENGTH_SHORT).show()
+        moreClickEvent.postValue(cafeteriaView)
     }
 }

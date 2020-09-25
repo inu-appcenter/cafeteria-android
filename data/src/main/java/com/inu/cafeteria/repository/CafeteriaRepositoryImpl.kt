@@ -30,6 +30,7 @@ import com.inu.cafeteria.model.scheme.CornerResult
 import com.inu.cafeteria.model.scheme.MenuResult
 import com.inu.cafeteria.service.CafeteriaNetworkService
 import com.inu.cafeteria.util.Cache
+import com.inu.cafeteria.util.PairedCache
 import timber.log.Timber
 import java.util.*
 
@@ -41,6 +42,7 @@ class CafeteriaRepositoryImpl(
     // These have app-wide lifecycle. Fetch runs only for once.
     private val cafeteriaCache = Cache<List<CafeteriaResult>>()
     private val cornerCache = Cache<List<CornerResult>>()
+    private val menuCaches = PairedCache<String, List<MenuResult>>()
 
     override fun getAllCafeteria(date: String?): List<Cafeteria> {
         val cafeteria = cachedFetch(cafeteriaCache) {
@@ -51,8 +53,9 @@ class CafeteriaRepositoryImpl(
             networkService.getCorners().getOrNull()
         } ?: return listOf()
 
-        val menus = networkService.getMenus(date).getOrNull()
-            ?: return listOf()
+        val menus = cachedFetch(menuCaches, date ?: Date().format()) {
+            networkService.getMenus(date).getOrNull()
+        } ?: return listOf()
 
         return ResultGatherer(cafeteria, corners, menus).combine()
     }
@@ -78,6 +81,11 @@ class CafeteriaRepositoryImpl(
     @Synchronized
     private fun <T> cachedFetch(cache: Cache<T>, fetch: () -> T?): T? {
         return (if (cache.isValid) cache.get() else null) ?: fetch()?.also(cache::set)
+    }
+
+    @Synchronized
+    private fun <K, V> cachedFetch(cache: PairedCache<K, V>, key: K, fetch: () -> V?): V? {
+        return (if (cache.isValid(key)) cache.get(key) else null) ?: fetch()?.also { cache.set(key, it) }
     }
 
     override fun getOrder(): Array<Int> {

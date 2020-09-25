@@ -1,10 +1,6 @@
 package com.inu.cafeteria.feature.main
 
-import android.graphics.drawable.InsetDrawable
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
@@ -17,7 +13,8 @@ import kotlin.math.min
 
 
 class MenuPageAdapter(
-    private val menuPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool()
+    private val menuPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool(),
+    private val pageSize: Int = DEFAULT_PAGE_SIZE
 ) : BaseAdapter<MenuView>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -26,17 +23,19 @@ class MenuPageAdapter(
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         fun paginateProps(pageNumber: Int): List<MenuView> {
-            val indexStart = pageNumber * stackSize
-            val indexEnd = min(indexStart + stackSize - 1, data.size - 1)
+            val indexStart = pageNumber * pageSize
+            val indexEnd = min(indexStart + pageSize - 1, data.size - 1)
 
             return data.slice(indexStart..indexEnd)
         }
 
-        (holder as MenuPageViewHolder).bind(paginateProps(position))
+        (holder as MenuPageViewHolder).bind(
+            if (pageSize == 0) data else paginateProps(position)
+        )
     }
 
     override fun getItemCount(): Int {
-        return ceil(data.size.toDouble() / stackSize).toInt()
+        return if (pageSize == 0) 1 else ceil(data.size.toDouble() / pageSize).toInt()
     }
 
     inner class MenuPageViewHolder(parent: ViewGroup) : BaseViewHolder(parent, R.layout.menu_page) {
@@ -64,6 +63,6 @@ class MenuPageAdapter(
     }
 
     companion object {
-        private const val stackSize: Int = 3
+        private const val DEFAULT_PAGE_SIZE: Int = 3
     }
 }
