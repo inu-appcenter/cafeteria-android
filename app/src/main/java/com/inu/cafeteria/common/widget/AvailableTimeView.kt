@@ -28,6 +28,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.inu.cafeteria.R
 import com.inu.cafeteria.extension.forEachBits
 import com.inu.cafeteria.extension.has
+import timber.log.Timber
 
 class AvailableTimeView(
     context: Context,
@@ -36,6 +37,7 @@ class AvailableTimeView(
 
     init {
         initView()
+        Timber.i("YEAH!!")
     }
 
     private fun initView() {
@@ -68,9 +70,9 @@ class AvailableTimeView(
 
     private fun selectProperLayout(howMany: Int): ConstraintLayout {
         val layouts = listOf<ConstraintLayout>(
-            findViewById<ConstraintLayout>(R.id.single_view),
-            findViewById<ConstraintLayout>(R.id.double_view),
-            findViewById<ConstraintLayout>(R.id.triple_view)
+            findViewById(R.id.single_view),
+            findViewById(R.id.double_view),
+            findViewById(R.id.triple_view)
         ).apply { forEach { it.visibility = GONE } }
 
         return if (howMany in 1..3) { layouts[howMany-1] } else { layouts[0] }
