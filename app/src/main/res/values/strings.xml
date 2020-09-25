@@ -98,5 +98,6 @@
     <string name="no_information_on_this_cafeteria">No information available for this cafeteria.</string>
     <string name="unit_krw">%,dKRW</string>
     <string name="unit_cal" translatable="false">%,dkcal</string>
+    <string name="desc_handle">This is an handle.</string>
 
 </resources>

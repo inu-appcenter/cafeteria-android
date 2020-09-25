@@ -22,8 +22,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/HorizontallyFullSizedView"
     android:paddingHorizontal="@dimen/cafeteria_horizontal_margin"
     android:paddingVertical="@dimen/cafeteria_vertical_margin"
     android:clickable="true"
@@ -31,15 +30,14 @@
     android:foreground="?android:attr/selectableItemBackground">
 
     <TextView
+        style="@style/HorizontallyFullSizedViewConstrained"
         android:id="@+id/cafeteria_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/handle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:textSize="@dimen/textTitle"
-        android:textColor="@color/textPrimary"
+        android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
         tools:text="학생식당" />
 
@@ -50,7 +48,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:tint="@color/textTertiary"
         android:src="@drawable/ic_reorder_24px"
-        app:tint="@color/textTertiary" />
+        android:contentDescription="@string/desc_handle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
