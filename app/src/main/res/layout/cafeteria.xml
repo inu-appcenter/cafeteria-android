@@ -10,10 +10,12 @@
     android:layout_marginBottom="@dimen/cafeteria_vertical_margin">
 
     <TextView
-        style="@style/FitSizedView"
+        style="@style/HorizontallyFullSizedViewConstrained"
         android:id="@+id/cafeteria_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/more_button"
+        android:lines="1"
         android:layout_marginStart="@dimen/cafeteria_horizontal_margin"
         android:textStyle="bold"
         android:textSize="@dimen/textTitle"
