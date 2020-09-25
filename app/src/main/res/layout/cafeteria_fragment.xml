@@ -46,8 +46,8 @@
 
                     <!-- Logo in the toolbar -->
                     <ImageView
+                        style="@style/HorizontallyFullSizedView"
                         android:id="@+id/logo_image"
-                        android:layout_width="match_parent"
                         android:layout_height="@dimen/logo_height"
                         android:layout_marginStart="@dimen/option_menu_item_width"
                         android:scaleType="fitCenter"
