@@ -59,12 +59,12 @@ class CafeteriaReorderFragment : BaseFragment() {
         with(view.cafeteria_sort_recycler) {
             adapterWrapper.setWithRecyclerView(this)
             with(adapterWrapper.adapter) {
-                emptyView = view.empty_view
+                emptyView = view.empty_view_group
                 loadingView = view.loading_view
             }
         }
 
-        setSupportActionBar(view.toolbar_sort, showTitle = true, showUpButton = true)
+        setSupportActionBar(view.toolbar_reorder, showTitle = true, showUpButton = true)
     }
 
     override fun onResume() {

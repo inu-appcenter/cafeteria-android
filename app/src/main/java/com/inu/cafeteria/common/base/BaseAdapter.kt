@@ -36,7 +36,7 @@ import timber.log.Timber
 abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), KoinComponent {
     private val mContext: Context by inject()
 
-    var isLoading: Boolean = true
+    var isLoading: Boolean = false
         set(value) {
             field = value
             updatePeripheralViews()

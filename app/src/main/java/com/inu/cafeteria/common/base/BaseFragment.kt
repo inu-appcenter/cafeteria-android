@@ -59,8 +59,8 @@ abstract class BaseFragment : Fragment(), KoinComponent {
         super.onCreateOptionsMenu(menu, inflater)
 
         optionMenuId?.let {
+            Timber.d("Inflate option menu view holder!")
             inflater.inflate(it, menu)
-            Timber.d("Inflate option menu")
         }
 
         this.menu = menu

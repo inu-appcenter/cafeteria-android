@@ -43,7 +43,7 @@ class MenuPageAdapter(
         private val menuAdapter = MenuAdapter()
 
         init {
-            Timber.d("Inflate Menu Page!")
+            Timber.d("Inflate Menu Page view holder!")
             setChildRecyclerView()
         }
 

@@ -20,6 +20,7 @@
 package com.inu.cafeteria.injection
 
 import com.inu.cafeteria.common.Navigator
+import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.repository.*
 import com.inu.cafeteria.usecase.*
 import org.koin.dsl.module
@@ -56,6 +57,7 @@ val myModules = module {
     single {
         CafeteriaRepositoryImpl(
             networkService = get(),
+            db = SharedPreferenceWrapper(get())
         ) as CafeteriaRepository
     }
 

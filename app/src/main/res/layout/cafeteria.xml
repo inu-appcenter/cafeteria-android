@@ -35,8 +35,8 @@
         android:background="?android:attr/selectableItemBackground"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:nestedScrollingEnabled="false"
         android:id="@+id/menu_page_recycler"
+        android:nestedScrollingEnabled="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/element_margin"
@@ -47,5 +47,15 @@
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/menu_page" />
+
+    <include
+        layout="@layout/empty_cafeteria_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/element_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafeteria_name"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

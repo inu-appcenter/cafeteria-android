@@ -19,6 +19,7 @@
 
 package com.inu.cafeteria.repository
 
+import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.Corner
 import com.inu.cafeteria.entities.Menu
@@ -34,10 +35,8 @@ import java.util.*
 
 class CafeteriaRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
+    private val db: SharedPreferenceWrapper
 ) : CafeteriaRepository() {
-
-    // TODO
-    private var orders: Array<Int> = arrayOf()
 
     // These have app-wide lifecycle. Fetch runs only for once.
     private val cafeteriaCache = Cache<List<CafeteriaResult>>()
@@ -82,15 +81,23 @@ class CafeteriaRepositoryImpl(
     }
 
     override fun getOrder(): Array<Int> {
-        return orders
+        val result = db.getArrayInt(ORDER_KEY)
+
+        if (result == null) {
+            // The first attempt to get order.
+            resetOrder()
+            return getOrder()
+        }
+
+        return result
     }
 
     override fun setOrder(orderedIds: Array<Int>) {
-        orders = orderedIds
+        db.putArrayInt(ORDER_KEY, orderedIds)
     }
 
     override fun resetOrder() {
-        orders = getCafeteriaOnly().map { it.id }.toTypedArray()
+        db.putArrayInt(ORDER_KEY, getCafeteriaOnly().map { it.id }.toTypedArray())
     }
 
     class ResultGatherer(
@@ -138,5 +145,9 @@ class CafeteriaRepositoryImpl(
                     )
                 }
         }
+    }
+
+    companion object {
+        private const val ORDER_KEY = "cafeteria_sort_order"
     }
 }

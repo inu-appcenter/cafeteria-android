@@ -90,5 +90,6 @@
     <string name="title_reorder">순서 변경</string>
     <string name="action_reset">재설정</string>
     <string name="no_information">정보가 없어요 ㅠㅠ</string>
+    <string name="no_information_on_this_cafeteria">해당 식당에 대한 정보가 없습니다.</string>
 
 </resources>

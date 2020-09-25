@@ -7,6 +7,7 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
 import kotlinx.android.synthetic.main.cafeteria.view.*
+import kotlinx.android.synthetic.main.empty_cafeteria_view.view.*
 import timber.log.Timber
 
 class CafeteriaAdapter : BaseAdapter<CafeteriaView>() {
@@ -29,13 +30,15 @@ class CafeteriaAdapter : BaseAdapter<CafeteriaView>() {
         private val menuPageAdapter = MenuPageAdapter(menuPool)
 
         init {
-            Timber.d("Inflate Cafeteria!")
+            Timber.d("Inflate Cafeteria view holder!")
             setChildRecyclerView()
         }
 
         private fun setChildRecyclerView() {
             with(itemView.menu_page_recycler) {
-                adapter = menuPageAdapter
+                adapter = menuPageAdapter.apply() {
+                    emptyView = itemView.empty_cafeteria_view
+                }
 
                 setRecycledViewPool(menuPagePool)
 

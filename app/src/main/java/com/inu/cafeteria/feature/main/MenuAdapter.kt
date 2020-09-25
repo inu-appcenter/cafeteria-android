@@ -10,7 +10,7 @@ import timber.log.Timber
 class MenuAdapter : BaseAdapter<MenuView>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        Timber.d("Inflate Menu!")
+        Timber.d("Inflate Menu view holder!")
 
         return BaseViewHolder(parent, R.layout.menu)
     }

@@ -100,6 +100,7 @@
     <dimen name="logo_height">16dp</dimen>
 
     <!-- MenuItem -->
-    <dimen name="option_menu_item_width">40dp</dimen>
+    <dimen name="option_menu_overflow_item_width">40dp</dimen>
+    <dimen name="option_menu_item_width">48dp</dimen>
 
 </resources>
