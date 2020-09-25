@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
+import com.inu.cafeteria.common.extension.setLeftInsetDivider
 import kotlinx.android.synthetic.main.menu_page.view.*
 import timber.log.Timber
 import kotlin.math.ceil
@@ -53,13 +54,7 @@ class MenuPageAdapter(
 
                 setRecycledViewPool(menuPool)
 
-                // TODO: dirty. clean it.
-                val divider = context.getDrawable(R.drawable.line_divider)
-                val inset = resources.getDimensionPixelSize(R.dimen.left_margin_until_text)
-                val insetDivider = InsetDrawable(divider, inset, 0, 0, 0)
-                val itemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-                itemDecoration.setDrawable(insetDivider)
-                addItemDecoration(itemDecoration)
+                setLeftInsetDivider(R.drawable.line_divider, R.dimen.left_margin_until_text)
             }
         }
 
