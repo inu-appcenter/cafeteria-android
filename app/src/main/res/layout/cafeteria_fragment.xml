@@ -18,7 +18,8 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -35,8 +36,8 @@
 
         <!-- Toolbar group -->
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar"
-            style="@style/AppBar">
+            style="@style/AppBar"
+            android:id="@+id/app_bar">
 
                 <androidx.appcompat.widget.Toolbar
                     style="@style/CustomToolbar"
@@ -56,8 +57,7 @@
                 </androidx.appcompat.widget.Toolbar>
 
             <!-- Date selection tab bar -->
-            <include
-                layout="@layout/date_selection_tab_bar" />
+            <include layout="@layout/date_selection_tab_bar" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -87,8 +87,8 @@
 
         <!-- Loading view -->
         <ProgressBar
-            android:id="@+id/loading_view"
-            style="@style/NonFunctionalProgressBar" />
+            style="@style/NonFunctionalProgressBar"
+            android:id="@+id/loading_view" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
