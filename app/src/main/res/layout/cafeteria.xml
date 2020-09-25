@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/item_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/cafeteria_vertical_margin"
-    android:layout_marginBottom="@dimen/cafeteria_vertical_margin"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_marginBottom="@dimen/cafeteria_vertical_margin">
 
     <TextView
+        style="@style/FitSizedView"
         android:id="@+id/cafeteria_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="@dimen/cafeteria_horizontal_margin"
@@ -23,7 +22,6 @@
 
     <ImageButton
         android:id="@+id/more_button"
-        android:contentDescription="@string/desc_more_button"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginEnd="@dimen/cafeteria_horizontal_margin"
@@ -32,17 +30,19 @@
         app:layout_constraintBottom_toBottomOf="@id/cafeteria_name"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/ic_arrow_forward_24px"
-        android:background="?android:attr/selectableItemBackground"/>
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/desc_more_button" />
 
     <androidx.recyclerview.widget.RecyclerView
+        style="@style/HorizontallyFullSizedView"
         android:id="@+id/menu_page_recycler"
-        android:nestedScrollingEnabled="false"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafeteria_name"
         android:layout_marginTop="@dimen/element_margin"
         android:paddingStart="@dimen/cafeteria_menu_page_horizontal_padding"
         android:paddingEnd="@dimen/cafeteria_menu_page_horizontal_padding"
-        app:layout_constraintTop_toBottomOf="@id/cafeteria_name"
+        android:nestedScrollingEnabled="false"
         android:clipToPadding="false"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
