@@ -3,22 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/HorizontallyFullSizedView"
     android:layout_marginTop="@dimen/prop_vertical_margin"
     android:layout_marginBottom="@dimen/prop_vertical_margin">
 
     <com.inu.cafeteria.common.widget.AvailableTimeView
+        style="@style/FitSizedView"
         android:id="@+id/available_at"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        style="@style/HorizontallyFullSizedViewConstrained"
         android:id="@+id/foods"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/element_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/available_at"
@@ -32,34 +29,32 @@
     <TextView
         style="@style/NotImportantTextView"
         android:id="@+id/corner_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/element_margin"
         app:layout_constraintTop_toBottomOf="@id/foods"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/available_at"
-        android:textColor="?android:attr/textColorSecondary"
         android:textSize="@dimen/textSecondary"
+        android:textColor="?android:attr/textColorSecondary"
         tools:text="2코너다아아" />
 
     <TextView
+        style="@style/FitSizedView"
         android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/foods"
+        android:textSize="@dimen/textSecondary"
         android:textColor="?android:attr/textColorSecondary"
         tools:text="3,500원" />
 
     <TextView
+        style="@style/FitSizedView"
         android:id="@+id/calorie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/separator_margin"
         app:layout_constraintEnd_toStartOf="@id/price"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/foods"
+        android:textSize="@dimen/textSecondary"
         android:textColor="?android:attr/textColorSecondary"
         tools:text="361kcal" />
 

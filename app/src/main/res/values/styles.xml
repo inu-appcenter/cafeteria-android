@@ -109,6 +109,11 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="HorizontallyFullSizedViewConstrained">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="FitSizedView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -122,7 +127,7 @@
         <item name="android:scaleType">centerCrop</item>
     </style>
 
-    <style name="NotImportantTextView">
+    <style name="NotImportantTextView" parent="FitSizedView">
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
         <item name="maxWidth">100dp</item>
