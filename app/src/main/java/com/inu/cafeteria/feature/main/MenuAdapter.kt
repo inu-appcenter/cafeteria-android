@@ -19,18 +19,16 @@ class MenuAdapter : BaseAdapter<MenuView>() {
         val menu = getItem(position) ?: return
 
         with(holder.containerView) {
-            // TODO
             available_at.setAvailableTime((1..7).random())
             corner_name.text = menu.cornerName
-            price.text = kotlin.String.format("%,d원", menu.price)
-            calorie.text = kotlin.String.format("%,dkcal", menu.calorie)
+            foods.text = menu.foods
+            price.text = context.getString(R.string.unit_krw, menu.price)
+            calorie.text = context.getString(R.string.unit_cal, menu.calorie)
 
-            // TODO: dirty. clean it.
-            with(foods) {
-                maxLines = 2
-                text = menu.foods
-            }
+            // Initial
+            foods.maxLines = 2
 
+            // On click
             setOnClickListener { foods.maxLines = 5 }
         }
     }
