@@ -32,7 +32,9 @@
 
         <action
             android:id="@+id/action_cafeteria_detail"
-            app:destination="@+id/cafeteria_detail_dest" />
+            app:destination="@+id/cafeteria_detail_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left" />
 
     </fragment>
 

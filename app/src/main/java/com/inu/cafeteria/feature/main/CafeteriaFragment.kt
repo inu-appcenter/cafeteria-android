@@ -67,7 +67,9 @@ class CafeteriaFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = persistentView ?: CafeteriaFragmentBinding
+    ): View? = persistentView?.apply {
+        (parent as? ViewGroup)?.removeView(persistentView)
+    } ?: CafeteriaFragmentBinding
         .inflate(inflater, container, false)
         .apply { lifecycleOwner = this@CafeteriaFragment }
         .apply { initializeView(root) }
@@ -98,13 +100,12 @@ class CafeteriaFragment : BaseFragment() {
         }
 
         with(view.logo_image) {
-            alpha = 0f
-            animate().alpha(1f)
+            withinAlphaAnimation(0f, 1f)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
 
         view?.cafeteria_recycler?.withinAlphaAnimation(0f, 1f) {
             viewModel.onSelectDateTab(pagingManager.getCurrentlySelectedTabPosition())
