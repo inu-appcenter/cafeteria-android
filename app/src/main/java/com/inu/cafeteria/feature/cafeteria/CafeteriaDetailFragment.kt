@@ -37,6 +37,7 @@ import kotlinx.android.synthetic.main.cafeteria_detail_fragment.view.*
 import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
 import kotlinx.android.synthetic.main.empty_cafeteria_view.view.*
 import kotlinx.android.synthetic.main.empty_view.view.*
+import timber.log.Timber
 
 class CafeteriaDetailFragment : BaseFragment() {
 

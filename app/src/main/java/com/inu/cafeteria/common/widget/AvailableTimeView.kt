@@ -37,7 +37,6 @@ class AvailableTimeView(
 
     init {
         initView()
-        Timber.i("YEAH!!")
     }
 
     private fun initView() {
