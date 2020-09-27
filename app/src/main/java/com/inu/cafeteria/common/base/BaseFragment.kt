@@ -21,15 +21,9 @@ package com.inu.cafeteria.common.base
 
 import android.content.Context
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import androidx.annotation.CallSuper
-import androidx.annotation.StringRes
+import android.view.*
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.inu.cafeteria.common.extension.notify
-import com.inu.cafeteria.common.extension.observe
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
@@ -39,6 +33,7 @@ import timber.log.Timber
  */
 
 abstract class BaseFragment : Fragment(), KoinComponent {
+
     private val mContext: Context by inject()
 
     open val optionMenuId: Int? = null
@@ -55,6 +50,15 @@ abstract class BaseFragment : Fragment(), KoinComponent {
         setHasOptionsMenu(optionMenuId != null)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = onCreateView(ViewCreator(this, inflater, container))
+        ?: super.onCreateView(inflater, container, savedInstanceState)
+
+    protected open fun onCreateView(viewCreator: ViewCreator): View? = null
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
@@ -64,5 +68,29 @@ abstract class BaseFragment : Fragment(), KoinComponent {
         }
 
         this.menu = menu
+    }
+
+    class ViewCreator(
+        val fragment: BaseFragment,
+        val inflater: LayoutInflater,
+        val container: ViewGroup?
+    ) {
+
+        inline operator fun <reified T: ViewDataBinding> invoke(also: T.() -> Unit = {}) =
+            createView(also)
+
+        inline fun <reified T: ViewDataBinding> createView(also: T.() -> Unit = {}): View {
+            val inflateMethod = T::class.java.getMethod(
+                "inflate",
+                LayoutInflater::class.java,
+                ViewGroup::class.java,
+                Boolean::class.java
+            )
+
+            return (inflateMethod.invoke(null, inflater, container, false) as T)
+                .apply { lifecycleOwner = fragment }
+                .apply { also(this) }
+                .root
+        }
     }
 }

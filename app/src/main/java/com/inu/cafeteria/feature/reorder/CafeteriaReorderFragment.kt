@@ -24,16 +24,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
-import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
 import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.loading_view
-import kotlinx.android.synthetic.main.empty_view.view.*
 
 class CafeteriaReorderFragment : BaseFragment() {
 
@@ -45,20 +44,16 @@ class CafeteriaReorderFragment : BaseFragment() {
             onItemChange = { viewModel.onChangeOrder(it.data.toOrderArray()) }
         )
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = CafeteriaReorderFragmentBinding
-        .inflate(inflater, container, false)
-        .apply { lifecycleOwner = this@CafeteriaReorderFragment }
-        .apply { initializeView(root) }
-        .apply { vm = viewModel }
-        .root
+    override fun onCreateView(viewCreator: ViewCreator) =
+        viewCreator<CafeteriaReorderFragmentBinding> {
+            initializeView(root)
+            vm = viewModel
+        }
 
     private fun initializeView(view: View) {
         with(view.cafeteria_sort_recycler) {
             adapterWrapper.setWithRecyclerView(this)
+
             with(adapterWrapper.adapter) {
                 emptyView = view.empty_view_group
                 loadingView = view.loading_view
