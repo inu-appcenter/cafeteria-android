@@ -93,5 +93,6 @@
     <string name="no_information_on_this_cafeteria">해당 식당에 대한 정보가 없습니다.</string>
     <string name="unit_krw">%,d원</string>
     <string name="desc_handle">핸들입니다.</string>
+    <string name="desc_help">살려줘!</string>
 
 </resources>

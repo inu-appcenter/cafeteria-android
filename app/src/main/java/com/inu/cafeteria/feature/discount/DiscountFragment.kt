@@ -20,10 +20,13 @@
 package com.inu.cafeteria.feature.discount
 
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.getViewModel
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
+import kotlinx.android.synthetic.main.discount_fragment.view.*
 
 class DiscountFragment : BaseFragment() {
 
@@ -36,6 +39,10 @@ class DiscountFragment : BaseFragment() {
         }
 
     private fun initializeView(view: View) {
-
+        with(view.carrot) {
+            startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake).apply {
+                duration = 200
+            })
+        }
     }
 }

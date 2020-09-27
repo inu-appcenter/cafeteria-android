@@ -28,22 +28,35 @@
             type="com.inu.cafeteria.feature.discount.DiscountViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent">
+        android:layout_height="match_parent">
 
-        <!-- Content Wrapper -->
-        <include
-            layout="@layout/barcode_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+        <ImageView
+            android:id="@+id/carrot"
+            android:layout_width="@dimen/available_time_view_size"
+            android:layout_height="@dimen/available_time_view_size"
+            android:layout_gravity="center"
+            android:src="@drawable/carrot"
+            android:contentDescription="@string/desc_help" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior=".common.widget.OverScrollBounceBehavior">
+
+            <!-- Content Wrapper -->
+            <include
+                layout="@layout/barcode_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="48dp" />
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>
 

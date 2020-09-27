@@ -99,5 +99,6 @@
     <string name="unit_krw">%,dKRW</string>
     <string name="unit_cal" translatable="false">%,dkcal</string>
     <string name="desc_handle">This is an handle.</string>
+    <string name="desc_help">Help!</string>
 
 </resources>
