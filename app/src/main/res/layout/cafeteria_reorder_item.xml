@@ -23,8 +23,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/HorizontallyFullSizedView"
-    android:paddingHorizontal="@dimen/cafeteria_horizontal_margin"
-    android:paddingVertical="@dimen/cafeteria_vertical_margin"
+    android:paddingHorizontal="@dimen/cafeteria_horizontal_space"
+    android:paddingVertical="@dimen/cafeteria_vertical_space"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground">
