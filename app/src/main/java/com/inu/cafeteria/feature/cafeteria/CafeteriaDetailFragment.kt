@@ -27,6 +27,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.databinding.BindingAdapter
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
@@ -43,7 +44,7 @@ import timber.log.Timber
 
 class CafeteriaDetailFragment : BaseFragment() {
 
-    private val viewModel: CafeteriaDetailViewModel by getViewModel()
+    private val viewModel: CafeteriaDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

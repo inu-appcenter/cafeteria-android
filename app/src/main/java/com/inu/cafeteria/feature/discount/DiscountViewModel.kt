@@ -19,23 +19,7 @@
 
 package com.inu.cafeteria.feature.discount
 
-import android.view.View
-import androidx.fragment.app.viewModels
-import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.common.extension.getViewModel
-import com.inu.cafeteria.databinding.DiscountFragmentBinding
+import com.inu.cafeteria.common.base.BaseViewModel
 
-class DiscountFragment : BaseFragment() {
-
-    private val viewModel: DiscountViewModel by viewModels()
-
-    override fun onCreateView(viewCreator: ViewCreator): View? =
-        viewCreator<DiscountFragmentBinding> {
-            initializeView(root)
-            vm = viewModel
-        }
-
-    private fun initializeView(view: View) {
-
-    }
+class DiscountViewModel : BaseViewModel() {
 }
