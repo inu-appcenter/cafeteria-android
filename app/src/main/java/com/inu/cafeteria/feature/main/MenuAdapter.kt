@@ -18,7 +18,7 @@ class MenuAdapter : BaseAdapter<MenuView>() {
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val menu = getItem(position) ?: return
 
-        with(holder.containerView) {
+        with(holder.view) {
             available_at.setAvailableTime((1..7).random())
             corner_name.text = menu.cornerName
             foods.text = menu.foods

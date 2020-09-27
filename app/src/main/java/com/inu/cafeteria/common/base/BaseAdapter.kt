@@ -19,24 +19,37 @@
 
 package com.inu.cafeteria.common.base
 
-import android.content.Context
 import android.view.View
 import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.extension.setVisible
 import org.koin.core.KoinComponent
-import org.koin.core.inject
 import timber.log.Timber
 
 /**
- * Base RecyclerView.Adapter that provides some convenience when creating a new Adapter, such as
- * data list handing and item animations
+ * This adapter handles loading/empty view visibility.
  */
-
 abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), KoinComponent {
-    private val mContext: Context by inject()
+
+    /**
+     * loadingView will be shown when it is not null and isLoading is true.
+     */
+    var loadingView: View? = null
+        set(value) {
+            field = value
+            updatePeripheralViews()
+        }
 
     var isLoading: Boolean = false
+        set(value) {
+            field = value
+            updatePeripheralViews()
+        }
+
+    /**
+     * emptyView will be shown when it is not null and data.isEmpty() returns true
+     */
+    var emptyView: View? = null
         set(value) {
             field = value
             updatePeripheralViews()
@@ -57,25 +70,9 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), KoinComp
         loadingView?.setVisible(isLoading)
     }
 
-    /**
-     * This view can be set, and the adapter will automatically control the visibility of this view
-     * based on the data
-     */
-    var emptyView: View? = null
-        set(value) {
-            field = value
-            updatePeripheralViews()
-        }
-
-    var loadingView: View? = null
-        set(value) {
-            field = value
-            updatePeripheralViews()
-        }
-
     fun getItem(position: Int): T? {
         if (position < 0) {
-            Timber.w("Trying to access index $position!!")
+            Timber.w("Trying to access index $position.")
             return null
         }
 

@@ -27,9 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import kotlinx.android.extensions.LayoutContainer
 
-open class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
+open class BaseViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     constructor(parent: ViewGroup, @LayoutRes layoutId: Int)
             : this(LayoutInflater.from(parent.context).inflate(layoutId, parent, false))
-
-    override val containerView: View = view
 }

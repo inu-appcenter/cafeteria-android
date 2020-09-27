@@ -19,7 +19,6 @@
 
 package com.inu.cafeteria.feature.reorder
 
-import android.graphics.Color
 import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -72,7 +71,7 @@ class CafeteriaReorderAdapter
     }
 
     private fun setTouchListener(viewHolder: BaseViewHolder) {
-        viewHolder.containerView.handle.setOnTouchListener { v, event ->
+        viewHolder.view.handle.setOnTouchListener { v, event ->
             v.performClick()
             if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                 touchHelper?.startDrag(viewHolder)
@@ -85,17 +84,17 @@ class CafeteriaReorderAdapter
         : BaseViewHolder(parent, layoutId), ItemTouchHelperViewHolder {
 
         fun bind(item: CafeteriaReorderView?) {
-            with(containerView.cafeteria_name) {
+            with(view.cafeteria_name) {
                 text = item?.displayName
             }
         }
 
         override fun onItemSelected() {
-            containerView.setBackgroundResource(R.color.selectedItemBackground)
+            view.setBackgroundResource(R.color.selectedItemBackground)
         }
 
         override fun onItemClear() {
-            containerView.setBackgroundColor(0)
+            view.setBackgroundColor(0)
         }
     }
 }
