@@ -24,6 +24,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
@@ -33,21 +34,16 @@ import kotlinx.android.synthetic.main.cafeteria.view.cafeteria_name
 import kotlinx.android.synthetic.main.cafeteria_reorder_item.view.*
 import java.util.*
 
-class CafeteriaReorderAdapter
-    : BaseAdapter<CafeteriaReorderView>(),
+class CafeteriaReorderAdapter(
+    private val onDragStart: (RecyclerView.ViewHolder) -> Any?
+) : BaseAdapter<CafeteriaReorderView>(),
     ItemTouchHelperAdapter {
-
-    private var touchHelper: ItemTouchHelper? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ReorderViewHolder(parent, R.layout.cafeteria_reorder_item).also(::setTouchListener)
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         (holder as ReorderViewHolder).bind(getItem(position))
-    }
-
-    override fun onSetItemTouchHelper(itemTouchHelper: ItemTouchHelper) {
-        touchHelper = itemTouchHelper
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
@@ -74,7 +70,7 @@ class CafeteriaReorderAdapter
         viewHolder.view.handle.setOnTouchListener { v, event ->
             v.performClick()
             if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-                touchHelper?.startDrag(viewHolder)
+                onDragStart(viewHolder)
             }
             false
         }

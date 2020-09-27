@@ -40,9 +40,10 @@ class CafeteriaReorderFragment : BaseFragment() {
     private val viewModel: CafeteriaReorderViewModel by viewModels()
 
     private val adapterWrapper =
-        ReorderableAdapterWrapper(CafeteriaReorderAdapter()) { adapter ->
-            viewModel.onChangeOrder(adapter.data.map { it.id }.toTypedArray())
-        }
+        ReorderableAdapterWrapper(
+            adapterFactory = { CafeteriaReorderAdapter(onDragStart = it::startDrag) },
+            onItemChange = { viewModel.onChangeOrder(it.data.toOrderArray()) }
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,

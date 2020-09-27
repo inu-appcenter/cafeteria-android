@@ -27,15 +27,12 @@ import androidx.recyclerview.widget.RecyclerView
  * The adapter must implement ItemTouchHelperAdapter.
  */
 class ReorderableAdapterWrapper<T>(
-    val adapter: T,
+    adapterFactory: (ItemTouchHelper) -> T,
     private val onItemChange: (T) -> Any? = {}
 ) where T: RecyclerView.Adapter<*>, T: ItemTouchHelperAdapter {
 
     private val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback())
-
-    init {
-        adapter.onSetItemTouchHelper(itemTouchHelper)
-    }
+    val adapter = adapterFactory(itemTouchHelper)
 
     fun setWithRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = adapter

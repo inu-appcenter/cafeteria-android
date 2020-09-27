@@ -23,3 +23,7 @@ data class CafeteriaReorderView(
     val id: Int,
     val displayName: String
 )
+
+fun List<CafeteriaReorderView>.toOrderArray(): Array<Int> {
+    return this.map { it.id }.toTypedArray()
+}
