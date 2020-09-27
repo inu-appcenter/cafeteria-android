@@ -29,11 +29,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.common.extension.observe
-import com.inu.cafeteria.common.extension.onTabSelect
-import com.inu.cafeteria.common.extension.setSupportActionBar
-import com.inu.cafeteria.common.extension.withinAlphaAnimation
+import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
+import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
 import com.inu.cafeteria.extension.afterDays
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.extension.withNonNull
@@ -63,19 +61,13 @@ class CafeteriaFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = persistentView?.apply {
-        (parent as? ViewGroup)?.removeView(persistentView)
-    } ?: CafeteriaFragmentBinding
-        .inflate(inflater, container, false)
-        .apply { lifecycleOwner = this@CafeteriaFragment }
-        .apply { initializeView(root) }
-        .apply { vm = viewModel }
-        .apply { persistentView = root }
-        .root
+    override fun onCreateView(viewCreator: ViewCreator) =
+        persistentView?.apply { removeFromParent() } ?:
+        viewCreator<CafeteriaFragmentBinding> {
+            initializeView(root)
+            vm = viewModel
+            persistentView = root
+        }
 
     private fun initializeView(view: View) {
         setSupportActionBar(view.toolbar_home)

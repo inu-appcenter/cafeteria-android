@@ -26,6 +26,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 
 fun View.cancelTransition() {
     transitionName = null
@@ -99,4 +100,8 @@ fun <T: View> T?.withinAlphaAnimation(from: Float, to: Float, delay: Long = 0, a
     this?.let {
         Handler(Looper.getMainLooper()).postDelayed({ animate().alpha(1f) }, delay)
     }
+}
+
+fun View.removeFromParent() {
+    (parent as? ViewGroup)?.removeView(this)
 }

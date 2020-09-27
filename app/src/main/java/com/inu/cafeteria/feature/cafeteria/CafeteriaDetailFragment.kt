@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.CafeteriaDetailFragmentBinding
+import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
 import com.inu.cafeteria.feature.main.MenuAdapter
 import com.inu.cafeteria.feature.main.MenuPageAdapter
 import com.inu.cafeteria.feature.main.MenuView
@@ -59,16 +60,11 @@ class CafeteriaDetailFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = CafeteriaDetailFragmentBinding
-        .inflate(inflater, container, false)
-        .apply { lifecycleOwner = this@CafeteriaDetailFragment }
-        .apply { initializeView(root) }
-        .apply { vm = viewModel }
-        .root
+    override fun onCreateView(viewCreator: ViewCreator) =
+        viewCreator<CafeteriaDetailFragmentBinding> {
+            initializeView(root)
+            vm = viewModel
+        }
 
     private fun initializeView(view: View) {
         setSupportActionBar(view.toolbar_cafeteria_detail, showTitle = true, showUpButton = true)
