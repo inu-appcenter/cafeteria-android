@@ -6,8 +6,7 @@
     android:id="@+id/item_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/cafeteria_vertical_margin"
-    android:layout_marginBottom="@dimen/cafeteria_vertical_margin">
+    android:paddingTop="@dimen/cafeteria_vertical_space">
 
     <TextView
         style="@style/HorizontallyFullSizedViewConstrained"
@@ -16,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/more_button"
         android:lines="1"
-        android:layout_marginStart="@dimen/cafeteria_horizontal_margin"
+        android:layout_marginStart="@dimen/cafeteria_horizontal_space"
         android:textStyle="bold"
         android:textSize="@dimen/textTitle"
         android:textColor="#000"
@@ -26,7 +25,7 @@
         android:id="@+id/more_button"
         android:layout_width="0dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="@dimen/cafeteria_horizontal_margin"
+        android:layout_marginEnd="@dimen/cafeteria_horizontal_space"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintTop_toTopOf="@id/cafeteria_name"
         app:layout_constraintBottom_toBottomOf="@id/cafeteria_name"
@@ -41,9 +40,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cafeteria_name"
-        android:layout_marginTop="@dimen/element_margin"
-        android:paddingStart="@dimen/cafeteria_menu_page_horizontal_padding"
-        android:paddingEnd="@dimen/cafeteria_menu_page_horizontal_padding"
+        android:paddingHorizontal="@dimen/cafeteria_menu_page_horizontal_space"
+        android:paddingVertical="@dimen/cafeteria_menu_page_vertical_space"
         android:nestedScrollingEnabled="false"
         android:clipToPadding="false"
         android:orientation="horizontal"
@@ -54,7 +52,7 @@
         layout="@layout/empty_cafeteria_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/element_margin"
+        android:layout_marginTop="@dimen/near_space"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cafeteria_name"

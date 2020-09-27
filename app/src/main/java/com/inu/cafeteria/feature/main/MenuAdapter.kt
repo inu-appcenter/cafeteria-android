@@ -19,7 +19,7 @@ class MenuAdapter : BaseAdapter<MenuView>() {
         val menu = getItem(position) ?: return
 
         with(holder.view) {
-            available_at.setAvailableTime((1..7).random())
+            available_at.setAvailableTime(menu.availableAt)
             corner_name.text = menu.cornerName
             foods.text = menu.foods
             price.text = context.getString(R.string.unit_krw, menu.price)

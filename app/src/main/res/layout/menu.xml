@@ -4,8 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/HorizontallyFullSizedView"
-    android:layout_marginTop="@dimen/prop_vertical_margin"
-    android:layout_marginBottom="@dimen/prop_vertical_margin">
+    android:paddingVertical="@dimen/menu_outer_space"
+    android:paddingHorizontal="@dimen/menu_outer_space"
+    android:background="?android:attr/selectableItemBackground">
 
     <com.inu.cafeteria.common.widget.AvailableTimeView
         style="@style/FitSizedView"
@@ -16,7 +17,7 @@
     <TextView
         style="@style/HorizontallyFullSizedViewConstrained"
         android:id="@+id/foods"
-        android:layout_marginStart="@dimen/element_margin"
+        android:layout_marginStart="@dimen/near_space"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/available_at"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +30,7 @@
     <TextView
         style="@style/HorizontallyFullSizedViewConstrained"
         android:id="@+id/corner_name"
-        android:layout_marginStart="@dimen/element_margin"
+        android:layout_marginStart="@dimen/near_space"
         app:layout_constraintTop_toBottomOf="@id/foods"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/available_at"
@@ -52,9 +53,20 @@
 
     <TextView
         style="@style/FitSizedView"
-        android:id="@+id/calorie"
-        android:layout_marginEnd="@dimen/separator_margin"
+        android:id="@+id/separator"
+        android:layout_marginEnd="@dimen/close_space"
         app:layout_constraintEnd_toStartOf="@id/price"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/foods"
+        android:textSize="@dimen/textSecondary"
+        android:textColor="?android:attr/textColorSecondary"
+        android:text="@string/middle_dot" />
+
+    <TextView
+        style="@style/FitSizedView"
+        android:id="@+id/calorie"
+        android:layout_marginEnd="@dimen/close_space"
+        app:layout_constraintEnd_toStartOf="@id/separator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/foods"
         android:textSize="@dimen/textSecondary"

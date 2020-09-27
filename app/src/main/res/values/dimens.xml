@@ -69,21 +69,21 @@
     <dimen name="barcodeWidth">200dp</dimen>
     <dimen name="barcodeHeight">120dp</dimen>
 
-
-
     <!-- Cafeteria section item -->
-    <dimen name="cafeteria_vertical_margin">16dp</dimen>
-    <dimen name="cafeteria_horizontal_margin">24dp</dimen>
+    <dimen name="cafeteria_vertical_space">16dp</dimen>
+    <dimen name="cafeteria_horizontal_space">22dp</dimen>
 
     <!-- Cafeteria section & menu page item -->
-    <dimen name="cafeteria_menu_page_horizontal_padding">18dp</dimen>
-    <dimen name="menu_page_horizontal_margin">6dp</dimen>
+    <dimen name="cafeteria_menu_page_horizontal_space">16dp</dimen>
+    <dimen name="cafeteria_menu_page_vertical_space">12dp</dimen>
+    <dimen name="menu_page_horizontal_space">6dp</dimen>
 
     <!-- Menu item -->
-    <dimen name="prop_vertical_margin">8dp</dimen>
-    <dimen name="element_margin">8dp</dimen>
-    <dimen name="separator_margin">16dp</dimen>
-    <dimen name="left_margin_until_text">58dp</dimen>
+    <dimen name="menu_outer_space">10dp</dimen>
+    <dimen name="close_space">4dp</dimen>
+    <dimen name="near_space">8dp</dimen>
+    <dimen name="far_space">16dp</dimen>
+    <dimen name="left_margin_until_text">58dp</dimen> <!-- available_time_view_size + 8 -->
 
     <!-- AvailableTimeView -->
     <dimen name="available_time_view_size">50dp</dimen>
