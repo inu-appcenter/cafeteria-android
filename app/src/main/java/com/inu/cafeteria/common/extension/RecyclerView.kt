@@ -25,13 +25,13 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.inu.cafeteria.common.widget.EndExclusiveDividerItemDecoration
 
-fun RecyclerView.setLeftInsetDivider(@DrawableRes dividerDrawableRes: Int, @DimenRes leftInsetRes: Int) {
+fun RecyclerView.setLeftInsetDivider(@DrawableRes dividerDrawableRes: Int, @DimenRes leftInsetRes: Int, divideUntil: Int = -1) {
     val divider = ContextCompat.getDrawable(context, dividerDrawableRes)
     val inset = resources.getDimensionPixelSize(leftInsetRes)
     val insetDivider = InsetDrawable(divider, inset, 0, 0, 0)
-    val itemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+    val itemDecoration = EndExclusiveDividerItemDecoration(insetDivider, divideUntil)
 
-    itemDecoration.setDrawable(insetDivider)
     addItemDecoration(itemDecoration)
 }

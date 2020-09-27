@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/FullSizedView"
-    android:id="@+id/menu_recycler"
     android:layout_marginStart="@dimen/menu_page_horizontal_margin"
     android:layout_marginEnd="@dimen/menu_page_horizontal_margin"
-    android:nestedScrollingEnabled="false"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    tools:listitem="@layout/menu" />
+    app:cardElevation="6dp"
+    app:cardCornerRadius="12dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        style="@style/FullSizedView"
+        android:id="@+id/menu_recycler"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/menu" />
+
+</androidx.cardview.widget.CardView>

@@ -73,6 +73,8 @@
                 android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}"
                 cafeteria="@{vm.cafeteria}"
                 isLoading="@{vm.loading}"
+                android:paddingBottom="16dp"
+                android:clipToPadding="false"
                 tools:listitem="@layout/cafeteria" />
 
         </androidx.core.widget.NestedScrollView>

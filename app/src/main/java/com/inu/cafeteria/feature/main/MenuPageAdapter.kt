@@ -53,7 +53,7 @@ class MenuPageAdapter(
 
                 setRecycledViewPool(menuPool)
 
-                setLeftInsetDivider(R.drawable.line_divider, R.dimen.left_margin_until_text)
+                setLeftInsetDivider(R.drawable.line_divider, R.dimen.left_margin_until_text, pageSize - 1)
             }
         }
 
@@ -63,6 +63,6 @@ class MenuPageAdapter(
     }
 
     companion object {
-        private const val DEFAULT_PAGE_SIZE: Int = 3
+        private const val DEFAULT_PAGE_SIZE: Int = 2
     }
 }

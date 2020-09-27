@@ -24,7 +24,6 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.common.extension.getViewModel
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
 import kotlinx.android.synthetic.main.discount_fragment.view.*
 
