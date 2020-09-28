@@ -24,7 +24,7 @@
     <data>
         <variable
             name="vm"
-            type="com.inu.cafeteria.feature.cafeteria.CafeteriaDetailViewModel" />
+            type="com.inu.cafeteria.feature.main.CafeteriaViewModel" />
     </data>
     
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +54,7 @@
             android:clipToPadding="false"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            menus="@{vm.menus}"
+            menus="@{vm.selected.wholeMenus}"
             tools:listitem="@layout/menu_page" />
 
         <!-- Empty view -->

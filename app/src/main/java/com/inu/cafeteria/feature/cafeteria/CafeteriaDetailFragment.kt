@@ -19,20 +19,20 @@
 
 package com.inu.cafeteria.feature.cafeteria
 
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.CafeteriaDetailFragmentBinding
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
+import com.inu.cafeteria.extension.withNonNull
+import com.inu.cafeteria.feature.main.CafeteriaViewModel
 import com.inu.cafeteria.feature.main.MenuAdapter
 import com.inu.cafeteria.feature.main.MenuPageAdapter
 import com.inu.cafeteria.feature.main.MenuView
@@ -44,22 +44,7 @@ import timber.log.Timber
 
 class CafeteriaDetailFragment : BaseFragment() {
 
-    private val viewModel: CafeteriaDetailViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        handleArguments()
-    }
-
-    private fun handleArguments() {
-        val cafeteriaId = arguments?.getInt("cafeteriaId", -1)?.takeIf { it != -1 }
-        val date = arguments?.getString("date")
-
-        viewModel.load(cafeteriaId ?: return, date ?: return) {
-            supportActionBar?.title = it
-        }
-    }
+    private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
 
     override fun onCreateView(viewCreator: ViewCreator) =
         viewCreator<CafeteriaDetailFragmentBinding> {
@@ -69,6 +54,10 @@ class CafeteriaDetailFragment : BaseFragment() {
 
     private fun initializeView(view: View) {
         setSupportActionBar(view.toolbar_cafeteria_detail, showTitle = true, showUpButton = true)
+
+        withNonNull(supportActionBar) {
+            title = viewModel.selected.value?.name
+        }
 
         with(view.menu_page_recycler) {
             adapter = MenuPageAdapter(pageSize = 0 /* no paging */).apply {

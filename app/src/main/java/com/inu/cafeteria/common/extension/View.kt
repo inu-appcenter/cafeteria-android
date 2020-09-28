@@ -102,6 +102,12 @@ fun <T: View> T?.withinAlphaAnimation(from: Float, to: Float, delay: Long = 0, a
     }
 }
 
+fun View.slideInWithFade(directionVector: Int) {
+    alpha = 0f
+    x += -30f * directionVector
+    animate().alpha(1f).x(0f)
+}
+
 fun View.removeFromParent() {
     (parent as? ViewGroup)?.removeView(this)
 }

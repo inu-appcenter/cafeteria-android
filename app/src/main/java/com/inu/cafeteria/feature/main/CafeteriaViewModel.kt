@@ -37,6 +37,9 @@ import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
 import java.util.*
 
+/**
+ * Shared through cafeteria navigation graph.
+ */
 class CafeteriaViewModel : BaseViewModel() {
 
     private val getCafeteria: GetCafeteria by inject()
@@ -47,12 +50,21 @@ class CafeteriaViewModel : BaseViewModel() {
     private val _cafeteria = MutableLiveData<List<CafeteriaView>>()
     val cafeteria: LiveData<List<CafeteriaView>> = _cafeteria
 
+    private val _selected = MutableLiveData<CafeteriaView>()
+    val selected: LiveData<CafeteriaView> = _selected
+
     private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
 
     private val cafeteriaCache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
 
-    val moreClickEvent = SingleLiveEvent<CafeteriaView>()
+    val moreClickEvent = SingleLiveEvent<Unit>()
+
+    val animateEvent = SingleLiveEvent<Int>()
+
+    private val _dateTabPosition = MutableLiveData<Int>()
+    val dateTabPosition: LiveData<Int> = _dateTabPosition
+
 
     fun preFetch(howMany: Int) {
         (0 until howMany).map(::daysAfter).forEach { date ->
@@ -65,7 +77,32 @@ class CafeteriaViewModel : BaseViewModel() {
     }
 
     fun onSelectDateTab(tabPosition: Int) {
+        dispatchAnimateEvent(tabPosition)
+
+        setCurrentSelectedTab(tabPosition)
+
         fetch(daysAfter(tabPosition))
+    }
+
+    fun reselectCurrentDateTab() {
+        onSelectDateTab(_dateTabPosition.value ?: 0)
+    }
+
+    private fun dispatchAnimateEvent(tabPosition: Int) {
+        val currentDateTabPosition = _dateTabPosition.value ?: 0
+
+        // -1: left, 1: right.
+        val animationDirection = when {
+            tabPosition > currentDateTabPosition -> -1
+            tabPosition < currentDateTabPosition -> +1
+            else -> 0
+        }
+
+        animateEvent.postValue(animationDirection)
+    }
+
+    private fun setCurrentSelectedTab(tabPosition: Int) {
+        _dateTabPosition.value = tabPosition
     }
 
     private fun daysAfter(days: Int): String = Date().afterDays(days).format()
@@ -143,7 +180,7 @@ class CafeteriaViewModel : BaseViewModel() {
             )
         }
 
-        this._cafeteria.value = result
+        _cafeteria.value = result
 
         finishLoading(slowly = result.isNotEmpty())
     }
@@ -155,6 +192,8 @@ class CafeteriaViewModel : BaseViewModel() {
     }
 
     fun onViewMore(cafeteriaView: CafeteriaView) {
-        moreClickEvent.postValue(cafeteriaView)
+        _selected.value = cafeteriaView
+
+        moreClickEvent.call()
     }
 }

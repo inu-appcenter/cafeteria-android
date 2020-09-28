@@ -37,6 +37,7 @@ import com.inu.cafeteria.extension.withNonNull
 import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
 import kotlinx.android.synthetic.main.empty_view.view.*
+import timber.log.Timber
 import java.util.*
 
 class CafeteriaFragment : BaseFragment() {
@@ -66,15 +67,21 @@ class CafeteriaFragment : BaseFragment() {
             }
 
             pagingManager.animationTarget = this
+
+            observe(viewModel.animateEvent) {
+                slideInWithFade(it ?: 0)
+            }
         }
 
         with(view.date_selector) {
+            getTabAt(viewModel.dateTabPosition.value ?: 0)?.select()
+
             onTabSelect {
                 it?.let {
                     viewModel.onSelectDateTab(it.position)
-                    pagingManager.onNewTabSelected(it.position)
                 }
             }
+
         }
 
         with(view.logo_image) {
@@ -85,11 +92,11 @@ class CafeteriaFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.apply {
+        with(viewModel) {
             preFetch(5)
 
             observe(moreClickEvent) {
-                it?.let(::showCafeteriaDetails)
+                showCafeteriaDetails()
             }
         }
     }
@@ -98,21 +105,17 @@ class CafeteriaFragment : BaseFragment() {
         super.onStart()
 
         view?.cafeteria_recycler?.withinAlphaAnimation(0f, 1f) {
-            viewModel.onSelectDateTab(pagingManager.getCurrentlySelectedTabPosition())
+            viewModel.reselectCurrentDateTab()
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
         viewModel.onClickOptionMenu(item.itemId)
 
-    private fun showCafeteriaDetails(cafeteria: CafeteriaView) {
-        val bundle = bundleOf(
-            "cafeteriaId" to cafeteria.id,
-            "date" to Date().afterDays(pagingManager.getCurrentlySelectedTabPosition()).format()
-        )
-
-        findNavController().navigate(R.id.action_cafeteria_detail, bundle)
+    private fun showCafeteriaDetails() {
+        findNavController().navigate(R.id.action_cafeteria_detail)
     }
+
 
     /**
      * Do an animation like that of page swapping.
@@ -120,11 +123,9 @@ class CafeteriaFragment : BaseFragment() {
      */
     class PagingManager {
 
-        private var currentSelectedTabPosition = 0
+        var currentSelectedTabPosition = 0
 
         var animationTarget: View? = null
-
-        fun getCurrentlySelectedTabPosition() = currentSelectedTabPosition
 
         fun onNewTabSelected(newlySelectedTabPosition: Int) {
             withNonNull(animationTarget) {
