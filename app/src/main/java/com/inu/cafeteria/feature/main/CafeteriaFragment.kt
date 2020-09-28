@@ -23,43 +23,29 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
-import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
 import com.inu.cafeteria.extension.afterDays
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.extension.withNonNull
 import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
 import kotlinx.android.synthetic.main.empty_view.view.*
-import timber.log.Timber
 import java.util.*
 
 class CafeteriaFragment : BaseFragment() {
 
     override val optionMenuId: Int? = R.menu.cafeteria_menu
 
-    private val viewModel: CafeteriaViewModel by viewModels()
+    private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
     private val pagingManager = PagingManager()
     private var persistentView: View? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel.apply {
-            preFetch(5)
-
-            observe(moreClickEvent) {
-                it?.let(::showCafeteriaDetails)
-            }
-        }
-    }
 
     override fun onCreateView(viewCreator: ViewCreator) =
         persistentView?.apply { removeFromParent() } ?:
@@ -70,7 +56,7 @@ class CafeteriaFragment : BaseFragment() {
         }
 
     private fun initializeView(view: View) {
-        setSupportActionBar(view.toolbar_home)
+        setSupportActionBar(view.toolbar_cafeteria)
 
         with(view.cafeteria_recycler) {
             adapter = CafeteriaAdapter().apply {
@@ -93,6 +79,18 @@ class CafeteriaFragment : BaseFragment() {
 
         with(view.logo_image) {
             withinAlphaAnimation(0f, 1f)
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.apply {
+            preFetch(5)
+
+            observe(moreClickEvent) {
+                it?.let(::showCafeteriaDetails)
+            }
         }
     }
 

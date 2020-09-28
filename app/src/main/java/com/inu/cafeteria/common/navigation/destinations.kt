@@ -21,4 +21,4 @@ package com.inu.cafeteria.common.navigation
 
 import com.inu.cafeteria.R
 
-val rootDestinations = intArrayOf(R.id.home_dest, R.id.discount_dest)
+val rootDestinations = intArrayOf(R.id.cafeteria_list_dest, R.id.discount_dest)

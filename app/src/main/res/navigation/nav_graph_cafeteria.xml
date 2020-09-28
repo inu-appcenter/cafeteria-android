@@ -22,11 +22,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph_home"
-    app:startDestination="@id/home_dest">
+    android:id="@+id/nav_graph_cafeteria"
+    app:startDestination="@id/cafeteria_list_dest">
 
     <fragment
-        android:id="@+id/home_dest"
+        android:id="@+id/cafeteria_list_dest"
         android:name="com.inu.cafeteria.feature.main.CafeteriaFragment"
         tools:layout="@layout/cafeteria_fragment">
 

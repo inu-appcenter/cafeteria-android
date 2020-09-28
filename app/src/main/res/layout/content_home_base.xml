@@ -26,7 +26,7 @@
 
     <!-- Content -->
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_home"
+        android:id="@+id/nav_host_cafeteria"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph_home"
+        app:navGraph="@navigation/nav_graph_cafeteria"
         android:name="androidx.navigation.fragment.NavHostFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

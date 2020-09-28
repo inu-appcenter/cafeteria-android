@@ -41,7 +41,7 @@
 
                 <androidx.appcompat.widget.Toolbar
                     style="@style/CustomToolbar"
-                    android:id="@+id/toolbar_home"
+                    android:id="@+id/toolbar_cafeteria"
                     app:layout_scrollFlags="scroll|enterAlways">
 
                     <!-- Logo in the toolbar -->
@@ -84,7 +84,7 @@
             layout="@layout/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar_home"
+            android:layout_below="@id/toolbar_cafeteria"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <!-- Loading view -->
