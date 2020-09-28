@@ -45,6 +45,8 @@ class CafeteriaViewModel : BaseViewModel() {
     private val getCafeteria: GetCafeteria by inject()
     private val getCafeteriaOrder: GetCafeteriaOrder by inject()
 
+    private val cafeteriaCache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
+
     private val navigator: Navigator by inject()
 
     private val _cafeteria = MutableLiveData<List<CafeteriaView>>()
@@ -56,17 +58,18 @@ class CafeteriaViewModel : BaseViewModel() {
     private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
 
-    private val cafeteriaCache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
+    var currentDateTabPosition: Int = 0
+        private set
 
     val moreClickEvent = SingleLiveEvent<Unit>()
-
     val animateEvent = SingleLiveEvent<Int>()
 
-    private val _dateTabPosition = MutableLiveData<Int>()
-    val dateTabPosition: LiveData<Int> = _dateTabPosition
+    init {
+        preFetch(5)
+        reselectCurrentDateTab()
+    }
 
-
-    fun preFetch(howMany: Int) {
+    private fun preFetch(howMany: Int) {
         (0 until howMany).map(::daysAfter).forEach { date ->
             getCafeteria(date) { result ->
                 result
@@ -79,18 +82,16 @@ class CafeteriaViewModel : BaseViewModel() {
     fun onSelectDateTab(tabPosition: Int) {
         dispatchAnimateEvent(tabPosition)
 
-        setCurrentSelectedTab(tabPosition)
+        currentDateTabPosition = tabPosition
 
         fetch(daysAfter(tabPosition))
     }
 
     fun reselectCurrentDateTab() {
-        onSelectDateTab(_dateTabPosition.value ?: 0)
+        onSelectDateTab(currentDateTabPosition)
     }
 
     private fun dispatchAnimateEvent(tabPosition: Int) {
-        val currentDateTabPosition = _dateTabPosition.value ?: 0
-
         // -1: left, 1: right.
         val animationDirection = when {
             tabPosition > currentDateTabPosition -> -1
@@ -99,10 +100,6 @@ class CafeteriaViewModel : BaseViewModel() {
         }
 
         animateEvent.postValue(animationDirection)
-    }
-
-    private fun setCurrentSelectedTab(tabPosition: Int) {
-        _dateTabPosition.value = tabPosition
     }
 
     private fun daysAfter(days: Int): String = Date().afterDays(days).format()

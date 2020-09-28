@@ -19,14 +19,17 @@
 
 package com.inu.cafeteria.feature.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.databinding.BindingAdapter
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
@@ -37,6 +40,7 @@ import com.inu.cafeteria.extension.withNonNull
 import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
 import kotlinx.android.synthetic.main.empty_view.view.*
+import org.koin.core.inject
 import timber.log.Timber
 import java.util.*
 
@@ -45,7 +49,8 @@ class CafeteriaFragment : BaseFragment() {
     override val optionMenuId: Int? = R.menu.cafeteria_menu
 
     private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
-    private val pagingManager = PagingManager()
+    private val eventHub: EventHub by inject()
+
     private var persistentView: View? = null
 
     override fun onCreateView(viewCreator: ViewCreator) =
@@ -65,45 +70,39 @@ class CafeteriaFragment : BaseFragment() {
                 emptyView = view.empty_view
                 loadingView = view.loading_view
             }
-
-            pagingManager.animationTarget = this
-
-            observe(viewModel.animateEvent) {
-                slideInWithFade(it ?: 0)
-            }
         }
 
         with(view.date_selector) {
-            getTabAt(viewModel.dateTabPosition.value ?: 0)?.select()
+            // Restoring tab position.
+            getTabAt(viewModel.currentDateTabPosition)?.select()
 
             onTabSelect {
-                it?.let {
-                    viewModel.onSelectDateTab(it.position)
-                }
+                viewModel.onSelectDateTab(it.position)
             }
-
         }
 
         with(view.logo_image) {
             withinAlphaAnimation(0f, 1f)
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         with(viewModel) {
-            preFetch(5)
-
             observe(moreClickEvent) {
                 showCafeteriaDetails()
+            }
+
+            observe(animateEvent) {
+                view.cafeteria_recycler.slideInWithFade(it ?: 0)
+            }
+        }
+
+        with(eventHub) {
+            observe(reorderEvent) {
+                reloadCurrentTab()
             }
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
+    private fun reloadCurrentTab() {
         view?.cafeteria_recycler?.withinAlphaAnimation(0f, 1f) {
             viewModel.reselectCurrentDateTab()
         }
@@ -114,39 +113,6 @@ class CafeteriaFragment : BaseFragment() {
 
     private fun showCafeteriaDetails() {
         findNavController().navigate(R.id.action_cafeteria_detail)
-    }
-
-
-    /**
-     * Do an animation like that of page swapping.
-     * This executes an in-place animation with a single view.
-     */
-    class PagingManager {
-
-        var currentSelectedTabPosition = 0
-
-        var animationTarget: View? = null
-
-        fun onNewTabSelected(newlySelectedTabPosition: Int) {
-            withNonNull(animationTarget) {
-                alpha = 0f
-                x += -30f * getWhichDirectionToSwipe(newlySelectedTabPosition)
-                animate().alpha(1f).x(0f)
-            }
-
-            currentSelectedTabPosition = newlySelectedTabPosition
-        }
-
-        private fun getWhichDirectionToSwipe(newlySelectedTabPosition: Int): Int {
-            val theAnswer = when {
-                newlySelectedTabPosition > currentSelectedTabPosition -> -1
-                newlySelectedTabPosition < currentSelectedTabPosition -> +1
-                else -> 0
-            }
-
-            // -1: left, 1: right.
-            return theAnswer
-        }
     }
 
     companion object {

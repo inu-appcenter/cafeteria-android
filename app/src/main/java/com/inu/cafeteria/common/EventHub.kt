@@ -17,16 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.common
 
-import com.inu.cafeteria.entities.Cafeteria
+import com.inu.cafeteria.util.SingleLiveEvent
 
-interface CafeteriaRepository {
+class EventHub {
 
-    fun getAllCafeteria(date: String? = null): List<Cafeteria>
-    fun getCafeteriaOnly(): List<Cafeteria>
-
-    fun getOrder(): Array<Int>
-    fun setOrder(orderedIds: Array<Int>)
-    fun resetOrder()
+    val reorderEvent = SingleLiveEvent<Unit>()
 }

@@ -19,6 +19,8 @@
 
 package com.inu.cafeteria.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.Corner
@@ -37,9 +39,8 @@ import java.util.*
 class CafeteriaRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
     private val db: SharedPreferenceWrapper
-) : CafeteriaRepository() {
+) : CafeteriaRepository {
 
-    // These have app-wide lifecycle. Fetch runs only for once.
     private val cafeteriaCache = Cache<List<CafeteriaResult>>()
     private val cornerCache = Cache<List<CornerResult>>()
     private val menuCaches = PairedCache<String, List<MenuResult>>()
@@ -88,71 +89,33 @@ class CafeteriaRepositoryImpl(
         return (if (cache.isValid(key)) cache.get(key) else null) ?: fetch()?.also { cache.set(key, it) }
     }
 
+
+    private val order = MutableLiveData<Array<Int>>()
+
     override fun getOrder(): Array<Int> {
+        return getOrderInternal()
+    }
+
+    private fun getOrderInternal(): Array<Int> {
         val result = db.getArrayInt(ORDER_KEY)
 
         if (result == null) {
             // The first attempt to get order.
             resetOrder()
-            return getOrder()
+            return getOrderInternal()
         }
 
         return result
     }
 
     override fun setOrder(orderedIds: Array<Int>) {
+        order.postValue(orderedIds)
+
         db.putArrayInt(ORDER_KEY, orderedIds)
     }
 
     override fun resetOrder() {
-        db.putArrayInt(ORDER_KEY, getCafeteriaOnly().map { it.id }.toTypedArray())
-    }
-
-    class ResultGatherer(
-        private val cafeteriaResult: List<CafeteriaResult>,
-        private val cornerResults: List<CornerResult>,
-        private val menuResults: List<MenuResult>
-    ) {
-
-        fun combine(): List<Cafeteria> {
-            return cafeteriaResult.map {
-                Cafeteria(
-                    id = it.id,
-                    name = it.name,
-                    displayName = it.displayName,
-                    supportMenu = it.supportMenu,
-                    supportDiscount = it.supportDiscount,
-                    supportNotification = it.supportNotification,
-                    corners = cornersOfCafeteria(it.id)
-                )
-            }
-        }
-
-        private fun cornersOfCafeteria(cafeteriaId: Int): List<Corner> {
-            return cornerResults
-                .filter { it.cafeteriaId == cafeteriaId }
-                .map {
-                    Corner(
-                        id = it.id,
-                        name = it.name,
-                        displayName = it.displayName,
-                        availableAt = it.availableAt,
-                        menus = menusOfCorner(it.id)
-                    )
-                }
-        }
-
-        private fun menusOfCorner(cornerId: Int): List<Menu> {
-            return menuResults
-                .filter { it.cornerId == cornerId }
-                .map {
-                    Menu(
-                        foods = it.foods.split(' '),
-                        price = it.price,
-                        calorie = it.calorie
-                    )
-                }
-        }
+        setOrder(getCafeteriaOnly().map { it.id }.toTypedArray())
     }
 
     companion object {

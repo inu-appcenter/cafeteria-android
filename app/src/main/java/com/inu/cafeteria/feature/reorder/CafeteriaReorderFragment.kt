@@ -25,23 +25,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.inu.cafeteria.R
+import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
+import com.inu.cafeteria.feature.main.CafeteriaViewModel
 import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
 import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.loading_view
+import org.koin.core.inject
 
 class CafeteriaReorderFragment : BaseFragment() {
 
     private val viewModel: CafeteriaReorderViewModel by viewModels()
+    private val eventHub: EventHub by inject()
 
     private val adapterWrapper =
         ReorderableAdapterWrapper(
             adapterFactory = { CafeteriaReorderAdapter(onDragStart = it::startDrag) },
-            onItemChange = { viewModel.onChangeOrder(it.data.toOrderArray()) }
+            onItemChange = {
+                viewModel.onChangeOrder(it.data.toOrderArray())
+                eventHub.reorderEvent.call()
+            }
         )
 
     override fun onCreateView(viewCreator: ViewCreator) =
@@ -51,6 +62,8 @@ class CafeteriaReorderFragment : BaseFragment() {
         }
 
     private fun initializeView(view: View) {
+        setSupportActionBar(view.toolbar_reorder, showTitle = true, showUpButton = true)
+
         with(view.cafeteria_sort_recycler) {
             adapterWrapper.setWithRecyclerView(this)
 
@@ -59,8 +72,6 @@ class CafeteriaReorderFragment : BaseFragment() {
                 loadingView = view.loading_view
             }
         }
-
-        setSupportActionBar(view.toolbar_reorder, showTitle = true, showUpButton = true)
     }
 
     override fun onResume() {

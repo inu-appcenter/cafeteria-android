@@ -64,6 +64,7 @@
         <!-- Content -->
         <androidx.core.widget.NestedScrollView
             style="@style/FullSizedView"
+            android:id="@+id/cafeteria_recycler_holder"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.inu.cafeteria.common.widget.ShyRecyclerView

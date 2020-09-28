@@ -20,27 +20,19 @@
 package com.inu.cafeteria.feature.cafeteria
 
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.viewModels
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.CafeteriaDetailFragmentBinding
-import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.feature.main.CafeteriaViewModel
-import com.inu.cafeteria.feature.main.MenuAdapter
 import com.inu.cafeteria.feature.main.MenuPageAdapter
 import com.inu.cafeteria.feature.main.MenuView
 import kotlinx.android.synthetic.main.cafeteria_detail_fragment.view.*
-import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
 import kotlinx.android.synthetic.main.empty_cafeteria_view.view.*
-import kotlinx.android.synthetic.main.empty_view.view.*
-import timber.log.Timber
 
 class CafeteriaDetailFragment : BaseFragment() {
 

@@ -21,11 +21,12 @@ package com.inu.cafeteria.common.extension
 
 import com.google.android.material.tabs.TabLayout
 
-fun TabLayout.onTabSelect(action: (TabLayout.Tab?) -> Any?) {
+fun TabLayout.onTabSelect(action: (TabLayout.Tab) -> Any?) {
     clearOnTabSelectedListeners()
+
     addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
-            action(tab)
+            tab?.let { action(it) }
         }
 
         override fun onTabReselected(tab: TabLayout.Tab?) {}

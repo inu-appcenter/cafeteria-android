@@ -19,6 +19,7 @@
 
 package com.inu.cafeteria.injection
 
+import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.repository.*
@@ -45,6 +46,10 @@ val myModules = module {
         RetrofitFactory.createCafeteriaNetworkService(
             context = get()
         )
+    }
+
+    single {
+        EventHub()
     }
 
 
