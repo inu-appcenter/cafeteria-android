@@ -59,7 +59,6 @@ class CafeteriaFragment : BaseFragment() {
         setSupportActionBar(view.toolbar_cafeteria)
 
         with(view.cafeteria_recycler) {
-
             adapter = this@CafeteriaFragment.adapter.apply {
                 onClickMore = viewModel::onViewMore
                 emptyView = view.empty_view
