@@ -39,6 +39,9 @@ abstract class PositionRetainingAdapter<T> : BaseAdapter<T, PositionRetainingVie
 
     var positions = SparseIntArray()
 
+    /**
+     * This must be called when an inner RecyclerView is scrolled.
+     */
     fun saveViewHolderPosition(holder: PositionRetainingViewHolder) {
         val position = holder.adapterPosition
         val firstVisiblePosition = holder.layoutManager?.findFirstVisibleItemPosition() ?: -1
@@ -46,7 +49,7 @@ abstract class PositionRetainingAdapter<T> : BaseAdapter<T, PositionRetainingVie
         positions.put(position, firstVisiblePosition)
     }
 
-    fun restoreViewHolderPosition(holder: PositionRetainingViewHolder) {
+    private fun restoreViewHolderPosition(holder: PositionRetainingViewHolder) {
         positions.get(holder.adapterPosition, 0).takeIf { it >= 0 }?.let {
             holder.layoutManager?.scrollToPositionWithOffset(it, 0)
         }
