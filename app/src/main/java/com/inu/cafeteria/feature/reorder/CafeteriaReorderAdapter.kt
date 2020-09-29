@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
+import com.inu.cafeteria.common.base.DefaultAdapter
 import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
 import com.inu.cafeteria.common.widget.ItemTouchHelperViewHolder
 import kotlinx.android.synthetic.main.cafeteria.view.cafeteria_name
@@ -36,7 +37,7 @@ import java.util.*
 
 class CafeteriaReorderAdapter(
     private val onDragStart: (RecyclerView.ViewHolder) -> Any?
-) : BaseAdapter<CafeteriaReorderView>(),
+) : DefaultAdapter<CafeteriaReorderView>(),
     ItemTouchHelperAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

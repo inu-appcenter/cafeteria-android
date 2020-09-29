@@ -26,6 +26,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.widget.EndExclusiveDividerItemDecoration
+import timber.log.Timber
 
 fun RecyclerView.setLeftInsetDivider(@DrawableRes dividerDrawableRes: Int, @DimenRes leftInsetRes: Int, divideUntil: Int = -1) {
     val divider = ContextCompat.getDrawable(context, dividerDrawableRes)
@@ -34,4 +35,16 @@ fun RecyclerView.setLeftInsetDivider(@DrawableRes dividerDrawableRes: Int, @Dime
     val itemDecoration = EndExclusiveDividerItemDecoration(insetDivider, divideUntil)
 
     addItemDecoration(itemDecoration)
+}
+
+fun RecyclerView.onScrollStateChange(action: (state: Int) -> Any?) {
+    clearOnScrollListeners()
+
+    addOnScrollListener(object: RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+
+            action(newState)
+        }
+    })
 }

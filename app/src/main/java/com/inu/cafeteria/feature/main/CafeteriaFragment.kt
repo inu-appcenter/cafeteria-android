@@ -19,30 +19,22 @@
 
 package com.inu.cafeteria.feature.main
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import androidx.core.os.bundleOf
+import android.view.MenuItem
+import android.view.View
 import androidx.databinding.BindingAdapter
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.EventHub
-import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
-import com.inu.cafeteria.extension.afterDays
-import com.inu.cafeteria.extension.format
-import com.inu.cafeteria.extension.withNonNull
 import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
 import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
 import kotlinx.android.synthetic.main.empty_view.view.*
 import org.koin.core.inject
-import timber.log.Timber
-import java.util.*
 
 class CafeteriaFragment : BaseFragment() {
 
@@ -50,6 +42,8 @@ class CafeteriaFragment : BaseFragment() {
 
     private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
     private val eventHub: EventHub by inject()
+
+    private val adapter = CafeteriaAdapter()
 
     private var persistentView: View? = null
 
@@ -65,10 +59,13 @@ class CafeteriaFragment : BaseFragment() {
         setSupportActionBar(view.toolbar_cafeteria)
 
         with(view.cafeteria_recycler) {
-            adapter = CafeteriaAdapter().apply {
+
+            adapter = this@CafeteriaFragment.adapter.apply {
                 onClickMore = viewModel::onViewMore
                 emptyView = view.empty_view
                 loadingView = view.loading_view
+
+                positions = viewModel.menuPagePositions
             }
         }
 
@@ -115,6 +112,12 @@ class CafeteriaFragment : BaseFragment() {
         findNavController().navigate(R.id.action_cafeteria_detail)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        viewModel.onSaveMenuPagePositions(adapter.positions)
+
+        super.onSaveInstanceState(outState)
+    }
+
     companion object {
 
         @JvmStatic
@@ -128,7 +131,7 @@ class CafeteriaFragment : BaseFragment() {
         @JvmStatic
         @BindingAdapter("isLoading")
         fun setLoading(view: RecyclerView, isLoading: Boolean?) {
-            (view.adapter as? BaseAdapter<*>)?.isLoading = isLoading ?: true
+            (view.adapter as? CafeteriaAdapter)?.isLoading = isLoading ?: true
         }
     }
 }

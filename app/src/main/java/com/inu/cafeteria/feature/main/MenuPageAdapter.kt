@@ -3,8 +3,8 @@ package com.inu.cafeteria.feature.main
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
+import com.inu.cafeteria.common.base.DefaultAdapter
 import com.inu.cafeteria.common.extension.setLeftInsetDivider
 import kotlinx.android.synthetic.main.menu_page.view.*
 import timber.log.Timber
@@ -15,7 +15,7 @@ import kotlin.math.min
 class MenuPageAdapter(
     private val menuPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool(),
     private val pageSize: Int = DEFAULT_PAGE_SIZE
-) : BaseAdapter<MenuView>() {
+) : DefaultAdapter<MenuView>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return MenuPageViewHolder(parent)

@@ -29,7 +29,7 @@ import timber.log.Timber
 /**
  * This adapter handles loading/empty view visibility.
  */
-abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), KoinComponent {
+abstract class BaseAdapter<T, VH: BaseViewHolder> : RecyclerView.Adapter<VH>(), KoinComponent {
 
     /**
      * loadingView will be shown when it is not null and isLoading is true.

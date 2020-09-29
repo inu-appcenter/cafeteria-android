@@ -2,12 +2,12 @@ package com.inu.cafeteria.feature.main
 
 import android.view.ViewGroup
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
+import com.inu.cafeteria.common.base.DefaultAdapter
 import kotlinx.android.synthetic.main.menu.view.*
 import timber.log.Timber
 
-class MenuAdapter : BaseAdapter<MenuView>() {
+class MenuAdapter : DefaultAdapter<MenuView>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         Timber.d("Inflate Menu view holder!")

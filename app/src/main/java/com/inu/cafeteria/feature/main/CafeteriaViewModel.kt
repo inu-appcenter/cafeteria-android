@@ -21,6 +21,7 @@ package com.inu.cafeteria.feature.main
 
 import android.os.Handler
 import android.os.Looper
+import android.util.SparseIntArray
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -61,6 +62,9 @@ class CafeteriaViewModel : BaseViewModel() {
     var currentDateTabPosition: Int = 0
         private set
 
+    var menuPagePositions = SparseIntArray()
+        private set
+
     val moreClickEvent = SingleLiveEvent<Unit>()
     val animateEvent = SingleLiveEvent<Int>()
 
@@ -89,6 +93,10 @@ class CafeteriaViewModel : BaseViewModel() {
 
     fun reselectCurrentDateTab() {
         onSelectDateTab(currentDateTabPosition)
+    }
+
+    fun onSaveMenuPagePositions(positions: SparseIntArray) {
+        menuPagePositions = positions
     }
 
     private fun dispatchAnimateEvent(tabPosition: Int) {
