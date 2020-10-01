@@ -101,5 +101,8 @@
     <string name="desc_handle">This is an handle.</string>
     <string name="desc_help">Help!</string>
     <string name="middle_dot" translatable="false">·</string>
+    <string name="title_uicoop">UICOOP</string>
+    <string name="title_student_id">STUDENT ID</string>
+    <string name="title_available_at">AVAILABLE AT</string>
 
 </resources>

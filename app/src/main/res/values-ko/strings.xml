@@ -94,5 +94,8 @@
     <string name="unit_krw">%,d원</string>
     <string name="desc_handle">핸들입니다.</string>
     <string name="desc_help">살려줘!</string>
+    <string name="title_uicoop">소비자생활협동조합</string>
+    <string name="title_student_id">학번</string>
+    <string name="title_available_at">이용 가능 식당</string>
 
 </resources>

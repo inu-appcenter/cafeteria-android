@@ -19,6 +19,7 @@
 
 <resources>
 
+    <dimen name="textBig">24sp</dimen>
     <dimen name="textToolbar">20sp</dimen>
     <dimen name="textTitle">18sp</dimen>
     <dimen name="textPrimary">16sp</dimen>
@@ -66,7 +67,7 @@
 
     <dimen name="barcodeCardViewHorizontalMargin">24dp</dimen>
 
-    <dimen name="barcodeWidth">200dp</dimen>
+    <dimen name="barcodeWidth">220dp</dimen>
     <dimen name="barcodeHeight">120dp</dimen>
 
     <!-- Cafeteria section item -->

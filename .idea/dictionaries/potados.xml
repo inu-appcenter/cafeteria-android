@@ -2,8 +2,10 @@
   <dictionary name="potados">
     <words>
       <w>dests</w>
+      <w>inversed</w>
       <w>reorderable</w>
       <w>squircle</w>
+      <w>uicoop</w>
     </words>
   </dictionary>
 </component>
