@@ -20,27 +20,64 @@
 package com.inu.cafeteria.feature.discount
 
 import android.graphics.Bitmap
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.entities.Account
+import com.inu.cafeteria.model.NoAccountException
+import com.inu.cafeteria.service.AccountService
+import com.inu.cafeteria.usecase.ActivateBarcode
 import com.inu.cafeteria.usecase.CreateBarcode
+import com.inu.cafeteria.usecase.GetSavedAccount
+import com.inu.cafeteria.usecase.RememberedLogin
 import org.koin.core.inject
 
 class DiscountViewModel : BaseViewModel() {
 
     private val createBarcode: CreateBarcode by inject()
+    private val rememberedLogin: RememberedLogin by inject()
+    private val activateBarcode: ActivateBarcode by inject()
+    private val getSavedAccount: GetSavedAccount by inject()
+
+    private val accountService: AccountService by inject()
 
     private val _barcodeBitmap = MutableLiveData<Bitmap>()
     val barcodeBitmap: LiveData<Bitmap> = _barcodeBitmap
 
     fun load() {
-        createBarcode(Triple("12345678", 600, 300)) {
-            it.onSuccess(::handleBarcode).onError(::handleFailure)
+        if (accountService.isLoggedIn()) {
+            showBarcode()
+        } else {
+            rememberedLogin(Unit) {
+                it.onSuccess { showBarcode() }.onError(::handleLoginFailure)
+            }
         }
     }
 
-    private fun handleBarcode(image: Bitmap) {
+    private fun showBarcode() {
+        getSavedAccount(Unit) {
+            it.onSuccess(::showBarcodeForAccount).onError(::handleFailure)
+        }
+    }
+
+    private fun showBarcodeForAccount(account: Account) {
+        createBarcode(Triple(account.barcode, 600, 300)) {
+            it.onSuccess(::handleBarcodeImage).onError(::handleFailure)
+        }
+
+        activateBarcode(Unit) {
+            it.onError(::handleFailure)
+        }
+    }
+
+    private fun handleBarcodeImage(image: Bitmap) {
         _barcodeBitmap.value = image
+    }
+
+    private fun handleLoginFailure(exception: Exception) {
+        when (exception) {
+            is NoAccountException -> {}
+            else -> handleFailure(exception)
+        }
     }
 }

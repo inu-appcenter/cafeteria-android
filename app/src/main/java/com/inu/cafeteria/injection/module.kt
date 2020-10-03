@@ -23,6 +23,7 @@ import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.repository.*
+import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.*
 import org.koin.dsl.module
 
@@ -52,6 +53,22 @@ val myModules = module {
         EventHub()
     }
 
+    /** DB */
+    single {
+        SharedPreferenceWrapper(get())
+    }
+
+
+    /*****************************
+     * Service
+     *****************************/
+
+    single {
+        AccountService(
+            accountRepo = get()
+        )
+    }
+
 
     /*****************************
      * Repository
@@ -62,31 +79,17 @@ val myModules = module {
     single {
         CafeteriaRepositoryImpl(
             networkService = get(),
-            db = SharedPreferenceWrapper(get())
+            db = get()
         ) as CafeteriaRepository
     }
 
-    /** Login Repository */
+    /** Account Repository */
 
     single {
-        LoginRepositoryImpl(
-            networkService = get()
-        ) as LoginRepository
-    }
-
-    /** Private Repository */
-
-    single {
-        PrivateRepositoryImpl() as PrivateRepository
-    }
-
-    /** Student Info Repository */
-
-    single {
-        StudentInfoRepositoryImpl(
-            context = get(),
-            networkService = get()
-        ) as StudentInfoRepository
+        AccountRepositoryImpl(
+            networkService = get(),
+            db = get()
+        ) as AccountRepository
     }
 
     /** Version Repository */
@@ -116,7 +119,7 @@ val myModules = module {
 
     single {
         ActivateBarcode(
-            studentInfoRepo = get()
+            accountService = get()
         )
     }
 
@@ -186,15 +189,7 @@ val myModules = module {
 
     single {
         Login(
-            loginRepo = get()
-        )
-    }
-
-    /** Logout */
-
-    single {
-        Logout(
-            loginRepo = get()
+            accountService = get()
         )
     }
 }

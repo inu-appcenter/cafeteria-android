@@ -19,17 +19,29 @@
 
 package com.inu.cafeteria.feature.discount
 
+import android.graphics.Bitmap
+import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
 import kotlinx.android.synthetic.main.discount_fragment.view.*
 
 class DiscountFragment : BaseFragment() {
 
     private val viewModel: DiscountViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.load()
+    }
 
     override fun onCreateView(viewCreator: ViewCreator): View? =
         viewCreator<DiscountFragmentBinding> {
@@ -42,6 +54,17 @@ class DiscountFragment : BaseFragment() {
             startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake).apply {
                 duration = 200
             })
+        }
+    }
+
+    companion object {
+
+        @BindingAdapter("barcodeImage")
+        fun setBarcodeImage(view: ImageView, barcodeImage: Bitmap?) {
+            with(view) {
+                setImageBitmap(barcodeImage)
+                setVisible(barcodeImage != null)
+            }
         }
     }
 }

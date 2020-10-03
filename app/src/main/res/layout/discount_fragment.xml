@@ -48,6 +48,7 @@
 
             <!-- Content Wrapper -->
             <include
+                vm="@{vm}"
                 layout="@layout/barcode_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

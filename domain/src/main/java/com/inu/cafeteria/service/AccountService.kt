@@ -20,6 +20,7 @@
 package com.inu.cafeteria.service
 
 import com.inu.cafeteria.entities.Account
+import com.inu.cafeteria.model.NoAccountException
 import com.inu.cafeteria.repository.AccountRepository
 
 class AccountService(
@@ -35,7 +36,7 @@ class AccountService(
     }
 
     fun rememberedLogin() {
-        val account = accountRepo.getSavedAccount() ?: throw Exception("No saved account.")
+        val account = accountRepo.getSavedAccount() ?: throw NoAccountException("No saved account.")
 
         val refreshedAccount = accountRepo.rememberedLogin(account.id, account.token)
 

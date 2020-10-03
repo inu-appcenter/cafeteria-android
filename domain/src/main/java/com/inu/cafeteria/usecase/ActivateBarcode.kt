@@ -21,13 +21,13 @@ package com.inu.cafeteria.usecase
 
 import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.repository.AccountRepository
+import com.inu.cafeteria.service.AccountService
 
 class ActivateBarcode(
-    private val accountRepo: AccountRepository
+    private val accountService: AccountService
 ) : UseCase<Unit, Unit>() {
 
     override fun run(params: Unit) = Result.of {
-        accountRepo.activateBarcode()
+        accountService.activateBarcode()
     }
 }

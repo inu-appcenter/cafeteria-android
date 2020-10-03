@@ -17,12 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common
+package com.inu.cafeteria.model
 
-import com.inu.cafeteria.util.SingleLiveEvent
-
-class EventHub {
-
-    val reorderEvent = SingleLiveEvent<Unit>()
-    val loginEvent = SingleLiveEvent<Unit>()
-}
+class NoAccountException(message: String) : Exception(message)
