@@ -23,7 +23,6 @@ import android.content.Context
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
-import com.inu.cafeteria.repository.PrivateRepositoryImpl
 import com.inu.cafeteria.service.CafeteriaNetworkService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

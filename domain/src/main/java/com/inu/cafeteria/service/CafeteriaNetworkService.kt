@@ -31,6 +31,10 @@ import retrofit2.http.*
  */
 
 interface CafeteriaNetworkService {
+    @GET("/notices")
+    fun getNotice(): Call<Notice>
+
+
     @GET("/cafeteria")
     fun getCafeteria(): Call<List<CafeteriaResult>>
 

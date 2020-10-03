@@ -92,15 +92,6 @@ val myModules = module {
         ) as AccountRepository
     }
 
-    /** Version Repository */
-
-    single {
-        VersionRepositoryImpl(
-            context = get(),
-            networkService = get()
-        ) as VersionRepository
-    }
-
     /** Notice Repository */
 
     single {
