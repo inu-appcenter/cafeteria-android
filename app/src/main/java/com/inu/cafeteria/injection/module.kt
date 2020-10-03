@@ -183,4 +183,20 @@ val myModules = module {
             accountService = get()
         )
     }
+
+    /** Remembered Login */
+
+    single {
+        RememberedLogin(
+            accountService = get()
+        )
+    }
+
+    /** Get Saved Account */
+
+    single {
+        GetSavedAccount(
+            accountService = get()
+        )
+    }
 }

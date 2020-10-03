@@ -59,6 +59,7 @@ class DiscountFragment : BaseFragment() {
 
     companion object {
 
+        @JvmStatic
         @BindingAdapter("barcodeImage")
         fun setBarcodeImage(view: ImageView, barcodeImage: Bitmap?) {
             with(view) {

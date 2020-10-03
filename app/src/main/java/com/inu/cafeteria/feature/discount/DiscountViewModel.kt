@@ -45,11 +45,11 @@ class DiscountViewModel : BaseViewModel() {
     val barcodeBitmap: LiveData<Bitmap> = _barcodeBitmap
 
     fun load() {
-        if (accountService.isLoggedIn()) {
-            showBarcode()
-        } else {
-            rememberedLogin(Unit) {
-                it.onSuccess { showBarcode() }.onError(::handleLoginFailure)
+        when {
+            accountService.isLoggedIn() -> showBarcode()
+            accountService.hasSavedAccount() -> loginAndShowBarcode()
+            else -> {
+                // Prompt user to login
             }
         }
     }
@@ -57,6 +57,12 @@ class DiscountViewModel : BaseViewModel() {
     private fun showBarcode() {
         getSavedAccount(Unit) {
             it.onSuccess(::showBarcodeForAccount).onError(::handleFailure)
+        }
+    }
+
+    private fun loginAndShowBarcode() {
+        rememberedLogin(Unit) {
+            it.onSuccess { showBarcode() }.onError(::handleLoginFailure)
         }
     }
 

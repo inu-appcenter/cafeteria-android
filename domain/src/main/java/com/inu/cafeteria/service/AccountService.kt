@@ -43,6 +43,8 @@ class AccountService(
         accountRepo.saveAccount(refreshedAccount)
     }
 
+    fun hasSavedAccount(): Boolean = getSavedAccount() != null
+
     fun getSavedAccount(): Account? = accountRepo.getSavedAccount()
 
     fun activateBarcode() = accountRepo.activateBarcode()

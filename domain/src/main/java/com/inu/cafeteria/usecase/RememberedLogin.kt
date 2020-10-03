@@ -28,6 +28,8 @@ class RememberedLogin(
 ) : UseCase<Unit, Unit>() {
 
     override fun run(params: Unit) = Result.of {
-        accountService.rememberedLogin()
+        if (accountService.hasSavedAccount()) {
+            accountService.rememberedLogin()
+        }
     }
 }
