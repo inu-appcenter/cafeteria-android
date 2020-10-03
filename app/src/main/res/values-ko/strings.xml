@@ -38,7 +38,7 @@
     <string name="fail_unexpected">알 수 없는 오류가 발생했습니다.</string>
     <string name="fail_wrong_auth">학번과 비밀번호를 확인해주세요.</string>
     <string name="hint_password">비밀번호</string>
-    <string name="hint_stuno">학번</string>
+    <string name="hint_id">학번</string>
     <string name="desc_app_description">인천대학교 학식당 식단 정보 앱</string>
     <string name="desc_close_drawer">서랍 닫기</string>
     <string name="button_exit">종료</string>

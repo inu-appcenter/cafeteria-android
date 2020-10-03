@@ -39,7 +39,7 @@
     <string name="title_server_error">Server Error</string>
     <string name="dialog_server_not_respond">Server is not responding. It could be due to the network. Please try again later.</string>
     <string name="button_exit">Exit</string>
-    <string name="hint_stuno">Student ID</string>
+    <string name="hint_id">Student ID</string>
     <string name="hint_password">Password</string>
     <string name="check_auto_login">Keep me logged in</string>
     <string name="button_login">Sign in</string>

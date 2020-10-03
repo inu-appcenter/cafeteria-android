@@ -22,6 +22,7 @@ package com.inu.cafeteria.feature.discount
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.model.NoAccountException
@@ -30,6 +31,7 @@ import com.inu.cafeteria.usecase.ActivateBarcode
 import com.inu.cafeteria.usecase.CreateBarcode
 import com.inu.cafeteria.usecase.GetSavedAccount
 import com.inu.cafeteria.usecase.RememberedLogin
+import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
 
 class DiscountViewModel : BaseViewModel() {
@@ -41,10 +43,17 @@ class DiscountViewModel : BaseViewModel() {
 
     private val accountService: AccountService by inject()
 
+    private val navigator: Navigator by inject()
+
     private val _barcodeBitmap = MutableLiveData<Bitmap>()
     val barcodeBitmap: LiveData<Bitmap> = _barcodeBitmap
 
+    private val _barcodeCardReady = MutableLiveData<Boolean>(false)
+    val barcodeCardReady: LiveData<Boolean> = _barcodeCardReady
+
     fun load() {
+        _barcodeCardReady.value = false
+
         when {
             accountService.isLoggedIn() -> showBarcode()
             accountService.hasSavedAccount() -> loginAndShowBarcode()
@@ -52,6 +61,10 @@ class DiscountViewModel : BaseViewModel() {
                 // Prompt user to login
             }
         }
+    }
+
+    fun onClickLogin() {
+        navigator.showLogin()
     }
 
     private fun showBarcode() {
@@ -78,6 +91,7 @@ class DiscountViewModel : BaseViewModel() {
 
     private fun handleBarcodeImage(image: Bitmap) {
         _barcodeBitmap.value = image
+        _barcodeCardReady.value = true
     }
 
     private fun handleLoginFailure(exception: Exception) {

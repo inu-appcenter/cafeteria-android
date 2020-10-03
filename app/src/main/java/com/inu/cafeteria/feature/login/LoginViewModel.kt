@@ -27,77 +27,16 @@ import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.applyOrder
-import com.inu.cafeteria.usecase.GetCafeteriaOnly
-import com.inu.cafeteria.usecase.GetCafeteriaOrder
-import com.inu.cafeteria.usecase.ResetCafeteriaOrder
-import com.inu.cafeteria.usecase.SetCafeteriaOrder
+import com.inu.cafeteria.usecase.*
 import org.koin.core.inject
 import timber.log.Timber
 
 class LoginViewModel : BaseViewModel() {
 
-    private val getCafeteriaOnly: GetCafeteriaOnly by inject()
-    private val getCafeteriaOrder: GetCafeteriaOrder by inject()
-    private val setCafeteriaOrder: SetCafeteriaOrder by inject()
-    private val resetCafeteriaOrder: ResetCafeteriaOrder by inject()
-
-    private val _cafeteria = MutableLiveData<List<CafeteriaReorderView>>()
-    val cafeteria: LiveData<List<CafeteriaReorderView>> = _cafeteria
+    private val login: Login by inject()
 
     private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
 
-    fun fetch() {
-        startLoading()
 
-        getCafeteriaOnly(Unit) {
-            it.onSuccess(::handleCafeteria).onError(::handleFailure)
-        }
-    }
-
-    fun resetOrder() {
-        resetCafeteriaOrder(Unit) {
-            fetch()
-        }
-    }
-
-    private fun startLoading() {
-        _loading.value = true
-    }
-
-    private fun finishLoading() {
-        _loading.value = false
-    }
-
-    fun onChangeOrder(orderedIds: Array<Int>) {
-        Timber.i(orderedIds.joinToString(", "))
-        setCafeteriaOrder(orderedIds)
-    }
-
-    private fun handleCafeteria(allCafeteria: List<Cafeteria>) {
-        getCafeteriaOrder(Unit) {
-            it.onSuccess{ orderedIds ->
-                handleCafeteriaOrdered(allCafeteria.applyOrder(orderedIds) { id })
-            }.onError(::handleFailure)
-        }
-    }
-
-    private fun handleCafeteriaOrdered(allCafeteriaOrdered: List<Cafeteria>) {
-        val result = allCafeteriaOrdered.map { cafeteria ->
-            CafeteriaReorderView(
-                id = cafeteria.id,
-                displayName = cafeteria.displayName ?: cafeteria.name,
-            )
-        }
-
-        this._cafeteria.value = result
-
-        finishLoading()
-    }
-
-    override fun handleFailure(e: Exception) {
-        super.handleFailure(e)
-
-        finishLoading()
-    }
 }

@@ -54,7 +54,7 @@ class LoginFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.fetch()
+
     }
 
     companion object {

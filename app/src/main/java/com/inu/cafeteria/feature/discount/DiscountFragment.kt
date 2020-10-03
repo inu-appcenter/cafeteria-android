@@ -31,6 +31,7 @@ import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
+import com.inu.cafeteria.feature.login.LoginActivity
 import kotlinx.android.synthetic.main.discount_fragment.view.*
 
 class DiscountFragment : BaseFragment() {

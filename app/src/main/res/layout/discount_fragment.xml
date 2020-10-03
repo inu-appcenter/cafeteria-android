@@ -23,6 +23,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="vm"
             type="com.inu.cafeteria.feature.discount.DiscountViewModel" />
@@ -32,19 +33,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Carrot! -->
         <ImageView
             android:id="@+id/carrot"
             android:layout_width="@dimen/available_time_view_size"
             android:layout_height="@dimen/available_time_view_size"
             android:layout_gravity="center"
             android:src="@drawable/carrot"
-            android:contentDescription="@string/desc_help" />
+            android:contentDescription="@string/desc_help"
+            android:visibility="@{vm.barcodeCardReady ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone" />
 
+        <!-- Barcode card wrapper -->
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            app:layout_behavior=".common.widget.OverScrollBounceBehavior">
+            app:layout_behavior=".common.widget.OverScrollBounceBehavior"
+            android:visibility="@{vm.barcodeCardReady ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone">
 
             <!-- Content Wrapper -->
             <include
@@ -56,6 +63,26 @@
                 android:layout_marginVertical="48dp" />
 
         </androidx.core.widget.NestedScrollView>
+
+        <!-- Login prompt view -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Login button -->
+            <Button
+                style="@style/HorizontallyFullSizedViewConstrained"
+                android:layout_margin="@dimen/far_space"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:backgroundTint="?android:attr/colorPrimary"
+                android:text="@string/button_login"
+                android:onClick="@{v -> vm.onClickLogin()}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

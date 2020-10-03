@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentActivity
 import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.widget.ThemedDialog
+import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
 import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
 import com.inu.cafeteria.feature.splash.SplashActivity
@@ -47,13 +48,11 @@ class Navigator(
         )
     }
 
-    /*
     fun showLogin() {
         startActivity(
             LoginActivity.callingIntent(context)
         )
     }
-     */
 
     fun showMain() {
         startActivity(
