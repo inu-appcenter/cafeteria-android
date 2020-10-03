@@ -19,7 +19,28 @@
 
 package com.inu.cafeteria.feature.discount
 
+import android.graphics.Bitmap
+import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.usecase.CreateBarcode
+import org.koin.core.inject
 
 class DiscountViewModel : BaseViewModel() {
+
+    private val createBarcode: CreateBarcode by inject()
+
+    private val _barcodeBitmap = MutableLiveData<Bitmap>()
+    val barcodeBitmap: LiveData<Bitmap> = _barcodeBitmap
+
+    fun load() {
+        createBarcode(Triple("12345678", 600, 300)) {
+            it.onSuccess(::handleBarcode).onError(::handleFailure)
+        }
+    }
+
+    private fun handleBarcode(image: Bitmap) {
+        _barcodeBitmap.value = image
+    }
 }

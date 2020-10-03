@@ -17,24 +17,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model.scheme
+package com.inu.cafeteria.service
 
 import com.inu.cafeteria.entities.Account
+import com.inu.cafeteria.repository.AccountRepository
 
-/**
- * Login result scheme.
- */
-
-data class LoginResult(
-    val id: Int,
-    val token: String,
-    val barcode: String
+class AccountService(
+    private val accountRepo: AccountRepository
 ) {
 
-    fun toAccount() =
-        Account(
-            id = id,
-            barcode = barcode,
-            token = token
-        )
+    fun isLoggedIn() = accountRepo.isLoggedIn()
+
+    fun login(id: Int, password: String) {
+        val account = accountRepo.firstLogin(id, password)
+
+        accountRepo.saveAccount(account)
+    }
+
+    fun rememberedLogin() {
+        val account = accountRepo.getSavedAccount() ?: throw Exception("No saved account.")
+
+        val refreshedAccount = accountRepo.rememberedLogin(account.id, account.token)
+
+        accountRepo.saveAccount(refreshedAccount)
+    }
+
+    fun getSavedAccount(): Account? = accountRepo.getSavedAccount()
+
+    fun activateBarcode() = accountRepo.activateBarcode()
 }

@@ -57,8 +57,4 @@ class CafeteriaDetailViewModel : BaseViewModel() {
             }
         }.flatten())
     }
-
-    private fun handleFailure(e: Exception) {
-        Toast.makeText(mContext, e.message, Toast.LENGTH_SHORT).show()
-    }
 }

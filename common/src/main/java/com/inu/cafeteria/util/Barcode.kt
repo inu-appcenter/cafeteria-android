@@ -48,7 +48,7 @@ class Barcode {
             }
         }
 
-        const val WIDTH = 600
-        const val HEIGHT = 360
+        private const val WIDTH = 600
+        private const val HEIGHT = 360
     }
 }

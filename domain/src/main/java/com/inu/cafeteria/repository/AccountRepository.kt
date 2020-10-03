@@ -19,32 +19,17 @@
 
 package com.inu.cafeteria.repository
 
-import com.inu.cafeteria.model.scheme.ActivateBarcodeParams
-import com.inu.cafeteria.model.scheme.ActivateBarcodeResult
+import com.inu.cafeteria.entities.Account
 
-abstract class StudentInfoRepository : Repository {
+interface AccountRepository {
 
-    /**
-     * Remove ALL student data.
-     */
+    fun isLoggedIn(): Boolean
 
-    abstract fun invalidate()
+    fun firstLogin(id: Int, password: String): Account
+    fun rememberedLogin(id: Int, token: String): Account
 
-    /**
-     * Remove one-time login data.
-     * This does nothing if token exists.
-     */
+    fun getSavedAccount(): Account?
+    fun saveAccount(account: Account)
 
-    abstract fun expire()
-
-    abstract fun getStudentId(): String?
-    abstract fun setStudentId(id: String?)
-
-    abstract fun getBarcode(): String?
-    abstract fun setBarcode(barcode: String?)
-
-    abstract fun getLoginToken(): String?
-    abstract fun setLoginToken(token: String?)
-
-    abstract fun activateBarcode(params: ActivateBarcodeParams, callback: Repository.DataCallback<ActivateBarcodeResult>)
+    fun activateBarcode()
 }

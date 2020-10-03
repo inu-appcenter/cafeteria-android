@@ -17,14 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.entities
 
-/**
- * You have to create your own implementation of this repository.
- * It is forbidden to upload the server url to VCS.
- */
-
-abstract class PrivateRepository : Repository {
-
-    abstract fun getServerBaseUrl(): String
-}
+data class Account(
+    val id: Int,
+    val barcode: String,
+    val token: String
+)

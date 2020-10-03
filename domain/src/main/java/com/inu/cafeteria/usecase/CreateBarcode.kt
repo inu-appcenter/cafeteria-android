@@ -24,13 +24,9 @@ import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
 import com.inu.cafeteria.util.Barcode
 
-/**
- * Create barcode bitmap.
- */
+class CreateBarcode : UseCase<Triple<String, Int, Int>, Bitmap>() {
 
-class CreateBarcode : UseCase<String, Bitmap>() {
-
-    override fun run(params: String) = Result.of {
-        Barcode.from(params)!!
+    override fun run(params: Triple<String, Int, Int>) = Result.of {
+        Barcode.from(params.first, params.second, params.third)!!
     }
 }

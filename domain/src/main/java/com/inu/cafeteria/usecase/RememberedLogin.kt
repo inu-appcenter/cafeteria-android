@@ -17,24 +17,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model.scheme
+package com.inu.cafeteria.usecase
 
-import com.inu.cafeteria.entities.Account
+import com.inu.cafeteria.functional.Result
+import com.inu.cafeteria.interactor.UseCase
+import com.inu.cafeteria.service.AccountService
 
-/**
- * Login result scheme.
- */
+class RememberedLogin(
+    private val accountService: AccountService
+) : UseCase<Unit, Unit>() {
 
-data class LoginResult(
-    val id: Int,
-    val token: String,
-    val barcode: String
-) {
-
-    fun toAccount() =
-        Account(
-            id = id,
-            barcode = barcode,
-            token = token
-        )
+    override fun run(params: Unit) = Result.of {
+        accountService.rememberedLogin()
+    }
 }

@@ -20,6 +20,7 @@
 package com.inu.cafeteria.common.base
 
 import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -31,4 +32,8 @@ import org.koin.core.inject
 abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     protected val mContext: Context by inject()
+
+    protected open fun handleFailure(e: Exception) {
+        Toast.makeText(mContext, e.message, Toast.LENGTH_SHORT).show()
+    }
 }

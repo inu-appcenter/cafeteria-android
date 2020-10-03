@@ -190,8 +190,8 @@ class CafeteriaViewModel : BaseViewModel() {
         finishLoading(slowly = result.isNotEmpty())
     }
 
-    private fun handleFailure(e: Exception) {
-        Toast.makeText(mContext, e.message, Toast.LENGTH_SHORT).show()
+    override fun handleFailure(e: Exception) {
+        super.handleFailure(e)
 
         finishLoading(slowly = false)
     }

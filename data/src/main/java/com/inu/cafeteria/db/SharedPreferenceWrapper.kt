@@ -43,4 +43,24 @@ class SharedPreferenceWrapper(context: Context) {
 
         return TextUtils.split(record, "‚‗‚").map { it.toInt() }.toTypedArray()
     }
+
+    fun putString(key: String, value: String) {
+        preferences.edit {
+            putString(key, value)
+        }
+    }
+
+    fun getString(key: String): String? {
+        return preferences.getString(key, null)
+    }
+
+    fun putInt(key: String, value: Int) {
+        preferences.edit {
+            putInt(key, value)
+        }
+    }
+
+    fun getInt(key: String): Int {
+        return preferences.getInt(key, -1)
+    }
 }

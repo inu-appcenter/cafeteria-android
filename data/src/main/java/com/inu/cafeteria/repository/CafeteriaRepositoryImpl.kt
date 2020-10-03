@@ -19,12 +19,9 @@
 
 package com.inu.cafeteria.repository
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Cafeteria
-import com.inu.cafeteria.entities.Corner
-import com.inu.cafeteria.entities.Menu
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.extension.getOrNull
 import com.inu.cafeteria.model.scheme.CafeteriaResult
@@ -33,7 +30,6 @@ import com.inu.cafeteria.model.scheme.MenuResult
 import com.inu.cafeteria.service.CafeteriaNetworkService
 import com.inu.cafeteria.util.Cache
 import com.inu.cafeteria.util.PairedCache
-import timber.log.Timber
 import java.util.*
 
 class CafeteriaRepositoryImpl(
@@ -97,7 +93,7 @@ class CafeteriaRepositoryImpl(
     }
 
     private fun getOrderInternal(): Array<Int> {
-        val result = db.getArrayInt(ORDER_KEY)
+        val result = db.getArrayInt(KEY_ORDER)
 
         if (result == null) {
             // The first attempt to get order.
@@ -111,7 +107,7 @@ class CafeteriaRepositoryImpl(
     override fun setOrder(orderedIds: Array<Int>) {
         order.postValue(orderedIds)
 
-        db.putArrayInt(ORDER_KEY, orderedIds)
+        db.putArrayInt(KEY_ORDER, orderedIds)
     }
 
     override fun resetOrder() {
@@ -119,6 +115,6 @@ class CafeteriaRepositoryImpl(
     }
 
     companion object {
-        private const val ORDER_KEY = "cafeteria_sort_order"
+        private const val KEY_ORDER = "cafeteria_sort_order"
     }
 }
