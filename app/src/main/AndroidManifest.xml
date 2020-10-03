@@ -48,7 +48,9 @@
         <activity
             android:name=".feature.reorder.CafeteriaReorderActivity"
             android:label="@string/title_reorder" />
-
+        <activity
+            android:name=".feature.login.LoginActivity"
+            android:label="@string/title_login" />
     </application>
 
 </manifest>

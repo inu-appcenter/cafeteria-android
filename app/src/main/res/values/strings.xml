@@ -93,6 +93,7 @@
     <string name="item_today4">Today+3</string>
     <string name="item_today5">Today+4</string>
     <string name="title_reorder">Reorder</string>
+    <string name="title_login">Sign in</string>
     <string name="action_reset">Reset</string>
     <string name="no_information">No information</string>
     <string name="no_information_on_this_cafeteria">No information available for this cafeteria.</string>
