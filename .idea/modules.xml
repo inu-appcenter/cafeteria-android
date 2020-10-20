@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="cafeteria/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cafeteria.iml" filepath="$PROJECT_DIR$/.idea/modules/cafeteria.iml" group="cafeteria" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/common.iml" group="cafeteria/common" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/data.iml" group="cafeteria/data" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/domain.iml" group="cafeteria/domain" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cafeteria.iml" filepath="$PROJECT_DIR$/.idea/modules/cafeteria.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/cafeteria.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/cafeteria.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/cafeteria.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/cafeteria.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/cafeteria.data.iml" filepath="$PROJECT_DIR$/.idea/modules/data/cafeteria.data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/cafeteria.domain.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/cafeteria.domain.iml" />
     </modules>
   </component>
 </project>

@@ -2,7 +2,10 @@
   <dictionary name="potados">
     <words>
       <w>dests</w>
+      <w>gson</w>
       <w>inversed</w>
+      <w>jsoup</w>
+      <w>koin</w>
       <w>reorderable</w>
       <w>squircle</w>
       <w>uicoop</w>
