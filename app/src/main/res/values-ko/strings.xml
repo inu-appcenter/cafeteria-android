@@ -100,5 +100,6 @@
     <string name="title_login">로그인</string>
     <string name="login_prompt_subtitle">재학생을 위한 할인 혜택을 제공합니다. 로그인하시고 이용해 보세요</string>
     <string name="login_prompt_title">학생 할인 멤버십</string>
+    <string name="error_check_login_form">학번과 비밀번호를 확인해 주세요.</string>
 
 </resources>

@@ -25,6 +25,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.extension.finishActivity
+import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
@@ -49,15 +51,10 @@ class LoginFragment : BaseFragment() {
     private fun initializeView(view: View) {
         setSupportActionBar(view.toolbar_login, showTitle = true, showUpButton = true)
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-
-    }
-
-    companion object {
-
+        with(eventHub) {
+            observe(loginEvent) {
+                finishActivity()
+            }
+        }
     }
 }

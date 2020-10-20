@@ -17,28 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common.base
+package com.inu.cafeteria.common.extension
 
-import android.content.Context
-import android.widget.Toast
-import androidx.annotation.StringRes
-import androidx.lifecycle.ViewModel
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import androidx.databinding.Observable
+import androidx.databinding.ObservableField
 
-/**
- * Base View Model that can handle failure inside it.
- */
-
-abstract class BaseViewModel : ViewModel(), KoinComponent {
-
-    protected val mContext: Context by inject()
-
-    protected open fun handleFailure(e: Exception) {
-        Toast.makeText(mContext, e.message, Toast.LENGTH_SHORT).show()
-    }
-
-    protected open fun handleFailure(@StringRes message: Int, vararg args: Any?) {
-        Toast.makeText(mContext, mContext.getString(message, *args), Toast.LENGTH_SHORT).show()
-    }
+fun ObservableField<*>.onChanged(action: () -> Unit) {
+    addOnPropertyChangedCallback(object: Observable.OnPropertyChangedCallback() {
+        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+            action()
+        }
+    })
 }

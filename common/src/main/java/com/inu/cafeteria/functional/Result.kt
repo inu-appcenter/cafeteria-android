@@ -46,6 +46,12 @@ sealed class Result<out T> {
         return this
     }
 
+    fun finally(body: () -> Unit): Result<T> {
+        body()
+
+        return this
+    }
+
     fun <R> either(onSuccess: (T) -> R, onError: (Exception) -> R): R =
         when (this) {
             is Success -> onSuccess(data)

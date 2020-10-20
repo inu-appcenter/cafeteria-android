@@ -49,6 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_login"
+            android:text="@={vm.userInputId}"
             android:inputType="number"
             android:hint="@string/hint_id"
             android:autofillHints="@string/hint_id" />
@@ -60,6 +61,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/id_field"
+            android:text="@={vm.userInputPassword}"
             android:inputType="textPassword"
             android:hint="@string/hint_password"
             android:autofillHints="@string/hint_password" />
@@ -72,7 +74,10 @@
             app:layout_constraintTop_toBottomOf="@id/password_field"
             android:textColor="?android:attr/textColorPrimaryInverse"
             android:backgroundTint="?android:attr/colorPrimary"
-            android:text="@string/button_login" />
+            android:text="@string/button_login"
+            android:enabled="@{vm.formValid}"
+            android:onClick="@{v -> vm.performLogin()}"
+            tools:enabled="false"/>
 
         <!-- Loading view -->
         <ProgressBar

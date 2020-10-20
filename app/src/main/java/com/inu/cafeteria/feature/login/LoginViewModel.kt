@@ -22,9 +22,14 @@ package com.inu.cafeteria.feature.login
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import androidx.databinding.Observable
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.inu.cafeteria.R
+import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.common.extension.onChanged
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.usecase.*
@@ -34,9 +39,64 @@ import timber.log.Timber
 class LoginViewModel : BaseViewModel() {
 
     private val login: Login by inject()
+    private val eventHub: EventHub by inject()
 
-    private val _loading = MutableLiveData(true)
+    private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
+    private val _formValid = MutableLiveData(false)
+    val formValid: LiveData<Boolean> = _formValid
 
+    val userInputId = ObservableField<String>().apply {
+        onChanged {
+            _formValid.value = isItOkayToSendLoginRequestNow()
+        }
+    }
+
+    val userInputPassword = ObservableField<String>().apply {
+        onChanged {
+            _formValid.value = isItOkayToSendLoginRequestNow()
+        }
+    }
+
+    fun performLogin() {
+        if (!isItOkayToSendLoginRequestNow()) {
+            handleFailure(R.string.error_check_login_form)
+            return
+        }
+
+        val id = userInputId.get()!!.toInt()
+        val password = userInputPassword.get()!!
+
+        _loading.value = true
+
+        login(Pair(id, password)) {
+            it
+                .onSuccess { handleLoginResult() }
+                .onError(::handleFailure)
+                .finally { _loading.value = false }
+        }
+    }
+
+    private fun isItOkayToSendLoginRequestNow(): Boolean {
+        val id = userInputId.get() ?: return false
+        if (id.isBlank()) {
+            return false
+        }
+        if (id.toIntOrNull() == null) {
+            return false
+        }
+
+        val password = userInputPassword.get() ?: return false
+        if (password.isBlank()) {
+            return false
+        }
+
+        return true
+    }
+
+    private fun handleLoginResult() {
+        // If reached here, login is succeeded.
+        eventHub.loginEvent.call()
+    }
 }

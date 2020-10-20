@@ -107,5 +107,6 @@
     <string name="title_available_at">AVAILABLE AT</string>
     <string name="login_prompt_title">Student Discount</string>
     <string name="login_prompt_subtitle">You can get a discount. Sign in to proceed.</string>
+    <string name="error_check_login_form">Please check your id and password.</string>
 
 </resources>
