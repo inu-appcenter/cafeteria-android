@@ -67,15 +67,47 @@
         <!-- Login prompt view -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="@{vm.barcodeCardReady ? View.GONE : View.VISIBLE}"
+            tools:visibility="visible">
+
+            <!-- Prompt title -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/far_space"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/subtitle"
+                android:text="@string/login_prompt_title"
+                android:textSize="@dimen/textBig"
+                android:textColor="@color/textPrimary"
+                android:textStyle="bold"/>
+
+            <!-- Prompt subtitle -->
+            <TextView
+                android:id="@+id/subtitle"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/far_space"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/login_button"
+                android:text="@string/login_prompt_subtitle"
+                android:textSize="@dimen/textPrimary"
+                android:textColor="@color/textSecondary"/>
 
             <!-- Login button -->
             <Button
                 style="@style/HorizontallyFullSizedViewConstrained"
-                android:layout_margin="@dimen/far_space"
+                android:id="@+id/login_button"
+                android:layout_margin="@dimen/near_space"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textColor="?android:attr/textColorPrimaryInverse"
                 android:backgroundTint="?android:attr/colorPrimary"

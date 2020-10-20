@@ -105,5 +105,7 @@
     <string name="title_uicoop">UICOOP</string>
     <string name="title_student_id">STUDENT ID</string>
     <string name="title_available_at">AVAILABLE AT</string>
+    <string name="login_prompt_title">Student Discount</string>
+    <string name="login_prompt_subtitle">You can get a discount. Sign in to proceed.</string>
 
 </resources>
