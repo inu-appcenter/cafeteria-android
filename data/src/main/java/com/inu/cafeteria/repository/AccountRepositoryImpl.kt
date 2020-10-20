@@ -41,6 +41,7 @@ class AccountRepositoryImpl(
             .getLoginResult(LoginParams.ofFirstLogin(id, password))
             .getOrNull()
             ?.toAccount()
+            ?.also { loggedIn = true }
             ?: throw Exception("Login failed.")
 
     override fun rememberedLogin(id: Int, token: String) =
@@ -48,6 +49,7 @@ class AccountRepositoryImpl(
             .getLoginResult(LoginParams.ofRememberedLogin(id, token))
             .getOrNull()
             ?.toAccount()
+            ?.also { loggedIn = true }
             ?: throw Exception("Login failed.")
 
     override fun getSavedAccount(): Account? {

@@ -33,6 +33,7 @@ import com.inu.cafeteria.common.extension.onChanged
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.usecase.*
+import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
 import timber.log.Timber
 
@@ -46,6 +47,8 @@ class LoginViewModel : BaseViewModel() {
 
     private val _formValid = MutableLiveData(false)
     val formValid: LiveData<Boolean> = _formValid
+
+    val loginSuccessEvent = SingleLiveEvent<Unit>()
 
     val userInputId = ObservableField<String>().apply {
         onChanged {
@@ -96,7 +99,11 @@ class LoginViewModel : BaseViewModel() {
     }
 
     private fun handleLoginResult() {
-        // If reached here, login is succeeded.
-        eventHub.loginEvent.call()
+        eventHub.loginEvent.call() // For global event listener: DiscountFragment.
+        loginSuccessEvent.call() // For the owner fragment: LoginFragment.
+    }
+
+    override fun handleFailure(e: Exception) {
+        handleFailure(R.string.error_login_fail)
     }
 }

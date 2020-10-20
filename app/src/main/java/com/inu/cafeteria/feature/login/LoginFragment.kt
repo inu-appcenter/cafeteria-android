@@ -40,7 +40,6 @@ import org.koin.core.inject
 class LoginFragment : BaseFragment() {
 
     private val viewModel: LoginViewModel by viewModels()
-    private val eventHub: EventHub by inject()
 
     override fun onCreateView(viewCreator: ViewCreator) =
         viewCreator<LoginFragmentBinding> {
@@ -51,8 +50,8 @@ class LoginFragment : BaseFragment() {
     private fun initializeView(view: View) {
         setSupportActionBar(view.toolbar_login, showTitle = true, showUpButton = true)
 
-        with(eventHub) {
-            observe(loginEvent) {
+        with(viewModel) {
+            observe(loginSuccessEvent) {
                 finishActivity()
             }
         }

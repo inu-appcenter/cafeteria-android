@@ -33,6 +33,7 @@ import com.inu.cafeteria.usecase.GetSavedAccount
 import com.inu.cafeteria.usecase.RememberedLogin
 import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
+import timber.log.Timber
 
 class DiscountViewModel : BaseViewModel() {
 
@@ -52,13 +53,22 @@ class DiscountViewModel : BaseViewModel() {
     val barcodeCardReady: LiveData<Boolean> = _barcodeCardReady
 
     fun load() {
+        Timber.d("Loading discount view model(again)!")
+
         _barcodeCardReady.value = false
 
         when {
-            accountService.isLoggedIn() -> showBarcode()
-            accountService.hasSavedAccount() -> loginAndShowBarcode()
+            accountService.isLoggedIn() -> {
+                Timber.d("User is logged in! Just show the barcode.")
+                showBarcode()
+            }
+            accountService.hasSavedAccount() -> {
+                Timber.d("User is not logged in but has saved account! Remembered login available.")
+                loginAndShowBarcode()
+            }
             else -> {
                 // Prompt user to login
+                Timber.d("Login is needed! Prompt user to do it.")
             }
         }
     }

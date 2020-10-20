@@ -108,5 +108,6 @@
     <string name="login_prompt_title">Student Discount</string>
     <string name="login_prompt_subtitle">You can get a discount. Sign in to proceed.</string>
     <string name="error_check_login_form">Please check your id and password.</string>
+    <string name="error_login_fail">Please check your id and password. Or try again later.</string>
 
 </resources>

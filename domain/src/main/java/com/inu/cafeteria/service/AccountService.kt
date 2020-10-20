@@ -22,6 +22,7 @@ package com.inu.cafeteria.service
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.model.NoAccountException
 import com.inu.cafeteria.repository.AccountRepository
+import timber.log.Timber
 
 class AccountService(
     private val accountRepo: AccountRepository
@@ -30,15 +31,21 @@ class AccountService(
     fun isLoggedIn() = accountRepo.isLoggedIn()
 
     fun login(id: Int, password: String) {
+        Timber.d("Try login with id=\"$id\" and password=\"$password\".")
+
         val account = accountRepo.firstLogin(id, password)
 
         accountRepo.saveAccount(account)
     }
 
     fun rememberedLogin() {
+        Timber.d("Try login with saved account.")
+
         val account = accountRepo.getSavedAccount() ?: throw NoAccountException("No saved account.")
+        Timber.d("The saved account: $account")
 
         val refreshedAccount = accountRepo.rememberedLogin(account.id, account.token)
+        Timber.d("The saved account with new token, after successful login: $refreshedAccount")
 
         accountRepo.saveAccount(refreshedAccount)
     }

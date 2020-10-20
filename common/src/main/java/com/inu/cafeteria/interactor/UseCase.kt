@@ -36,8 +36,10 @@ abstract class UseCase<in Params, out Type> {
 
     operator fun invoke(params: Params, onResult: (Result<Type>) -> Unit = {}) {
 
+        val className = this::class.java.name
+
         val job = CoroutineScope(Dispatchers.IO).async {
-            Timber.v("UseCase ${this::class.java.name} running on ${Thread.currentThread().name}")
+            Timber.v("UseCase $className running on ${Thread.currentThread().name}")
             run(params)
         }
 

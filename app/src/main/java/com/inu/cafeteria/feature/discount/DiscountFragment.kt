@@ -27,16 +27,19 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
 import com.inu.cafeteria.feature.login.LoginActivity
 import kotlinx.android.synthetic.main.discount_fragment.view.*
+import org.koin.android.ext.android.inject
 
 class DiscountFragment : BaseFragment() {
 
     private val viewModel: DiscountViewModel by viewModels()
+    private val eventHub: EventHub by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +58,12 @@ class DiscountFragment : BaseFragment() {
             startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake).apply {
                 duration = 200
             })
+        }
+
+        with(eventHub) {
+            observe(loginEvent) {
+                viewModel.load()
+            }
         }
     }
 
