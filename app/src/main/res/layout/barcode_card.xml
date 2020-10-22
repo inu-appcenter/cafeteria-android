@@ -94,7 +94,8 @@
                     android:layout_height="wrap_content"
                     android:scaleType="fitCenter"
                     android:src="@drawable/logo_new_inversed"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/desc_logo" />
 
             </FrameLayout>
 
@@ -122,47 +123,33 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/student_id_label"
+                android:text="@{vm.studentId}"
                 android:fontFamily="sans-serif-light"
-                android:text="201701562"
                 android:textColor="@color/textPrimary"
-                android:textSize="@dimen/textToolbar" />
-
-            <!-- Available at label -->
-            <TextView
-                android:id="@+id/available_cafeteria_label"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginHorizontal="16dp"
-                app:layout_constraintTop_toBottomOf="@id/student_id"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/title_available_at"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/textTertiary"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/textToolbar"
+                tools:text="201701562" />
 
             <!-- Available at -->
             <TextView
                 android:id="@+id/available_cafeteria"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                app:layout_constraintTop_toBottomOf="@id/available_cafeteria_label"
+                android:layout_marginHorizontal="@dimen/far_space"
+                android:layout_marginTop="@dimen/far_space"
+                app:layout_constraintTop_toBottomOf="@id/student_id"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:fontFamily="sans-serif-light"
-                android:text="제1기숙사 식당, 사범대 식당, 학생식당"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/textToolbar" />
+                android:text="@string/discount_notice"
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/textSecondary" />
 
             <!-- Barcode layout -->
             <FrameLayout
                 android:id="@+id/barcode_layout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginHorizontal="48dp"
-                android:layout_marginVertical="36dp"
+                android:layout_margin="48dp"
                 app:layout_constraintDimensionRatio="@string/barcode_ratio"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -184,6 +171,21 @@
                     barcodeImage="@{vm.barcodeBitmap}" />
 
             </FrameLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/close_space"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barcode_layout"
+                android:text="@{vm.barcodeContent}"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/textPrimary"
+                android:fontFamily="courier"
+                android:textStyle="bold"
+                tools:text="121020937" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

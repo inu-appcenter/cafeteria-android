@@ -55,6 +55,12 @@ class DiscountViewModel : BaseViewModel() {
     private val _onceLoggedIn = MutableLiveData(false)
     val onceLoggedIn: LiveData<Boolean> = _onceLoggedIn
 
+    private val _studentId = MutableLiveData<String>(null)
+    val studentId: LiveData<String> = _studentId
+
+    private val _barcodeContent = MutableLiveData<String>(null)
+    val barcodeContent: LiveData<String> = _barcodeContent
+
     fun load() {
         Timber.d("Loading discount view model(maybe again)!")
 
@@ -107,6 +113,9 @@ class DiscountViewModel : BaseViewModel() {
         activateBarcode(Unit) {
             it.onError(::handleFailure)
         }
+
+        _studentId.value = account.id.toString()
+        _barcodeContent.value = account.barcode
     }
 
     private fun handleBarcodeImage(image: Bitmap) {
