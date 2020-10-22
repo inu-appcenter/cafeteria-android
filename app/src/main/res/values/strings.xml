@@ -109,5 +109,6 @@
     <string name="login_prompt_subtitle">You can get a discount. Sign in to proceed.</string>
     <string name="error_check_login_form">Please check your id and password.</string>
     <string name="error_login_fail">Please check your id and password. Or try again later.</string>
+    <string name="barcode_ratio" translatable="false">2.5</string>
 
 </resources>

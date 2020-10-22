@@ -18,7 +18,8 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -53,7 +54,7 @@
             android:visibility="@{vm.barcodeCardReady ? View.VISIBLE : View.GONE}"
             tools:visibility="gone">
 
-            <!-- Content Wrapper -->
+            <!-- Barcode card -->
             <include
                 vm="@{vm}"
                 layout="@layout/barcode_card"
@@ -65,56 +66,15 @@
         </androidx.core.widget.NestedScrollView>
 
         <!-- Login prompt view -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{vm.barcodeCardReady ? View.GONE : View.VISIBLE}"
-            tools:visibility="visible">
+        <include
+            vm="@{vm}"
+            layout="@layout/login_prompt_view" />
 
-            <!-- Prompt title -->
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginBottom="@dimen/far_space"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/subtitle"
-                android:text="@string/login_prompt_title"
-                android:textSize="@dimen/textBig"
-                android:textColor="@color/textPrimary"
-                android:textStyle="bold"/>
-
-            <!-- Prompt subtitle -->
-            <TextView
-                android:id="@+id/subtitle"
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/far_space"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/login_button"
-                android:text="@string/login_prompt_subtitle"
-                android:textSize="@dimen/textPrimary"
-                android:textColor="@color/textSecondary"/>
-
-            <!-- Login button -->
-            <Button
-                style="@style/HorizontallyFullSizedViewConstrained"
-                android:id="@+id/login_button"
-                android:layout_margin="@dimen/near_space"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:backgroundTint="?android:attr/colorPrimary"
-                android:text="@string/button_login"
-                android:onClick="@{v -> vm.onClickLogin()}"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Loading view -->
+        <ProgressBar
+            style="@style/NonFunctionalProgressBar"
+            android:id="@+id/loading_view"
+            android:visibility="@{(vm.onceLoggedIn &amp;&amp; !vm.barcodeCardReady) ? View.VISIBLE : View.GONE}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

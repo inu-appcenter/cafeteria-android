@@ -31,16 +31,16 @@ class Barcode {
 
             return tryOrNull {
                 val byteMap = MultiFormatWriter().encode(data, BarcodeFormat.CODE_128,
-                    WIDTH,
-                    HEIGHT
+                    width,
+                    height
                 )
                 val bitmap = Bitmap.createBitmap(
-                    WIDTH,
-                    HEIGHT, Bitmap.Config.ARGB_8888)
+                    width,
+                    height, Bitmap.Config.ARGB_8888)
 
-                for (i in 0 until WIDTH)
+                for (i in 0 until width)
 
-                    for (j in 0 until HEIGHT) {
+                    for (j in 0 until height) {
                         bitmap.setPixel(i, j, if (byteMap.get(i, j)) Color.BLACK else Color.WHITE)
                     }
 

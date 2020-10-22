@@ -22,6 +22,7 @@ package com.inu.cafeteria.feature.discount
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Account
@@ -31,7 +32,6 @@ import com.inu.cafeteria.usecase.ActivateBarcode
 import com.inu.cafeteria.usecase.CreateBarcode
 import com.inu.cafeteria.usecase.GetSavedAccount
 import com.inu.cafeteria.usecase.RememberedLogin
-import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
 import timber.log.Timber
 
@@ -49,21 +49,27 @@ class DiscountViewModel : BaseViewModel() {
     private val _barcodeBitmap = MutableLiveData<Bitmap>()
     val barcodeBitmap: LiveData<Bitmap> = _barcodeBitmap
 
-    private val _barcodeCardReady = MutableLiveData<Boolean>(false)
+    private val _barcodeCardReady = MutableLiveData(false)
     val barcodeCardReady: LiveData<Boolean> = _barcodeCardReady
 
+    private val _onceLoggedIn = MutableLiveData(false)
+    val onceLoggedIn: LiveData<Boolean> = _onceLoggedIn
+
     fun load() {
-        Timber.d("Loading discount view model(again)!")
+        Timber.d("Loading discount view model(maybe again)!")
 
         _barcodeCardReady.value = false
+        _onceLoggedIn.value = accountService.isLoggedIn() || accountService.hasSavedAccount()
 
         when {
             accountService.isLoggedIn() -> {
                 Timber.d("User is logged in! Just show the barcode.")
+
                 showBarcode()
             }
             accountService.hasSavedAccount() -> {
                 Timber.d("User is not logged in but has saved account! Remembered login available.")
+
                 loginAndShowBarcode()
             }
             else -> {
@@ -90,7 +96,11 @@ class DiscountViewModel : BaseViewModel() {
     }
 
     private fun showBarcodeForAccount(account: Account) {
-        createBarcode(Triple(account.barcode, 600, 300)) {
+        val barcodeRatio = mContext.getString(R.string.barcode_ratio).toFloat()
+        val barcodeWidth = mContext.resources.getDimensionPixelSize(R.dimen.barcode_width)
+        val barcodeHeight = (barcodeWidth / barcodeRatio).toInt()
+
+        createBarcode(Triple(account.barcode, barcodeWidth, barcodeHeight)) {
             it.onSuccess(::handleBarcodeImage).onError(::handleFailure)
         }
 

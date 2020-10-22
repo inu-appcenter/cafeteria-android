@@ -67,9 +67,6 @@
 
     <dimen name="barcodeCardViewHorizontalMargin">24dp</dimen>
 
-    <dimen name="barcodeWidth">220dp</dimen>
-    <dimen name="barcodeHeight">120dp</dimen>
-
     <!-- Cafeteria section item -->
     <dimen name="cafeteria_vertical_space">16dp</dimen>
     <dimen name="cafeteria_horizontal_space">22dp</dimen>
@@ -104,4 +101,6 @@
     <dimen name="option_menu_overflow_item_width">40dp</dimen>
     <dimen name="option_menu_item_width">48dp</dimen>
 
+    <!-- Barcode width -->
+    <dimen name="barcode_width">200dp</dimen>
 </resources>
