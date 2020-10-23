@@ -1,10 +1,20 @@
 <!--
-  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
-  ~
   ~ This file is part of INU Cafeteria.
   ~
-  ~ This work is licensed under the terms of the MIT license.
-  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
 <resources>
@@ -29,7 +39,7 @@
     <string name="title_server_error">Server Error</string>
     <string name="dialog_server_not_respond">Server is not responding. It could be due to the network. Please try again later.</string>
     <string name="button_exit">Exit</string>
-    <string name="hint_stuno">Student ID</string>
+    <string name="hint_id">Student ID</string>
     <string name="hint_password">Password</string>
     <string name="check_auto_login">Keep me logged in</string>
     <string name="button_login">Sign in</string>
@@ -70,5 +80,36 @@
     <string name="menu_login">Sign in</string>
     <string name="button_confirm">Confirm</string>
     <string name="desc_dont_show_again">Don\'t show again</string>
+    <string name="desc_more_button">More button</string>
+    <string name="desc_single_squircle">An icon consisting of one image.</string>
+    <string name="desc_double_squircle">An icon consisting of two images.</string>
+    <string name="desc_triple_squircle">An icon consisting of three images.</string>
+    <string name="notify_press_again_to_exit">Press again to exit app.</string>
+    <string name="title_menus">Menus</string>
+    <string name="title_discount">Discount</string>
+    <string name="item_today">Today</string>
+    <string name="item_today2">Tomorrow</string>
+    <string name="item_today3">Today+2</string>
+    <string name="item_today4">Today+3</string>
+    <string name="item_today5">Today+4</string>
+    <string name="title_reorder">Reorder</string>
+    <string name="title_login">Sign in</string>
+    <string name="action_reset">Reset</string>
+    <string name="no_information">No information</string>
+    <string name="no_information_on_this_cafeteria">No information available for this cafeteria.</string>
+    <string name="unit_krw">%,dKRW</string>
+    <string name="unit_cal" translatable="false">%,dkcal</string>
+    <string name="desc_handle">This is an handle.</string>
+    <string name="desc_help">Help!</string>
+    <string name="middle_dot" translatable="false">·</string>
+    <string name="title_uicoop">UICOOP</string>
+    <string name="title_student_id">STUDENT ID</string>
+    <string name="title_available_at">AVAILABLE AT</string>
+    <string name="login_prompt_title">Student Discount</string>
+    <string name="login_prompt_subtitle">You can get a discount. Sign in to proceed.</string>
+    <string name="error_check_login_form">Please check your id and password.</string>
+    <string name="error_login_fail">Please check your id and password. Or try again later.</string>
+    <string name="barcode_ratio" translatable="false">2.5</string>
+    <string name="discount_notice">제1 기숙사 식당, 사범대 식당, 학생식당에서 사용하실 수 있습니다. 할인 제공 여부와 시점은 식당 사정에 따라 달라질 수 있습니다.</string>
 
 </resources>

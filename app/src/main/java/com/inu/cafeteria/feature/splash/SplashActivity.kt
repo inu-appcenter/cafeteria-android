@@ -1,23 +1,45 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.feature.splash
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.SingleFragmentActivity
+import org.koin.android.ext.android.inject
+import org.koin.core.inject
 
-class SplashActivity : SingleFragmentActivity() {
-    override val fragment: Fragment = SplashFragment()
+class SplashActivity : AppCompatActivity() {
 
-    companion object {
-        fun callingIntent(context: Context) = Intent(context, SplashActivity::class.java)
+    private val navigator: Navigator by inject()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Do other things before the normal routine.
+
+        navigator.showMain()
+
+        finish()
     }
 }

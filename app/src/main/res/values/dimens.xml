@@ -1,15 +1,27 @@
 <!--
-  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
-  ~
   ~ This file is part of INU Cafeteria.
   ~
-  ~ This work is licensed under the terms of the MIT license.
-  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
 <resources>
 
+    <dimen name="textBig">24sp</dimen>
     <dimen name="textToolbar">20sp</dimen>
+    <dimen name="textTitle">18sp</dimen>
     <dimen name="textPrimary">16sp</dimen>
     <dimen name="textSecondary">14sp</dimen>
     <dimen name="textTertiary">12sp</dimen>
@@ -55,7 +67,40 @@
 
     <dimen name="barcodeCardViewHorizontalMargin">24dp</dimen>
 
-    <dimen name="barcodeWidth">200dp</dimen>
-    <dimen name="barcodeHeight">120dp</dimen>
+    <!-- Cafeteria section item -->
+    <dimen name="cafeteria_vertical_space">16dp</dimen>
+    <dimen name="cafeteria_horizontal_space">22dp</dimen>
 
+    <!-- Cafeteria section & menu page item -->
+    <dimen name="cafeteria_menu_page_horizontal_space">16dp</dimen>
+    <dimen name="cafeteria_menu_page_vertical_space">12dp</dimen>
+    <dimen name="menu_page_horizontal_space">6dp</dimen>
+
+    <!-- Menu item -->
+    <dimen name="menu_outer_space">10dp</dimen>
+    <dimen name="close_space">4dp</dimen>
+    <dimen name="near_space">8dp</dimen>
+    <dimen name="far_space">16dp</dimen>
+    <dimen name="left_margin_until_text">58dp</dimen> <!-- available_time_view_size + 8 -->
+
+    <!-- AvailableTimeView -->
+    <dimen name="available_time_view_size">50dp</dimen>
+
+    <dimen name="single_squircle_radius">20dp</dimen>
+    <dimen name="double_squircle_radius">13dp</dimen>
+    <dimen name="triple_squircle_radius">11dp</dimen>
+
+    <dimen name="single_squircle_size">50dp</dimen>
+    <dimen name="double_squircle_size">33dp</dimen>
+    <dimen name="triple_squircle_size">28dp</dimen>
+
+    <!-- Logo -->
+    <dimen name="logo_height">16dp</dimen>
+
+    <!-- MenuItem -->
+    <dimen name="option_menu_overflow_item_width">40dp</dimen>
+    <dimen name="option_menu_item_width">48dp</dimen>
+
+    <!-- Barcode width -->
+    <dimen name="barcode_width">200dp</dimen>
 </resources>

@@ -1,33 +1,52 @@
-/*
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
+/**
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 buildscript {
+    ext.kotlin_version = '1.3.72'
+
     /** THE VERSION NAME! */
     ext.version_name = '3.0.1-beta01'
 
-    ext.kotlin_version = '1.3.61'
-    ext.gradle_version = '3.5.3'
+    ext.kotlin_version = '1.4.10'
+    ext.gradle_version = '4.1.0'
     ext.koin_version = '2.0.1'
     ext.timber_version = '4.7.1'
-    ext.appcompat_version = '1.1.0'
-    ext.core_ktx_version = '1.1.0'
+    ext.appcompat_version = '1.2.0'
+    ext.core_ktx_version = '1.3.2'
     ext.recyclerview_version = '1.1.0'
-    ext.constraintlayout_version = '2.0.0-beta4'
-    ext.lifecycle_version = '1.1.1'
-    ext.material_version = '1.2.0-alpha03'
-    ext.retrofit_version = '2.7.1'
+    ext.constraintlayout_version = '2.0.2'
+    ext.lifecycle_version = '2.2.0'
+    ext.material_version = '1.3.0-alpha03'
+    ext.retrofit_version = '2.9.0'
     ext.gson_version = '2.8.6'
     ext.cookiejar_version = 'v1.0.1'
-    ext.zxing_version = '3.4.0'
-    ext.jsoup_version = '1.12.1'
-    ext.glide_version = '4.10.0'
+    ext.zxing_version = '3.4.1'
+    ext.jsoup_version = '1.13.1'
+    ext.glide_version = '4.11.0'
     ext.aescrypt_version = '0.0.1'
+    ext.navigation_version = '2.3.1'
+    ext.junit_version = '4.13.1'
+    ext.test_runner_version = '1.3.0'
+    ext.test_rules_version = '1.3.0'
+    ext.espresso_core_version = '3.3.0'
+    ext.junit_ext_version = '1.1.2'
+    ext.koin_test_version = '2.0.1'
 
     repositories {
         google()
@@ -62,6 +81,7 @@ task clean(type: Delete) {
  * We will use the git revision count as a version code.
  * @return the git revision count, integer.
  */
+
 static def getRevisionCount() {
     return Integer.parseInt('git rev-list --count HEAD'.execute().text.trim())
 }

@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.common
@@ -12,23 +22,14 @@ package com.inu.cafeteria.common
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.fragment.app.FragmentActivity
 import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.R
-import com.inu.cafeteria.base.FailableComponent
 import com.inu.cafeteria.common.widget.ThemedDialog
-import com.inu.cafeteria.feature.barcode.BarcodeActivity
-import com.inu.cafeteria.feature.cafeteria.CafeteriaDetailsActivity
-import com.inu.cafeteria.feature.info.InfoActivity
 import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
+import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
 import com.inu.cafeteria.feature.splash.SplashActivity
-import com.inu.cafeteria.model.json.Cafeteria
 import org.koin.core.KoinComponent
 import timber.log.Timber
 import kotlin.system.exitProcess
@@ -36,13 +37,14 @@ import kotlin.system.exitProcess
 /**
  * Go everywhere.
  */
+
 class Navigator(
     private val context: Context
-) : FailableComponent(), KoinComponent {
+) : KoinComponent {
 
-    fun showSplash() {
+    fun showMain() {
         startActivity(
-            SplashActivity.callingIntent(context)
+            MainActivity.callingIntent(context)
         )
     }
 
@@ -52,9 +54,9 @@ class Navigator(
         )
     }
 
-    fun showMain() {
+    fun showSorting() {
         startActivity(
-            MainActivity.callingIntent(context)
+            CafeteriaReorderActivity.callingIntent(context)
         )
     }
 
@@ -62,6 +64,7 @@ class Navigator(
      * Explain user that the server or network is down.
      * Only choose is to close the app.
      */
+
     fun showNoConnectionDialog(activity: FragmentActivity) {
         ThemedDialog(activity)
             .withTitle(R.string.title_server_error)
@@ -74,6 +77,7 @@ class Navigator(
      * Explain user that the server or network is down.
      * Give user a chance to retry.
      */
+
     fun showNoConnectionDialog(activity: FragmentActivity, onRetry: () -> Unit) {
         ThemedDialog(activity)
             .withTitle(R.string.title_server_error)
@@ -90,23 +94,6 @@ class Navigator(
             .show()
     }
 
-    fun showCafeteriaDetail(activity: FragmentActivity, cafeteria: Cafeteria, sharedImageView: ImageView, sharedTextView: TextView) {
-        if (CafeteriaDetailsActivity.instantiated) {
-            Timber.w("Cafeteria details activity is already instantiated!")
-            return
-        }
-
-        val intent = CafeteriaDetailsActivity.callingIntent(activity, cafeteria)
-
-        val imageAnim = Pair.create(sharedImageView as View, sharedImageView.transitionName)
-        val titleAnim = Pair.create(sharedTextView as View, sharedTextView.transitionName)
-
-        val activityOptions = ActivityOptionsCompat
-            .makeSceneTransitionAnimation(activity, imageAnim, titleAnim)
-
-        activity.startActivity(intent, activityOptions.toBundle())
-    }
-
     fun showStore() {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)
@@ -121,6 +108,7 @@ class Navigator(
         )
     }
 
+    /* TODO
     fun showInfo() {
         startActivity(
             InfoActivity.callingIntent(context)
@@ -132,6 +120,7 @@ class Navigator(
             BarcodeActivity.callingIntent(context)
         )
     }
+*/
 
     private fun startActivity(intent: Intent) {
         // Recent versions Android requires this flag

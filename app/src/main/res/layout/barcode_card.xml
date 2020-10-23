@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.inu.cafeteria.feature.discount.DiscountViewModel" />
+    </data>
+
+    <!-- Content Wrapper -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:foregroundGravity="center"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Content -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/student_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- UICOOP logo -->
+            <ImageView
+                android:id="@+id/uicoop_logo"
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/uicoop_logo"
+                android:contentDescription="@string/desc_logo" />
+
+            <!-- UICOOP title -->
+            <TextView
+                style="@style/TextPrimary"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintStart_toEndOf="@id/uicoop_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/uicoop_logo"
+                app:layout_constraintBottom_toBottomOf="@id/uicoop_logo"
+                android:gravity="center_vertical"
+                android:text="@string/title_uicoop"
+                android:textStyle="bold"/>
+
+            <!-- Cafeteria logo area -->
+            <FrameLayout
+                android:id="@+id/logo_image_plate"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/uicoop_logo"
+                android:background="@color/themeBlue">
+
+                <!-- Logo text image -->
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/logo_new_inversed"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/desc_logo" />
+
+            </FrameLayout>
+
+            <!-- Student number label -->
+            <TextView
+                android:id="@+id/student_id_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/logo_image_plate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/title_student_id"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/textTertiary"
+                android:textStyle="bold"/>
+
+            <!-- Student number -->
+            <TextView
+                android:id="@+id/student_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/student_id_label"
+                android:text="@{vm.studentId}"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/textToolbar"
+                tools:text="201701562" />
+
+            <!-- Available at -->
+            <TextView
+                android:id="@+id/available_cafeteria"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/far_space"
+                android:layout_marginTop="@dimen/far_space"
+                app:layout_constraintTop_toBottomOf="@id/student_id"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/discount_notice"
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/textSecondary" />
+
+            <!-- Barcode layout -->
+            <FrameLayout
+                android:id="@+id/barcode_layout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="48dp"
+                app:layout_constraintDimensionRatio="@string/barcode_ratio"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/available_cafeteria"
+                app:layout_constraintVertical_bias="1">
+
+                <!-- The barcode -->
+                <ImageView
+                    android:id="@+id/barcode_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/desc_student_barcode"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic"
+                    barcodeImage="@{vm.barcodeBitmap}" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/close_space"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barcode_layout"
+                android:text="@{vm.barcodeContent}"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/textPrimary"
+                android:fontFamily="courier"
+                android:textStyle="bold"
+                tools:text="121020937" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

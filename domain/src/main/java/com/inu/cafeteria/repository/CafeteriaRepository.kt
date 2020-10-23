@@ -1,27 +1,32 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.repository
 
-import com.inu.cafeteria.model.FoodMenu
-import com.inu.cafeteria.model.json.Cafeteria
+import com.inu.cafeteria.entities.Cafeteria
 
-/**
- * This repository use callback model.
- */
-abstract class CafeteriaRepository : Repository() {
+interface CafeteriaRepository {
 
-    abstract fun invalidateCache()
+    fun getAllCafeteria(date: String? = null): List<Cafeteria>
+    fun getCafeteriaOnly(): List<Cafeteria>
 
-    abstract fun getAllCafeteria(callback: DataCallback<List<Cafeteria>>)
-    abstract fun getAllFoodMenu(callback: DataCallback<List<FoodMenu>>)
-
-    abstract fun getCafeteriaByCafeteriaNumber(key: Int, callback: DataCallback<Cafeteria>)
-    abstract fun getFoodMenuByCafeteriaNumber(key: Int, callback: DataCallback<FoodMenu>)
+    fun getOrder(): Array<Int>
+    fun setOrder(orderedIds: Array<Int>)
+    fun resetOrder()
 }

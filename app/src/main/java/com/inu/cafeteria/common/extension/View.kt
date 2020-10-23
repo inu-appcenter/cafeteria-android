@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.common.extension
@@ -12,8 +22,11 @@ package com.inu.cafeteria.common.extension
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 
 fun View.cancelTransition() {
     transitionName = null
@@ -49,6 +62,7 @@ fun View.setVisible(visible: Boolean, invisible: Int = View.GONE) {
  * the view no longer work. Also problematic when we try to long press on an image in the message
  * view
  */
+
 fun View.forwardTouches(parent: View) {
     var isLongClick = false
 
@@ -74,4 +88,26 @@ fun View.forwardTouches(parent: View) {
             else -> v.onTouchEvent(event)
         }
     }
+}
+
+fun <T: View> T?.withinAlphaAnimation(from: Float, to: Float, delay: Long = 0, action: T?.() -> Unit = {}) {
+    this?.let {
+        alpha = from
+    }
+
+    action(this)
+
+    this?.let {
+        Handler(Looper.getMainLooper()).postDelayed({ animate().alpha(1f) }, delay)
+    }
+}
+
+fun View.slideInWithFade(directionVector: Int) {
+    alpha = 0f
+    x += -30f * directionVector
+    animate().alpha(1f).x(0f)
+}
+
+fun View.removeFromParent() {
+    (parent as? ViewGroup)?.removeView(this)
 }

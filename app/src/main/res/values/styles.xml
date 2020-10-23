@@ -1,10 +1,20 @@
 <!--
-  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
-  ~
   ~ This file is part of INU Cafeteria.
   ~
-  ~ This work is licensed under the terms of the MIT license.
-  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
 <resources>
@@ -35,11 +45,6 @@
     <style name="TextTertiary">
         <item name="android:textColor">?android:attr/textColorTertiary</item>
         <item name="android:textSize">@dimen/textTertiary</item>
-    </style>
-
-    <style name="Toolbar" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <!-- Customize color of navigation drawer icon and back arrow -->
-        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
@@ -91,6 +96,101 @@
     <style name="ShadowImageView">
         <item name="android:background">@drawable/rounded_rectangle_75dp</item>
         <item name="android:elevation">12dp</item>
+    </style>
+
+
+    <style name="FullSizedView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="HorizontallyFullSizedView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="HorizontallyFullSizedViewConstrained">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FitSizedView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FlexibleSizedView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="CircularImageHolder" parent="FullSizedView">
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <style name="CircularInnerImage" parent="FullSizedView">
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="NotImportantTextView" parent="FitSizedView">
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="maxWidth">100dp</item>
+    </style>
+
+    <!-- AppBar -->
+    <style name="AppBar" parent="HorizontallyFullSizedView">
+        <item name="android:background">?attr/barBackground</item>
+    </style>
+
+    <!-- Toolbar -->
+    <style name="Toolbar" parent="HorizontallyFullSizedView">
+        <item name="android:layout_height">?android:attr/actionBarSize</item>
+        <item name="android:background">?attr/barBackground</item>
+        <item name="titleTextAppearance">@style/ToolbarText</item>
+    </style>
+    <style name="CustomToolbar" parent="Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="android:contentInsetStart">0dp</item>
+    </style>
+    <style name="ToolbarText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:background">@null</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">@dimen/textToolbar</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TabBar -->
+    <style name="TabBarText">
+        <item name="android:textSize">@dimen/textSecondary</item>
+    </style>
+
+    <!-- BottomNavigation -->
+    <style name="BottomNavigation" parent="HorizontallyFullSizedView">
+        <item name="android:background">?attr/barBackground</item>
+        <item name="itemIconTint">?attr/barSelectedTextColor</item>
+        <item name="itemTextColor">?attr/barSelectedTextColor</item>
+    </style>
+    
+    <!-- TabLayout -->
+    <style name="TabLayout" parent="HorizontallyFullSizedView">
+        <item name="tabIndicator">@drawable/tab_indicator</item>
+        <item name="tabIndicatorColor">?attr/barSelectedTextColor</item>
+        <item name="tabTextColor">?attr/barTextColor</item>
+        <item name="tabSelectedTextColor">?attr/barSelectedTextColor</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="tabTextAppearance">@style/TabBarText</item>
+    </style>
+
+    <!-- Loading progress bar -->
+    <style name="NonFunctionalProgressBar" parent="FitSizedView">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTint">?android:attr/colorPrimary</item>
     </style>
 
 </resources>

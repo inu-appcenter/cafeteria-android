@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/cafeteria_vertical_space">
+
+    <TextView
+        style="@style/HorizontallyFullSizedViewConstrained"
+        android:id="@+id/cafeteria_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/more_button"
+        android:lines="1"
+        android:layout_marginStart="@dimen/cafeteria_horizontal_space"
+        android:textStyle="bold"
+        android:textSize="@dimen/textTitle"
+        android:textColor="#000"
+        tools:text="Section A" />
+
+    <ImageButton
+        android:id="@+id/more_button"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="@dimen/cafeteria_horizontal_space"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintTop_toTopOf="@id/cafeteria_name"
+        app:layout_constraintBottom_toBottomOf="@id/cafeteria_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_arrow_forward_24px"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/desc_more_button" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        style="@style/HorizontallyFullSizedView"
+        android:id="@+id/menu_page_recycler"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafeteria_name"
+        android:paddingHorizontal="@dimen/cafeteria_menu_page_horizontal_space"
+        android:paddingVertical="@dimen/cafeteria_menu_page_vertical_space"
+        android:nestedScrollingEnabled="false"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/menu_page" />
+
+    <include
+        layout="@layout/empty_cafeteria_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/near_space"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cafeteria_name"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

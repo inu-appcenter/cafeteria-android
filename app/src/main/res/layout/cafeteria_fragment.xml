@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.inu.cafeteria.feature.main.CafeteriaViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Toolbar group -->
+        <com.google.android.material.appbar.AppBarLayout
+            style="@style/AppBar"
+            android:id="@+id/app_bar">
+
+                <androidx.appcompat.widget.Toolbar
+                    style="@style/CustomToolbar"
+                    android:id="@+id/toolbar_cafeteria"
+                    app:layout_scrollFlags="scroll|enterAlways">
+
+                    <!-- Logo in the toolbar -->
+                    <ImageView
+                        style="@style/HorizontallyFullSizedView"
+                        android:id="@+id/logo_image"
+                        android:layout_height="@dimen/logo_height"
+                        android:layout_marginStart="@dimen/option_menu_item_width"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/logo_new"
+                        android:contentDescription="@string/desc_logo" />
+
+                </androidx.appcompat.widget.Toolbar>
+
+            <!-- Date selection tab bar -->
+            <include layout="@layout/date_selection_tab_bar" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!-- Content -->
+        <androidx.core.widget.NestedScrollView
+            style="@style/FullSizedView"
+            android:id="@+id/cafeteria_recycler_holder"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.inu.cafeteria.common.widget.ShyRecyclerView
+                style="@style/FullSizedView"
+                android:id="@+id/cafeteria_recycler"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}"
+                cafeteria="@{vm.cafeteria}"
+                isLoading="@{vm.loading}"
+                android:paddingBottom="16dp"
+                android:clipToPadding="false"
+                tools:listitem="@layout/cafeteria" />
+
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Empty view -->
+        <include
+            layout="@layout/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar_cafeteria"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <!-- Loading view -->
+        <ProgressBar
+            style="@style/NonFunctionalProgressBar"
+            android:id="@+id/loading_view" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
+

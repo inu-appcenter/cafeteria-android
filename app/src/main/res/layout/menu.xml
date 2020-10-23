@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/HorizontallyFullSizedView"
+    android:paddingVertical="@dimen/menu_outer_space"
+    android:paddingHorizontal="@dimen/menu_outer_space"
+    android:background="?android:attr/selectableItemBackground">
+
+    <com.inu.cafeteria.common.widget.AvailableTimeView
+        style="@style/FitSizedView"
+        android:id="@+id/available_at"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/HorizontallyFullSizedViewConstrained"
+        android:id="@+id/foods"
+        android:layout_marginStart="@dimen/near_space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/available_at"
+        app:layout_constraintTop_toTopOf="parent"
+        android:ellipsize="end"
+        android:textSize="@dimen/textSecondary"
+        android:textColor="@color/textPrimary"
+        android:textStyle="bold"
+        tools:text="학식은, 맛없어, 퉤퉤, 메롱, 헤헤, 졸려, 집가고싶다, 히히" />
+
+    <TextView
+        style="@style/HorizontallyFullSizedViewConstrained"
+        android:id="@+id/corner_name"
+        android:layout_marginStart="@dimen/near_space"
+        app:layout_constraintTop_toBottomOf="@id/foods"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/available_at"
+        app:layout_constraintEnd_toStartOf="@id/calorie"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/textSecondary"
+        android:textColor="?android:attr/textColorSecondary"
+        tools:text="2코너다아아" />
+
+    <TextView
+        style="@style/FitSizedView"
+        android:id="@+id/price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/foods"
+        android:textSize="@dimen/textSecondary"
+        android:textColor="?android:attr/textColorSecondary"
+        tools:text="3,500원" />
+
+    <TextView
+        style="@style/FitSizedView"
+        android:id="@+id/separator"
+        android:layout_marginEnd="@dimen/close_space"
+        app:layout_constraintEnd_toStartOf="@id/price"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/foods"
+        android:textSize="@dimen/textSecondary"
+        android:textColor="?android:attr/textColorSecondary"
+        android:text="@string/middle_dot" />
+
+    <TextView
+        style="@style/FitSizedView"
+        android:id="@+id/calorie"
+        android:layout_marginEnd="@dimen/close_space"
+        app:layout_constraintEnd_toStartOf="@id/separator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/foods"
+        android:textSize="@dimen/textSecondary"
+        android:textColor="?android:attr/textColorSecondary"
+        tools:text="361kcal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,78 +1,78 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.common.base
 
-import android.content.Context
 import android.view.View
 import androidx.annotation.CallSuper
-import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.inu.cafeteria.base.Failable
 import com.inu.cafeteria.common.extension.setVisible
 import org.koin.core.KoinComponent
-import org.koin.core.inject
 import timber.log.Timber
 
 /**
- * Base RecyclerView.Adapter that provides some convenience when creating a new Adapter, such as
- * data list handing and item animations
+ * This adapter handles loading/empty view visibility.
  */
-abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder>(), Failable, KoinComponent {
-    private val mContext: Context by inject()
-
-    private val failure = MutableLiveData<Failable.Failure>()
-
-    final override fun setFailure(failure: Failable.Failure) {
-        this.failure.postValue(failure)
-        Timber.w("Failure is set: ${failure.message}")
-    }
-
-    final override fun getFailure(): LiveData<Failable.Failure> {
-        return failure
-    }
-
-    override fun fail(@StringRes message: Int, vararg formatArgs: Any?, show: Boolean) {
-        setFailure(Failable.Failure(mContext.getString(message, *formatArgs), show))
-    }
-
-    var data: List<T> = ArrayList()
-        set(value) {
-            if (field === value) return
-
-            field = value
-
-            notifyDataSetChanged()
-
-            setEmptyView(value.isEmpty())
-        }
-
-    @CallSuper
-    protected open fun setEmptyView(isDataEmpty: Boolean) {
-        emptyView?.setVisible(isDataEmpty)
-    }
+abstract class BaseAdapter<T, VH: BaseViewHolder> : RecyclerView.Adapter<VH>(), KoinComponent {
 
     /**
-     * This view can be set, and the adapter will automatically control the visibility of this view
-     * based on the data
+     * loadingView will be shown when it is not null and isLoading is true.
+     */
+    var loadingView: View? = null
+        set(value) {
+            field = value
+            updatePeripheralViews()
+        }
+
+    var isLoading: Boolean = false
+        set(value) {
+            field = value
+            updatePeripheralViews()
+        }
+
+    /**
+     * emptyView will be shown when it is not null and data.isEmpty() returns true
      */
     var emptyView: View? = null
         set(value) {
             field = value
-            field?.setVisible(data.isEmpty())
+            updatePeripheralViews()
         }
+
+    var data: List<T> = ArrayList()
+        set(value) {
+            if (field === value) return
+            field = value
+
+            notifyDataSetChanged()
+            updatePeripheralViews()
+        }
+
+    @CallSuper
+    protected open fun updatePeripheralViews() {
+        emptyView?.setVisible(data.isEmpty() && !isLoading)
+        loadingView?.setVisible(isLoading)
+    }
 
     fun getItem(position: Int): T? {
         if (position < 0) {
-            Timber.w("Trying to access index $position!!")
+            Timber.w("Trying to access index $position.")
             return null
         }
 

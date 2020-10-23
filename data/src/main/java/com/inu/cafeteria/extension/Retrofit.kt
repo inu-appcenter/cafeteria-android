@@ -1,10 +1,20 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.extension
@@ -43,6 +53,7 @@ fun <T> Call<T>.onSuccess(block: (Response<T>) -> Unit) {
  *
  * @see [Call]
  */
+
 fun <T> Call<T>.onResult(
     async: Boolean = true,
     onSuccess: (T) -> Unit,
@@ -52,6 +63,7 @@ fun <T> Call<T>.onResult(
         /**
          * Go async
          */
+
         enqueue(object: Callback<T> {
 
             override fun onResponse(call: Call<T>, response: Response<T>) {
@@ -89,6 +101,7 @@ fun <T> Call<T>.onResult(
         /**
          * Go sync
          */
+
         try {
             val result = execute()
 
@@ -113,5 +126,53 @@ fun <T> Call<T>.onResult(
             onFail(e)
             Timber.e("Unexpected exception during synchronous execute..")
         }
+    }
+}
+
+fun <T> Call<T>.getOrNull(): T? {
+    try {
+        val result = execute()
+        return if (result.isSuccessful) {
+            val body = result.body()
+            body.also {
+                it?.let { Timber.i("Response success!") }
+                    ?: Timber.w("Response is success but body is null.")
+            }
+        } else {
+            Timber.w(result.errorBody()?.string())
+            Timber.w("Response is fail.")
+            null
+        }
+    } catch (e: IOException) {
+        Timber.e(e)
+        Timber.w("Server no responding.")
+        return null
+    } catch (e: Exception) {
+        Timber.e("Unexpected exception during synchronous execute..")
+        return null
+    }
+}
+
+fun <T> Call<T>.getOrThrow(exception: Exception): T? {
+    try {
+        val result = execute()
+        return if (result.isSuccessful) {
+            val body = result.body()
+            body.also {
+                it?.let { Timber.i("Response success!") }
+                    ?: Timber.w("Response is success but body is null.")
+            }
+        } else {
+            Timber.w(result.errorBody()?.string())
+            Timber.w("Response is fail.")
+            throw exception
+        }
+    } catch (e: IOException) {
+        Timber.e(e)
+        Timber.w("Server no responding.")
+        throw exception
+    } catch (e: Exception) {
+        Timber.e("Unexpected exception during synchronous execute..")
+        throw exception
     }
 }

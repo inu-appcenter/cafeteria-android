@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.inu.cafeteria.feature.discount.DiscountViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Carrot! -->
+        <ImageView
+            android:id="@+id/carrot"
+            android:layout_width="@dimen/available_time_view_size"
+            android:layout_height="@dimen/available_time_view_size"
+            android:layout_gravity="center"
+            android:src="@drawable/carrot"
+            android:contentDescription="@string/desc_help"
+            android:visibility="@{vm.barcodeCardReady ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone" />
+
+        <!-- Barcode card wrapper -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior=".common.widget.OverScrollBounceBehavior"
+            android:visibility="@{vm.barcodeCardReady ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone">
+
+            <!-- Barcode card -->
+            <include
+                vm="@{vm}"
+                layout="@layout/barcode_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="48dp" />
+
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Login prompt view -->
+        <include
+            vm="@{vm}"
+            layout="@layout/login_prompt_view" />
+
+        <!-- Loading view -->
+        <ProgressBar
+            style="@style/NonFunctionalProgressBar"
+            android:id="@+id/loading_view"
+            android:visibility="@{(vm.onceLoggedIn &amp;&amp; !vm.barcodeCardReady) ? View.VISIBLE : View.GONE}"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
+

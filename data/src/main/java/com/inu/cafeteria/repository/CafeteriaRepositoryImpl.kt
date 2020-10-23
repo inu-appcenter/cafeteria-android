@@ -1,145 +1,120 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.repository
 
-import com.inu.cafeteria.exception.BodyParseException
-import com.inu.cafeteria.exception.DataNotFoundException
-import com.inu.cafeteria.extension.getFormatedDate
-import com.inu.cafeteria.extension.onNull
-import com.inu.cafeteria.extension.onResult
-import com.inu.cafeteria.model.Cache
-import com.inu.cafeteria.model.FoodMenu
-import com.inu.cafeteria.model.json.Cafeteria
-import com.inu.cafeteria.parser.CafeteriaParser
-import com.inu.cafeteria.parser.FoodMenuParser
+import androidx.lifecycle.MutableLiveData
+import com.inu.cafeteria.db.SharedPreferenceWrapper
+import com.inu.cafeteria.entities.Cafeteria
+import com.inu.cafeteria.extension.format
+import com.inu.cafeteria.extension.getOrNull
+import com.inu.cafeteria.model.scheme.CafeteriaResult
+import com.inu.cafeteria.model.scheme.CornerResult
+import com.inu.cafeteria.model.scheme.MenuResult
 import com.inu.cafeteria.service.CafeteriaNetworkService
-import timber.log.Timber
+import com.inu.cafeteria.util.Cache
+import com.inu.cafeteria.util.PairedCache
 import java.util.*
 
 class CafeteriaRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
-    private val cafeteriaParser: CafeteriaParser,
-    private val foodMenuParser: FoodMenuParser
-) : CafeteriaRepository() {
+    private val db: SharedPreferenceWrapper
+) : CafeteriaRepository {
 
-    private val cafeteriaCache = Cache<List<Cafeteria>>()
-    private val foodCache = Cache<List<FoodMenu>>()
+    private val cafeteriaCache = Cache<List<CafeteriaResult>>()
+    private val cornerCache = Cache<List<CornerResult>>()
+    private val menuCaches = PairedCache<String, List<MenuResult>>()
 
-    override fun invalidateCache() {
-        cafeteriaCache.invalidate()
-        foodCache.invalidate()
+    override fun getAllCafeteria(date: String?): List<Cafeteria> {
+        val cafeteria = cachedFetch(cafeteriaCache) {
+            networkService.getCafeteria().getOrNull()
+        } ?: return listOf()
 
-        Timber.i("All cache invalidated.")
+        val corners = cachedFetch(cornerCache) {
+            networkService.getCorners().getOrNull()
+        } ?: return listOf()
+
+        val menus = cachedFetch(menuCaches, date ?: Date().format()) {
+            networkService.getMenus(date).getOrNull()
+        } ?: return listOf()
+
+        return ResultGatherer(cafeteria, corners, menus).combine()
     }
 
-    override fun getAllCafeteria(callback: DataCallback<List<Cafeteria>>) {
-        if (cafeteriaCache.isValid) {
-            cafeteriaCache.get()?.let {
-                callback.onSuccess(it)
-                Timber.i("Got all cafeteria from cache!")
-                return
-            }
+    override fun getCafeteriaOnly(): List<Cafeteria> {
+        val cafeteria = cachedFetch(cafeteriaCache) {
+            networkService.getCafeteria().getOrNull()
+        } ?: return listOf()
+
+        return cafeteria.map {
+            Cafeteria(
+                id = it.id,
+                name = it.name,
+                displayName = it.displayName,
+                supportMenu = it.supportMenu,
+                supportDiscount = it.supportDiscount,
+                supportNotification = it.supportNotification,
+                corners = listOf()
+            )
+        }
+    }
+
+    @Synchronized
+    private fun <T> cachedFetch(cache: Cache<T>, fetch: () -> T?): T? {
+        return (if (cache.isValid) cache.get() else null) ?: fetch()?.also(cache::set)
+    }
+
+    @Synchronized
+    private fun <K, V> cachedFetch(cache: PairedCache<K, V>, key: K, fetch: () -> V?): V? {
+        return (if (cache.isValid(key)) cache.get(key) else null) ?: fetch()?.also { cache.set(key, it) }
+    }
+
+
+    private val order = MutableLiveData<Array<Int>>()
+
+    override fun getOrder(): Array<Int> {
+        return getOrderInternal()
+    }
+
+    private fun getOrderInternal(): Array<Int> {
+        val result = db.getArrayInt(KEY_ORDER)
+
+        if (result == null) {
+            // The first attempt to get order.
+            resetOrder()
+            return getOrderInternal()
         }
 
-        networkService.getCafeteria().onResult(
-            async = callback.async,
-            onSuccess = { json ->
-                cafeteriaParser.parse(json)?.let {
-                    callback.onSuccess(it)
-                    cafeteriaCache.set(it)
-                    Timber.i("Successfully fetched all cafeteria from server.")
-                }.onNull { callback.onFail(BodyParseException()) }
-            },
-            onFail = callback.onFail
-        )
+        return result
     }
 
-    override fun getAllFoodMenu(callback: DataCallback<List<FoodMenu>>) {
-        if (foodCache.isValid) {
-            foodCache.get()?.let {
-                callback.onSuccess(it)
-                Timber.i("Got all food menus from cache!")
-                return
-            }
-        }
+    override fun setOrder(orderedIds: Array<Int>) {
+        order.postValue(orderedIds)
 
-        val menuSupportCafeteria = mutableListOf<Int>()
-
-        // To parse the food menu, we need the list of
-        // cafeteria supporting food menu.
-        // Getting all cafeteria will be launched synchronously
-        // whatever the callback.async is, or this execution will pass
-        // the failure check below.
-        var failure: Exception? = null
-
-        getAllCafeteria(
-            DataCallback(
-                async = false,
-                onSuccess = { result ->
-                    menuSupportCafeteria.addAll(
-                        result
-                            .filter { cafeteria -> cafeteria.supportFoodMenu >= 0 }
-                            .map { cafeteria -> cafeteria.key }
-                    )
-                },
-                onFail = { failure = it }
-            )
-        )
-
-        failure?.let {
-            Timber.w("")
-            callback.onFail(it)
-        }
-
-        networkService.getFoods(Calendar.getInstance().getFormatedDate()).onResult(
-            async = callback.async,
-            onSuccess = { json ->
-                foodMenuParser.parse(json, menuSupportCafeteria)?.let {
-                    callback.onSuccess(it)
-                    foodCache.set(it)
-                    Timber.i("Successfully fetched all food menus from server.")
-                }.onNull { callback.onFail(BodyParseException()) }
-            },
-            onFail = callback.onFail
-        )
+        db.putArrayInt(KEY_ORDER, orderedIds)
     }
 
-    override fun getCafeteriaByCafeteriaNumber(key: Int, callback: DataCallback<Cafeteria>) {
-        getAllCafeteria(
-            DataCallback(
-                async = callback.async,
-                onSuccess = {
-                    if (it.getOrNull(key) != null) {
-                        callback.onSuccess(it[key])
-                    } else {
-                        callback.onFail(DataNotFoundException())
-                    }
-                },
-                onFail = callback.onFail
-            )
-        )
+    override fun resetOrder() {
+        setOrder(getCafeteriaOnly().map { it.id }.toTypedArray())
     }
 
-    override fun getFoodMenuByCafeteriaNumber(key: Int, callback: DataCallback<FoodMenu>) {
-        getAllFoodMenu(
-            DataCallback(
-                async = callback.async,
-                onSuccess = {
-                    if (it.getOrNull(key) != null) {
-                        callback.onSuccess(it[key])
-                    } else {
-                        callback.onFail(DataNotFoundException())
-                    }
-                },
-                onFail = callback.onFail
-            )
-        )
+    companion object {
+        private const val KEY_ORDER = "cafeteria_sort_order"
     }
 }

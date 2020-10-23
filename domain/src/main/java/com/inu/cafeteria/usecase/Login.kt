@@ -1,37 +1,33 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.usecase
 
 import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.model.scheme.LoginParams
-import com.inu.cafeteria.model.scheme.LoginResult
-import com.inu.cafeteria.repository.LoginRepository
-import com.inu.cafeteria.repository.Repository
+import com.inu.cafeteria.service.AccountService
 
 class Login(
-    private val loginRepo: LoginRepository
-) : UseCase<LoginParams, LoginResult>() {
+    private val accountService: AccountService
+) : UseCase<Pair<Int, String>, Unit>() {
 
-    override fun run(params: LoginParams) = Result.of {
-        var result: LoginResult? = null
-        var failure: Exception? = null
-
-        loginRepo.login(params, Repository.DataCallback(
-            async = false,
-            onSuccess = { result = it },
-            onFail = { failure = it }
-        ))
-
-        failure?.let { throw it }
-
-        return@of result!!
+    override fun run(params: Pair<Int, String>) = Result.of {
+        accountService.login(params.first, params.second)
     }
 }

@@ -1,121 +1,58 @@
 /**
- * Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
- *
  * This file is part of INU Cafeteria.
  *
- * This work is licensed under the terms of the MIT license.
- * For a copy, see <https://opensource.org/licenses/MIT>.
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.inu.cafeteria.feature.main
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import androidx.fragment.app.Fragment
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.base.SingleFragmentActivity
-import com.inu.cafeteria.common.extension.defaultDataErrorHandle
-import com.inu.cafeteria.common.extension.getViewModel
-import com.inu.cafeteria.common.extension.isVisible
-import com.inu.cafeteria.common.extension.setSupportActionBar
-import com.inu.cafeteria.common.widget.ThemedDialog
-import com.inu.cafeteria.feature.cafeteria.CafeteriaListFragment
-import com.inu.cafeteria.repository.LoginRepository
-import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.android.synthetic.main.toolbar.*
-import org.koin.android.ext.android.inject
+import com.inu.cafeteria.common.base.NavigationActivity
+import com.inu.cafeteria.common.base.NavigationHostFragment
+import com.inu.cafeteria.common.navigation.rootDestinations
 
-/**
- * Manage student data here.
- */
-class MainActivity : SingleFragmentActivity() {
+class MainActivity : NavigationActivity() {
 
-    override val fragment: Fragment = CafeteriaListFragment()
-    override val layoutId: Int? = null
+    override val menuRes: Int = R.menu.bottom_menu
+    override val layoutRes: Int = R.layout.main_activity
+    override val mainPagerRes: Int = R.id.main_pager
+    override val bottomNavRes: Int = R.id.bottom_nav
 
-    private val loginRepo: LoginRepository by inject()
+    override val fragmentArguments: List<NavigationHostFragment.Arguments> = listOf(
 
-    private lateinit var mainViewModel: MainViewModel
+        /** Home */
+        NavigationHostFragment.createArguments(
+            layoutRes = R.layout.content_home_base,
+            toolbarId = -1, // Un-managed toolbar.
+            navHostId = R.id.nav_host_cafeteria,
+            tabItemId = R.id.tab_cafeteria,
+            rootDests = rootDestinations
+        ),
 
-    private val logout = {
-        mainViewModel.tryLogout(
-            onSuccess = {
-                mainViewModel.showLogin(this)
-            },
-            onFail = ::defaultDataErrorHandle,
-            onNoToken = { fail(R.string.fail_token_invalid, show = true) }
+        /** Discount */
+        NavigationHostFragment.createArguments(
+            layoutRes = R.layout.content_discount_base,
+            toolbarId = R.id.toolbar_discount,
+            navHostId = R.id.nav_host_discount,
+            tabItemId = R.id.tab_discount,
+            rootDests = rootDestinations
         )
-
-        // Remove all user data even if the logout got failed.
-        mainViewModel.removeUserData()
-    }
-
-    init {
-        failables += this
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContentView(R.layout.main_activity)
-        setViewModel()
-        setSupportActionBar(toolbar, title = false, upButton = false)
-
-        initializeView()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        MenuInflater(this).inflate(R.menu.menu_main, menu)
-        menu?.let(::initializeMenu)
-
-        return true // Display the menu.
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        super.onOptionsItemSelected(item)
-
-        when (item.itemId) {
-            R.id.menu_app_info -> {
-                mainViewModel.showInfo()
-            }
-            R.id.menu_logout -> {
-                ThemedDialog(this)
-                    .withTitle(R.string.title_logout)
-                    .withMessage(R.string.dialog_ask_logout)
-                    .withPositiveButton(R.string.button_confirm) { logout() }
-                    .withNegativeButton(R.string.button_cancel)
-                    .show()
-            }
-            R.id.menu_login -> {
-                mainViewModel.showLogin(this)
-            }
-        }
-
-        return true
-    }
-
-    private fun setViewModel() {
-        mainViewModel = getViewModel()
-        failables += mainViewModel.failables
-    }
-
-    private fun initializeView() {
-        with(barcode_button) {
-            isVisible = loginRepo.isLoggedIn()
-            setOnClickListener {
-                mainViewModel.showBarcode()
-            }
-        }
-    }
-
-    private fun initializeMenu(menu: Menu) {
-        menu.findItem(R.id.menu_logout)?.isVisible = loginRepo.isLoggedIn()
-        menu.findItem(R.id.menu_login)?.isVisible = loginRepo.isLoggedIn().not()
-    }
+    )
 
     companion object {
         fun callingIntent(context: Context) = Intent(context, MainActivity::class.java)

@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
-  ~
   ~ This file is part of INU Cafeteria.
   ~
-  ~ This work is licensed under the terms of the MIT license.
-  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
 <resources>
@@ -13,7 +23,7 @@
     <style name="AppThemeLight" parent="AppBaseThemeLight" />
 
     <!-- Light theme -->
-    <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.NoActionBar">item>
+    <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:divider">@color/separatorLight</item>
         <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentTransitions">true</item>
@@ -21,15 +31,25 @@
         <item name="android:textColorSecondary">@color/textSecondary</item>
         <item name="android:textColorTertiary">@color/textTertiary</item>
 
-        <item name="android:fitsSystemWindows">false</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">?android:attr/windowBackground</item>
 
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/themeBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/themeRed</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
+
+        <item name="barBackground">@color/backgroundLight</item>
+        <item name="barTextColor">@color/textSecondary</item>
+        <item name="barSelectedTextColor">@drawable/bar_item_color</item>
+    </style>
+
+    <!-- Splash theme -->
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/themeBlue</item>
     </style>
 
 </resources>

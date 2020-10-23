@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2018-2019 INU Appcenter. All rights reserved.
-  ~
   ~ This file is part of INU Cafeteria.
   ~
-  ~ This work is licensed under the terms of the MIT license.
-  ~ For a copy, see <https://opensource.org/licenses/MIT>.
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
 <resources>
@@ -28,7 +38,7 @@
     <string name="fail_unexpected">알 수 없는 오류가 발생했습니다.</string>
     <string name="fail_wrong_auth">학번과 비밀번호를 확인해주세요.</string>
     <string name="hint_password">비밀번호</string>
-    <string name="hint_stuno">학번</string>
+    <string name="hint_id">학번</string>
     <string name="desc_app_description">인천대학교 학식당 식단 정보 앱</string>
     <string name="desc_close_drawer">서랍 닫기</string>
     <string name="button_exit">종료</string>
@@ -65,6 +75,33 @@
     <string name="menu_login">로그인</string>
     <string name="button_confirm">확인</string>
     <string name="desc_dont_show_again">다시 보지 않음</string>
-
+    <string name="desc_more_button">더보기 버튼입니다.</string>
+    <string name="desc_single_squircle">이미지 세 개로 이루어진 아이콘입니다.</string>
+    <string name="desc_double_squircle">이미지 두 개로 이루어진 아이콘입니다.</string>
+    <string name="desc_triple_squircle">이미지 한 개로 이루어진 아이콘입니다.</string>
+    <string name="notify_press_again_to_exit">뒤로 가기 버튼을 한 번 더 두르면 앱이 종료됩니다.</string>
+    <string name="title_menus">식단</string>
+    <string name="title_discount">할인</string>
+    <string name="item_today">오늘</string>
+    <string name="item_today2">내일</string>
+    <string name="item_today3">모레</string>
+    <string name="item_today4">글피</string>
+    <string name="item_today5">그글피</string>
+    <string name="title_reorder">순서 변경</string>
+    <string name="action_reset">재설정</string>
+    <string name="no_information">정보가 없어요 ㅠㅠ</string>
+    <string name="no_information_on_this_cafeteria">해당 식당에 대한 정보가 없습니다.</string>
+    <string name="unit_krw">%,d원</string>
+    <string name="desc_handle">핸들입니다.</string>
+    <string name="desc_help">살려줘!</string>
+    <string name="title_uicoop">소비자생활협동조합</string>
+    <string name="title_student_id">학번</string>
+    <string name="title_available_at">이용 가능 식당</string>
+    <string name="title_login">로그인</string>
+    <string name="login_prompt_subtitle">재학생을 위한 할인 혜택을 제공합니다. 로그인하시고 이용해 보세요</string>
+    <string name="login_prompt_title">학생 할인 멤버십</string>
+    <string name="error_check_login_form">학번과 비밀번호를 확인해 주세요.</string>
+    <string name="error_login_fail">학번과 비밀번호를 확인해 주세요. 문제가 반복된다면 잠시 후에 다시 시도해 주세요.</string>
+    <string name="discount_notice">제1 기숙사 식당, 사범대 식당, 학생식당에서 사용하실 수 있습니다. 할인 제공 여부와 시점은 식당 사정에 따라 달라질 수 있습니다.</string>
 
 </resources>
