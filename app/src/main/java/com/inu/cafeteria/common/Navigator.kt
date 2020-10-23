@@ -42,21 +42,15 @@ class Navigator(
     private val context: Context
 ) : KoinComponent {
 
-    fun showSplash() {
+    fun showMain() {
         startActivity(
-            SplashActivity.callingIntent(context)
+            MainActivity.callingIntent(context)
         )
     }
 
     fun showLogin() {
         startActivity(
             LoginActivity.callingIntent(context)
-        )
-    }
-
-    fun showMain() {
-        startActivity(
-            MainActivity.callingIntent(context)
         )
     }
 

@@ -37,20 +37,28 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <!-- Activity -->
-        <activity android:name=".common.RouterActivity">
+        <activity
+            android:name=".feature.splash.SplashActivity"
+            android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".feature.splash.SplashActivity" />
-        <activity android:name=".feature.main.MainActivity" />
+
+        <activity
+            android:name=".feature.main.MainActivity" />
+
         <activity
             android:name=".feature.reorder.CafeteriaReorderActivity"
             android:label="@string/title_reorder" />
+
         <activity
             android:name=".feature.login.LoginActivity"
             android:label="@string/title_login" />
+
     </application>
 
 </manifest>

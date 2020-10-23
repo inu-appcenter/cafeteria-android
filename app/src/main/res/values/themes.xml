@@ -44,4 +44,12 @@
         <item name="barSelectedTextColor">@drawable/bar_item_color</item>
     </style>
 
+    <!-- Splash theme -->
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/themeBlue</item>
+    </style>
+
 </resources>

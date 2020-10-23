@@ -21,14 +21,25 @@ package com.inu.cafeteria.feature.splash
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.SingleFragmentActivity
+import org.koin.android.ext.android.inject
+import org.koin.core.inject
 
-class SplashActivity : SingleFragmentActivity() {
+class SplashActivity : AppCompatActivity() {
 
-    override val fragment: Fragment = SplashFragment()
+    private val navigator: Navigator by inject()
 
-    companion object {
-        fun callingIntent(context: Context) = Intent(context, SplashActivity::class.java)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Do other things before the normal routine.
+
+        navigator.showMain()
+
+        finish()
     }
 }
