@@ -32,10 +32,12 @@ import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.afterDays
 import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.extension.format
+import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.usecase.GetCafeteria
 import com.inu.cafeteria.usecase.GetCafeteriaOrder
 import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -45,6 +47,8 @@ class CafeteriaViewModel : BaseViewModel() {
 
     private val getCafeteria: GetCafeteria by inject()
     private val getCafeteriaOrder: GetCafeteriaOrder by inject()
+
+    private val statusRepo: DeviceStatusRepository by inject()
 
     private val cafeteriaCache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
 
@@ -68,7 +72,14 @@ class CafeteriaViewModel : BaseViewModel() {
     val moreClickEvent = SingleLiveEvent<Unit>()
     val animateEvent = SingleLiveEvent<Int>()
 
-    init {
+    fun load() {
+        if (!statusRepo.isOnline()) {
+            Timber.d("Device is offline. Pending loading cafeteria view model.")
+            return
+        }
+
+        Timber.d("Loading cafeteria view model!")
+
         preFetch(5)
         reselectCurrentDateTab()
     }

@@ -21,9 +21,13 @@ package com.inu.cafeteria.repository
 
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Account
-import com.inu.cafeteria.extension.getOrNull
+import com.inu.cafeteria.exception.NetworkException
+import com.inu.cafeteria.exception.NullBodyException
 import com.inu.cafeteria.extension.getOrThrow
+import com.inu.cafeteria.extension.getResult
+import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.model.scheme.LoginParams
+import com.inu.cafeteria.model.scheme.LoginResult
 import com.inu.cafeteria.service.CafeteriaNetworkService
 
 class AccountRepositoryImpl(
@@ -38,20 +42,18 @@ class AccountRepositoryImpl(
     }
 
     override fun firstLogin(id: Int, password: String) =
-        networkService
-            .getLoginResult(LoginParams.ofFirstLogin(id, password))
-            .getOrNull()
-            ?.toAccount()
-            ?.also { loggedIn = true }
-            ?: throw Exception("Login failed.")
+        login(LoginParams.ofFirstLogin(id, password))
 
     override fun rememberedLogin(id: Int, token: String) =
-        networkService
-            .getLoginResult(LoginParams.ofRememberedLogin(id, token))
-            .getOrNull()
-            ?.toAccount()
-            ?.also { loggedIn = true }
-            ?: throw Exception("Login failed.")
+        login(LoginParams.ofRememberedLogin(id, token))
+
+    private fun login(param: LoginParams): Account {
+        val result = networkService
+            .getLoginResult(param)
+            .getOrThrow()
+
+        return result?.toAccount() ?: throw NullBodyException("Login result must not be null!")
+    }
 
     override fun getSavedAccount(): Account? {
         return Account(
@@ -72,7 +74,7 @@ class AccountRepositoryImpl(
     override fun activateBarcode() {
         networkService
             .getActivateBarcodeResult()
-            .getOrThrow(Exception("Barcode activation failed."))
+            .getOrThrow()
     }
 
     companion object {

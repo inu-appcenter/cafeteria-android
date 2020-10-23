@@ -23,7 +23,7 @@ import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.format
-import com.inu.cafeteria.extension.getOrNull
+import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.model.scheme.CafeteriaResult
 import com.inu.cafeteria.model.scheme.CornerResult
 import com.inu.cafeteria.model.scheme.MenuResult
@@ -43,15 +43,15 @@ class CafeteriaRepositoryImpl(
 
     override fun getAllCafeteria(date: String?): List<Cafeteria> {
         val cafeteria = cachedFetch(cafeteriaCache) {
-            networkService.getCafeteria().getOrNull()
+            networkService.getCafeteria().getOrThrow()
         } ?: return listOf()
 
         val corners = cachedFetch(cornerCache) {
-            networkService.getCorners().getOrNull()
+            networkService.getCorners().getOrThrow()
         } ?: return listOf()
 
         val menus = cachedFetch(menuCaches, date ?: Date().format()) {
-            networkService.getMenus(date).getOrNull()
+            networkService.getMenus(date).getOrThrow()
         } ?: return listOf()
 
         return ResultGatherer(cafeteria, corners, menus).combine()
@@ -59,7 +59,7 @@ class CafeteriaRepositoryImpl(
 
     override fun getCafeteriaOnly(): List<Cafeteria> {
         val cafeteria = cachedFetch(cafeteriaCache) {
-            networkService.getCafeteria().getOrNull()
+            networkService.getCafeteria().getOrThrow()
         } ?: return listOf()
 
         return cafeteria.map {

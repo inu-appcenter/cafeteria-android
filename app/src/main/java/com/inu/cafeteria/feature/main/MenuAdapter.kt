@@ -48,6 +48,10 @@ class MenuAdapter : DefaultAdapter<MenuView>() {
                 setVisible(menu.calorie ?: 0 != 0)
                 text = context.getString(R.string.unit_cal, menu.calorie)
             }
+
+            with(separator) {
+                setVisible((menu.price ?: 0 != 0) && (menu.calorie ?: 0 != 0))
+            }
         }
     }
 }

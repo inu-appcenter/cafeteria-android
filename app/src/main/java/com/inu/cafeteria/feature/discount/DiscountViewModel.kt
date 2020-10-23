@@ -27,6 +27,7 @@ import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.model.NoAccountException
+import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.ActivateBarcode
 import com.inu.cafeteria.usecase.CreateBarcode
@@ -43,6 +44,8 @@ class DiscountViewModel : BaseViewModel() {
     private val getSavedAccount: GetSavedAccount by inject()
 
     private val accountService: AccountService by inject()
+
+    private val statusRepo: DeviceStatusRepository by inject()
 
     private val navigator: Navigator by inject()
 
@@ -62,6 +65,11 @@ class DiscountViewModel : BaseViewModel() {
     val barcodeContent: LiveData<String> = _barcodeContent
 
     fun load() {
+        if (!statusRepo.isOnline()) {
+            Timber.d("Device is offline. Pending loading discount view model.")
+            return
+        }
+
         Timber.d("Loading discount view model(maybe again)!")
 
         _barcodeCardReady.value = false

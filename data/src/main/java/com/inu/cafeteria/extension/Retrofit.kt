@@ -21,7 +21,8 @@ package com.inu.cafeteria.extension
 
 import com.inu.cafeteria.exception.NullBodyException
 import com.inu.cafeteria.exception.ResponseFailException
-import com.inu.cafeteria.exception.ServerNoResponseException
+import com.inu.cafeteria.exception.NetworkException
+import com.inu.cafeteria.functional.Result
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -89,7 +90,7 @@ fun <T> Call<T>.onResult(
 
             override fun onFailure(call: Call<T>, t: Throwable) {
                 try {
-                    onFail(ServerNoResponseException())
+                    onFail(NetworkException())
                     Timber.w("Server no responding.")
                 } catch (e: Exception) {
                     onFail(e)
@@ -120,7 +121,7 @@ fun <T> Call<T>.onResult(
 
         } catch (e: IOException) {
             Timber.e(e)
-            onFail(ServerNoResponseException())
+            onFail(NetworkException())
             Timber.w("Server no responding.")
         } catch (e: Exception) {
             onFail(e)
@@ -129,50 +130,36 @@ fun <T> Call<T>.onResult(
     }
 }
 
-fun <T> Call<T>.getOrNull(): T? {
+fun <T> Call<T>.getResult(): Result<T?> {
     try {
         val result = execute()
+
         return if (result.isSuccessful) {
-            val body = result.body()
-            body.also {
-                it?.let { Timber.i("Response success!") }
-                    ?: Timber.w("Response is success but body is null.")
-            }
+            Result.Success(result.body())
         } else {
             Timber.w(result.errorBody()?.string())
             Timber.w("Response is fail.")
-            null
+            Result.Error(ResponseFailException("Response is fail."))
         }
     } catch (e: IOException) {
         Timber.e(e)
-        Timber.w("Server no responding.")
-        return null
+        Timber.w("Server not responding.")
+
+        return Result.Error(NetworkException("Server not responding."))
     } catch (e: Exception) {
         Timber.e("Unexpected exception during synchronous execute..")
-        return null
+
+        return Result.Error(e)
     }
 }
 
-fun <T> Call<T>.getOrThrow(exception: Exception): T? {
-    try {
-        val result = execute()
-        return if (result.isSuccessful) {
-            val body = result.body()
-            body.also {
-                it?.let { Timber.i("Response success!") }
-                    ?: Timber.w("Response is success but body is null.")
-            }
-        } else {
-            Timber.w(result.errorBody()?.string())
-            Timber.w("Response is fail.")
-            throw exception
+fun <T> Call<T>.getOrThrow(): T? {
+    when (val result = getResult()) {
+        is Result.Success -> {
+            return result.data
         }
-    } catch (e: IOException) {
-        Timber.e(e)
-        Timber.w("Server no responding.")
-        throw exception
-    } catch (e: Exception) {
-        Timber.e("Unexpected exception during synchronous execute..")
-        throw exception
+        is Result.Error -> {
+            throw result.exception
+        }
     }
 }

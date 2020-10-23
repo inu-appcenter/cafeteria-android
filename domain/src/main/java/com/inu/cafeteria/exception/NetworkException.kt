@@ -19,4 +19,4 @@
 
 package com.inu.cafeteria.exception
 
-class ServerNoResponseException(message: String = "") : Exception(message)
+class NetworkException(message: String = "") : Exception(message)

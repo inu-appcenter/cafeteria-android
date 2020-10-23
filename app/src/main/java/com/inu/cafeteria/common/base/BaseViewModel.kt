@@ -23,6 +23,10 @@ import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import com.inu.cafeteria.R
+import com.inu.cafeteria.exception.NetworkException
+import com.inu.cafeteria.exception.NullBodyException
+import com.inu.cafeteria.exception.ResponseFailException
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -35,7 +39,22 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
     protected val mContext: Context by inject()
 
     protected open fun handleFailure(e: Exception) {
-        Toast.makeText(mContext, e.message, Toast.LENGTH_SHORT).show()
+        val errorMessage = when (e) {
+            is NetworkException -> {
+                mContext.getString(R.string.fail_server)
+            }
+            is ResponseFailException -> {
+                mContext.getString(R.string.fail_response)
+            }
+            is NullBodyException -> {
+                mContext.getString(R.string.fail_response_body_null)
+            }
+            else -> {
+                e.message
+            }
+        }
+
+        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show()
     }
 
     protected open fun handleFailure(@StringRes message: Int, vararg args: Any?) {

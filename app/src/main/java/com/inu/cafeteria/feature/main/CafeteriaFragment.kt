@@ -47,6 +47,12 @@ class CafeteriaFragment : BaseFragment() {
 
     private var persistentView: View? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.load()
+    }
+
     override fun onCreateView(viewCreator: ViewCreator) =
         persistentView?.apply { removeFromParent() } ?:
         viewCreator<CafeteriaFragmentBinding> {

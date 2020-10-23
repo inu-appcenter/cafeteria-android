@@ -19,12 +19,15 @@
 
 package com.inu.cafeteria.injection
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.repository.*
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.*
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val myModules = module {
@@ -99,6 +102,14 @@ val myModules = module {
             context = get(),
             networkService = get()
         ) as NoticeRepository
+    }
+
+    /** Device Status Repository */
+
+    single {
+        DeviceStatusRepositoryImpl(
+            manager = androidContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        ) as DeviceStatusRepository
     }
 
 
