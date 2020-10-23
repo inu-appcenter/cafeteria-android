@@ -136,7 +136,7 @@ fun <T> Call<T>.getOrNull(): T? {
             val body = result.body()
             body.also {
                 it?.let { Timber.i("Response success!") }
-                    ?.onNull { Timber.w("Response is success but body is null.") }
+                    ?: Timber.w("Response is success but body is null.")
             }
         } else {
             Timber.w(result.errorBody()?.string())
@@ -150,5 +150,29 @@ fun <T> Call<T>.getOrNull(): T? {
     } catch (e: Exception) {
         Timber.e("Unexpected exception during synchronous execute..")
         return null
+    }
+}
+
+fun <T> Call<T>.getOrThrow(exception: Exception): T? {
+    try {
+        val result = execute()
+        return if (result.isSuccessful) {
+            val body = result.body()
+            body.also {
+                it?.let { Timber.i("Response success!") }
+                    ?: Timber.w("Response is success but body is null.")
+            }
+        } else {
+            Timber.w(result.errorBody()?.string())
+            Timber.w("Response is fail.")
+            throw exception
+        }
+    } catch (e: IOException) {
+        Timber.e(e)
+        Timber.w("Server no responding.")
+        throw exception
+    } catch (e: Exception) {
+        Timber.e("Unexpected exception during synchronous execute..")
+        throw exception
     }
 }

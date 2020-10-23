@@ -22,6 +22,7 @@ package com.inu.cafeteria.repository
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.extension.getOrNull
+import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.model.scheme.LoginParams
 import com.inu.cafeteria.service.CafeteriaNetworkService
 
@@ -69,7 +70,9 @@ class AccountRepositoryImpl(
     }
 
     override fun activateBarcode() {
-        
+        networkService
+            .getActivateBarcodeResult()
+            .getOrThrow(Exception("Barcode activation failed."))
     }
 
     companion object {
