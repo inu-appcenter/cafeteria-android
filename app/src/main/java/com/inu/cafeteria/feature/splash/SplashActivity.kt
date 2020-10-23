@@ -36,8 +36,6 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Do other things before the normal routine.
-
         navigator.showMain()
 
         finish()

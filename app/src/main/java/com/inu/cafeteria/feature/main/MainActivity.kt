@@ -27,6 +27,7 @@ import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.setVisible
+import com.inu.cafeteria.common.extension.withinAlphaAnimation
 import com.inu.cafeteria.common.navigation.rootDestinations
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import kotlinx.android.synthetic.main.main_activity.*

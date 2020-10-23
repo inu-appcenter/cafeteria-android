@@ -98,7 +98,7 @@ fun <T: View> T?.withinAlphaAnimation(from: Float, to: Float, delay: Long = 0, a
     action(this)
 
     this?.let {
-        Handler(Looper.getMainLooper()).postDelayed({ animate().alpha(1f) }, delay)
+        Handler(Looper.getMainLooper()).postDelayed({ animate().alpha(to) }, delay)
     }
 }
 
