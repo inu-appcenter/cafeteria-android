@@ -27,7 +27,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.util.Notify
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import timber.log.Timber
 
 /**
@@ -36,7 +39,21 @@ import timber.log.Timber
  *
  */
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), KoinComponent {
+
+    private val deviceStatusRepository: DeviceStatusRepository by inject()
+
+    open fun onNetworkChange(available: Boolean) {}
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        observe(deviceStatusRepository.isOnlineLiveData()) {
+            it?.let {
+                onNetworkChange(it)
+            }
+        }
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

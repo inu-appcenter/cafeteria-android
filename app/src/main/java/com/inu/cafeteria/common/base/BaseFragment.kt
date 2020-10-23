@@ -24,6 +24,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.repository.DeviceStatusRepository
+import com.inu.cafeteria.repository.DeviceStatusRepositoryImpl
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
@@ -35,6 +38,7 @@ import timber.log.Timber
 abstract class BaseFragment : Fragment(), KoinComponent {
 
     private val mContext: Context by inject()
+    private val deviceStatusRepository: DeviceStatusRepository by inject()
 
     open val optionMenuId: Int? = null
 
@@ -43,11 +47,20 @@ abstract class BaseFragment : Fragment(), KoinComponent {
 
     open fun onBackPressed() {}
 
+    open fun onNetworkChange(available: Boolean) {}
+
     internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setHasOptionsMenu(optionMenuId != null)
+
+        observe(deviceStatusRepository.isOnlineLiveData()) {
+            it?.let {
+                onNetworkChange(it)
+            }
+        }
     }
 
     override fun onCreateView(

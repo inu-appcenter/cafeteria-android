@@ -51,4 +51,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Offline view -->
+    <androidx.cardview.widget.CardView
+        style="@style/HorizontallyFullSizedViewConstrained"
+        android:id="@+id/offline_view"
+        android:layout_margin="@dimen/far_space"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@android:color/holo_orange_dark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mid_space"
+            android:text="@string/description_offline"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSecondary"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

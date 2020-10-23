@@ -21,10 +21,17 @@ package com.inu.cafeteria.feature.main
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
+import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.common.navigation.rootDestinations
+import com.inu.cafeteria.repository.DeviceStatusRepository
+import kotlinx.android.synthetic.main.main_activity.*
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 class MainActivity : NavigationActivity() {
 
@@ -53,6 +60,10 @@ class MainActivity : NavigationActivity() {
             rootDests = rootDestinations
         )
     )
+
+    override fun onNetworkChange(available: Boolean) {
+        offline_view.setVisible(available.not())
+    }
 
     companion object {
         fun callingIntent(context: Context) = Intent(context, MainActivity::class.java)

@@ -32,19 +32,26 @@ import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
-import com.inu.cafeteria.feature.login.LoginActivity
+import com.inu.cafeteria.repository.DeviceStatusRepository
 import kotlinx.android.synthetic.main.discount_fragment.view.*
-import org.koin.android.ext.android.inject
+import org.koin.core.inject
 
 class DiscountFragment : BaseFragment() {
 
     private val viewModel: DiscountViewModel by viewModels()
     private val eventHub: EventHub by inject()
 
+    override fun onNetworkChange(available: Boolean) {
+        if (available) {
+            viewModel.load()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.load()
+        // Offline works. Should be performed whether the networks is available or not.
+        viewModel.preload()
     }
 
     override fun onCreateView(viewCreator: ViewCreator): View? =

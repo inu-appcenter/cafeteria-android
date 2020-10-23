@@ -21,6 +21,8 @@ package com.inu.cafeteria.common
 
 import android.app.Application
 import com.inu.cafeteria.injection.myModules
+import com.inu.cafeteria.repository.DeviceStatusRepository
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -35,5 +37,12 @@ class ThisApplication : Application() {
             androidContext(this@ThisApplication)
             modules(myModules)
         }
+
+        startDeviceStatusRepository()
+    }
+
+    private fun startDeviceStatusRepository() {
+        val statusRepo: DeviceStatusRepository by inject()
+        statusRepo.init()
     }
 }

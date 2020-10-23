@@ -64,6 +64,11 @@ class DiscountViewModel : BaseViewModel() {
     private val _barcodeContent = MutableLiveData<String>(null)
     val barcodeContent: LiveData<String> = _barcodeContent
 
+    fun preload() {
+        _barcodeCardReady.value = false
+        _onceLoggedIn.value = accountService.isLoggedIn() || accountService.hasSavedAccount()
+    }
+
     fun load() {
         if (!statusRepo.isOnline()) {
             Timber.d("Device is offline. Pending loading discount view model.")
@@ -72,8 +77,7 @@ class DiscountViewModel : BaseViewModel() {
 
         Timber.d("Loading discount view model(maybe again)!")
 
-        _barcodeCardReady.value = false
-        _onceLoggedIn.value = accountService.isLoggedIn() || accountService.hasSavedAccount()
+        preload()
 
         when {
             accountService.isLoggedIn() -> {

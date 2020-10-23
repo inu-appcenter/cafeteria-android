@@ -19,6 +19,11 @@
 
 package com.inu.cafeteria.repository
 
+import androidx.lifecycle.LiveData
+
 interface DeviceStatusRepository {
+    fun init()
+
     fun isOnline(): Boolean
+    fun isOnlineLiveData(): LiveData<Boolean>
 }

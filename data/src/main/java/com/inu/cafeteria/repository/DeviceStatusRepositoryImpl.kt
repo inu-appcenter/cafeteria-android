@@ -21,15 +21,45 @@ package com.inu.cafeteria.repository
 
 import android.annotation.SuppressLint
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Build
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 class DeviceStatusRepositoryImpl(
     private val manager: ConnectivityManager
 ) : DeviceStatusRepository {
 
-    @SuppressLint("MissingPermission")
+    private val _online = MutableLiveData<Boolean>(null)
+
+    override fun init() {
+        val networkRequest = NetworkRequest.Builder()
+            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            .build()
+
+        manager.registerNetworkCallback(networkRequest, object: ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+                _online.postValue(true)
+            }
+
+            override fun onUnavailable() {
+                super.onUnavailable()
+                _online.postValue(false)
+            }
+
+            override fun onLost(network: Network) {
+                super.onLost(network)
+                _online.postValue(false)
+            }
+        })
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
     override fun isOnline(): Boolean {
         var result = false
         val connectivityManager = manager
@@ -59,4 +89,6 @@ class DeviceStatusRepositoryImpl(
 
         return result
     }
+
+    override fun isOnlineLiveData(): LiveData<Boolean> = _online
 }

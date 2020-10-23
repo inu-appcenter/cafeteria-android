@@ -75,6 +75,9 @@ dependencies {
 
     /** AES Crypt */
     api "com.scottyab:aescrypt:$aescrypt_version"
+
+    /** Lifecycle */
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 }
 repositories {
     mavenCentral()
