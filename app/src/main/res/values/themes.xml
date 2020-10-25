@@ -20,10 +20,11 @@
 
 <resources>
 
-    <style name="AppThemeLight" parent="AppBaseThemeLight" />
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppThemeLight"/>
 
     <!-- Light theme -->
-    <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:divider">@color/separatorLight</item>
         <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentTransitions">true</item>
@@ -50,6 +51,16 @@
 
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">@color/themeBlue</item>
+    </style>
+
+    <!-- Transparent Theme -->
+    <style name="Transparent" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
 </resources>

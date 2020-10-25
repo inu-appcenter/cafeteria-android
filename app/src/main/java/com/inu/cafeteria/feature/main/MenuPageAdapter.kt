@@ -11,7 +11,6 @@ import timber.log.Timber
 import kotlin.math.ceil
 import kotlin.math.min
 
-
 class MenuPageAdapter(
     private val menuPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool(),
     private val pageSize: Int = DEFAULT_PAGE_SIZE

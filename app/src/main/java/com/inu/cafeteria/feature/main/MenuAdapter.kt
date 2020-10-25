@@ -36,7 +36,7 @@ class MenuAdapter : DefaultAdapter<MenuView>() {
                 maxLines = 2
 
                 // On click
-                setOnClickListener { maxLines = 5 }
+                holder.view.setOnClickListener { maxLines = 5 }
             }
 
             with(price) {
