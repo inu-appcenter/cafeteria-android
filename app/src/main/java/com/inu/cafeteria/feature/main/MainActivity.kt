@@ -22,17 +22,18 @@ package com.inu.cafeteria.feature.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.AnimationUtils
+import android.widget.Toast
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
-import com.inu.cafeteria.common.extension.observe
-import com.inu.cafeteria.common.extension.setVisible
-import com.inu.cafeteria.common.extension.withinAlphaAnimation
+import com.inu.cafeteria.common.extension.fadeIn
+import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.navigation.rootDestinations
-import com.inu.cafeteria.repository.DeviceStatusRepository
+import com.inu.cafeteria.util.Fun
+import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.main_activity.*
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+
 
 class MainActivity : NavigationActivity() {
 
@@ -62,8 +63,59 @@ class MainActivity : NavigationActivity() {
         )
     )
 
-    override fun onNetworkChange(available: Boolean) {
-        offline_view.setVisible(available.not())
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setOfflineView()
+    }
+
+    private fun setOfflineView() {
+        val eggs = getEasterEggs()
+
+        with(offline_view) {
+            val animation = AnimationUtils
+                .loadAnimation(this@MainActivity, R.anim.shake_once)
+                .apply {
+                    duration = 100
+                }
+
+            setOnClickListener {
+                startAnimation(animation)
+                eggs.haveSomeFun()
+            }
+        }
+    }
+
+    private fun getEasterEggs() = Fun(
+        listOf(
+            Fun.Event(9) {
+                Toast.makeText(this, getString(R.string.egg_wow), Toast.LENGTH_SHORT).show()
+
+                ParticleSystem(this, 50, R.drawable.dot, 3000)
+                    .setSpeedRange(0.2f, 0.7f)
+                    .oneShot(offline_view, 50)
+            },
+            Fun.Event(17) {
+                Toast.makeText(this, getString(R.string.egg_help), Toast.LENGTH_SHORT).show()
+            },
+            Fun.Event(22) {
+                Toast.makeText(this, getString(R.string.egg_upup), Toast.LENGTH_SHORT).show()
+            },
+            Fun.Event(99) {
+                Toast.makeText(this, getString(R.string.egg_gmg), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.heart), Toast.LENGTH_SHORT).show()
+            }
+        )
+    )
+
+    override fun onNetworkStateChange(available: Boolean) {
+        with(offline_view) {
+            if (available) {
+                fadeOut(250L)
+            } else {
+                fadeIn(250L)
+            }
+        }
     }
 
     companion object {

@@ -101,7 +101,7 @@
     <string name="unit_cal" translatable="false">%,dkcal</string>
     <string name="desc_handle">This is an handle.</string>
     <string name="desc_help">Help!</string>
-    <string name="middle_dot" translatable="false">·</string>
+    <string name="middle_dot" translatable="false">·</string>면
     <string name="title_uicoop">UICOOP</string>
     <string name="title_student_id">STUDENT ID</string>
     <string name="title_available_at">AVAILABLE AT</string>
@@ -112,5 +112,10 @@
     <string name="barcode_ratio" translatable="false">2.5</string>
     <string name="discount_notice">제1 기숙사 식당, 사범대 식당, 학생식당에서 사용하실 수 있습니다. 할인 제공 여부와 시점은 식당 사정에 따라 달라질 수 있습니다.</string>
     <string name="description_offline">You\'re not connected to the internet. We will keep trying to reconnect you.</string>
+    <string name="egg_wow">Wow!</string>
+    <string name="egg_help">HELP!</string>
+    <string name="egg_upup">....!!</string>
+    <string name="egg_gmg">HAUP-HAUP</string>
+    <string name="heart" translatable="false">❤</string>
 
 </resources>

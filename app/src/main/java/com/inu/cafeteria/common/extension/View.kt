@@ -111,3 +111,16 @@ fun View.slideInWithFade(directionVector: Int) {
 fun View.removeFromParent() {
     (parent as? ViewGroup)?.removeView(this)
 }
+
+fun View.fadeIn(duration: Long=500L) {
+    alpha = 0f
+    setVisible(true)
+    animate().alpha(1f).setDuration(duration).start()
+}
+
+fun View.fadeOut(duration: Long=500L) {
+    alpha = 1f
+    animate().alpha(0f).setDuration(duration).withEndAction {
+        setVisible(false)
+    }.start()
+}

@@ -103,6 +103,8 @@ dependencies {
     /** Navigation */
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+    implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
 }
 
 repositories {

@@ -32,7 +32,6 @@ import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
-import com.inu.cafeteria.repository.DeviceStatusRepository
 import kotlinx.android.synthetic.main.discount_fragment.view.*
 import org.koin.core.inject
 
@@ -62,7 +61,7 @@ class DiscountFragment : BaseFragment() {
 
     private fun initializeView(view: View) {
         with(view.carrot) {
-            startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake).apply {
+            startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_forever).apply {
                 duration = 200
             })
         }
