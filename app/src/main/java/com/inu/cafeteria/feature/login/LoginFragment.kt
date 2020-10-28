@@ -19,10 +19,13 @@
 
 package com.inu.cafeteria.feature.login
 
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.finishActivity
@@ -35,6 +38,7 @@ import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
 import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.loading_view
 import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.toolbar_reorder
 import kotlinx.android.synthetic.main.login_fragment.view.*
+import kotlinx.android.synthetic.main.login_prompt_view.view.*
 import org.koin.core.inject
 
 class LoginFragment : BaseFragment() {
@@ -49,6 +53,17 @@ class LoginFragment : BaseFragment() {
 
     private fun initializeView(view: View) {
         setSupportActionBar(view.toolbar_login, showTitle = true, showUpButton = true)
+
+        with(view.password_field) {
+            setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    viewModel.performLogin()
+                    true
+                } else {
+                    false
+                }
+            }
+        }
 
         with(viewModel) {
             observe(loginSuccessEvent) {

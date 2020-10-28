@@ -22,6 +22,7 @@ package com.inu.cafeteria.extension
 import com.inu.cafeteria.exception.NullBodyException
 import com.inu.cafeteria.exception.ResponseFailException
 import com.inu.cafeteria.exception.NetworkException
+import com.inu.cafeteria.exception.UnauthorizedException
 import com.inu.cafeteria.functional.Result
 import retrofit2.Call
 import retrofit2.Callback
@@ -78,7 +79,7 @@ fun <T> Call<T>.onResult(
                             Timber.w("Response is success but body is null.")
                         }
                     } else {
-                        onFail(ResponseFailException())
+                        onFail(ResponseFailException(response.code()))
                         Timber.w("Response is fail.")
                     }
 
@@ -115,7 +116,7 @@ fun <T> Call<T>.onResult(
                     Timber.w("Response is success but body is null.")
                 }
             } else {
-                onFail(ResponseFailException())
+                onFail(ResponseFailException(result.code()))
                 Timber.w("Response is fail.")
             }
 
@@ -134,12 +135,18 @@ fun <T> Call<T>.getResult(): Result<T?> {
     try {
         val result = execute()
 
-        return if (result.isSuccessful) {
-            Result.Success(result.body())
-        } else {
-            Timber.w(result.errorBody()?.string())
-            Timber.w("Response is fail.")
-            Result.Error(ResponseFailException("Response is fail."))
+        return when {
+            result.isSuccessful -> {
+                Result.Success(result.body())
+            }
+            result.code() == 401 /* Unauthorized */ -> {
+                Result.Error(UnauthorizedException(result.errorBody()?.string() ?: ""))
+            }
+            else -> {
+                Timber.w(result.errorBody()?.string())
+                Timber.w("Response is fail.")
+                Result.Error(ResponseFailException(result.code(), "Request failed with status ${result.code()}"))
+            }
         }
     } catch (e: IOException) {
         Timber.e(e)

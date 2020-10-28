@@ -41,7 +41,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Content -->
+        <!-- Id -->
         <EditText
             style="@style/HorizontallyFullSizedViewConstrained"
             android:id="@+id/id_field"
@@ -54,6 +54,7 @@
             android:hint="@string/hint_id"
             android:autofillHints="@string/hint_id" />
 
+        <!-- Password -->
         <EditText
             style="@style/HorizontallyFullSizedViewConstrained"
             android:id="@+id/password_field"
@@ -64,8 +65,10 @@
             android:text="@={vm.userInputPassword}"
             android:inputType="textPassword"
             android:hint="@string/hint_password"
-            android:autofillHints="@string/hint_password" />
+            android:autofillHints="@string/hint_password"
+            android:imeOptions="actionSend"/>
 
+        <!-- Login button -->
         <Button
             style="@style/HorizontallyFullSizedViewConstrained"
             android:layout_margin="@dimen/far_space"
@@ -76,8 +79,9 @@
             android:backgroundTint="?android:attr/colorPrimary"
             android:text="@string/button_login"
             android:enabled="@{vm.formValid}"
+            android:alpha="@{vm.formValid ? 1.0f : 0.5f}"
             android:onClick="@{v -> vm.performLogin()}"
-            tools:enabled="false"/>
+            tools:enabled="false" />
 
         <!-- Loading view -->
         <ProgressBar

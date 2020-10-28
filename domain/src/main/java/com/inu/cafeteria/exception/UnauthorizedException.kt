@@ -19,8 +19,4 @@
 
 package com.inu.cafeteria.exception
 
-/**
- * Thrown when response is not successful.
- */
-
-class ResponseFailException(val responseCode: Int, message: String = "") : Exception(message)
+class UnauthorizedException(message: String) : Exception(message)

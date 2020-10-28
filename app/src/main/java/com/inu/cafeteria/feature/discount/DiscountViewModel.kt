@@ -26,6 +26,7 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Account
+import com.inu.cafeteria.exception.UnauthorizedException
 import com.inu.cafeteria.model.NoAccountException
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.service.AccountService
@@ -49,20 +50,20 @@ class DiscountViewModel : BaseViewModel() {
 
     private val navigator: Navigator by inject()
 
-    private val _barcodeBitmap = MutableLiveData<Bitmap>()
-    val barcodeBitmap: LiveData<Bitmap> = _barcodeBitmap
-
     private val _barcodeCardReady = MutableLiveData(false)
     val barcodeCardReady: LiveData<Boolean> = _barcodeCardReady
 
     private val _onceLoggedIn = MutableLiveData(false)
     val onceLoggedIn: LiveData<Boolean> = _onceLoggedIn
 
-    private val _studentId = MutableLiveData<String>(null)
-    val studentId: LiveData<String> = _studentId
+    private val _barcodeBitmap = MutableLiveData<Bitmap>()
+    val barcodeBitmap: LiveData<Bitmap> = _barcodeBitmap
 
     private val _barcodeContent = MutableLiveData<String>(null)
     val barcodeContent: LiveData<String> = _barcodeContent
+
+    private val _studentId = MutableLiveData<String>(null)
+    val studentId: LiveData<String> = _studentId
 
     fun preload() {
         _barcodeCardReady.value = false
@@ -137,8 +138,14 @@ class DiscountViewModel : BaseViewModel() {
 
     private fun handleLoginFailure(exception: Exception) {
         when (exception) {
-            is NoAccountException -> {}
+            is NoAccountException -> promptLoginAgain()
+            is UnauthorizedException -> promptLoginAgain()
             else -> handleFailure(exception)
         }
+    }
+
+    private fun promptLoginAgain() {
+        _barcodeCardReady.value = false
+        _onceLoggedIn.value = false
     }
 }

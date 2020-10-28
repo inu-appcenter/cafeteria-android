@@ -34,16 +34,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Carrot! -->
-        <ImageView
-            android:id="@+id/carrot"
+        <!-- Carrot wrapper -->
+        <FrameLayout
             android:layout_width="@dimen/available_time_view_size"
             android:layout_height="@dimen/available_time_view_size"
             android:layout_gravity="center"
-            android:src="@drawable/carrot"
-            android:contentDescription="@string/desc_help"
             android:visibility="@{vm.barcodeCardReady ? View.VISIBLE : View.GONE}"
-            tools:visibility="gone" />
+            tools:visibility="gone">
+
+            <!-- Carrot! -->
+            <ImageView
+                android:id="@+id/carrot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/carrot"
+                android:contentDescription="@string/desc_help" />
+
+        </FrameLayout>
 
         <!-- Barcode card wrapper -->
         <androidx.core.widget.NestedScrollView

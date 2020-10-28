@@ -23,6 +23,7 @@
     <color name="colorPrimary">@color/toolbarLight</color>
     <color name="colorPrimaryDark">@color/statusBarLight</color>
     <color name="colorAccent">@color/pointBlue</color>
+    <color name="colorAccentDarken">@color/dinner</color>
 
     <color name="white">#FFFFFF</color>
 
