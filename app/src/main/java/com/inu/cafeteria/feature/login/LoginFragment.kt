@@ -19,27 +19,20 @@
 
 package com.inu.cafeteria.feature.login
 
-import android.view.KeyEvent
+import android.content.Context
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.databinding.BindingAdapter
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.RecyclerView
-import com.inu.cafeteria.R
-import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.finishActivity
 import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.common.extension.requestFocusWithKeyboard
 import com.inu.cafeteria.common.extension.setSupportActionBar
-import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
-import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
 import com.inu.cafeteria.databinding.LoginFragmentBinding
-import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
-import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.loading_view
-import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.toolbar_reorder
 import kotlinx.android.synthetic.main.login_fragment.view.*
-import kotlinx.android.synthetic.main.login_prompt_view.view.*
-import org.koin.core.inject
+
 
 class LoginFragment : BaseFragment() {
 
@@ -53,6 +46,10 @@ class LoginFragment : BaseFragment() {
 
     private fun initializeView(view: View) {
         setSupportActionBar(view.toolbar_login, showTitle = true, showUpButton = true)
+
+        with(view.id_field) {
+            requestFocusWithKeyboard()
+        }
 
         with(view.password_field) {
             setOnEditorActionListener { _, actionId, _ ->

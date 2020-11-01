@@ -83,6 +83,7 @@ class MainActivity : NavigationActivity() {
         super.onCreate(savedInstanceState)
 
         setOfflineView()
+        promptUserSendFeedback()
     }
 
     private fun setOfflineView() {
@@ -124,6 +125,11 @@ class MainActivity : NavigationActivity() {
         )
     )
 
+    private fun promptUserSendFeedback() {
+        Toast.makeText(this, "테스트에 참여하여 주셔서 감사합니다!", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "기기를 흔들어 피드백을 보내실 수 있습니다 :)", Toast.LENGTH_LONG).show()
+    }
+
     override fun onNetworkStateChange(available: Boolean) {
         with(offline_view) {
             if (available) {
@@ -148,9 +154,11 @@ class MainActivity : NavigationActivity() {
 
     private fun onShake() {
         navigator.showFeedbackDialog(this) { feedbackMessage ->
-            sendAppFeedback(feedbackMessage) {
-                it.onSuccess { response ->
-                    Toast.makeText(this, response, Toast.LENGTH_SHORT).show()
+            sendAppFeedback(feedbackMessage) { result ->
+                result.onSuccess { body ->
+                    Toast.makeText(this, body, Toast.LENGTH_SHORT).show()
+                }.onError {
+                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 }
             }
         }

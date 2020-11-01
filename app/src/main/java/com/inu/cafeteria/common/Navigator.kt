@@ -23,12 +23,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.extension.requestFocusWithKeyboard
 import com.inu.cafeteria.common.widget.ThemedDialog
 import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
@@ -82,6 +84,8 @@ class Navigator(
                 dialog.dismiss()
             }
             .show()
+
+        textInput.requestFocusWithKeyboard()
     }
 
     /**

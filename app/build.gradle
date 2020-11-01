@@ -49,6 +49,18 @@ android {
         dataBinding = true
     }
 
+    flavorDimensions "stage"
+    productFlavors {
+        betatest {
+            dimension "stage"
+            versionNameSuffix "-betatest"
+        }
+
+        master {
+            dimension "stage"
+        }
+    }
+
     compileOptions {
         // okHTTP wants this!
         sourceCompatibility = 1.8
