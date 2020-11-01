@@ -19,11 +19,13 @@
 
 package com.inu.cafeteria.common.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.repository.DeviceStatusRepository
+import com.inu.cafeteria.util.ShakeListener
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -35,6 +37,7 @@ import org.koin.core.inject
 
 abstract class BaseActivity : AppCompatActivity(), KoinComponent {
 
+    protected val mContext: Context by inject()
     private val deviceStatusRepository: DeviceStatusRepository by inject()
 
     open fun onNetworkStateChange(available: Boolean) {}
@@ -42,6 +45,10 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        observeNetworkStateChange()
+    }
+
+    private fun observeNetworkStateChange() {
         observe(deviceStatusRepository.isOnlineLiveData()) {
             it?.let {
                 onNetworkStateChange(it)

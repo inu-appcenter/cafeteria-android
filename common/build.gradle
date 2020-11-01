@@ -90,5 +90,8 @@ dependencies {
     api "com.google.zxing:core:$zxing_version"
 
     /** Coroutine */
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutine_version"
+
+    /** Volley */
+    api "com.android.volley:volley:$volley_version"
 }

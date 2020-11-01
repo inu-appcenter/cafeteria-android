@@ -19,9 +19,13 @@
 
 package com.inu.cafeteria.common
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.R
@@ -30,6 +34,7 @@ import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
 import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
 import com.inu.cafeteria.feature.splash.SplashActivity
+import com.inu.cafeteria.usecase.SendAppFeedback
 import org.koin.core.KoinComponent
 import timber.log.Timber
 import kotlin.system.exitProcess
@@ -58,6 +63,25 @@ class Navigator(
         startActivity(
             CafeteriaReorderActivity.callingIntent(context)
         )
+    }
+
+    @SuppressLint("RestrictedApi")
+    fun showFeedbackDialog(activity: FragmentActivity, sendFeedback: (String) -> Unit) {
+        val textInput = EditText(activity).apply {
+            hint = "피드백을 작성해주세요 :)"
+        }
+
+        AlertDialog.Builder(activity)
+            .setTitle("피드백")
+            .setMessage("개선이 필요한 부분을 알려주세요!")
+            .setView(textInput, 60, 0, 60, 0)
+            .setPositiveButton("보내기") { _, _ ->
+                sendFeedback(textInput.text.toString())
+            }
+            .setNegativeButton("취소하기") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     /**

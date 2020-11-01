@@ -19,20 +19,29 @@
 
 package com.inu.cafeteria.feature.main
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
 import com.inu.cafeteria.common.extension.fadeIn
 import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.navigation.rootDestinations
+import com.inu.cafeteria.usecase.SendAppFeedback
 import com.inu.cafeteria.util.Fun
+import com.inu.cafeteria.util.ShakeListener
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.main_activity.*
+import org.koin.core.inject
 
 
 class MainActivity : NavigationActivity() {
@@ -62,6 +71,13 @@ class MainActivity : NavigationActivity() {
             rootDests = rootDestinations
         )
     )
+
+    private val navigator: Navigator by inject()
+    private val sendAppFeedback: SendAppFeedback by inject()
+
+    private val shakeListener = ShakeListener(mContext).apply {
+        setOnShakeListener { onShake() }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,6 +130,28 @@ class MainActivity : NavigationActivity() {
                 fadeOut(250L)
             } else {
                 fadeIn(250L)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        shakeListener.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        shakeListener.pause()
+    }
+
+    private fun onShake() {
+        navigator.showFeedbackDialog(this) { feedbackMessage ->
+            sendAppFeedback(feedbackMessage) {
+                it.onSuccess { response ->
+                    Toast.makeText(this, response, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

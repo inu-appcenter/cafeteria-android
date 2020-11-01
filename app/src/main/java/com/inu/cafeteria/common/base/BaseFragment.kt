@@ -37,7 +37,7 @@ import timber.log.Timber
 
 abstract class BaseFragment : Fragment(), KoinComponent {
 
-    private val mContext: Context by inject()
+    protected val mContext: Context by inject()
     private val deviceStatusRepository: DeviceStatusRepository by inject()
 
     open val optionMenuId: Int? = null

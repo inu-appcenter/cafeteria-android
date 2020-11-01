@@ -171,6 +171,14 @@ val myModules = module {
         )
     }
 
+    /** Send app feedback */
+
+    single {
+        SendAppFeedback(
+            context = get()
+        )
+    }
+
     /** Get Version */
 
     single {
