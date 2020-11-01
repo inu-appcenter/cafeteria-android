@@ -135,7 +135,7 @@ abstract class NavigationActivity : BaseActivity(),
         val now = Date().time
         val elapsed = now - lastRootLevelBackPress
 
-        if (elapsed < 500) {
+        if (elapsed < BACK_PRESS_THRESHOLD_MILLIS) {
             finishAndRemoveTask()
         } else {
             Toast.makeText(
@@ -224,5 +224,9 @@ abstract class NavigationActivity : BaseActivity(),
         override fun getItem(position: Int): Fragment =
             NavigationHostFragment.newInstance(fragmentArguments[position])
         override fun getCount(): Int = fragmentArguments.size
+    }
+
+    companion object {
+        private const val BACK_PRESS_THRESHOLD_MILLIS = 500
     }
 }
