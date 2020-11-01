@@ -21,9 +21,13 @@ package com.inu.cafeteria.injection
 
 import android.content.Context
 import android.net.ConnectivityManager
+import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.common.EventHub
+import com.inu.cafeteria.common.LifecycleEventHandler
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.db.SharedPreferenceWrapper
+import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplBetaTest
+import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplMaster
 import com.inu.cafeteria.repository.*
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.*
@@ -52,13 +56,26 @@ val myModules = module {
         )
     }
 
+    /** Live event hub */
+
     single {
         EventHub()
     }
 
     /** DB */
+
     single {
         SharedPreferenceWrapper(get())
+    }
+
+    /** Main activity event handler */
+
+    single {
+        when (BuildConfig.FLAVOR) {
+            "betatest" -> LifecycleEventHandlerImplBetaTest(context = get())
+            "master" -> LifecycleEventHandlerImplMaster()
+            else -> LifecycleEventHandlerImplMaster()
+        } as LifecycleEventHandler
     }
 
 

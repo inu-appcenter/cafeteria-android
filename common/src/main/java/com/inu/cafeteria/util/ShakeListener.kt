@@ -55,6 +55,7 @@ class ShakeListener(private val context: Context) : SensorEventListener {
 
     fun pause() {
         sensorManager?.unregisterListener(this)
+        onShake = {}
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {

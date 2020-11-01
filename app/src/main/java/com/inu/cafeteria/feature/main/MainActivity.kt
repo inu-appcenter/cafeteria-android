@@ -19,26 +19,19 @@
 
 package com.inu.cafeteria.feature.main
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.Navigator
+import com.inu.cafeteria.common.LifecycleEventHandler
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
 import com.inu.cafeteria.common.extension.fadeIn
 import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.navigation.rootDestinations
-import com.inu.cafeteria.usecase.SendAppFeedback
 import com.inu.cafeteria.util.Fun
-import com.inu.cafeteria.util.ShakeListener
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.main_activity.*
 import org.koin.core.inject
@@ -72,18 +65,10 @@ class MainActivity : NavigationActivity() {
         )
     )
 
-    private val navigator: Navigator by inject()
-    private val sendAppFeedback: SendAppFeedback by inject()
-
-    private val shakeListener = ShakeListener(mContext).apply {
-        setOnShakeListener { onShake() }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setOfflineView()
-        promptUserSendFeedback()
     }
 
     private fun setOfflineView() {
@@ -125,41 +110,12 @@ class MainActivity : NavigationActivity() {
         )
     )
 
-    private fun promptUserSendFeedback() {
-        Toast.makeText(this, "테스트에 참여하여 주셔서 감사합니다!", Toast.LENGTH_LONG).show()
-        Toast.makeText(this, "기기를 흔들어 피드백을 보내실 수 있습니다 :)", Toast.LENGTH_LONG).show()
-    }
-
     override fun onNetworkStateChange(available: Boolean) {
         with(offline_view) {
             if (available) {
                 fadeOut(250L)
             } else {
                 fadeIn(250L)
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        shakeListener.resume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        shakeListener.pause()
-    }
-
-    private fun onShake() {
-        navigator.showFeedbackDialog(this) { feedbackMessage ->
-            sendAppFeedback(feedbackMessage) { result ->
-                result.onSuccess { body ->
-                    Toast.makeText(this, body, Toast.LENGTH_SHORT).show()
-                }.onError {
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                }
             }
         }
     }

@@ -17,19 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common.extension
+package com.inu.cafeteria.feature.main
 
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
+import androidx.fragment.app.FragmentActivity
+import com.inu.cafeteria.common.LifecycleEventHandler
 
-fun EditText.requestFocusWithKeyboard() {
-    requestFocus()
-    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
-}
+class LifecycleEventHandlerImplMaster : LifecycleEventHandler {
 
-fun EditText.hideKeyboard() {
-    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.hideSoftInputFromWindow(windowToken, 0)
+    override fun onCreate(activity: FragmentActivity) {
+        // Do nothing
+    }
+
+    override fun onResume(activity: FragmentActivity) {
+        // Do nothing
+    }
+
+    override fun onPause(activity: FragmentActivity) {
+        // Do nothing
+    }
 }

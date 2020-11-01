@@ -30,6 +30,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.extension.hideKeyboard
 import com.inu.cafeteria.common.extension.requestFocusWithKeyboard
 import com.inu.cafeteria.common.widget.ThemedDialog
 import com.inu.cafeteria.feature.login.LoginActivity
@@ -79,11 +80,13 @@ class Navigator(
             .setView(textInput, 60, 0, 60, 0)
             .setPositiveButton("보내기") { _, _ ->
                 sendFeedback(textInput.text.toString())
+                textInput.hideKeyboard()
             }
-            .setNegativeButton("취소하기") { dialog, _ ->
-                dialog.dismiss()
+            .setNegativeButton("취소하기") { _, _ ->
+                textInput.hideKeyboard()
             }
             .show()
+            .setCanceledOnTouchOutside(false)
 
         textInput.requestFocusWithKeyboard()
     }
