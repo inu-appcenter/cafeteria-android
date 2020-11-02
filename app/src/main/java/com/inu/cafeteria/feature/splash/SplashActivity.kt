@@ -19,15 +19,10 @@
 
 package com.inu.cafeteria.feature.splash
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.inu.cafeteria.common.Navigator
-import com.inu.cafeteria.common.base.SingleFragmentActivity
 import org.koin.android.ext.android.inject
-import org.koin.core.inject
 
 class SplashActivity : AppCompatActivity() {
 

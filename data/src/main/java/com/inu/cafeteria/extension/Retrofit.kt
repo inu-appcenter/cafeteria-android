@@ -19,9 +19,9 @@
 
 package com.inu.cafeteria.extension
 
+import com.inu.cafeteria.exception.NetworkException
 import com.inu.cafeteria.exception.NullBodyException
 import com.inu.cafeteria.exception.ResponseFailException
-import com.inu.cafeteria.exception.NetworkException
 import com.inu.cafeteria.exception.UnauthorizedException
 import com.inu.cafeteria.functional.Result
 import retrofit2.Call

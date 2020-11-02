@@ -23,10 +23,8 @@ import android.graphics.drawable.InsetDrawable
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.widget.EndExclusiveDividerItemDecoration
-import timber.log.Timber
 
 fun RecyclerView.setLeftInsetDivider(@DrawableRes dividerDrawableRes: Int, @DimenRes leftInsetRes: Int, divideUntil: Int = -1) {
     val divider = ContextCompat.getDrawable(context, dividerDrawableRes)

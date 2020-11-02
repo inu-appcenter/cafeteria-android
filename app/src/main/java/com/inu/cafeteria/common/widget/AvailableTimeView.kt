@@ -28,7 +28,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.inu.cafeteria.R
 import com.inu.cafeteria.extension.forEachBits
 import com.inu.cafeteria.extension.has
-import timber.log.Timber
 
 class AvailableTimeView(
     context: Context,

@@ -19,12 +19,9 @@
 
 package com.inu.cafeteria.interactor
 
-import android.os.Handler
-import android.os.Looper
 import com.inu.cafeteria.functional.Result
 import kotlinx.coroutines.*
 import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
 
 /**
  * Abstract class for Use Case (Interactor in terms of Clean Architecture).

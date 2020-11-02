@@ -20,17 +20,7 @@
 package com.inu.cafeteria.common.base
 
 import android.util.SparseIntArray
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.annotation.LayoutRes
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.inu.cafeteria.common.extension.setVisible
-import com.inu.cafeteria.feature.main.CafeteriaAdapter
-import org.koin.core.KoinComponent
-import timber.log.Timber
 
 /**
  * This adapter handles loading/empty view visibility.

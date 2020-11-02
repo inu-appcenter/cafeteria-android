@@ -19,12 +19,10 @@
 
 package com.inu.cafeteria.feature.cafeteria
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Cafeteria
-import com.inu.cafeteria.feature.main.CafeteriaView
 import com.inu.cafeteria.feature.main.MenuView
 import com.inu.cafeteria.usecase.GetCafeteria
 import org.koin.core.inject

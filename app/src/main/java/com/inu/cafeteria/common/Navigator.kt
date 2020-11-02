@@ -23,9 +23,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.inu.cafeteria.BuildConfig
@@ -36,8 +34,6 @@ import com.inu.cafeteria.common.widget.ThemedDialog
 import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
 import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
-import com.inu.cafeteria.feature.splash.SplashActivity
-import com.inu.cafeteria.usecase.SendAppFeedback
 import org.koin.core.KoinComponent
 import timber.log.Timber
 import kotlin.system.exitProcess

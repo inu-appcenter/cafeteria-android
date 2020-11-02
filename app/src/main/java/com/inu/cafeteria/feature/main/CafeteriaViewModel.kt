@@ -22,7 +22,6 @@ package com.inu.cafeteria.feature.main
 import android.os.Handler
 import android.os.Looper
 import android.util.SparseIntArray
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R

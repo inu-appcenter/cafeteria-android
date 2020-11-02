@@ -25,7 +25,6 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.LifecycleEventHandler
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
 import com.inu.cafeteria.common.extension.fadeIn
@@ -34,7 +33,6 @@ import com.inu.cafeteria.common.navigation.rootDestinations
 import com.inu.cafeteria.util.Fun
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.main_activity.*
-import org.koin.core.inject
 
 
 class MainActivity : NavigationActivity() {

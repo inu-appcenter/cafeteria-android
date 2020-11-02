@@ -19,9 +19,6 @@
 
 package com.inu.cafeteria.service
 
-import com.google.gson.JsonElement
-import com.inu.cafeteria.entities.Corner
-import com.inu.cafeteria.entities.Menu
 import com.inu.cafeteria.model.scheme.*
 import retrofit2.Call
 import retrofit2.http.*

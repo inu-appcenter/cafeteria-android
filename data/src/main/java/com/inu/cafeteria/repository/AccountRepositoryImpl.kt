@@ -21,13 +21,9 @@ package com.inu.cafeteria.repository
 
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Account
-import com.inu.cafeteria.exception.NetworkException
 import com.inu.cafeteria.exception.NullBodyException
 import com.inu.cafeteria.extension.getOrThrow
-import com.inu.cafeteria.extension.getResult
-import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.model.scheme.LoginParams
-import com.inu.cafeteria.model.scheme.LoginResult
 import com.inu.cafeteria.service.CafeteriaNetworkService
 
 class AccountRepositoryImpl(

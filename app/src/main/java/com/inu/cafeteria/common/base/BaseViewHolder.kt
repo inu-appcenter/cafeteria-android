@@ -24,8 +24,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import com.inu.cafeteria.R
-import kotlinx.android.extensions.LayoutContainer
 
 open class BaseViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     constructor(parent: ViewGroup, @LayoutRes layoutId: Int)

@@ -26,7 +26,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.repository.DeviceStatusRepository
-import com.inu.cafeteria.repository.DeviceStatusRepositoryImpl
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber

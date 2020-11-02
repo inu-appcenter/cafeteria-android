@@ -25,7 +25,8 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.common.extension.*
+import com.inu.cafeteria.common.extension.setSupportActionBar
+import com.inu.cafeteria.common.extension.supportActionBar
 import com.inu.cafeteria.databinding.CafeteriaDetailFragmentBinding
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.feature.main.CafeteriaViewModel

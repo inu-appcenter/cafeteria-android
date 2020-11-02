@@ -26,7 +26,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.inu.cafeteria.common.LifecycleEventHandler
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.repository.DeviceStatusRepository
-import com.inu.cafeteria.util.ShakeListener
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 

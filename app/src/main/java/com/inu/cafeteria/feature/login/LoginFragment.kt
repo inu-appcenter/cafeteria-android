@@ -19,11 +19,8 @@
 
 package com.inu.cafeteria.feature.login
 
-import android.content.Context
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.finishActivity

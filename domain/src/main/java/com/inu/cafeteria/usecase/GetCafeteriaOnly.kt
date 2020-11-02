@@ -20,11 +20,9 @@
 package com.inu.cafeteria.usecase
 
 import com.inu.cafeteria.entities.Cafeteria
-import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
 import com.inu.cafeteria.repository.CafeteriaRepository
-import java.util.*
 
 class GetCafeteriaOnly(
     private val cafeteriaRepo: CafeteriaRepository

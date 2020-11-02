@@ -19,8 +19,6 @@
 
 package com.inu.cafeteria.common.widget
 
-import androidx.recyclerview.widget.ItemTouchHelper
-
 interface ItemTouchHelperViewHolder {
     fun onItemSelected()
     fun onItemClear()

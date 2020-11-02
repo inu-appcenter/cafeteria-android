@@ -19,26 +19,16 @@
 
 package com.inu.cafeteria.feature.reorder
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
-import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.inu.cafeteria.R
 import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
-import com.inu.cafeteria.feature.main.CafeteriaViewModel
 import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
-import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.loading_view
 import org.koin.core.inject
 
 class CafeteriaReorderFragment : BaseFragment() {

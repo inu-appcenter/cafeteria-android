@@ -23,10 +23,8 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.core.view.MotionEventCompat
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
 import com.inu.cafeteria.common.base.DefaultAdapter
 import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
