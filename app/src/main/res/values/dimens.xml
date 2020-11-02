@@ -29,23 +29,43 @@
     <!-- Google's official status bar height. -->
 
     <!-- Toolbar height including status bar. -->
+    <dimen name="toolbarHeight">80dp</dimen>
 
     <!-- Expanded height of a collapsing toolbar -->
+    <dimen name="expandedToolbarHeight">240dp</dimen>
 
     <!-- Collapsed height of a collapsing toolbar -->
+    <dimen name="collapsedToolbarHeight">@dimen/toolbarHeight</dimen>
 
     <!--
     ~ Padding for placing 24dp drawable in vertical center of an appbar.
     ~ 24dp(status bar height) + 28dp(half of toolbar height) - 12dp(half of drawable height)
     ~ A drawable with this padding will look 16dp from the status bar.
     -->
+    <dimen name="dp24IconPaddingTop">40dp</dimen>
 
     <!--
     ~ Padding for placing 24dp drawable inside an appbar with a same
     ~ space at top and start/end corner.
     -->
+    <dimen name="dp24IconPadding">16dp</dimen>
+
+    <dimen name="cardViewMarginHorizontal">8dp</dimen>
+    <dimen name="cardViewMarginVertical">4dp</dimen>
+
+    <dimen name="cardViewElevation">2dp</dimen>
+
+    <dimen name="cardViewItemPaddingHorizontal">15dp</dimen>
+    <dimen name="cardViewItemPaddingVertical">12dp</dimen>
+
+    <dimen name="toolbarTitleMarginTop">12dp</dimen>
 
     <!-- Padding of sections in info fragment. -->
+    <dimen name="infoBlockPadding">18dp</dimen>
+
+    <dimen name="cafeteriaListItemHeight">70dp</dimen>
+
+    <dimen name="barcodeCardViewHorizontalMargin">24dp</dimen>
 
     <dimen name="close_space">4dp</dimen>
     <dimen name="near_space">8dp</dimen>
@@ -72,6 +92,7 @@
     <dimen name="double_squircle_radius">13dp</dimen>
     <dimen name="triple_squircle_radius">11dp</dimen>
 
+    <dimen name="single_squircle_size">50dp</dimen>
     <dimen name="double_squircle_size">33dp</dimen>
     <dimen name="triple_squircle_size">28dp</dimen>
 
@@ -79,6 +100,7 @@
     <dimen name="logo_height">16dp</dimen>
 
     <!-- MenuItem -->
+    <dimen name="option_menu_overflow_item_width">40dp</dimen>
     <dimen name="option_menu_item_width">48dp</dimen>
 
     <!-- Barcode width -->
