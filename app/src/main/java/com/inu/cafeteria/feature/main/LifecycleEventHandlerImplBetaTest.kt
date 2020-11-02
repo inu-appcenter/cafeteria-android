@@ -20,12 +20,22 @@
 package com.inu.cafeteria.feature.main
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.inu.cafeteria.BuildConfig
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.Navigator
+import com.inu.cafeteria.common.extension.fadeIn
+import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.usecase.SendAppFeedback
 import com.inu.cafeteria.util.ShakeListener
+import com.plattysoft.leonids.ParticleSystem
+import kotlinx.android.synthetic.main.main_activity.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -36,36 +46,57 @@ class LifecycleEventHandlerImplBetaTest(
     private val navigator: Navigator by inject()
     private val sendAppFeedback: SendAppFeedback by inject()
 
-    private val shakeListener = ShakeListener(context)
-
     override fun onCreate(activity: FragmentActivity) {
         if (activity !is MainActivity) {
             return
         }
 
-        Toast.makeText(context, BuildConfig.VERSION_NAME, Toast.LENGTH_SHORT).show()
-        Toast.makeText(context, "테스트에 참여하여 주셔서 감사합니다!", Toast.LENGTH_SHORT).show()
-        Toast.makeText(context, "기기를 흔들어 피드백을 보내실 수 있습니다 :)", Toast.LENGTH_LONG).show()
+        showWelcomeMessage(activity)
+        showFeedbackButton(activity)
+     }
+
+    private fun showWelcomeMessage(activity: MainActivity) {
+        Toast.makeText(activity, "테스트에 참여하여 주셔서 감사합니다!", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onResume(activity: FragmentActivity) {
-        shakeListener.setOnShakeListener { onShakeDetected(activity) }
-        shakeListener.resume()
+    private fun showFeedbackButton(activity: FragmentActivity) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            activity.findViewById<ExtendedFloatingActionButton>(R.id.feedback_button)?.let {
+                it.setOnClickListener { showFeedbackDialog(activity) }
+                it.fadeIn(500)
+            }
+        }, 1000)
     }
 
-    override fun onPause(activity: FragmentActivity) {
-        shakeListener.pause()
-    }
-
-    private fun onShakeDetected(activity: FragmentActivity) {
+    private fun showFeedbackDialog(activity: FragmentActivity) {
         navigator.showFeedbackDialog(activity) { feedbackMessage ->
             sendAppFeedback(feedbackMessage) { result ->
                 result.onSuccess { body ->
-                    Toast.makeText(context, body, Toast.LENGTH_SHORT).show()
+                    welcomeUserWhoGaveUsFeedback(activity, body)
                 }.onError {
-                    Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                    handleError(it.message)
                 }
             }
         }
+    }
+
+    private fun welcomeUserWhoGaveUsFeedback(activity: FragmentActivity, thanksMessage: String) {
+        Toast.makeText(context, thanksMessage, Toast.LENGTH_SHORT).show()
+
+        ParticleSystem(activity, 70, R.drawable.dot, 3000)
+            .setSpeedRange(0.2f, 0.7f)
+            .oneShot(activity.findViewById(R.id.main_pager), 70)
+    }
+
+    private fun handleError(errorMessage: String?) {
+        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onResume(activity: FragmentActivity) {
+        // No shake detection!
+    }
+
+    override fun onPause(activity: FragmentActivity) {
+        // No shake detection!
     }
 }

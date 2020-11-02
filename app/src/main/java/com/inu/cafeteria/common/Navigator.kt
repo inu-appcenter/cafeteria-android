@@ -72,7 +72,7 @@ class Navigator(
 
         AlertDialog.Builder(activity)
             .setTitle("피드백")
-            .setMessage("개선이 필요한 부분을 알려주세요!")
+            .setMessage("개선이 필요한 부분을 알려주세요!\n(버전 ${BuildConfig.VERSION_NAME})")
             .setView(textInput, 60, 0, 60, 0)
             .setPositiveButton("보내기") { dialog, _ ->
                 sendFeedback(textInput.text.toString())

@@ -33,6 +33,7 @@ import com.inu.cafeteria.common.navigation.rootDestinations
 import com.inu.cafeteria.util.Fun
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.main_activity.*
+import org.koin.core.inject
 
 
 class MainActivity : NavigationActivity() {
@@ -63,10 +64,13 @@ class MainActivity : NavigationActivity() {
         )
     )
 
+    private val eventHandler: LifecycleEventHandler by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setOfflineView()
+        eventHandler.onCreate(this)
     }
 
     private fun setOfflineView() {
@@ -107,6 +111,18 @@ class MainActivity : NavigationActivity() {
             }
         )
     )
+
+    override fun onResume() {
+        super.onResume()
+
+        eventHandler.onResume(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        eventHandler.onPause(this)
+    }
 
     override fun onNetworkStateChange(available: Boolean) {
         with(offline_view) {

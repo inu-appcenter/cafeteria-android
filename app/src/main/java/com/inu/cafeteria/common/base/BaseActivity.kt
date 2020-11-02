@@ -32,9 +32,7 @@ import org.koin.core.inject
 abstract class BaseActivity : AppCompatActivity(), KoinComponent {
 
     protected val mContext: Context by inject()
-
     private val deviceStatusRepository: DeviceStatusRepository by inject()
-    private val eventHandler: LifecycleEventHandler by inject()
 
     open fun onNetworkStateChange(available: Boolean) {}
 
@@ -42,7 +40,6 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
         super.onCreate(savedInstanceState)
 
         observeNetworkStateChange()
-        eventHandler.onCreate(this)
     }
 
     private fun observeNetworkStateChange() {
@@ -51,18 +48,6 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
                 onNetworkStateChange(it)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        eventHandler.onResume(this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        eventHandler.onPause(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -24,7 +24,7 @@
     <style name="AppTheme" parent="AppThemeLight"/>
 
     <!-- Light theme -->
-    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeLight" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:divider">@color/separatorLight</item>
         <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentTransitions">true</item>
@@ -45,7 +45,7 @@
     </style>
 
     <!-- Splash theme -->
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
 
         <item name="android:windowLightStatusBar">false</item>

@@ -63,5 +63,6 @@
     <string name="egg_upup">읍읍..!</string>
     <string name="egg_gmg">하웁하웁</string>
     <string name="app_name">카페테리아</string>
+    <string name="title_feedback">피드백</string>
 
 </resources>

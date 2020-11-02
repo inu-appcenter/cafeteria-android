@@ -69,5 +69,6 @@
     <string name="egg_upup">....!!</string>
     <string name="egg_gmg">HAUP-HAUP</string>
     <string name="heart" translatable="false">❤</string>
+    <string name="title_feedback">Feedback</string>
 
 </resources>
