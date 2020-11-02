@@ -19,67 +19,21 @@
 
 <resources>
     <string name="app_name">Cafeteria</string>
-    <string name="menu_app_info">App Info</string>
-    <string name="menu_logout">Sign out</string>
     <string name="desc_logo">This is a logo of this application.</string>
-    <string name="desc_close_drawer">Close drawer</string>
-    <string name="desc_open_drawer">Open drawer</string>
-    <string name="title_student_barcode">TAG</string>
-    <string name="warn_internet">Please check the internet.</string>
     <string name="desc_student_barcode">This is a student tag.</string>
-    <string name="desc_for_the_discount">For the discount at dining halls in dormitory and the college of education.</string>
     <string name="fail_server">Could not communicate with server.</string>
     <string name="fail_response">Server request failed.</string>
-    <string name="fail_unexpected">Unexpected error occurd.</string>
-    <string name="dialog_new_version">New Version %s</string>
-    <string name="dialog_ask_update">New version is available. Do you want to update?</string>
-    <string name="button_update">Update</string>
-    <string name="button_cancel">Cancel</string>
     <string name="desc_app_description">INU cafeteria</string>
     <string name="title_server_error">Server Error</string>
     <string name="dialog_server_not_respond">Server is not responding. It could be due to the network. Please try again later.</string>
     <string name="button_exit">Exit</string>
-    <string name="hint_id">Student ID</string>
-    <string name="hint_password">Password</string>
-    <string name="check_auto_login">Keep me logged in</string>
     <string name="button_login">Sign in</string>
-    <string name="button_no_user_login">Without account</string>
-    <string name="fail_wrong_auth">Please check your ID and password.</string>
-    <string name="fail_token_invalid">Please sign in again.</string>
-    <string name="fail_no_barcode">No tag information.</string>
-    <string name="ask_not_inu">Not a member?</string>
-    <string name="desc_login_to_see_tag">This feature requires student information. You can login to proceed.</string>
     <string name="fail_response_body_null">Response body is empty.</string>
-    <string name="fail_body_parse">Failed while parsing response body.</string>
-    <string name="fail_no_data_for_key">Failed to get data. No data for the key.</string>
 
     <!-- Animations -->
-    <string name="cafeteria_transition_image" translatable="false">cafeteriaImageTransition</string>
-    <string name="cafeteria_transition_title" translatable="false">cafeteriaTitleTransition</string>
 
-    <string name="title_logout">Sign out</string>
-    <string name="dialog_ask_logout">Do you want to sign out?</string>
-    <string name="button_logout">Logout</string>
-    <string name="title_no_menu">No menu found for today.</string>
-    <string name="desc_no_menu">This cafeteria might not offer the menu.\nOr it could be a temporal problem.\nPlease try again later.</string>
-    <string name="desc_cafeteria_image">This is a cafeteria title image.</string>
-    <string name="desc_cancel_button">This is a cancel button.</string>
-    <string name="desc_menu_data">Food menu is offered by UICOOP. Might be inaccurate.</string>
-    <string name="desc_no_data">No data available.</string>
-    <string name="desc_pass_this_version">Pass this version</string>
-    <string name="title_authors">Authors</string>
-    <string name="desc_license">This software is released under %1$s. You can get a copy of full source code at %2$s. If you hav any question, please contact %3$s.</string>
-    <string name="title_open_source_licenses">Open Source Licenses</string>
-    <string name="current_version">Current Version: %s</string>
-    <string name="latest_version">Latest Version: %s</string>
-    <string name="latest_version_error">Could not find latest version.</string>
-    <string name="phase">Phase %d</string>
-    <string name="title_unexpected_error">Unexpected Error</string>
     <string name="title_fatal_error">Fatal Error</string>
     <string name="button_retry">Retry</string>
-    <string name="menu_login">Sign in</string>
-    <string name="button_confirm">Confirm</string>
-    <string name="desc_dont_show_again">Don\'t show again</string>
     <string name="desc_more_button">More button</string>
     <string name="desc_single_squircle">An icon consisting of one image.</string>
     <string name="desc_double_squircle">An icon consisting of two images.</string>
@@ -94,7 +48,6 @@
     <string name="item_today5">Today+4</string>
     <string name="title_reorder">Reorder</string>
     <string name="title_login">Sign in</string>
-    <string name="action_reset">Reset</string>
     <string name="no_information">No information</string>
     <string name="no_information_on_this_cafeteria">No information available for this cafeteria.</string>
     <string name="unit_krw">%,dKRW</string>
@@ -104,7 +57,6 @@
     <string name="middle_dot" translatable="false">·</string>면
     <string name="title_uicoop">UICOOP</string>
     <string name="title_student_id">STUDENT ID</string>
-    <string name="title_available_at">AVAILABLE AT</string>
     <string name="login_prompt_title">Student Discount</string>
     <string name="login_prompt_subtitle">You can get a discount. Sign in to proceed.</string>
     <string name="error_check_login_form">Please check your id and password.</string>

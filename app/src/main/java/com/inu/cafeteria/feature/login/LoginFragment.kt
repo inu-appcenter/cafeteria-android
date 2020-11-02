@@ -30,7 +30,6 @@ import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.databinding.LoginFragmentBinding
 import kotlinx.android.synthetic.main.login_fragment.view.*
 
-
 class LoginFragment : BaseFragment() {
 
     private val viewModel: LoginViewModel by viewModels()
