@@ -78,9 +78,10 @@ class Navigator(
             .setTitle("피드백")
             .setMessage("개선이 필요한 부분을 알려주세요!")
             .setView(textInput, 60, 0, 60, 0)
-            .setPositiveButton("보내기") { _, _ ->
+            .setPositiveButton("보내기") { dialog, _ ->
                 sendFeedback(textInput.text.toString())
                 textInput.hideKeyboard()
+                dialog.dismiss() // Not gonna dismiss automatically
             }
             .setNegativeButton("취소하기") { _, _ ->
                 textInput.hideKeyboard()
