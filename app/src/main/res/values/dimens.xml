@@ -72,12 +72,12 @@
     <dimen name="cafeteria_horizontal_space">22dp</dimen>
 
     <!-- Cafeteria section & menu page item -->
-    <dimen name="cafeteria_menu_page_horizontal_space">16dp</dimen>
+    <dimen name="cafeteria_menu_page_horizontal_space">19dp</dimen>
     <dimen name="cafeteria_menu_page_vertical_space">12dp</dimen>
-    <dimen name="menu_page_horizontal_space">6dp</dimen>
+    <dimen name="menu_page_horizontal_space">3dp</dimen>
 
     <!-- Menu item -->
-    <dimen name="menu_outer_space">10dp</dimen>
+    <dimen name="menu_outer_space">9dp</dimen>
     <dimen name="close_space">4dp</dimen>
     <dimen name="near_space">8dp</dimen>
     <dimen name="mid_space">12dp</dimen>
