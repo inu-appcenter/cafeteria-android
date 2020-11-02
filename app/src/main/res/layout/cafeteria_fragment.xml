@@ -27,7 +27,7 @@
         <import type="android.view.View" />
         <variable
             name="vm"
-            type="com.inu.cafeteria.feature.main.CafeteriaViewModel" />
+            type="com.inu.cafeteria.feature.cafeteria.CafeteriaViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

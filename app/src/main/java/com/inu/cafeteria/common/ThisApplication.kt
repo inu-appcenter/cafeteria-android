@@ -28,6 +28,7 @@ import org.koin.core.context.startKoin
 import timber.log.Timber
 
 class ThisApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
 

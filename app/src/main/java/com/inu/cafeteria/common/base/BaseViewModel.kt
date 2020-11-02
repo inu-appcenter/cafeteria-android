@@ -30,10 +30,6 @@ import com.inu.cafeteria.exception.ResponseFailException
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-/**
- * Base View Model that can handle failure inside it.
- */
-
 abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     protected val mContext: Context by inject()

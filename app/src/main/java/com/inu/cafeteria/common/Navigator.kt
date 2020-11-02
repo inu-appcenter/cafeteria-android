@@ -88,68 +88,6 @@ class Navigator(
         textInput.requestFocusWithKeyboard()
     }
 
-    /**
-     * Explain user that the server or network is down.
-     * Only choose is to close the app.
-     */
-
-    fun showNoConnectionDialog(activity: FragmentActivity) {
-        ThemedDialog(activity)
-            .withTitle(R.string.title_server_error)
-            .withMessage(R.string.dialog_server_not_respond)
-            .withPositiveButton(R.string.button_exit) { exitProcess(0) }
-            .show()
-    }
-
-    /**
-     * Explain user that the server or network is down.
-     * Give user a chance to retry.
-     */
-
-    fun showNoConnectionDialog(activity: FragmentActivity, onRetry: () -> Unit) {
-        ThemedDialog(activity)
-            .withTitle(R.string.title_server_error)
-            .withMessage(R.string.dialog_server_not_respond)
-            .withPositiveButton(R.string.button_retry) { onRetry() }
-            .show()
-    }
-
-    fun showFatalDialog(activity: FragmentActivity, e: Exception) {
-        ThemedDialog(activity)
-            .withTitle(R.string.title_fatal_error)
-            .withMessage(e.localizedMessage)
-            .withPositiveButton(R.string.button_exit) { exitProcess(0) }
-            .show()
-    }
-
-    fun showStore() {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)
-        }
-
-        startActivity(intent)
-    }
-
-    fun showUrl(url: String) {
-        startActivity(
-            Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url) }
-        )
-    }
-
-    /* TODO
-    fun showInfo() {
-        startActivity(
-            InfoActivity.callingIntent(context)
-        )
-    }
-
-    fun showBarcode() {
-        startActivity(
-            BarcodeActivity.callingIntent(context)
-        )
-    }
-*/
-
     private fun startActivity(intent: Intent) {
         // Recent versions Android requires this flag
         // to start activity from non-activity context.

@@ -29,9 +29,6 @@ import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.extension.supportActionBar
 import com.inu.cafeteria.databinding.CafeteriaDetailFragmentBinding
 import com.inu.cafeteria.extension.withNonNull
-import com.inu.cafeteria.feature.main.CafeteriaViewModel
-import com.inu.cafeteria.feature.main.MenuPageAdapter
-import com.inu.cafeteria.feature.main.MenuView
 import kotlinx.android.synthetic.main.cafeteria_detail_fragment.view.*
 import kotlinx.android.synthetic.main.empty_cafeteria_view.view.*
 

@@ -29,7 +29,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitFactory {
+
     companion object {
+
         fun createCafeteriaNetworkService(context: Context): CafeteriaNetworkService {
             val cookieJar = PersistentCookieJar(
                 SetCookieCache(),

@@ -30,10 +30,6 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
 
-/**
- * Base Fragment that has options menu and failure handling.
- */
-
 abstract class BaseFragment : Fragment(), KoinComponent {
 
     protected val mContext: Context by inject()

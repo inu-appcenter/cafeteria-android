@@ -24,7 +24,7 @@ import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
 import com.inu.cafeteria.repository.CafeteriaRepository
 
-class GetCafeteriaOnly(
+class GetCafeteriaOnly /* = without corners inside. */ (
     private val cafeteriaRepo: CafeteriaRepository
 ) : UseCase<Unit, List<Cafeteria>>() {
 

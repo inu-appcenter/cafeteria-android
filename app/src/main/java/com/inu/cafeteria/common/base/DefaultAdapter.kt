@@ -19,5 +19,4 @@
 
 package com.inu.cafeteria.common.base
 
-abstract class DefaultAdapter<T> : BaseAdapter<T, BaseViewHolder>() {
-}
+abstract class DefaultAdapter<T> : BaseAdapter<T, BaseViewHolder>()

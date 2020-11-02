@@ -19,24 +19,10 @@
 
 package com.inu.cafeteria.feature.main
 
-import com.inu.cafeteria.entities.Corner
-import com.inu.cafeteria.entities.Menu
+import androidx.fragment.app.FragmentActivity
 
-data class MenuView(
-    val availableAt: Int,
-    val cornerName: String,
-    val foods: String,
-    val price: Int?,
-    val calorie: Int?,
-) {
-    companion object {
-        fun fromCornerAndMenu(corner: Corner, menu: Menu): MenuView =
-            MenuView(
-                availableAt = corner.availableAt,
-                cornerName = if (corner.displayName.isNullOrBlank()) corner.name else corner.displayName ?: "-",
-                foods = menu.foods.joinToString(", "),
-                calorie = menu.calorie,
-                price = menu.price
-            )
-    }
+interface LifecycleEventHandler {
+    fun onCreate(activity: FragmentActivity)
+    fun onResume(activity: FragmentActivity)
+    fun onPause(activity: FragmentActivity)
 }

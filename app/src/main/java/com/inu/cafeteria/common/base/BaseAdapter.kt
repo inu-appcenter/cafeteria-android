@@ -26,9 +26,6 @@ import com.inu.cafeteria.common.extension.setVisible
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
-/**
- * This adapter handles loading/empty view visibility.
- */
 abstract class BaseAdapter<T, VH: BaseViewHolder> : RecyclerView.Adapter<VH>(), KoinComponent {
 
     /**

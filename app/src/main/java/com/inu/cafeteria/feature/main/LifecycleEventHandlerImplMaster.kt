@@ -20,7 +20,6 @@
 package com.inu.cafeteria.feature.main
 
 import androidx.fragment.app.FragmentActivity
-import com.inu.cafeteria.common.LifecycleEventHandler
 
 class LifecycleEventHandlerImplMaster : LifecycleEventHandler {
 

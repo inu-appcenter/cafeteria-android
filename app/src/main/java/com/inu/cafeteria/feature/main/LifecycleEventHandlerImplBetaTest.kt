@@ -23,7 +23,6 @@ import android.content.Context
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.inu.cafeteria.BuildConfig
-import com.inu.cafeteria.common.LifecycleEventHandler
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.usecase.SendAppFeedback
 import com.inu.cafeteria.util.ShakeListener

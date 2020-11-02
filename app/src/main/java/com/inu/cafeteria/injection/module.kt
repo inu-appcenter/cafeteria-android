@@ -23,7 +23,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.common.EventHub
-import com.inu.cafeteria.common.LifecycleEventHandler
+import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplBetaTest
@@ -41,7 +41,6 @@ val myModules = module {
      *****************************/
 
     /** Navigator */
-
     single {
         Navigator(
             context = get()
@@ -49,7 +48,6 @@ val myModules = module {
     }
 
     /** Network Service */
-
     single {
         RetrofitFactory.createCafeteriaNetworkService(
             context = get()
@@ -57,19 +55,16 @@ val myModules = module {
     }
 
     /** Live event hub */
-
     single {
         EventHub()
     }
 
     /** DB */
-
     single {
         SharedPreferenceWrapper(get())
     }
 
     /** Main activity event handler */
-
     single {
         when (BuildConfig.FLAVOR) {
             "betatest" -> LifecycleEventHandlerImplBetaTest(context = get())
@@ -83,6 +78,7 @@ val myModules = module {
      * Service
      *****************************/
 
+    /** Account service */
     single {
         AccountService(
             accountRepo = get()
@@ -94,8 +90,7 @@ val myModules = module {
      * Repository
      *****************************/
 
-    /** Cafeteria Repository */
-
+    /** Cafeteria repository */
     single {
         CafeteriaRepositoryImpl(
             networkService = get(),
@@ -103,8 +98,7 @@ val myModules = module {
         ) as CafeteriaRepository
     }
 
-    /** Account Repository */
-
+    /** Account repository */
     single {
         AccountRepositoryImpl(
             networkService = get(),
@@ -112,17 +106,7 @@ val myModules = module {
         ) as AccountRepository
     }
 
-    /** Notice Repository */
-
-    single {
-        NoticeRepositoryImpl(
-            context = get(),
-            networkService = get()
-        ) as NoticeRepository
-    }
-
-    /** Device Status Repository */
-
+    /** Device status repository */
     single {
         DeviceStatusRepositoryImpl(
             manager = androidContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -134,54 +118,47 @@ val myModules = module {
      * Use Case
      *****************************/
 
-    /** Activate Barcode */
-
+    /** Activate barcode */
     single {
         ActivateBarcode(
             accountService = get()
         )
     }
 
-    /** Create Barcode */
-
+    /** Create barcode */
     single {
         CreateBarcode()
     }
 
-    /** Get Cafeteria */
-
+    /** Get cafeteria */
     single {
         GetCafeteria(
             cafeteriaRepo = get()
         )
     }
 
-    /** Get Cafeteria only */
-
+    /** Get cafeteria only */
     single {
         GetCafeteriaOnly(
             cafeteriaRepo = get()
         )
     }
 
-    /** Get Cafeteria order */
-
+    /** Get cafeteria order */
     single {
         GetCafeteriaOrder(
             cafeteriaRepo = get()
         )
     }
 
-    /** Set Cafeteria order */
-
+    /** Set cafeteria order */
     single {
         SetCafeteriaOrder(
             cafeteriaRepo = get()
         )
     }
 
-    /** Reset Cafeteria order */
-
+    /** Reset cafeteria order */
     single {
         ResetCafeteriaOrder(
             cafeteriaRepo = get()
@@ -189,47 +166,27 @@ val myModules = module {
     }
 
     /** Send app feedback */
-
     single {
         SendAppFeedback(
             context = get()
         )
     }
 
-    /** Get Version */
-
-    single {
-        GetVersion(
-            versionRepo = get()
-        )
-    }
-
-    /** Get Notice */
-
-    single {
-        GetNotice(
-            noticeRepo = get()
-        )
-    }
-
     /** Login */
-
     single {
         Login(
             accountService = get()
         )
     }
 
-    /** Remembered Login */
-
+    /** Remembered login */
     single {
         RememberedLogin(
             accountService = get()
         )
     }
 
-    /** Get Saved Account */
-
+    /** Get saved account */
     single {
         GetSavedAccount(
             accountService = get()
