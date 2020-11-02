@@ -18,7 +18,7 @@
   -->
 
 <resources>
-    <string name="app_name" translatable="false">INU Cafeteria</string>
+    <string name="app_name">Cafeteria</string>
     <string name="menu_app_info">App Info</string>
     <string name="menu_logout">Sign out</string>
     <string name="desc_logo">This is a logo of this application.</string>

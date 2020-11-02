@@ -52,7 +52,7 @@ class MenuPageAdapter(
 
                 setRecycledViewPool(menuPool)
 
-                setLeftInsetDivider(R.drawable.line_divider, R.dimen.left_margin_until_text, pageSize - 1)
+                setLeftInsetDivider(R.drawable.line_divider, R.dimen.menu_left_margin_until_text, pageSize - 1)
             }
         }
 
