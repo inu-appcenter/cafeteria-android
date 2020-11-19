@@ -35,7 +35,6 @@ import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.main_activity.*
 import org.koin.core.inject
 
-
 class MainActivity : NavigationActivity() {
 
     override val menuRes: Int = R.menu.bottom_menu

@@ -1,10 +1,28 @@
 # cafeteria-android
 
- > 인천대학교 식단 정보 애플리케이션 INU Cafeteria (Android)
+**Cafeteria Android 앱**
+
+> #### Cafeteria 관련 저장소 일람
+>
+> ##### 서비스
+> - API 서버: [cafeteria-server](https://github.com/inu-appcenter/cafeteria-server)
+> - **Android 앱**: [cafeteria-android](https://github.com/inu-appcenter/cafeteria-android)
+>
+> ##### 운영 관리
+> - 관리용 API 서버: [cafeteria-management-server](https://github.com/inu-appcenter/cafeteria-management-server)
+> - 웹 콘솔: [cafeteria-management-web](https://github.com/inu-appcenter/cafeteria-management-web)
+>
+> ##### 배포 관리
+> - API 서버 배포 스크립트: [cafeteria-server-deploy](https://github.com/inu-appcenter/cafeteria-server-deploy)
+
+
+## 개요
 
 인천대학교 교내 학식당을 포함한 식당의 메뉴를 보여주며 생협 학생 할인을 위한 바코드를 제공합니다.
 
+
 ## 사용자이신가요
+
 
 ### 주요 기능
 - 학식, 카페테리아, 기숙사 식당 등을 교내 식당의 식단 정보를 보기 좋게 제공.
