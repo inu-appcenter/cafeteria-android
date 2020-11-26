@@ -23,10 +23,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.common.extension.finishActivity
-import com.inu.cafeteria.common.extension.observe
-import com.inu.cafeteria.common.extension.requestFocusWithKeyboard
-import com.inu.cafeteria.common.extension.setSupportActionBar
+import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.LoginFragmentBinding
 import kotlinx.android.synthetic.main.login_fragment.view.*
 
@@ -61,6 +58,7 @@ class LoginFragment : BaseFragment() {
 
         with(viewModel) {
             observe(loginSuccessEvent) {
+                view.password_field.hideKeyboard() // Keyboard does not disappear automatically.
                 finishActivity()
             }
         }
