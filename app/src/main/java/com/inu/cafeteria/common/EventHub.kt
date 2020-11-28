@@ -24,5 +24,4 @@ import com.inu.cafeteria.util.SingleLiveEvent
 class EventHub {
 
     val reorderEvent = SingleLiveEvent<Unit>()
-    val loginEvent = SingleLiveEvent<Unit>()
 }
