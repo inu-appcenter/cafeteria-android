@@ -22,9 +22,9 @@ package com.inu.cafeteria.repository
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.Corner
 import com.inu.cafeteria.entities.Menu
-import com.inu.cafeteria.model.scheme.CafeteriaResult
-import com.inu.cafeteria.model.scheme.CornerResult
-import com.inu.cafeteria.model.scheme.MenuResult
+import com.inu.cafeteria.retrofit.scheme.CafeteriaResult
+import com.inu.cafeteria.retrofit.scheme.CornerResult
+import com.inu.cafeteria.retrofit.scheme.MenuResult
 
 class ResultGatherer(
     private val cafeteriaResult: List<CafeteriaResult>,

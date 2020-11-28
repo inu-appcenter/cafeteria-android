@@ -17,24 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model.scheme
-
-import com.inu.cafeteria.entities.Account
+package com.inu.cafeteria.retrofit.scheme
 
 /**
- * Login result scheme.
+ * Logout request scheme.
  */
 
-data class LoginResult(
-    val id: Int,
-    val token: String,
-    val barcode: String
-) {
-
-    fun toAccount() =
-        Account(
-            id = id,
-            barcode = barcode,
-            token = token
-        )
-}
+data class LogoutParams(
+    val token: String   // The token we got on login
+)

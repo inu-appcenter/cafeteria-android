@@ -23,8 +23,8 @@ import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.exception.NullBodyException
 import com.inu.cafeteria.extension.getOrThrow
-import com.inu.cafeteria.model.scheme.LoginParams
-import com.inu.cafeteria.service.CafeteriaNetworkService
+import com.inu.cafeteria.retrofit.scheme.LoginParams
+import com.inu.cafeteria.retrofit.CafeteriaNetworkService
 
 class AccountRepositoryImpl(
     private val networkService: CafeteriaNetworkService,

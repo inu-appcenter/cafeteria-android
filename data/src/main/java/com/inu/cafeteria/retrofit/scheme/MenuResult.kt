@@ -17,12 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model.scheme
+package com.inu.cafeteria.retrofit.scheme
 
-/**
- * Retrofit version result scheme
- */
+import com.google.gson.annotations.SerializedName
 
-data class Version(val android: Android) {
-    data class Android(val latest: String)
-}
+data class MenuResult(
+    val foods: String,
+    val price: Int,
+    val calorie: Int,
+
+    @SerializedName("corner-id") val cornerId: Int
+)

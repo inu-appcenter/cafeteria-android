@@ -17,24 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model.scheme
+package com.inu.cafeteria.retrofit.scheme
 
 /**
- * Scheme for notice.
+ * Scheme for activated barcode result.
  */
 
-data class Notice(
-    val all: PlatformNotice,
-    val android: PlatformNotice
-) {
-    data class PlatformNotice(val id: Long, val title: String, val message: String)
+data class ActivateBarcodeResult(
+    /**
+     * Is activated?
+     *
+     * In fact, if activation request is succeded,
+     * it will have the same value as the request.
+     * That is defined in the server logic.
+     */
 
-    companion object {
-        fun emptyNotice(): Notice {
-            return Notice(
-                PlatformNotice(-1L, "", ""),
-                PlatformNotice(-1L, "", "")
-            )
-        }
-    }
-}
+    val active: String
+)

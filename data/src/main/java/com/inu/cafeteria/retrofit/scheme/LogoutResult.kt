@@ -17,14 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model.scheme
+package com.inu.cafeteria.retrofit.scheme
 
-import com.google.gson.annotations.SerializedName
+/**
+ * Logout result scheme.
+ */
 
-data class CornerResult(
-    val id: Int,
-    val name: String,
-    @SerializedName("display-name") val displayName: String,
-    @SerializedName("available-at") val availableAt: Int,
-    @SerializedName("cafeteria-id") val cafeteriaId: Int
+data class LogoutResult(
+    val result: String
 )

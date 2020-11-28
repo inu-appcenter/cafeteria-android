@@ -20,7 +20,7 @@
 package com.inu.cafeteria.service
 
 import com.inu.cafeteria.entities.Account
-import com.inu.cafeteria.model.NoAccountException
+import com.inu.cafeteria.exception.NoAccountException
 import com.inu.cafeteria.repository.AccountRepository
 import timber.log.Timber
 

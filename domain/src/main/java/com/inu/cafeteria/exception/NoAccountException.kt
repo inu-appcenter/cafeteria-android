@@ -17,12 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model.scheme
+package com.inu.cafeteria.exception
 
-/**
- * Logout result scheme.
- */
-
-data class LogoutResult(
-    val result: String
-)
+class NoAccountException(message: String) : Exception(message)

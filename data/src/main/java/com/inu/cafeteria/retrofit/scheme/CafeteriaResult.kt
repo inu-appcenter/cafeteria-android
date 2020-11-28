@@ -17,18 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model
+package com.inu.cafeteria.retrofit.scheme
 
-/**
- * A class having a current version and a latest version.
- * It is useful when we want to get and compare versions in one place.
- */
+import com.google.gson.annotations.SerializedName
 
-data class VersionCompared(val currentVersion: String, val latestVersion: String) {
-    fun needUpdate(): Boolean {
-        return !isUpToDate()
-    }
-    fun isUpToDate(): Boolean {
-        return latestVersion <= currentVersion
-    }
-}
+data class CafeteriaResult(
+    val id: Int,
+    val name: String,
+    @SerializedName("display-name") val displayName: String,
+    @SerializedName("support-menu") val supportMenu: Boolean,
+    @SerializedName("support-discount") val supportDiscount: Boolean,
+    @SerializedName("support-notification") val supportNotification: Boolean
+)

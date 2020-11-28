@@ -17,6 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model
+package com.inu.cafeteria.repository
 
-class NoAccountException(message: String) : Exception(message)
+import com.inu.cafeteria.entities.Notice
+
+interface NoticeRepository {
+    fun getNewNotice(): Notice
+    fun getAllNotices(): List<Notice>
+
+
+}

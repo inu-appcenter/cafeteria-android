@@ -17,28 +17,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model.scheme
+package com.inu.cafeteria.retrofit.scheme
 
 /**
- * Login request scheme.
+ * Scheme for activated barcode result.
  */
 
-data class LoginParams(
-    val id: Int,
-    val token: String,
-    val password: String,
+data class ActivateBarcodeParams(
+    /**
+     * The barcode data to activate or not.
+     */
+
+    val barcode: String,
+
+    /**
+     * Whether to activate or not.
+     * Must be "1"(activate) or "0"(deactivate).
+     */
+
+    val activated: String
 ) {
-
     companion object {
+        const val ACTIVATE_TRUE = "1"
+        const val ACTIVATE_FALSE = "0"
 
-        fun ofFirstLogin(id: Int, password: String): LoginParams {
-            return LoginParams(id, EMPTY, password)
+        fun ofActivating(barcode: String): ActivateBarcodeParams {
+            return ActivateBarcodeParams(
+                barcode = barcode,
+                activated = ACTIVATE_TRUE
+            )
         }
 
-        fun ofRememberedLogin(id: Int, token: String): LoginParams {
-            return LoginParams(id, token, EMPTY)
+        fun ofInvalidating(barcode: String): ActivateBarcodeParams {
+            return ActivateBarcodeParams(
+                barcode = barcode,
+                activated = ACTIVATE_FALSE
+            )
         }
-
-        private const val EMPTY = ""
     }
 }

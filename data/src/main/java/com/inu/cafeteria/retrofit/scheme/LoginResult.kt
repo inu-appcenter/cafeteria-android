@@ -17,14 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model
+package com.inu.cafeteria.retrofit.scheme
 
-data class AuthorGroup(
-    val phase: Int,
-    val authors: List<Author>
-)
+import com.inu.cafeteria.entities.Account
 
-data class Author(
-    val name: String,
-    val part: String
-)
+/**
+ * Login result scheme.
+ */
+
+data class LoginResult(
+    val id: Int,
+    val token: String,
+    val barcode: String
+) {
+
+    fun toAccount() =
+        Account(
+            id = id,
+            barcode = barcode,
+            token = token
+        )
+}

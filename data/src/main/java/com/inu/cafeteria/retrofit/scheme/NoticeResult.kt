@@ -17,28 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.model
+package com.inu.cafeteria.retrofit.scheme
 
-/**
- * Represents a barcode loading state.
- */
+import com.google.gson.annotations.SerializedName
 
-data class BarcodeState(
-    /**
-     * Logged in as a student?
-     */
-
-val isLoggedIn: Boolean = false,
-
-    /**
-     * Is the barcode loading?
-     */
-
-val isLoading: Boolean = false,
-
-    /**
-     * Is the network or the server down?
-     */
-
-val isNetworkDown: Boolean = false
+data class NoticeResult(
+    val id: Int,
+    val title: String,
+    val body: String,
+    @SerializedName("created-at") val createdAt: Long,
 )
