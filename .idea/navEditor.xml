@@ -8,7 +8,7 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="home_dest">
+                  <entry key="discount_dest">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -71,6 +71,28 @@
         <entry key="nav_graph_menu.xml">
           <value>
             <LayoutPositions />
+          </value>
+        </entry>
+        <entry key="nav_graph_support.xml">
+          <value>
+            <LayoutPositions>
+              <option name="myPositions">
+                <map>
+                  <entry key="support_dest">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </LayoutPositions>
           </value>
         </entry>
       </map>

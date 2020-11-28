@@ -17,12 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common.navigation
+package com.inu.cafeteria.feature.support
 
-import com.inu.cafeteria.R
+import com.inu.cafeteria.common.base.BaseViewModel
 
-val rootDestinations = intArrayOf(
-    R.id.cafeteria_list_dest,
-    R.id.discount_dest,
-    R.id.support_dest
-)
+class SupportViewModel : BaseViewModel() {
+}

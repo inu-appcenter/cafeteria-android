@@ -53,7 +53,7 @@ class DiscountFragment : BaseFragment() {
         viewModel.preload()
     }
 
-    override fun onCreateView(viewCreator: ViewCreator): View? =
+    override fun onCreateView(viewCreator: ViewCreator): View =
         viewCreator<DiscountFragmentBinding> {
             initializeView(root)
             vm = viewModel

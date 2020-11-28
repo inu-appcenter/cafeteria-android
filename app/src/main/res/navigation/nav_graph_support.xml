@@ -18,21 +18,17 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_support"
+    app:startDestination="@id/support_dest">
 
-    <item
-        android:id="@+id/tab_cafeteria"
-        android:icon="@drawable/ic_restaurant_24px"
-        android:title="@string/title_menus" />
+    <fragment
+        android:id="@+id/support_dest"
+        android:name="com.inu.cafeteria.feature.support.SupportFragment"
+        android:label="@string/title_support"
+        tools:layout="@layout/support_fragment" />
 
-    <item
-        android:id="@+id/tab_discount"
-        android:icon="@drawable/ic_barcode_20dp"
-        android:title="@string/title_discount" />
-
-    <item
-        android:id="@+id/tab_support"
-        android:icon="@drawable/ic_support_agent_24px"
-        android:title="@string/title_support" />
-
-</menu>
+</navigation>

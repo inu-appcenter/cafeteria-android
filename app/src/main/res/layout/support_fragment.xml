@@ -18,21 +18,20 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/tab_cafeteria"
-        android:icon="@drawable/ic_restaurant_24px"
-        android:title="@string/title_menus" />
+    <data>
+        <variable
+            name="vm"
+            type="com.inu.cafeteria.feature.support.SupportViewModel" />
+    </data>
 
-    <item
-        android:id="@+id/tab_discount"
-        android:icon="@drawable/ic_barcode_20dp"
-        android:title="@string/title_discount" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <item
-        android:id="@+id/tab_support"
-        android:icon="@drawable/ic_support_agent_24px"
-        android:title="@string/title_support" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</menu>
+</layout>
+

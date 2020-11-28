@@ -17,12 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common.navigation
+package com.inu.cafeteria.feature.support
 
-import com.inu.cafeteria.R
+import android.view.View
+import androidx.fragment.app.viewModels
+import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.databinding.SupportFragmentBinding
 
-val rootDestinations = intArrayOf(
-    R.id.cafeteria_list_dest,
-    R.id.discount_dest,
-    R.id.support_dest
-)
+class SupportFragment : BaseFragment() {
+
+    private val viewModel: SupportViewModel by viewModels()
+
+    override fun onCreateView(viewCreator: ViewCreator): View {
+        return viewCreator.createView<SupportFragmentBinding> {
+            initializeView(root)
+            vm = viewModel
+        }
+    }
+
+    private fun initializeView(view: View) {
+        // TODO("Not yet implemented")
+    }
+}

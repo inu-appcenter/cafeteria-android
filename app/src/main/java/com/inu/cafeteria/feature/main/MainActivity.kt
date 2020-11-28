@@ -62,6 +62,15 @@ class MainActivity : NavigationActivity() {
             navHostId = R.id.nav_host_discount,
             tabItemId = R.id.tab_discount,
             rootDests = rootDestinations
+        ),
+
+        /** Support */
+        NavigationHostFragment.createArguments(
+            layoutRes = R.layout.content_support_base,
+            toolbarId = R.id.toolbar_support,
+            navHostId = R.id.nav_host_support,
+            tabItemId = R.id.tab_support,
+            rootDests = rootDestinations
         )
     )
 
