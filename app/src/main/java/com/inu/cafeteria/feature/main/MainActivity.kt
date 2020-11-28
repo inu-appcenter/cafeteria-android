@@ -77,7 +77,8 @@ class MainActivity : NavigationActivity() {
         setOfflineView()
         eventHandler.onCreate(this)
 
-        navigator.showNotice(this, Notice(1, "히히", "하하!!", Date().time))
+        // navigator.showNotice(this, Notice(1, "히히", "하하!!", Date().time))
+        navigator.showUpdate(this)
     }
 
     private fun setOfflineView() {

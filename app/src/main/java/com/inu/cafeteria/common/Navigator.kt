@@ -82,6 +82,26 @@ class Navigator(
         dialog.show()
     }
 
+    fun showUpdate(activity: FragmentActivity) {
+        AlertDialog
+            .Builder(activity)
+            .setTitle(context.getString(R.string.wait))
+            .setMessage(context.getString(R.string.description_updated_needed))
+            .setPositiveButton(context.getString(R.string.button_update)) { _, _ ->
+                showStore()
+            }
+            .setCancelable(false) // Force!
+            .show()
+    }
+
+    fun showStore() {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID)
+        }
+
+        startActivity(intent)
+    }
+
     @SuppressLint("RestrictedApi")
     fun showFeedbackDialog(activity: FragmentActivity, sendFeedback: (String) -> Unit) {
         val textInput = EditText(activity).apply {
