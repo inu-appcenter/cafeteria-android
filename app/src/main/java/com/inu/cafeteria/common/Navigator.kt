@@ -67,7 +67,7 @@ class Navigator(
         )
     }
 
-    fun showNotice(activity: FragmentActivity, notice: Notice) {
+    fun showNotice(activity: FragmentActivity, notice: Notice, onDismiss: () -> Unit) {
         val dialog = BottomSheetDialog(activity)
         val noticeView = activity.layoutInflater.inflate(R.layout.notice_view, null).apply {
             with(this.title) {
@@ -77,7 +77,15 @@ class Navigator(
             with(this.body) {
                 text = notice.body
             }
+
+            with(this.dismiss) {
+                setOnClickListener {
+                    dialog.dismiss()
+                    onDismiss()
+                }
+            }
         }
+
         dialog.setContentView(noticeView)
         dialog.show()
     }

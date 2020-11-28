@@ -24,14 +24,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
 import com.inu.cafeteria.common.extension.fadeIn
 import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.navigation.rootDestinations
-import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.util.Fun
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.main_activity.*
@@ -66,19 +65,14 @@ class MainActivity : NavigationActivity() {
         )
     )
 
+    private val viewModel: MainViewModel by viewModels()
     private val eventHandler: LifecycleEventHandler by inject()
-
-    // TODO
-    private val navigator: Navigator by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setOfflineView()
         eventHandler.onCreate(this)
-
-        // navigator.showNotice(this, Notice(1, "히히", "하하!!", Date().time))
-        navigator.showUpdate(this)
     }
 
     private fun setOfflineView() {
@@ -133,6 +127,10 @@ class MainActivity : NavigationActivity() {
     }
 
     override fun onNetworkStateChange(available: Boolean) {
+        if (available) {
+            viewModel.load(this)
+        }
+
         with(offline_view) {
             if (available) {
                 fadeOut(250L)

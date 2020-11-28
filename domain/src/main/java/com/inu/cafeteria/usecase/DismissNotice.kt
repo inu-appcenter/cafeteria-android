@@ -17,13 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.usecase
 
 import com.inu.cafeteria.entities.Notice
+import com.inu.cafeteria.functional.Result
+import com.inu.cafeteria.interactor.UseCase
+import com.inu.cafeteria.repository.NoticeRepository
 
-interface NoticeRepository {
-    fun getNewNotice(): Notice?
-    fun markNoticeRead(notice: Notice)
+class DismissNotice(
+    private val noticeRepo: NoticeRepository
+) : UseCase<Notice, Unit>() {
 
-    fun getAllNotices(): List<Notice>
+    override fun run(params: Notice) = Result.of {
+        noticeRepo.markNoticeRead(params)
+    }
 }

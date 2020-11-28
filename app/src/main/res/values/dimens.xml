@@ -105,4 +105,8 @@
 
     <!-- Barcode width -->
     <dimen name="barcode_width">200dp</dimen>
+
+    <!-- Notice bottom sheet -->
+    <dimen name="notice_sheet_height">180dp</dimen>
+
 </resources>

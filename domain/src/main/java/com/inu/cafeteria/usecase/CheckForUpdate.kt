@@ -17,13 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.usecase
 
-import com.inu.cafeteria.entities.Notice
+import com.inu.cafeteria.functional.Result
+import com.inu.cafeteria.interactor.UseCase
+import com.inu.cafeteria.repository.VersionRepository
 
-interface NoticeRepository {
-    fun getNewNotice(): Notice?
-    fun markNoticeRead(notice: Notice)
+class CheckForUpdate(
+    private val versionRepo: VersionRepository
+) : UseCase<String, Boolean>() {
 
-    fun getAllNotices(): List<Notice>
+    override fun run(params: String) = Result.of {
+        versionRepo.shouldIUpdate(
+            "android",
+            params
+        )
+    }
 }

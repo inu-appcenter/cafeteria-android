@@ -118,6 +118,21 @@ val myModules = module {
         ) as DeviceStatusRepository
     }
 
+    /** Notice repository */
+    single {
+        NoticeRepositoryImpl(
+            networkService = get(),
+            db = get()
+        ) as NoticeRepository
+    }
+
+    /** Version repository */
+    single {
+        VersionRepositoryImpl(
+            networkService = get()
+        ) as VersionRepository
+    }
+
 
     /*****************************
      * Use Case
@@ -195,6 +210,27 @@ val myModules = module {
     single {
         GetSavedAccount(
             accountService = get()
+        )
+    }
+
+    /** Check new notice */
+    single {
+        GetNewNotice(
+            noticeRepo = get()
+        )
+    }
+
+    /** Dismiss notice */
+    single {
+        DismissNotice(
+            noticeRepo = get()
+        )
+    }
+
+    /** Check for update */
+    single {
+        CheckForUpdate(
+            versionRepo = get()
         )
     }
 }

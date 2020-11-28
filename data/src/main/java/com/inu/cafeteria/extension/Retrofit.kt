@@ -19,10 +19,7 @@
 
 package com.inu.cafeteria.extension
 
-import com.inu.cafeteria.exception.NetworkException
-import com.inu.cafeteria.exception.NullBodyException
-import com.inu.cafeteria.exception.ResponseFailException
-import com.inu.cafeteria.exception.UnauthorizedException
+import com.inu.cafeteria.exception.*
 import com.inu.cafeteria.functional.Result
 import retrofit2.Call
 import retrofit2.Callback
@@ -141,6 +138,9 @@ fun <T> Call<T>.getResult(): Result<T?> {
             }
             result.code() == 401 /* Unauthorized */ -> {
                 Result.Error(UnauthorizedException(result.errorBody()?.string() ?: ""))
+            }
+            result.code() == 404 /* Not found */ -> {
+                Result.Error(DataNotFoundException(result.errorBody()?.string() ?: ""))
             }
             else -> {
                 Timber.w(result.errorBody()?.string())

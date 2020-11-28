@@ -19,11 +19,15 @@
 
 package com.inu.cafeteria.repository
 
-import com.inu.cafeteria.entities.Notice
+import com.inu.cafeteria.exception.NullBodyException
+import com.inu.cafeteria.extension.getOrThrow
+import com.inu.cafeteria.retrofit.CafeteriaNetworkService
 
-interface NoticeRepository {
-    fun getNewNotice(): Notice?
-    fun markNoticeRead(notice: Notice)
+class VersionRepositoryImpl(
+    private val networkService: CafeteriaNetworkService
+) : VersionRepository {
 
-    fun getAllNotices(): List<Notice>
+    override fun shouldIUpdate(os: String, version: String): Boolean {
+        return networkService.shouldIUpdate(os, version).getOrThrow() ?: throw NullBodyException("Body should not be empty!")
+    }
 }
