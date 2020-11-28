@@ -30,6 +30,8 @@ class AccountService(
 
     fun isLoggedIn() = accountRepo.isLoggedIn()
 
+    fun loggedInStatus() = accountRepo.isLoggedInLiveData()
+
     fun login(id: Int, password: String) {
         Timber.d("Try login with id=\"$id\" and password=\"$password\".")
 

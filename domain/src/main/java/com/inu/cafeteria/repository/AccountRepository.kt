@@ -19,11 +19,13 @@
 
 package com.inu.cafeteria.repository
 
+import androidx.lifecycle.LiveData
 import com.inu.cafeteria.entities.Account
 
 interface AccountRepository {
 
     fun isLoggedIn(): Boolean
+    fun isLoggedInLiveData(): LiveData<Boolean>
 
     fun firstLogin(id: Int, password: String): Account
     fun rememberedLogin(id: Int, token: String): Account

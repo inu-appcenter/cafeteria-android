@@ -20,11 +20,17 @@
 package com.inu.cafeteria.feature.support
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.repository.DeviceStatusRepository
+import com.inu.cafeteria.service.AccountService
+import org.koin.core.inject
 
 class SupportViewModel : BaseViewModel() {
+
+    private val accountService: AccountService by inject()
 
     private val availableSupportOptionsForThoseLoggedIn = listOf(
         SupportOption(R.string.title_authors, R.id.support_dest),
@@ -35,8 +41,14 @@ class SupportViewModel : BaseViewModel() {
         SupportOption(R.string.title_authors, R.id.support_dest)
     )
 
-    private val _supportOptions = MutableLiveData<List<SupportOption>>(availableSupportOptionsForThoseLoggedIn)
+    private val _supportOptions = MediatorLiveData<List<SupportOption>>().apply {
+        addSource(accountService.loggedInStatus()) { loggedIn ->
+            if (loggedIn) {
+                postValue(availableSupportOptionsForThoseLoggedIn)
+            } else {
+                postValue(availableSupportOptionsForThoseNotLoggedIn)
+            }
+        }
+    }
     val supportOptions: LiveData<List<SupportOption>> = _supportOptions
-
-
 }

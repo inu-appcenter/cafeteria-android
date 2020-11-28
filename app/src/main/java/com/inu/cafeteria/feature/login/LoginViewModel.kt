@@ -26,6 +26,7 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.extension.onChanged
+import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.Login
 import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
@@ -33,7 +34,7 @@ import org.koin.core.inject
 class LoginViewModel : BaseViewModel() {
 
     private val login: Login by inject()
-    private val eventHub: EventHub by inject()
+    private val accountService: AccountService by inject()
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
@@ -41,7 +42,7 @@ class LoginViewModel : BaseViewModel() {
     private val _formValid = MutableLiveData(false)
     val formValid: LiveData<Boolean> = _formValid
 
-    val loginSuccessEvent = SingleLiveEvent<Unit>()
+    val loggedInStatus = accountService.loggedInStatus()
 
     val userInputId = ObservableField<String>().apply {
         onChanged {
@@ -68,7 +69,6 @@ class LoginViewModel : BaseViewModel() {
 
         login(Pair(id, password)) {
             it
-                .onSuccess { handleLoginResult() }
                 .onError(::handleFailure)
                 .finally { _loading.value = false }
         }
@@ -89,11 +89,6 @@ class LoginViewModel : BaseViewModel() {
         }
 
         return true
-    }
-
-    private fun handleLoginResult() {
-        eventHub.loginEvent.call() // For global event listener: DiscountFragment.
-        loginSuccessEvent.call() // For the owner fragment: LoginFragment.
     }
 
     override fun handleFailure(e: Exception) {

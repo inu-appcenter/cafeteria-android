@@ -19,6 +19,8 @@
 
 package com.inu.cafeteria.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.exception.NullBodyException
@@ -31,9 +33,13 @@ class AccountRepositoryImpl(
     private val db: SharedPreferenceWrapper
 ) : AccountRepository {
 
-    private var loggedIn = false
+    private var loggedIn = MutableLiveData<Boolean>(false)
 
     override fun isLoggedIn(): Boolean {
+        return loggedIn.value!!
+    }
+
+    override fun isLoggedInLiveData(): LiveData<Boolean> {
         return loggedIn
     }
 
@@ -48,7 +54,9 @@ class AccountRepositoryImpl(
             .getLoginResult(param)
             .getOrThrow()
 
-        return result?.toAccount() ?: throw NullBodyException("Login result must not be null!")
+        return result?.toAccount().apply {
+            loggedIn.postValue(true)
+        } ?: throw NullBodyException("Login result must not be null!")
     }
 
     override fun getSavedAccount(): Account? {

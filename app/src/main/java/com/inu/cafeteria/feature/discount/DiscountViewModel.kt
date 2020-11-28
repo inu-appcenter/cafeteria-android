@@ -65,6 +65,8 @@ class DiscountViewModel : BaseViewModel() {
     private val _studentId = MutableLiveData<String>(null)
     val studentId: LiveData<String> = _studentId
 
+    val loggedInStatus = accountService.loggedInStatus()
+
     fun preload() {
         _barcodeCardReady.value = false
         _onceLoggedIn.value = accountService.isLoggedIn() || accountService.hasSavedAccount()
