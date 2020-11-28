@@ -26,14 +26,17 @@ import android.net.Uri
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.extension.hideKeyboard
 import com.inu.cafeteria.common.extension.requestFocusWithKeyboard
 import com.inu.cafeteria.common.widget.ThemedDialog
+import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
 import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
+import kotlinx.android.synthetic.main.notice_view.view.*
 import org.koin.core.KoinComponent
 import timber.log.Timber
 import kotlin.system.exitProcess
@@ -62,6 +65,21 @@ class Navigator(
         startActivity(
             CafeteriaReorderActivity.callingIntent(context)
         )
+    }
+
+    fun showNotice(activity: FragmentActivity, notice: Notice) {
+        val dialog = BottomSheetDialog(activity)
+        val noticeView = activity.layoutInflater.inflate(R.layout.notice_view, null).apply {
+            with(this.title) {
+                text = notice.title
+            }
+
+            with(this.body) {
+                text = notice.body
+            }
+        }
+        dialog.setContentView(noticeView)
+        dialog.show()
     }
 
     @SuppressLint("RestrictedApi")

@@ -42,6 +42,8 @@
         <item name="barBackground">@color/backgroundLight</item>
         <item name="barTextColor">@color/textSecondary</item>
         <item name="barSelectedTextColor">@drawable/bar_item_color</item>
+
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <!-- Splash theme -->
@@ -52,7 +54,7 @@
         <item name="android:statusBarColor">@color/themeBlue</item>
     </style>
 
-    <!-- Transparent Theme -->
+    <!-- Transparent theme -->
     <style name="Transparent" parent="AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -60,6 +62,11 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- Bottom sheet theme -->
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
 </resources>
