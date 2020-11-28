@@ -121,5 +121,7 @@
     <string name="wait">Hey..!</string>
     <string name="description_updated_needed">You need to update this application! You will be connected to Play Store after you click Update.</string>
     <string name="title_support">Support</string>
+    <string name="title_inu_appcenter">INU Appcenter</string>
+    <string name="button_kakaotalk">KakaoTalk Chat</string>
 
 </resources>

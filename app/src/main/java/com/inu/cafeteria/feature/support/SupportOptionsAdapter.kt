@@ -19,24 +19,12 @@
 
 package com.inu.cafeteria.feature.support
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.databinding.SupportOptionItemBinding
 
-class SupportViewModel : BaseViewModel() {
+class SupportOptionsAdapter : GenericAdapter<SupportOption, SupportOptionItemBinding>() {
 
-    private val availableSupportOptionsForThoseLoggedIn = listOf(
-        SupportOption(R.string.title_authors, R.id.support_dest),
-        SupportOption(R.string.title_feedback, R.id.support_dest)
-    )
-
-    private val availableSupportOptionsForThoseNotLoggedIn = listOf(
-        SupportOption(R.string.title_authors, R.id.support_dest)
-    )
-
-    private val _supportOptions = MutableLiveData<List<SupportOption>>(availableSupportOptionsForThoseLoggedIn)
-    val supportOptions: LiveData<List<SupportOption>> = _supportOptions
-
-
+    override fun getLayoutIdForPosition(position: Int): Int {
+        return R.layout.support_option_item
+    }
 }

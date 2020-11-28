@@ -20,13 +20,23 @@
 package com.inu.cafeteria.feature.support
 
 import android.view.View
+import android.widget.Toast
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.SupportFragmentBinding
+import com.inu.cafeteria.databinding.SupportOptionItemBinding
+import kotlinx.android.synthetic.main.support_fragment.view.*
+import timber.log.Timber
 
 class SupportFragment : BaseFragment() {
 
     private val viewModel: SupportViewModel by viewModels()
+
+    private val adapter = SupportOptionsAdapter()
 
     override fun onCreateView(viewCreator: ViewCreator): View {
         return viewCreator.createView<SupportFragmentBinding> {
@@ -36,6 +46,25 @@ class SupportFragment : BaseFragment() {
     }
 
     private fun initializeView(view: View) {
-        // TODO("Not yet implemented")
+        with(view.support_options_recycler) {
+            adapter = this@SupportFragment.adapter
+        }
+
+        with(adapter) {
+            onClickRootLayout = {
+                Toast.makeText(activity, "Hey!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    companion object {
+
+        @JvmStatic
+        @BindingAdapter("supportOptions")
+        fun setSupportOptions(view: RecyclerView, options: List<SupportOption>?) {
+            options?.let {
+                (view.adapter as? SupportOptionsAdapter)?.items = it
+            }
+        }
     }
 }

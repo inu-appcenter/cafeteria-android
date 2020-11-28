@@ -18,8 +18,9 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -27,11 +28,30 @@
             type="com.inu.cafeteria.feature.support.SupportViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- KakaoTalk chat -->
+            <include layout="@layout/kakao_chat_button" />
+
+            <!-- Other support options -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/support_options_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:supportOptions="@{vm.supportOptions}"
+                tools:listitem="@layout/support_option_item"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </layout>
 
