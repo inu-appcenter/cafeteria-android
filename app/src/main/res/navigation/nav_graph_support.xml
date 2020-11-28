@@ -29,6 +29,56 @@
         android:id="@+id/support_dest"
         android:name="com.inu.cafeteria.feature.support.SupportFragment"
         android:label="@string/title_support"
-        tools:layout="@layout/support_fragment" />
+        tools:layout="@layout/support_fragment" >
+
+        <action
+            android:id="@+id/action_support_manual"
+            app:destination="@id/support_manual_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left" />
+
+        <action
+            android:id="@+id/action_support_faq"
+            app:destination="@id/support_faq_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left" />
+
+        <action
+            android:id="@+id/action_support_ask"
+            app:destination="@id/support_ask_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left" />
+
+        <action
+            android:id="@+id/action_support_questions"
+            app:destination="@id/support_questions_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/support_manual_dest"
+        android:name="com.inu.cafeteria.feature.support.manual.ManualFragment"
+        android:label="@string/title_service_manual"
+        tools:layout="@layout/manual_fragment" />
+
+    <fragment
+        android:id="@+id/support_faq_dest"
+        android:name="com.inu.cafeteria.feature.support.faq.FaqFragment"
+        android:label="@string/title_faq"
+        tools:layout="@layout/ask_fragment" />
+
+    <fragment
+        android:id="@+id/support_ask_dest"
+        android:name="com.inu.cafeteria.feature.support.ask.AskFragment"
+        android:label="@string/title_ask"
+        tools:layout="@layout/ask_fragment" />
+
+    <fragment
+        android:id="@+id/support_questions_dest"
+        android:name="com.inu.cafeteria.feature.support.questions.QuestionsFragment"
+        android:label="@string/title_questions"
+        tools:layout="@layout/questions_fragment" />
 
 </navigation>

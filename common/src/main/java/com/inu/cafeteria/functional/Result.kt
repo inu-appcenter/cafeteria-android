@@ -70,7 +70,7 @@ sealed class Result<out T> {
             return try {
                 Success(body())
             } catch (e: Exception) {
-                Timber.e(e)
+                Timber.i(e)
                 Error(e)
             }
         }

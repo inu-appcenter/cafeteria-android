@@ -19,7 +19,23 @@
 
 package com.inu.cafeteria.feature.support
 
+import com.inu.cafeteria.R
+
 data class SupportOption(
     val title: Int,
     val navigateTo: Int
-)
+) {
+    companion object {
+        val availableSupportOptionsForThoseLoggedIn = listOf(
+            SupportOption(R.string.title_service_manual, R.id.action_support_manual),
+            SupportOption(R.string.title_faq, R.id.action_support_faq),
+            SupportOption(R.string.title_ask, R.id.action_support_ask),
+            SupportOption(R.string.title_questions, R.id.action_support_questions),
+        )
+
+        val availableSupportOptionsForThoseNotLoggedIn = listOf(
+            SupportOption(R.string.title_service_manual, R.id.action_support_manual),
+            SupportOption(R.string.title_faq, R.id.action_support_faq),
+        )
+    }
+}

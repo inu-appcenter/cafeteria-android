@@ -123,5 +123,9 @@
     <string name="title_support">Support</string>
     <string name="title_inu_appcenter">INU Appcenter</string>
     <string name="button_kakaotalk">KakaoTalk Chat</string>
+    <string name="title_faq">FAQ</string>
+    <string name="title_ask">Ask</string>
+    <string name="title_questions">My questions</string>
+    <string name="title_service_manual">Service manual</string>
 
 </resources>

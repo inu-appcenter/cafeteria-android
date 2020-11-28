@@ -23,6 +23,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
@@ -52,7 +53,7 @@ class SupportFragment : BaseFragment() {
 
         with(adapter) {
             onClickRootLayout = {
-                Toast.makeText(activity, "Hey!", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(it.navigateTo)
             }
         }
     }

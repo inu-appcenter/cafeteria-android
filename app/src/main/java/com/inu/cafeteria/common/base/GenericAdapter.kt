@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.support
+package com.inu.cafeteria.common.base
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,8 +25,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.support_option_item.view.*
-import timber.log.Timber
 
 abstract class GenericAdapter<E, T: ViewDataBinding> : RecyclerView.Adapter<GenericAdapter<E, T>.GenericViewHolder>() {
 

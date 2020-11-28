@@ -115,5 +115,9 @@
     <string name="title_support">지원</string>
     <string name="title_inu_appcenter">인천대학교 앱센터</string>
     <string name="button_kakaotalk">카카오톡으로 문의하기</string>
+    <string name="title_faq">자주묻는 질문</string>
+    <string name="title_ask">1:1 문의하기</string>
+    <string name="title_questions">문의 내역</string>
+    <string name="title_service_manual">서비스 이용안내</string>
 
 </resources>

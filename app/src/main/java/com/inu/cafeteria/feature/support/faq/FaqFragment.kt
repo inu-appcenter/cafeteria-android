@@ -17,15 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.support
+package com.inu.cafeteria.feature.support.faq
 
-import com.inu.cafeteria.R
-import com.inu.cafeteria.common.base.GenericAdapter
-import com.inu.cafeteria.databinding.SupportOptionItemBinding
+import com.inu.cafeteria.common.base.BaseFragment
 
-class SupportOptionsAdapter : GenericAdapter<SupportOption, SupportOptionItemBinding>() {
-
-    override fun getLayoutIdForPosition(position: Int): Int {
-        return R.layout.support_option_item
-    }
+class FaqFragment : BaseFragment() {
 }
