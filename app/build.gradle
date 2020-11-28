@@ -49,15 +49,25 @@ android {
         dataBinding = true
     }
 
-    flavorDimensions "stage"
+    flavorDimensions "stage", "server"
+
     productFlavors {
         betatest {
             dimension "stage"
             versionNameSuffix "-betatest"
         }
 
-        master {
+        finalstage {
             dimension "stage"
+        }
+
+        localserver {
+            dimension "server"
+            versionNameSuffix "-localserver"
+        }
+
+        productionserver {
+            dimension "server"
         }
     }
 

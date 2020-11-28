@@ -21,7 +21,7 @@ package com.inu.cafeteria.feature.main
 
 import androidx.fragment.app.FragmentActivity
 
-class LifecycleEventHandlerImplMaster : LifecycleEventHandler {
+class LifecycleEventHandlerImplFinal : LifecycleEventHandler {
 
     override fun onCreate(activity: FragmentActivity) {
         // Do nothing

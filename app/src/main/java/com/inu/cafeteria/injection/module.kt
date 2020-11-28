@@ -26,8 +26,8 @@ import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.db.SharedPreferenceWrapper
-import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplBetaTest
-import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplMaster
+import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplBeta
+import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplFinal
 import com.inu.cafeteria.repository.*
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.*
@@ -50,7 +50,12 @@ val myModules = module {
     /** Network Service */
     single {
         RetrofitFactory.createCafeteriaNetworkService(
-            context = get()
+            context = get(),
+            baseUrl = when (BuildConfig.FLAVOR_server) {
+                "localserver" -> "http://10.0.1.10:9999"
+                "productionserver" -> "https://api.inu-cafeteria.app"
+                else -> "https://api.inu-cafeteria.app"
+            }
         )
     }
 
@@ -66,10 +71,10 @@ val myModules = module {
 
     /** Main activity event handler */
     single {
-        when (BuildConfig.FLAVOR) {
-            "betatest" -> LifecycleEventHandlerImplBetaTest(context = get())
-            "master" -> LifecycleEventHandlerImplMaster()
-            else -> LifecycleEventHandlerImplMaster()
+        when (BuildConfig.FLAVOR_stage) {
+            "betatest" -> LifecycleEventHandlerImplBeta(context = get())
+            "finalstage" -> LifecycleEventHandlerImplFinal()
+            else -> LifecycleEventHandlerImplFinal()
         } as LifecycleEventHandler
     }
 

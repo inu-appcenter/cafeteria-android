@@ -39,7 +39,7 @@ import kotlinx.android.synthetic.main.main_activity.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class LifecycleEventHandlerImplBetaTest(
+class LifecycleEventHandlerImplBeta(
     private val context: Context
 ) : LifecycleEventHandler, KoinComponent {
 

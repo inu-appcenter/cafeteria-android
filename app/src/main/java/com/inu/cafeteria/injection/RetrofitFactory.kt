@@ -32,7 +32,7 @@ class RetrofitFactory {
 
     companion object {
 
-        fun createCafeteriaNetworkService(context: Context): CafeteriaNetworkService {
+        fun createCafeteriaNetworkService(context: Context, baseUrl: String): CafeteriaNetworkService {
             val cookieJar = PersistentCookieJar(
                 SetCookieCache(),
                 SharedPrefsCookiePersistor(context)
@@ -44,7 +44,7 @@ class RetrofitFactory {
             val builder = Retrofit.Builder()
 
             val retrofit = builder
-                .baseUrl("https://api.inu-cafeteria.app")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()
