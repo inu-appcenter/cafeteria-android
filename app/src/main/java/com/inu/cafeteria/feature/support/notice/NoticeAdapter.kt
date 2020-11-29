@@ -37,12 +37,12 @@ class NoticeAdapter : BaseAdapter<NoticeView, NoticeAdapter.NoticeViewHolder>() 
     override fun onBindViewHolder(holder: NoticeViewHolder, position: Int) {
         val item = getItem(position) ?: return
 
-        holder.bind(item, position)
+        holder.bind(item)
     }
 
     inner class NoticeViewHolder(parent: ViewGroup, @LayoutRes layoutId: Int) : BaseViewHolder(parent, layoutId) {
 
-        fun bind(item: NoticeView, position: Int) {
+        fun bind(item: NoticeView) {
             with(itemView.date) {
                 text = item.date
             }
