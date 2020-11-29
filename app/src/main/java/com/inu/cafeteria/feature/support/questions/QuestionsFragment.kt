@@ -19,18 +19,54 @@
 
 package com.inu.cafeteria.feature.support.questions
 
-import android.os.Bundle
+import android.view.View
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.databinding.QuestionsFragmentBinding
+import kotlinx.android.synthetic.main.questions_fragment.view.*
 
 class QuestionsFragment : BaseFragment() {
 
     private val viewModel: QuestionsViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val adapter = QuestionsAdapter()
 
-        viewModel.load()
+    override fun onNetworkChange(available: Boolean) {
+        if (available) {
+            viewModel.load()
+        }
+    }
+
+    override fun onCreateView(viewCreator: ViewCreator): View {
+        return viewCreator.createView<QuestionsFragmentBinding> {
+            initializeView(root)
+            vm = viewModel
+        }
+    }
+
+    private fun initializeView(view: View) {
+        with(view.questions_recycler) {
+            adapter = this@QuestionsFragment.adapter
+        }
+
+        with(adapter) {
+            onAnswerRead = {
+                viewModel.setAnswerRead(it)
+            }
+        }
+    }
+
+    companion object {
+
+        @JvmStatic
+        @BindingAdapter("questions")
+        fun setQuestions(view: RecyclerView, questions: List<QuestionView>?) {
+            questions?.let {
+                (view.adapter as? QuestionsAdapter)?.data = it
+            }
+        }
     }
 
 }

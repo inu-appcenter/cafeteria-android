@@ -6,7 +6,7 @@
     style="@style/FullSizedView"
     android:layout_marginHorizontal="@dimen/menu_page_horizontal_space"
     app:cardElevation="6dp"
-    app:cardCornerRadius="12dp">
+    app:cardCornerRadius="@dimen/mid_space">
 
     <androidx.recyclerview.widget.RecyclerView
         style="@style/FullSizedView"

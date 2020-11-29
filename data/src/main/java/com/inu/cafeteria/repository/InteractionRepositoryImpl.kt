@@ -58,7 +58,10 @@ class InteractionRepositoryImpl(
     }
 
     override fun markAnswerRead(answerId: Int) {
-        networkService.markAnswerRead(answerId)
+        networkService.markAnswerRead(answerId).getOrThrow()
+
+        // Local copy updated. Need new one.
+        answerCache.clear()
     }
 
     override fun checkForUnreadAnswers(): Boolean {

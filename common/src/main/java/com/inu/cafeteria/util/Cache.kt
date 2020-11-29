@@ -78,8 +78,7 @@ class Cache<T> {
      * Set the cache to null.
      * This method is internal only, must be called with setting [isValid].
      */
-
-    private fun clear() {
+    fun clear() {
         cache = null
     }
 }

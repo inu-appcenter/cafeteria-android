@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="answer"
+            type="com.inu.cafeteria.feature.support.questions.AnswerView" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundLightGray">
+
+        <!-- Separator -->
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/shadow"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Reply arrow -->
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/near_space"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            android:src="@drawable/ic_subdirectory_arrow_right_24px"
+            android:contentDescription="@string/desc_reply" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/question_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            app:layout_constraintBottom_toBottomOf="@id/arrow"
+            app:layout_constraintStart_toEndOf="@id/arrow"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/textPrimary"
+            android:textStyle="bold"
+            android:text='@{answer.title ?? ""}'
+            tools:text="그게말입니다"/>
+
+        <!-- New dot -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/mid_space"
+            app:layout_constraintTop_toTopOf="@id/question_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/question_title"
+            app:tint="@android:color/holo_orange_dark"
+            android:src="@drawable/notification_dot"
+            android:visibility="@{answer.read ? View.GONE : View.VISIBLE}"
+            android:contentDescription="@string/desc_reply" />
+
+        <!-- Content -->
+        <TextView
+            android:id="@+id/answer_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/mid_space"
+            android:paddingTop="@dimen/mid_space"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/mid_space"
+            app:layout_constraintStart_toStartOf="@id/question_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/question_title"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/textSecondary"
+            android:text='@{answer.body ?? ""}'
+            android:visibility="@{answer.expanded ? View.VISIBLE : View.GONE}"
+            tools:text="그게 사실은 이러이러해서 이렇게 된건데 말이죠, 자세한건 전화주세요." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

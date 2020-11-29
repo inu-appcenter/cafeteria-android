@@ -18,27 +18,14 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <solid android:color="#EB4DF6" />
 
-    <data>
-        <variable
-            name="vm"
-            type="com.inu.cafeteria.feature.support.questions.QuestionsViewModel" />
-    </data>
+    <size
+        android:width="12dp"
+        android:height="12dp"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/questions_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            questions="@{vm.questions}" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
+</shape>

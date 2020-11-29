@@ -19,15 +19,24 @@
 
 package com.inu.cafeteria.feature.support.questions
 
+import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Question
+import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.usecase.GetQuestionsAndAnswers
+import com.inu.cafeteria.usecase.MarkAnswerRead
 import org.koin.core.inject
-import timber.log.Timber
+import java.util.*
 
 class QuestionsViewModel : BaseViewModel() {
 
     private val getQuestionsAndAnswers: GetQuestionsAndAnswers by inject()
+    private val markAnswerRead: MarkAnswerRead by inject()
+
+    private val _questions = MutableLiveData<List<QuestionView>>()
+    val questions: LiveData<List<QuestionView>> = _questions
 
     fun load() {
         getQuestionsAndAnswers(Unit) {
@@ -36,6 +45,34 @@ class QuestionsViewModel : BaseViewModel() {
     }
 
     private fun handleResult(result: List<Question>) {
-        Timber.i(result.joinToString { it.toString() })
+        val questionsViews = result
+            .sortedByDescending { it.createdAt }
+            .map { question ->
+                QuestionView(
+                    content = question.content,
+                    answer = question.answer?.let { answer ->
+                        AnswerView(
+                            id = answer.id,
+                            title = answer.title,
+                            body = answer.body,
+                            read = answer.read,
+                            date = dateString(answer.createdAt)
+                        )
+                    },
+                    date = dateString(question.createdAt)
+                )
+            }
+
+        _questions.value = questionsViews
+    }
+
+    private fun dateString(timestamp: Long): String {
+        return Date(timestamp).format("yyyy/MM/dd hh:mm")
+    }
+
+    fun setAnswerRead(answerId: Int) {
+        markAnswerRead(answerId) {
+            it.onError(::handleFailure)
+        }
     }
 }
