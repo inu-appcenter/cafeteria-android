@@ -55,6 +55,9 @@ class QuestionsFragment : BaseFragment() {
             onAnswerRead = {
                 viewModel.setAnswerRead(it)
             }
+
+            emptyView = view.empty_view
+            loadingView = view.loading_view
         }
     }
 
@@ -66,6 +69,12 @@ class QuestionsFragment : BaseFragment() {
             questions?.let {
                 (view.adapter as? QuestionsAdapter)?.data = it
             }
+        }
+
+        @JvmStatic
+        @BindingAdapter("isQuestionsLoading")
+        fun setLoading(view: RecyclerView, isQuestionsLoading: Boolean?) {
+            (view.adapter as? QuestionsAdapter)?.isLoading = isQuestionsLoading ?: true
         }
     }
 

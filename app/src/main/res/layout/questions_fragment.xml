@@ -36,8 +36,36 @@
             android:id="@+id/questions_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingVertical="@dimen/mid_space"
+            android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            questions="@{vm.questions}" />
+            questions="@{vm.questions}"
+            isQuestionsLoading="@{vm.loading}"/>
+
+        <!-- Empty view -->
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="@dimen/textPrimary"
+            android:textColor="@color/textTertiary"
+            android:textStyle="bold"
+            android:text="@string/no_questions" />
+
+        <!-- Loading view -->
+        <ProgressBar
+            android:id="@+id/loading_view"
+            style="@style/NonFunctionalProgressBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

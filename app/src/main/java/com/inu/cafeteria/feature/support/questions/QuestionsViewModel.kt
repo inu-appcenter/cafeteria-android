@@ -19,7 +19,6 @@
 
 package com.inu.cafeteria.feature.support.questions
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.base.BaseViewModel
@@ -38,9 +37,15 @@ class QuestionsViewModel : BaseViewModel() {
     private val _questions = MutableLiveData<List<QuestionView>>()
     val questions: LiveData<List<QuestionView>> = _questions
 
+    private val _loading = MutableLiveData(true)
+    val loading: LiveData<Boolean> = _loading
+
     fun load() {
+
         getQuestionsAndAnswers(Unit) {
-            it.onSuccess(::handleResult).onError(::handleFailure)
+            _loading.value = true
+
+            it.onSuccess(::handleResult).onError(::handleFailure).finally { _loading.value = false }
         }
     }
 

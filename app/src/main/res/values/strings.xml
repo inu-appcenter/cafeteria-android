@@ -134,5 +134,6 @@
     <string name="description_app_version">App version: %s</string>
     <string name="title_question">Question</string>
     <string name="desc_reply">Reply icon</string>
+    <string name="no_questions">No history</string>
 
 </resources>

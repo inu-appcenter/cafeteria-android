@@ -25,7 +25,9 @@ import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.entities.Question
 import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
-import com.inu.cafeteria.retrofit.scheme.*
+import com.inu.cafeteria.retrofit.scheme.AnswerResult
+import com.inu.cafeteria.retrofit.scheme.AskParams
+import com.inu.cafeteria.retrofit.scheme.QuestionResult
 import com.inu.cafeteria.util.Cache
 
 class InteractionRepositoryImpl(
@@ -46,6 +48,9 @@ class InteractionRepositoryImpl(
                 content = content
             )
         ).getOrThrow()
+
+        // New item added. Need to reflect server.
+        questionsCache.clear()
     }
 
     override fun getAllQuestions(): List<Question> {
