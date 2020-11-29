@@ -49,6 +49,17 @@
                 app:supportOptions="@{vm.supportOptions}"
                 tools:listitem="@layout/support_option_item"/>
 
+            <!-- App version -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/mid_space"
+                android:layout_marginTop="@dimen/mid_space"
+                android:text="@{vm.appVersionText}"
+                android:textSize="@dimen/textSecondary"
+                android:textColor="?android:attr/textColorSecondary"
+                tools:text="앱 버전: 4.0.0"/>
+
         </LinearLayout>
 
     </ScrollView>

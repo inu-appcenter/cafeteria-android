@@ -20,6 +20,7 @@
 package com.inu.cafeteria.repository
 
 import com.inu.cafeteria.GlobalConfig
+import com.inu.cafeteria.entities.Question
 import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
 import com.inu.cafeteria.retrofit.scheme.AskParams
@@ -39,4 +40,15 @@ class InteractionRepositoryImpl(
         ).getOrThrow()
     }
 
+    override fun getAllQuestions(): List<Question> {
+        return listOf()
+    }
+
+    override fun markAnswerRead(answerId: Int) {
+
+    }
+
+    override fun checkForUnreadAnswers(): Boolean {
+        return false
+    }
 }

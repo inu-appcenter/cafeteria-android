@@ -27,8 +27,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_rectangle_30dp"
     android:backgroundTint="@color/kakaoYellow"
-    android:padding="12dp"
-    android:layout_margin="12dp">
+    android:padding="@dimen/mid_space"
+    android:layout_margin="@dimen/mid_space">
 
     <!-- Upper line -->
     <TextView
@@ -47,14 +47,14 @@
         android:id="@+id/action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="4dp"
+        android:paddingTop="@dimen/close_space"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description"
         android:text="@string/button_kakaotalk"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/textPrimary"
-        android:drawablePadding="8dp"
+        android:drawablePadding="@dimen/near_space"
         app:drawableStartCompat="@drawable/ic_kakao_symbol" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

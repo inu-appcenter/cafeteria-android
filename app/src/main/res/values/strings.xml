@@ -131,5 +131,6 @@
     <string name="button_ask">Send</string>
     <string name="notify_ask_succeeded">Submit succeeded</string>
     <string name="description_on_ask">You might be replied in 72 hours.</string>
+    <string name="description_app_version">App version: %s</string>
 
 </resources>

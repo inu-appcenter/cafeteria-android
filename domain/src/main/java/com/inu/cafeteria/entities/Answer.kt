@@ -17,14 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.entities
 
-import com.inu.cafeteria.entities.Question
-
-interface InteractionRepository {
-    fun ask(content: String)
-    fun getAllQuestions(): List<Question>
-    fun markAnswerRead(answerId: Int)
-
-    fun checkForUnreadAnswers(): Boolean
-}
+data class Answer(
+    val id: Int,
+    val title: String,
+    val body: String,
+    val read: Boolean,
+    val createdAt: Long
+)

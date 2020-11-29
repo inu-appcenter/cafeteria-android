@@ -21,6 +21,8 @@ package com.inu.cafeteria.feature.support
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.inu.cafeteria.GlobalConfig
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.feature.support.SupportOption.Companion.availableSupportOptionsForThoseLoggedIn
 import com.inu.cafeteria.feature.support.SupportOption.Companion.availableSupportOptionsForThoseNotLoggedIn
@@ -29,6 +31,7 @@ import org.koin.core.inject
 
 class SupportViewModel : BaseViewModel() {
 
+    private val globalConfig: GlobalConfig by inject()
     private val accountService: AccountService by inject()
 
     private val _supportOptions = MediatorLiveData<List<SupportOption>>().apply {
@@ -41,4 +44,6 @@ class SupportViewModel : BaseViewModel() {
         }
     }
     val supportOptions: LiveData<List<SupportOption>> = _supportOptions
+
+    val appVersionText = mContext.getString(R.string.description_app_version, globalConfig.version)
 }
