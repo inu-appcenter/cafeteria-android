@@ -61,7 +61,7 @@
         android:id="@+id/support_manual_dest"
         android:name="com.inu.cafeteria.feature.support.manual.ManualFragment"
         android:label="@string/title_service_manual"
-        tools:layout="@layout/manual_fragment" />
+        tools:layout="@layout/web_view_only_fragment" />
 
     <fragment
         android:id="@+id/support_faq_dest"

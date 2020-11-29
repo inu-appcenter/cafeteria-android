@@ -17,15 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.support.manual
+package com.inu.cafeteria.common
 
-import com.inu.cafeteria.common.Config
-import com.inu.cafeteria.common.base.WebViewOnlyFragment
-import org.koin.core.inject
-
-class ManualFragment : WebViewOnlyFragment() {
-    private val config: Config by inject()
-    private val manualPageUrl = config.baseUrl + config.serviceManualPagePath
-
-    override fun getPageUrl() = manualPageUrl
-}
+data class Config(
+    val baseUrl: String,
+    val serviceManualPagePath: String
+)

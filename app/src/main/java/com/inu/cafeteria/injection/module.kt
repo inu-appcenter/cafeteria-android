@@ -22,6 +22,7 @@ package com.inu.cafeteria.injection
 import android.content.Context
 import android.net.ConnectivityManager
 import com.inu.cafeteria.BuildConfig
+import com.inu.cafeteria.common.Config
 import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.common.Navigator
@@ -35,6 +36,22 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val myModules = module {
+
+    /*****************************
+     * Global config
+     *****************************/
+
+    single {
+        Config(
+            baseUrl = when (BuildConfig.FLAVOR_server) {
+                "localserver" -> "http://10.0.1.10:9999"
+                "productionserver" -> "https://api.inu-cafeteria.app"
+                else -> "https://api.inu-cafeteria.app"
+            },
+            serviceManualPagePath = "/res/pages/manual/index.html"
+        )
+    }
+
 
     /*****************************
      * General
@@ -51,11 +68,7 @@ val myModules = module {
     single {
         RetrofitFactory.createCafeteriaNetworkService(
             context = get(),
-            baseUrl = when (BuildConfig.FLAVOR_server) {
-                "localserver" -> "http://10.0.1.10:9999"
-                "productionserver" -> "https://api.inu-cafeteria.app"
-                else -> "https://api.inu-cafeteria.app"
-            }
+            baseUrl = get<Config>().baseUrl
         )
     }
 
