@@ -50,6 +50,8 @@ class SupportViewModel : BaseViewModel() {
 
     fun getKakaoIntent() = Intent(Intent.ACTION_VIEW, Uri.parse(globalConfig.kakaoPlusFriendLink))
 
+    fun callUiCoopIntent() = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${globalConfig.uicoopPhoneNumber}"))
+
     private fun updateSupportOptions() {
         val loggedIn = accountService.isLoggedIn();
         val hasNotification = interactionRepo.getNumberOfUnreadAnswersLiveData().value ?: 0 > 0

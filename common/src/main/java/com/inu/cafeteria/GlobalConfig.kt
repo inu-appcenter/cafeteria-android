@@ -45,5 +45,6 @@ data class GlobalConfig(
     val deviceInfo: String,
     val version: String,
     val appId: String,
-    val kakaoPlusFriendLink: String
+    val kakaoPlusFriendLink: String,
+    val uicoopPhoneNumber: String,
 )

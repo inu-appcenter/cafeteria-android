@@ -18,15 +18,15 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<!-- KakaoTalk button -->
+<!-- Call UICOOP button -->
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/kakaotalk_button"
+    android:id="@+id/call_uicoop_button"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_rectangle_30dp"
-    android:backgroundTint="@color/kakaoYellow"
+    android:backgroundTint="@color/lightGray"
     android:padding="@dimen/mid_space"
     android:layout_marginVertical="@dimen/near_space"
     android:layout_marginHorizontal="@dimen/mid_space">
@@ -39,7 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/title_inu_appcenter"
+        android:text="@string/title_uicoop"
         android:textColor="@color/textPrimary"
         android:alpha="0.85"/>
 
@@ -52,11 +52,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description"
-        android:text="@string/button_kakaotalk"
+        android:text="@string/button_call_uicoop"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/textPrimary"
         android:drawablePadding="@dimen/near_space"
-        app:drawableStartCompat="@drawable/ic_kakao_symbol" />
+        app:drawableStartCompat="@drawable/ic_call_24px" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

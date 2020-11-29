@@ -135,5 +135,6 @@
     <string name="title_question">Question</string>
     <string name="desc_reply">Reply icon</string>
     <string name="no_questions">No history</string>
+    <string name="button_call_uicoop">Call UICOOP</string>
 
 </resources>

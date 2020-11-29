@@ -28,6 +28,7 @@ import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.databinding.SupportFragmentBinding
 import kotlinx.android.synthetic.main.kakao_chat_button.view.*
 import kotlinx.android.synthetic.main.support_fragment.view.*
+import kotlinx.android.synthetic.main.uicoop_call_button.view.*
 
 class SupportFragment : BaseFragment() {
 
@@ -56,10 +57,18 @@ class SupportFragment : BaseFragment() {
         with(view.kakaotalk_button) {
             setOnClickListener { onKakaoTalkClick() }
         }
+
+        with(view.call_uicoop_button) {
+            setOnClickListener { onCallUiCoopClick() }
+        }
     }
 
     private fun onKakaoTalkClick() {
         startActivity(viewModel.getKakaoIntent())
+    }
+
+    private fun onCallUiCoopClick() {
+        startActivity(viewModel.callUiCoopIntent())
     }
 
     companion object {

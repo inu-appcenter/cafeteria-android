@@ -54,7 +54,8 @@ val myModules = module {
             deviceInfo = "android " + Build.VERSION.RELEASE,
             version = BuildConfig.VERSION_NAME,
             appId = BuildConfig.APPLICATION_ID,
-            kakaoPlusFriendLink = "kakaoplus://plusfriend/home/_xgxaSLd"
+            kakaoPlusFriendLink = "kakaoplus://plusfriend/home/_xgxaSLd",
+            uicoopPhoneNumber = "0328354720"
         )
     }
 
