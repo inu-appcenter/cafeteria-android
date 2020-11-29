@@ -23,6 +23,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="question"
             type="com.inu.cafeteria.feature.support.questions.QuestionView" />
@@ -33,42 +34,42 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/mid_space">
 
-        <!-- Title -->
-        <TextView
-            android:id="@+id/question_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/question_date"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="@dimen/textPrimary"
-            android:textStyle="bold"
-            android:text="@string/title_question" />
-
         <!-- Date -->
         <TextView
             android:id="@+id/question_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:text="@{question.date}"
+            android:textSize="@dimen/textTertiary"
             android:textColor="?android:attr/textColorSecondary"
-            tools:text="2020년 11월 26일 오후 8시 30분" />
+            tools:text="11/26" />
 
         <!-- Content -->
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/mid_space"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/question_title"
+            app:layout_constraintTop_toBottomOf="@id/question_date"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/textSecondary"
             android:text="@{question.content}"
             tools:text="궁금한게 있는데 말입니다." />
+
+        <!-- Answered or not -->
+        <TextView
+            android:id="@+id/answer_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/question_date"
+            app:layout_constraintBottom_toBottomOf="@id/question_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{(question.answer == null) ? @string/description_not_answered : @string/description_answered}"
+            android:textSize="@dimen/textTertiary"
+            tools:text="답변 완료" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

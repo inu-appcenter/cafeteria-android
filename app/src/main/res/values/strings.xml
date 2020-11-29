@@ -136,5 +136,7 @@
     <string name="desc_reply">Reply icon</string>
     <string name="no_questions">No history</string>
     <string name="button_call_uicoop">Call UICOOP</string>
+    <string name="description_answered">replied</string>
+    <string name="description_not_answered">waiting</string>
 
 </resources>

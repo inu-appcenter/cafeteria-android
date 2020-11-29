@@ -25,9 +25,7 @@ import androidx.databinding.DataBindingUtil
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
-import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.QuestionsAnswerItemBinding
-import kotlinx.android.synthetic.main.answer_item.view.*
 
 class QuestionsAdapter : BaseAdapter<QuestionView, QuestionsAdapter.QuestionsViewHolder>() {
 
@@ -56,19 +54,17 @@ class QuestionsAdapter : BaseAdapter<QuestionView, QuestionsAdapter.QuestionsVie
 
             with(binding.root) {
                 setOnClickListener {
-                    expandAnswer(item, position)
+                    item.answer?.let {
+                        readAnswer(it, position)
+                    }
                 }
             }
         }
 
-        private fun expandAnswer(item: QuestionView, position: Int) {
-            val answer = item.answer ?: return
-
-            if (!answer.expanded) {
-                answer.expanded = true
-                answer.read = true
-
+        private fun readAnswer(answer: AnswerView, position: Int) {
+            if (!answer.read) {
                 onAnswerRead(answer.id)
+                answer.read = true
 
                 notifyItemChanged(position)
             }

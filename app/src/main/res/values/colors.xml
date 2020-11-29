@@ -46,6 +46,7 @@
 
     <color name="pointBlue">#38b1e4</color>
     <color name="lightGray">#e5e5e5</color>
+    <color name="moreLightGray">#F1F1F1</color>
 
     <color name="dimmedBackground">#77000000</color>
 

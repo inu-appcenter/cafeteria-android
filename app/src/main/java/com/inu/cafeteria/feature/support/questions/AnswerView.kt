@@ -24,6 +24,5 @@ data class AnswerView(
     val title: String,
     val body: String,
     var read: Boolean,
-    val date: String,
-    var expanded: Boolean = false
+    val date: String
 )

@@ -26,13 +26,11 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
 import com.inu.cafeteria.common.extension.fadeIn
 import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.extension.observe
-import com.inu.cafeteria.common.extension.setBackgroundTint
 import com.inu.cafeteria.common.navigation.rootDestinations
 import com.inu.cafeteria.util.Fun
 import com.plattysoft.leonids.ParticleSystem
@@ -131,13 +129,13 @@ class MainActivity : NavigationActivity() {
 
     private fun setSupportTabBadge() {
         with(bottom_nav) {
-            val badge = getOrCreateBadge(R.id.tab_support).apply {
-                isVisible = false
-                backgroundColor = getColor(R.color.orange)
-            }
 
             observe(viewModel.numberOfUnreadAnswers) { numberOfNotifications ->
                 numberOfNotifications ?: return@observe
+
+                val badge = getOrCreateBadge(R.id.tab_support).apply {
+                    backgroundColor = getColor(R.color.orange)
+                }
 
                 Timber.i("Notifications left: $numberOfNotifications")
 

@@ -36,7 +36,6 @@
             android:id="@+id/questions_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingVertical="@dimen/mid_space"
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             questions="@{vm.questions}"

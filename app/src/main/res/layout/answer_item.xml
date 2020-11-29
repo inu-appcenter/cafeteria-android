@@ -32,72 +32,78 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/backgroundLightGray">
-
-        <!-- Separator -->
-        <View
-            android:id="@+id/separator"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@drawable/shadow"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:visibility="@{(answer == null) ? View.GONE : View.VISIBLE}">
 
         <!-- Reply arrow -->
         <ImageView
             android:id="@+id/arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/near_space"
+            android:layout_marginStart="@dimen/mid_space"
+            android:layout_marginTop="@dimen/close_space"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separator"
+            app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_subdirectory_arrow_right_24px"
+            app:tint="@color/dimmedBackground"
             android:contentDescription="@string/desc_reply" />
 
-        <!-- Title -->
-        <TextView
-            android:id="@+id/question_title"
+        <!-- Title and body -->
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/separator"
-            app:layout_constraintBottom_toBottomOf="@id/arrow"
             app:layout_constraintStart_toEndOf="@id/arrow"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="@dimen/textPrimary"
-            android:textStyle="bold"
-            android:text='@{answer.title ?? ""}'
-            tools:text="그게말입니다"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/close_space"
+            android:layout_marginBottom="@dimen/mid_space"
+            android:layout_marginStart="@dimen/close_space"
+            android:layout_marginEnd="@dimen/mid_space"
+            android:padding="@dimen/near_space"
+            android:background="@drawable/rounded_rectangle_12dp"
+            android:backgroundTint="@color/moreLightGray"
+            android:orientation="vertical">
 
-        <!-- New dot -->
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/mid_space"
-            app:layout_constraintTop_toTopOf="@id/question_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/question_title"
-            app:tint="@color/orange"
-            android:src="@drawable/notification_dot"
-            android:visibility="@{answer.read ? View.GONE : View.VISIBLE}"
-            android:contentDescription="@string/desc_reply" />
+            <!-- Title -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
 
-        <!-- Content -->
-        <TextView
-            android:id="@+id/answer_body"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/mid_space"
-            android:paddingTop="@dimen/mid_space"
-            android:paddingStart="0dp"
-            android:paddingEnd="@dimen/mid_space"
-            app:layout_constraintStart_toStartOf="@id/question_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/question_title"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="@dimen/textSecondary"
-            android:text='@{answer.body ?? ""}'
-            android:visibility="@{answer.expanded ? View.VISIBLE : View.GONE}"
-            tools:text="그게 사실은 이러이러해서 이렇게 된건데 말이죠, 자세한건 전화주세요." />
+                <!-- Text -->
+                <TextView
+                    android:id="@+id/question_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="@dimen/textSecondary"
+                    android:textStyle="bold"
+                    android:text='@{answer.title ?? ""}'
+                    tools:text="그게말입니다"/>
+
+                <!-- New dot -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/notification_dot"
+                    android:padding="@dimen/close_space"
+                    android:contentDescription="@string/desc_reply"
+                    android:visibility="@{answer.read ? View.GONE : View.VISIBLE}"/>
+
+            </LinearLayout>
+
+            <!-- Content -->
+            <TextView
+                android:id="@+id/answer_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="@dimen/textSecondary"
+                android:text='@{answer.body ?? ""}'
+                tools:text="그게 사실은 이러이러해서 이렇게 된건데 말이죠, 자세한건 전화주세요." />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

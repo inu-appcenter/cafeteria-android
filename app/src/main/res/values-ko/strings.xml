@@ -128,5 +128,7 @@
     <string name="desc_reply">답변 아이콘입니다.</string>
     <string name="no_questions">문의하신 내역이 없습니다</string>
     <string name="button_call_uicoop">전화로 문의하기</string>
+    <string name="description_answered">답변 완료</string>
+    <string name="description_not_answered">답변 대기중</string>
 
 </resources>

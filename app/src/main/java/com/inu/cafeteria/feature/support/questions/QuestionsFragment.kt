@@ -22,6 +22,7 @@ package com.inu.cafeteria.feature.support.questions
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.databinding.QuestionsFragmentBinding
@@ -49,6 +50,7 @@ class QuestionsFragment : BaseFragment() {
     private fun initializeView(view: View) {
         with(view.questions_recycler) {
             adapter = this@QuestionsFragment.adapter
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
         with(adapter) {
