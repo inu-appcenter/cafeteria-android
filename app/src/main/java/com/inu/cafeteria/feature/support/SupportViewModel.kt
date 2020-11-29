@@ -40,27 +40,24 @@ class SupportViewModel : BaseViewModel() {
     private val interactionRepo: InteractionRepository by inject()
 
     private val _supportOptions = MediatorLiveData<List<SupportOption>>().apply {
-        addSource(accountService.loggedInStatus()) { loggedIn ->
-            if (loggedIn) {
-                postValue(availableSupportOptionsForThoseLoggedIn)
-            } else {
-                postValue(availableSupportOptionsForThoseNotLoggedIn)
-            }
-        }
-
-        addSource(interactionRepo.getNumberOfUnreadAnswersLiveData()) { number ->
-            // This update will happen only when logged in,
-            // because the only trigger that fetches happen after login.
-            if (number > 0) {
-                postValue(availableSupportOptionsForThoseHaveNotification)
-            } else {
-                postValue(availableSupportOptionsForThoseLoggedIn)
-            }
-        }
+        addSource(accountService.loggedInStatus()) { updateSupportOptions() }
+        addSource(interactionRepo.getNumberOfUnreadAnswersLiveData()) { updateSupportOptions() }
     }
+
     val supportOptions: LiveData<List<SupportOption>> = _supportOptions
 
     val appVersionText = mContext.getString(R.string.description_app_version, globalConfig.version)
 
     fun getKakaoIntent() = Intent(Intent.ACTION_VIEW, Uri.parse(globalConfig.kakaoPlusFriendLink))
+
+    private fun updateSupportOptions() {
+        val loggedIn = accountService.isLoggedIn();
+        val hasNotification = interactionRepo.getNumberOfUnreadAnswersLiveData().value ?: 0 > 0
+
+        _supportOptions.postValue(when {
+            hasNotification -> availableSupportOptionsForThoseHaveNotification
+            loggedIn -> availableSupportOptionsForThoseLoggedIn
+            else -> availableSupportOptionsForThoseNotLoggedIn
+        })
+    }
 }
