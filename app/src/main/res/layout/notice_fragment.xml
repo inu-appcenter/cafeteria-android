@@ -18,29 +18,27 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="vm"
-            type="com.inu.cafeteria.feature.support.questions.QuestionsViewModel" />
+            type="com.inu.cafeteria.feature.support.notice.NoticeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Questions -->
+        <!-- Notices -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/questions_recycler"
+            android:id="@+id/notice_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            questions="@{vm.questions}"
-            isQuestionsLoading="@{vm.loading}"/>
+            notices="@{vm.notices}"
+            isNoticesLoading="@{vm.loading}" />
 
         <!-- Empty view -->
         <TextView
@@ -54,7 +52,7 @@
             android:textSize="@dimen/textPrimary"
             android:textColor="@color/textTertiary"
             android:textStyle="bold"
-            android:text="@string/no_questions" />
+            android:text="@string/no_notices" />
 
         <!-- Loading view -->
         <ProgressBar

@@ -133,15 +133,17 @@ class MainActivity : NavigationActivity() {
             observe(viewModel.numberOfUnreadAnswers) { numberOfNotifications ->
                 numberOfNotifications ?: return@observe
 
-                val badge = getOrCreateBadge(R.id.tab_support).apply {
-                    backgroundColor = getColor(R.color.orange)
-                }
-
                 Timber.i("Notifications left: $numberOfNotifications")
 
-                with(badge) {
-                    isVisible = numberOfNotifications > 0
-                    number = numberOfNotifications
+                if (numberOfNotifications > 0) {
+                    getOrCreateBadge(R.id.tab_support).apply {
+                        backgroundColor = getColor(R.color.orange)
+                        isVisible = true
+                        number = numberOfNotifications
+                    }
+                } else {
+                    getBadge(R.id.tab_support)?.isVisible = false
+                    removeBadge(R.id.tab_support)
                 }
             }
         }

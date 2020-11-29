@@ -26,8 +26,8 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Account
-import com.inu.cafeteria.exception.UnauthorizedException
 import com.inu.cafeteria.exception.NoAccountException
+import com.inu.cafeteria.exception.UnauthorizedException
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.ActivateBarcode
@@ -147,6 +147,9 @@ class DiscountViewModel : BaseViewModel() {
     }
 
     private fun promptLoginAgain() {
+        // Invalidate
+        accountService.deleteSavedAccount()
+
         _barcodeCardReady.value = false
         _onceLoggedIn.value = false
     }

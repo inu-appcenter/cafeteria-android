@@ -244,14 +244,16 @@ val myModules = module {
     /** Check new notice */
     single {
         GetNewNotice(
-            noticeRepo = get()
+            noticeRepo = get(),
+            globalConfig = get()
         )
     }
 
     /** Get all notices */
     single {
         GetAllNotices(
-            noticeRepo = get()
+            noticeRepo = get(),
+            globalConfig = get()
         )
     }
 

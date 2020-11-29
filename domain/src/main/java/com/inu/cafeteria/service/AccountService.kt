@@ -56,5 +56,7 @@ class AccountService(
 
     fun getSavedAccount(): Account? = accountRepo.getSavedAccount()
 
+    fun deleteSavedAccount() = accountRepo.deleteSavedAccount()
+
     fun activateBarcode() = accountRepo.activateBarcode()
 }

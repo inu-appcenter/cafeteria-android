@@ -32,6 +32,12 @@
         tools:layout="@layout/support_fragment" >
 
         <action
+            android:id="@+id/action_support_notice"
+            app:destination="@id/support_notice_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left" />
+
+        <action
             android:id="@+id/action_support_manual"
             app:destination="@id/support_manual_dest"
             app:enterAnim="@anim/slide_in_right"
@@ -56,6 +62,12 @@
             app:popEnterAnim="@anim/slide_in_left" />
 
     </fragment>
+
+    <fragment
+        android:id="@+id/support_notice_dest"
+        android:name="com.inu.cafeteria.feature.support.manual.ManualFragment"
+        android:label="@string/title_notice"
+        tools:layout="@layout/notice_fragment" />
 
     <fragment
         android:id="@+id/support_manual_dest"

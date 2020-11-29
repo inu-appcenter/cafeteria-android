@@ -25,8 +25,8 @@ import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.exception.NullBodyException
 import com.inu.cafeteria.extension.getOrThrow
-import com.inu.cafeteria.retrofit.scheme.LoginParams
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
+import com.inu.cafeteria.retrofit.scheme.LoginParams
 
 class AccountRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
@@ -72,6 +72,14 @@ class AccountRepositoryImpl(
             putInt(KEY_ID, account.id)
             putString(KEY_BARCODE, account.barcode)
             putString(KEY_TOKEN, account.token)
+        }
+    }
+
+    override fun deleteSavedAccount() {
+        with(db) {
+            putInt(KEY_ID, -1)
+            putString(KEY_BARCODE, null)
+            putString(KEY_TOKEN, null)
         }
     }
 

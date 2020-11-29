@@ -186,8 +186,20 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="231" />
-                            <option name="y" value="-423" />
+                            <option name="x" value="278" />
+                            <option name="y" value="-322" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="support_notice_dest">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="108" />
+                            <option name="y" value="-569" />
                           </Point>
                         </option>
                       </LayoutPositions>
