@@ -32,9 +32,9 @@ class NoticeRepositoryImpl(
     private val db: SharedPreferenceWrapper
 ) : NoticeRepository {
 
-    override fun getNewNotice(): Notice? {
+    override fun getNewNotice(os: String, version: String): Notice? {
         val notice = try {
-            getLatestNotice()
+            getLatestNotice(os, version)
         } catch (exception: DataNotFoundException) {
             return null
         }
@@ -49,8 +49,10 @@ class NoticeRepositoryImpl(
         }
     }
 
-    private fun getLatestNotice(): Notice {
-        val latestNoticeFromServer = this.networkService.getLatestNotice().getOrThrow() ?: throw NullBodyException("Body should not be empty!")
+    private fun getLatestNotice(os: String, version: String): Notice {
+        val latestNoticeFromServer = this.networkService
+            .getLatestNotice(os, version)
+            .getOrThrow() ?: throw NullBodyException("Body should not be empty!")
 
         return parseNotice(latestNoticeFromServer)
     }
@@ -59,8 +61,10 @@ class NoticeRepositoryImpl(
         this.db.putInt(KEY_LAST_SEEN_NOTICE_ID, notice.id)
     }
 
-    override fun getAllNotices(): List<Notice> {
-        val allNoticesFromServer = this.networkService.getAllNotices().getOrThrow() ?: throw NullBodyException("Body should not be empty!")
+    override fun getAllNotices(os: String, version: String): List<Notice> {
+        val allNoticesFromServer = this.networkService
+            .getAllNotices(os, version)
+            .getOrThrow() ?: throw NullBodyException("Body should not be empty!")
 
         return allNoticesFromServer.map { parseNotice(it) }
     }

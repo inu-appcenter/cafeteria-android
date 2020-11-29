@@ -19,15 +19,21 @@
 
 package com.inu.cafeteria.usecase
 
+import com.inu.cafeteria.GlobalConfig
+import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.repository.InteractionRepository
+import com.inu.cafeteria.repository.NoticeRepository
 
-class FetchNotifications(
-    private val interactionRepo: InteractionRepository
-) : UseCase<Unit, Unit>() {
+class GetAllNotices(
+    private val noticeRepo: NoticeRepository,
+    private val globalConfig: GlobalConfig
+) : UseCase<Unit, List<Notice>>() {
 
     override fun run(params: Unit) = Result.of {
-        interactionRepo.fetchNumberOfUnreadAnswers()
+        noticeRepo.getAllNotices(
+            "android",
+            globalConfig.version
+        )
     }
 }

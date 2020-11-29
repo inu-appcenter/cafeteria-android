@@ -22,8 +22,8 @@ package com.inu.cafeteria.repository
 import com.inu.cafeteria.entities.Notice
 
 interface NoticeRepository {
-    fun getNewNotice(): Notice?
+    fun getNewNotice(os: String, version: String): Notice?
     fun markNoticeRead(notice: Notice)
 
-    fun getAllNotices(): List<Notice>
+    fun getAllNotices(os: String, version: String): List<Notice>
 }

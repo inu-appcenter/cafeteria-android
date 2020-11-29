@@ -248,6 +248,13 @@ val myModules = module {
         )
     }
 
+    /** Get all notices */
+    single {
+        GetAllNotices(
+            noticeRepo = get()
+        )
+    }
+
     /** Dismiss notice */
     single {
         DismissNotice(
@@ -286,7 +293,7 @@ val myModules = module {
     /** Mark answer read */
     single {
         FetchNotifications(
-            interactionRepository = get()
+            interactionRepo = get()
         )
     }
 }
