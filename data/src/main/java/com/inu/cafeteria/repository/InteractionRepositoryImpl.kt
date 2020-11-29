@@ -23,12 +23,17 @@ import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.entities.Question
 import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
-import com.inu.cafeteria.retrofit.scheme.AskParams
+import com.inu.cafeteria.retrofit.scheme.*
+import com.inu.cafeteria.util.Cache
+import com.inu.cafeteria.util.PairedCache
 
 class InteractionRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
     private val globalConfig: GlobalConfig
 ) : InteractionRepository {
+
+    private val questionsCache = Cache<List<QuestionResult>>()
+    private val answerCache = Cache<List<AnswerResult>>()
 
     override fun ask(content: String) {
         networkService.ask(
@@ -41,14 +46,31 @@ class InteractionRepositoryImpl(
     }
 
     override fun getAllQuestions(): List<Question> {
-        return listOf()
+        val questions = cachedFetch(questionsCache) {
+            networkService.getAllQuestions().getOrThrow()
+        } ?: return listOf()
+
+        val answers = cachedFetch(answerCache) {
+            networkService.getAllAnswers().getOrThrow()
+        } ?: return listOf()
+
+        return InteractionResultGatherer(questions, answers).combine()
     }
 
     override fun markAnswerRead(answerId: Int) {
-
+        networkService.markAnswerRead(answerId)
     }
 
     override fun checkForUnreadAnswers(): Boolean {
-        return false
+        val answers = cachedFetch(answerCache) {
+            networkService.getAllAnswers(unreadOnly = true).getOrThrow()
+        } ?: return false
+
+        return answers.isNotEmpty()
+    }
+
+    @Synchronized
+    private fun <T> cachedFetch(cache: Cache<T>, fetch: () -> T?): T? {
+        return (if (cache.isValid) cache.get() else null) ?: fetch()?.also(cache::set)
     }
 }

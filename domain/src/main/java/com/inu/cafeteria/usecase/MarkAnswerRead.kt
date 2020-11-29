@@ -17,11 +17,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.support.questions
+package com.inu.cafeteria.usecase
 
-import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.functional.Result
+import com.inu.cafeteria.interactor.UseCase
+import com.inu.cafeteria.repository.InteractionRepository
 
-class QuestionsFragment : BaseFragment() {
+class MarkAnswerRead(
+    private val interactionRepo: InteractionRepository
+) : UseCase<Int, Unit>() {
 
-
+    override fun run(params: Int) = Result.of {
+        interactionRepo.markAnswerRead(params)
+    }
 }

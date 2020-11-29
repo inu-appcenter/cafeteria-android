@@ -266,4 +266,18 @@ val myModules = module {
             interactionRepo = get()
         )
     }
+
+    /** Get questions ans answers */
+    single {
+        GetQuestionsAndAnswers(
+            interactionRepo = get()
+        )
+    }
+
+    /** Mark answer read */
+    single {
+        MarkAnswerRead(
+            interactionRepo = get()
+        )
+    }
 }

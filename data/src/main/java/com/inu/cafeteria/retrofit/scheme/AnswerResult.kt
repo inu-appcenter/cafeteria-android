@@ -17,11 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.support.questions
+package com.inu.cafeteria.retrofit.scheme
 
-import com.inu.cafeteria.common.base.BaseFragment
+import com.google.gson.annotations.SerializedName
 
-class QuestionsFragment : BaseFragment() {
-
-
-}
+data class AnswerResult(
+    val id: Int,
+    val title: String,
+    val body: String,
+    val read: Boolean,
+    @SerializedName("question-id") val questionId: Int,
+    @SerializedName("created-at") val createdAt: Long,
+)

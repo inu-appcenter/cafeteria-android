@@ -26,7 +26,7 @@ import com.inu.cafeteria.retrofit.scheme.CafeteriaResult
 import com.inu.cafeteria.retrofit.scheme.CornerResult
 import com.inu.cafeteria.retrofit.scheme.MenuResult
 
-class ResultGatherer(
+class CafeteriaResultGatherer(
     private val cafeteriaResult: List<CafeteriaResult>,
     private val cornerResults: List<CornerResult>,
     private val menuResults: List<MenuResult>

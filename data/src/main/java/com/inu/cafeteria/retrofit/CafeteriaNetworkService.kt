@@ -48,7 +48,6 @@ import retrofit2.http.*
 
 interface CafeteriaNetworkService {
 
-
     /**
      * Notices
      */
@@ -73,6 +72,15 @@ interface CafeteriaNetworkService {
      */
     @POST("/ask")
     fun ask(@Body data: AskParams): Call<Unit>
+
+    @GET("/questions")
+    fun getAllQuestions(): Call<List<QuestionResult>>
+
+    @GET("/answers")
+    fun getAllAnswers(@Query("unreadOnly") unreadOnly: Boolean = false): Call<List<AnswerResult>>
+
+    @POST("/markAnswerRead/{answerId}")
+    fun markAnswerRead(@Path("answerId") answerId: Int): Call<Unit>
 
 
     /**

@@ -54,7 +54,7 @@ class CafeteriaRepositoryImpl(
             networkService.getMenus(date).getOrThrow()
         } ?: return listOf()
 
-        return ResultGatherer(cafeteria, corners, menus).combine()
+        return CafeteriaResultGatherer(cafeteria, corners, menus).combine()
     }
 
     override fun getCafeteriaOnly(): List<Cafeteria> {
