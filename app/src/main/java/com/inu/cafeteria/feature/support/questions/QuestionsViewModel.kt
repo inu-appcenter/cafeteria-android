@@ -19,18 +19,23 @@
 
 package com.inu.cafeteria.feature.support.questions
 
-import android.os.Bundle
-import androidx.fragment.app.viewModels
-import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.entities.Question
+import com.inu.cafeteria.usecase.GetQuestionsAndAnswers
+import org.koin.core.inject
+import timber.log.Timber
 
-class QuestionsFragment : BaseFragment() {
+class QuestionsViewModel : BaseViewModel() {
 
-    private val viewModel: QuestionsViewModel by viewModels()
+    private val getQuestionsAndAnswers: GetQuestionsAndAnswers by inject()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel.load()
+    fun load() {
+        getQuestionsAndAnswers(Unit) {
+            it.onSuccess(::handleResult).onError(::handleFailure)
+        }
     }
 
+    private fun handleResult(result: List<Question>) {
+        Timber.i(result.joinToString { it.toString() })
+    }
 }
