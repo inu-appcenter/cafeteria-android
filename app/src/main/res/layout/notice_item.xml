@@ -18,16 +18,73 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
+    <!-- Summary -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground">
 
+        <!-- Date -->
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/mid_space"
+            android:paddingTop="@dimen/mid_space"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/textTertiary"
+            android:textColor="?android:attr/textColorSecondary"
+            tools:text="11/26" />
 
-    
+        <!-- Title -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/mid_space"
+            android:paddingBottom="@dimen/mid_space"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/more_close"
+            app:layout_constraintTop_toBottomOf="@id/date"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/textSecondary"
+            tools:text="드릴 말씀이 있는데 말입니다." />
 
+        <!-- Arrow more/close -->
+        <ImageView
+            android:id="@+id/more_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/mid_space"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/date"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:tint="?android:attr/textColorSecondary"
+            tools:src="@drawable/ic_keyboard_arrow_up_24px"
+            android:contentDescription="@string/desc_more_button" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Body -->
+    <TextView
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/mid_space"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:background="@color/moreLightGray"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="@dimen/textTertiary"
+        tools:text="하아하아아아아하하ㅏ하하하ㅏ"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -39,8 +39,10 @@ class NoticeViewModel : BaseViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     fun load() {
+        _loading.value = true
+
         getAllNotices(Unit) {
-            it.onSuccess(::handleNotices).onError(::handleFailure)
+            it.onSuccess(::handleNotices).onError(::handleFailure).finally { _loading.value = false }
         }
     }
 

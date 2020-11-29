@@ -22,6 +22,7 @@ package com.inu.cafeteria.feature.support.notice
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.databinding.NoticeFragmentBinding
@@ -49,6 +50,7 @@ class NoticeFragment : BaseFragment() {
     private fun initializeView(view: View) {
         with(view.notice_recycler) {
             adapter = this@NoticeFragment.adapter
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
         with(adapter) {
@@ -62,13 +64,17 @@ class NoticeFragment : BaseFragment() {
         @JvmStatic
         @BindingAdapter("notices")
         fun setNotices(view: RecyclerView, notices: List<NoticeView>?) {
-
+            notices?.let {
+                (view.adapter as? NoticeAdapter)?.data = it
+            }
         }
 
         @JvmStatic
         @BindingAdapter("isNoticesLoading")
         fun setNoticesLoading(view: RecyclerView, isNoticesLoading: Boolean?) {
-
+            isNoticesLoading?.let {
+                (view.adapter as? NoticeAdapter)?.isLoading = it
+            }
         }
     }
 }

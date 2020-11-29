@@ -50,7 +50,6 @@ class QuestionsViewModel : BaseViewModel() {
 
     private fun handleResult(result: List<Question>) {
         val questionsViews = result
-            .sortedByDescending { it.createdAt }
             .map { question ->
                 QuestionView(
                     content = question.content,

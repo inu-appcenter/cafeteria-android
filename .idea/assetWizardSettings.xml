@@ -304,8 +304,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_call_24px" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/call-24px.svg" />
+                            <entry key="outputName" value="ic_keyboard_arrow_down_24px" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/keyboard_arrow_down-24px.svg" />
                           </map>
                         </option>
                       </PersistentState>

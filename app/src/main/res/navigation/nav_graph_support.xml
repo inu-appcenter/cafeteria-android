@@ -65,7 +65,7 @@
 
     <fragment
         android:id="@+id/support_notice_dest"
-        android:name="com.inu.cafeteria.feature.support.manual.ManualFragment"
+        android:name="com.inu.cafeteria.feature.support.notice.NoticeFragment"
         android:label="@string/title_notice"
         tools:layout="@layout/notice_fragment" />
 

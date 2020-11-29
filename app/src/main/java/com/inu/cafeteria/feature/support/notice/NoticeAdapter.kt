@@ -24,6 +24,8 @@ import androidx.annotation.LayoutRes
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
+import com.inu.cafeteria.common.extension.isVisible
+import kotlinx.android.synthetic.main.notice_item.view.*
 
 
 class NoticeAdapter : BaseAdapter<NoticeView, NoticeAdapter.NoticeViewHolder>() {
@@ -35,13 +37,41 @@ class NoticeAdapter : BaseAdapter<NoticeView, NoticeAdapter.NoticeViewHolder>() 
     override fun onBindViewHolder(holder: NoticeViewHolder, position: Int) {
         val item = getItem(position) ?: return
 
-        holder.bind(item)
+        holder.bind(item, position)
     }
 
-    class NoticeViewHolder(parent: ViewGroup, @LayoutRes layoutId: Int): BaseViewHolder(parent, layoutId) {
+    inner class NoticeViewHolder(parent: ViewGroup, @LayoutRes layoutId: Int) : BaseViewHolder(parent, layoutId) {
 
-        fun bind(item: NoticeView) {
+        fun bind(item: NoticeView, position: Int) {
+            with(itemView.date) {
+                text = item.date
+            }
 
+            with(itemView.title) {
+                text = item.title
+            }
+
+            with(itemView.body) {
+                isVisible = item.expanded
+                text = item.body
+            }
+
+            with(itemView.more_close) {
+                setImageResource(
+                    when (item.expanded) {
+                        true -> R.drawable.ic_keyboard_arrow_up_24px
+                        else -> R.drawable.ic_keyboard_arrow_down_24px
+                    }
+                )
+            }
+
+            with(itemView.summary) {
+                setOnClickListener {
+                    item.expanded = !item.expanded
+
+                    itemView.body.isVisible = item.expanded
+                }
+            }
         }
     }
 }
