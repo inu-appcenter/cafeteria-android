@@ -25,7 +25,9 @@ import androidx.databinding.DataBindingUtil
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseAdapter
 import com.inu.cafeteria.common.base.BaseViewHolder
+import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.QuestionsAnswerItemBinding
+import kotlinx.android.synthetic.main.answer_item.view.*
 
 class QuestionsAdapter : BaseAdapter<QuestionView, QuestionsAdapter.QuestionsViewHolder>() {
 
@@ -66,7 +68,11 @@ class QuestionsAdapter : BaseAdapter<QuestionView, QuestionsAdapter.QuestionsVie
                 onAnswerRead(answer.id)
                 answer.read = true
 
-                notifyItemChanged(position)
+                with(itemView.new_dot) {
+                    // We used notifyItemChanged early, but it makes scroll position change.
+                    // Therefore we need to change the visibility manually.
+                    setVisible(false)
+                }
             }
         }
     }

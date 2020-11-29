@@ -40,7 +40,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/mid_space"
-            android:layout_marginTop="@dimen/close_space"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_subdirectory_arrow_right_24px"
@@ -55,7 +54,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/close_space"
             android:layout_marginBottom="@dimen/mid_space"
             android:layout_marginStart="@dimen/close_space"
             android:layout_marginEnd="@dimen/mid_space"
@@ -84,6 +82,7 @@
 
                 <!-- New dot -->
                 <ImageView
+                    android:id="@+id/new_dot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/notification_dot"
