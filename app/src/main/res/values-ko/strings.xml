@@ -119,5 +119,9 @@
     <string name="title_ask">1:1 문의하기</string>
     <string name="title_questions">문의 내역</string>
     <string name="title_service_manual">서비스 이용안내</string>
+    <string name="hint_ask_anything">문의하실 내용을 입력해 주세요 :)</string>
+    <string name="button_ask">문의하기</string>
+    <string name="notify_ask_succeeded">문의가 접수되었습니다.</string>
+    <string name="description_on_ask">문의가 접수된 후 72시간 이내에 답변 드리도록 노력합니다! 관리자가 학생이라 조금 늦어질 수도 있으나 최선을 다해 운영중이니 조금만 기다려 주시면 감사하겠습니다 :)</string>
 
 </resources>

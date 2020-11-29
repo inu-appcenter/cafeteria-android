@@ -19,7 +19,42 @@
 
 package com.inu.cafeteria.feature.support.ask
 
+import android.view.View
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.databinding.AskFragmentBinding
 
 class AskFragment : BaseFragment() {
+
+    private val viewModel: AskViewModel by viewModels()
+
+    override fun onCreateView(viewCreator: ViewCreator): View {
+        return viewCreator.createView<AskFragmentBinding> {
+            init()
+            vm = viewModel
+        }
+    }
+
+    private fun init() {
+        with(viewModel) {
+            load()
+
+            observe(submitSuccessEvent) {
+                notifyUserYouSucceeded()
+                navigateBack()
+            }
+        }
+    }
+
+    private fun notifyUserYouSucceeded() {
+        Toast.makeText(activity, getString(R.string.notify_ask_succeeded), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun navigateBack() {
+        findNavController().navigateUp()
+    }
 }

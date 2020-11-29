@@ -21,8 +21,9 @@ package com.inu.cafeteria.injection
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.os.Build
 import com.inu.cafeteria.BuildConfig
-import com.inu.cafeteria.common.Config
+import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.common.Navigator
@@ -42,14 +43,17 @@ val myModules = module {
      *****************************/
 
     single {
-        Config(
+        GlobalConfig(
             baseUrl = when (BuildConfig.FLAVOR_server) {
                 "localserver" -> "http://10.0.1.10:9999"
                 "productionserver" -> "https://api.inu-cafeteria.app"
                 else -> "https://api.inu-cafeteria.app"
             },
             serviceManualPagePath = "/res/pages/manual/index.html",
-            faqPagePath = "/res/pages/faq/index.html"
+            faqPagePath = "/res/pages/faq/index.html",
+            deviceInfo = "android " + Build.VERSION.RELEASE,
+            version = BuildConfig.VERSION_NAME,
+            appId = BuildConfig.APPLICATION_ID
         )
     }
 
@@ -61,7 +65,8 @@ val myModules = module {
     /** Navigator */
     single {
         Navigator(
-            context = get()
+            context = get(),
+            globalConfig = get()
         )
     }
 
@@ -69,7 +74,7 @@ val myModules = module {
     single {
         RetrofitFactory.createCafeteriaNetworkService(
             context = get(),
-            baseUrl = get<Config>().baseUrl
+            baseUrl = get<GlobalConfig>().baseUrl
         )
     }
 
@@ -147,6 +152,13 @@ val myModules = module {
         ) as VersionRepository
     }
 
+    /** Interaction repository */
+    single {
+        InteractionRepositoryImpl(
+            networkService = get(),
+            globalConfig = get()
+        ) as InteractionRepository
+    }
 
     /*****************************
      * Use Case
@@ -245,6 +257,13 @@ val myModules = module {
     single {
         CheckForUpdate(
             versionRepo = get()
+        )
+    }
+
+    /** Ask */
+    single {
+        Ask(
+            interactionRepo = get()
         )
     }
 }

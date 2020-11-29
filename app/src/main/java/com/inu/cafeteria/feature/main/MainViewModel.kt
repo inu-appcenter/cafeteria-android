@@ -19,7 +19,7 @@
 
 package com.inu.cafeteria.feature.main
 
-import com.inu.cafeteria.BuildConfig
+import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Notice
@@ -31,6 +31,7 @@ import timber.log.Timber
 
 class MainViewModel : BaseViewModel() {
     private val navigator: Navigator by inject()
+    private val globalConfig: GlobalConfig by inject()
 
     private val getNewNotice: GetNewNotice by inject()
     private val dismissNotice: DismissNotice by inject()
@@ -61,7 +62,7 @@ class MainViewModel : BaseViewModel() {
     }
 
     private fun checkForUpdate(activity: MainActivity) {
-        shouldIUpdate(BuildConfig.VERSION_NAME) {
+        shouldIUpdate(globalConfig.version) {
             it.onSuccess { shouldUpdate ->
                 if (shouldUpdate) {
                     Timber.i("Need to update!")

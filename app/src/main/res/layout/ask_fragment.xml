@@ -19,16 +19,58 @@
   -->
 
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.inu.cafeteria.feature.support.ask.AskViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/far_space"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="1.5"
+            android:text="@={vm.content}"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            android:hint="@string/hint_ask_anything"
+            android:autofillHints="@string/hint_ask_anything" />
+
+        <!-- Submit button -->
+        <Button
+            android:id="@+id/submit"
+            style="@style/HorizontallyFullSizedViewConstrained"
+            android:layout_margin="@dimen/far_space"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/content"
+            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:backgroundTint="?android:attr/colorPrimary"
+            android:text="@string/button_ask"
+            android:enabled="@{vm.contentValid}"
+            android:onClick="@{() -> vm.submit()}"
+            tools:enabled="false" />
+
+        <!-- Notices -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/far_space"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/submit"
+            android:text="@string/description_on_ask" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

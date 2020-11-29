@@ -47,14 +47,37 @@ import retrofit2.http.*
  */
 
 interface CafeteriaNetworkService {
+
+
+    /**
+     * Notices
+     */
+
     @GET("/notices")
     fun getAllNotices(): Call<List<NoticeResult>>
 
     @GET("/notices/latest")
     fun getLatestNotice(): Call<NoticeResult>
 
+
+    /**
+     * Versioning
+     */
+
     @GET("/shouldIUpdate")
     fun shouldIUpdate(@Query("os") os: String, @Query("version") version: String): Call<Boolean>
+
+
+    /**
+     * Interactions
+     */
+    @POST("/ask")
+    fun ask(@Body data: AskParams): Call<Unit>
+
+
+    /**
+     * Cafeteria
+     */
 
     @GET("/cafeteria")
     fun getCafeteria(): Call<List<CafeteriaResult>>
@@ -65,6 +88,10 @@ interface CafeteriaNetworkService {
     @GET("/menus")
     fun getMenus(@Query("date") date: String? = null): Call<List<MenuResult>>
 
+
+    /**
+     * Membership
+     */
 
     @POST("/login")
     fun getLoginResult(@Body data: LoginParams): Call<LoginResult>

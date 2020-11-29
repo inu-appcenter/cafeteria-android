@@ -17,10 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common
+package com.inu.cafeteria.repository
 
-data class Config(
-    val baseUrl: String,
-    val serviceManualPagePath: String,
-    val faqPagePath: String,
-)
+import com.inu.cafeteria.GlobalConfig
+import com.inu.cafeteria.extension.getOrThrow
+import com.inu.cafeteria.retrofit.CafeteriaNetworkService
+import com.inu.cafeteria.retrofit.scheme.AskParams
+
+class InteractionRepositoryImpl(
+    private val networkService: CafeteriaNetworkService,
+    private val globalConfig: GlobalConfig
+) : InteractionRepository {
+
+    override fun ask(content: String) {
+        networkService.ask(
+            AskParams(
+                deviceInfo = globalConfig.deviceInfo,
+                version = globalConfig.version,
+                content = content
+            )
+        ).getOrThrow()
+    }
+
+}

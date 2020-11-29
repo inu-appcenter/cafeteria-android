@@ -17,20 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.retrofit.scheme
+package com.inu.cafeteria
 
-/**
- * Scheme for activated barcode result.
- */
-
-data class ActivateBarcodeResult(
-    /**
-     * Is activated?
-     *
-     * In fact, if activation request is succeded,
-     * it will have the same value as the request.
-     * That is defined in the server logic.
-     */
-
-    val active: String
+data class GlobalConfig(
+    val baseUrl: String,
+    val serviceManualPagePath: String,
+    val faqPagePath: String,
+    val deviceInfo: String,
+    val version: String,
+    val appId: String,
 )

@@ -17,15 +17,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.support.manual
+package com.inu.cafeteria.usecase
 
-import com.inu.cafeteria.GlobalConfig
-import com.inu.cafeteria.common.base.WebViewOnlyFragment
-import org.koin.core.inject
+import com.inu.cafeteria.functional.Result
+import com.inu.cafeteria.interactor.UseCase
+import com.inu.cafeteria.repository.InteractionRepository
 
-class ManualFragment : WebViewOnlyFragment() {
-    private val globalConfig: GlobalConfig by inject()
-    private val manualPageUrl = globalConfig.baseUrl + globalConfig.serviceManualPagePath
+class Ask(
+    private val interactionRepo: InteractionRepository
+) : UseCase<String, Unit>() {
 
-    override fun getPageUrl() = manualPageUrl
+    override fun run(params: String) = Result.of {
+        interactionRepo.ask(params)
+    }
 }

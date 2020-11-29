@@ -127,5 +127,9 @@
     <string name="title_ask">Ask</string>
     <string name="title_questions">My questions</string>
     <string name="title_service_manual">Service manual</string>
+    <string name="hint_ask_anything">Feel free to ask anything :)</string>
+    <string name="button_ask">Send</string>
+    <string name="notify_ask_succeeded">Submit succeeded</string>
+    <string name="description_on_ask">You might be replied in 72 hours.</string>
 
 </resources>
