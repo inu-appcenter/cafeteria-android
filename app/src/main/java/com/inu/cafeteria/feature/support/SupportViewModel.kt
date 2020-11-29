@@ -19,6 +19,8 @@
 
 package com.inu.cafeteria.feature.support
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.inu.cafeteria.GlobalConfig
@@ -59,4 +61,6 @@ class SupportViewModel : BaseViewModel() {
     val supportOptions: LiveData<List<SupportOption>> = _supportOptions
 
     val appVersionText = mContext.getString(R.string.description_app_version, globalConfig.version)
+
+    fun getKakaoIntent() = Intent(Intent.ACTION_VIEW, Uri.parse(globalConfig.kakaoPlusFriendLink))
 }

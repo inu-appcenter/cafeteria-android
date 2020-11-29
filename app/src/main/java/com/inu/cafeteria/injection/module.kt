@@ -25,9 +25,9 @@ import android.os.Build
 import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.EventHub
-import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.db.SharedPreferenceWrapper
+import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplBeta
 import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplFinal
 import com.inu.cafeteria.repository.*
@@ -53,7 +53,8 @@ val myModules = module {
             faqPagePath = "/res/pages/faq/index.html",
             deviceInfo = "android " + Build.VERSION.RELEASE,
             version = BuildConfig.VERSION_NAME,
-            appId = BuildConfig.APPLICATION_ID
+            appId = BuildConfig.APPLICATION_ID,
+            kakaoPlusFriendLink = "kakaoplus://plusfriend/home/_xgxaSLd"
         )
     }
 

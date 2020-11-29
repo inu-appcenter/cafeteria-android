@@ -20,18 +20,14 @@
 package com.inu.cafeteria.feature.support
 
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.SupportFragmentBinding
-import com.inu.cafeteria.databinding.SupportOptionItemBinding
+import kotlinx.android.synthetic.main.kakao_chat_button.view.*
 import kotlinx.android.synthetic.main.support_fragment.view.*
-import timber.log.Timber
 
 class SupportFragment : BaseFragment() {
 
@@ -56,6 +52,14 @@ class SupportFragment : BaseFragment() {
                 findNavController().navigate(it.navigateTo)
             }
         }
+
+        with(view.kakaotalk_button) {
+            setOnClickListener { onKakaoTalkClick() }
+        }
+    }
+
+    private fun onKakaoTalkClick() {
+        startActivity(viewModel.getKakaoIntent())
     }
 
     companion object {
