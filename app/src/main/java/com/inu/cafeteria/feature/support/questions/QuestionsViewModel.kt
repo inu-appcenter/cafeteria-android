@@ -41,7 +41,6 @@ class QuestionsViewModel : BaseViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     fun load() {
-
         getQuestionsAndAnswers(Unit) {
             _loading.value = true
 
