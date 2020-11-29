@@ -19,13 +19,14 @@
 
 package com.inu.cafeteria.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.entities.Question
 import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
 import com.inu.cafeteria.retrofit.scheme.*
 import com.inu.cafeteria.util.Cache
-import com.inu.cafeteria.util.PairedCache
 
 class InteractionRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
@@ -34,6 +35,12 @@ class InteractionRepositoryImpl(
 
     private val questionsCache = Cache<List<QuestionResult>>()
     private val answerCache = Cache<List<AnswerResult>>()
+
+    private val numberOfUnreadAnswers = MutableLiveData(0)
+
+    init {
+        fetchNumberOfUnreadAnswers()
+    }
 
     override fun ask(content: String) {
         networkService.ask(
@@ -60,16 +67,27 @@ class InteractionRepositoryImpl(
     override fun markAnswerRead(answerId: Int) {
         networkService.markAnswerRead(answerId).getOrThrow()
 
+        // Need to propagate changes to observers(tab icon, app badge, etc...)
+        fetchNumberOfUnreadAnswers()
+
         // Local copy updated. Need new one.
         answerCache.clear()
     }
 
-    override fun checkForUnreadAnswers(): Boolean {
+    private fun fetchNumberOfUnreadAnswers() {
+        numberOfUnreadAnswers.value = getNumberOfUnreadAnswers()
+    }
+
+    private fun getNumberOfUnreadAnswers(): Int {
         val answers = cachedFetch(answerCache) {
             networkService.getAllAnswers(unreadOnly = true).getOrThrow()
-        } ?: return false
+        } ?: return 0
 
-        return answers.isNotEmpty()
+        return answers.size
+    }
+
+    override fun getNumberOfUnreadAnswersLiveData(): LiveData<Int> {
+        return numberOfUnreadAnswers
     }
 
     @Synchronized

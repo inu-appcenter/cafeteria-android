@@ -19,6 +19,7 @@
 
 package com.inu.cafeteria.repository
 
+import androidx.lifecycle.LiveData
 import com.inu.cafeteria.entities.Question
 
 interface InteractionRepository {
@@ -26,5 +27,5 @@ interface InteractionRepository {
     fun getAllQuestions(): List<Question>
     fun markAnswerRead(answerId: Int)
 
-    fun checkForUnreadAnswers(): Boolean
+    fun getNumberOfUnreadAnswersLiveData(): LiveData<Int>
 }
