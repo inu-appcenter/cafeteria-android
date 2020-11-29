@@ -28,7 +28,7 @@
             type="com.inu.cafeteria.feature.support.SupportViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -50,10 +50,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/support_options_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:supportOptions="@{vm.supportOptions}"
-                tools:listitem="@layout/support_option_item"/>
+                tools:listitem="@layout/support_option_item"
+                android:nestedScrollingEnabled="false"/>
 
             <!-- App version -->
             <TextView
@@ -68,7 +69,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>
 

@@ -72,7 +72,7 @@ class QuestionsViewModel : BaseViewModel() {
     }
 
     private fun dateString(timestamp: Long): String {
-        return Date(timestamp).format("yyyy/MM/dd hh:mm")
+        return Date(timestamp).format("yyyy/MM/dd HH:mm")
     }
 
     fun setAnswerRead(answerId: Int) {
