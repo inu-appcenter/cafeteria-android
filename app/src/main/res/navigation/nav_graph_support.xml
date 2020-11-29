@@ -67,7 +67,7 @@
         android:id="@+id/support_faq_dest"
         android:name="com.inu.cafeteria.feature.support.faq.FaqFragment"
         android:label="@string/title_faq"
-        tools:layout="@layout/ask_fragment" />
+        tools:layout="@layout/web_view_only_fragment" />
 
     <fragment
         android:id="@+id/support_ask_dest"

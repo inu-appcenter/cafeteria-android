@@ -19,7 +19,13 @@
 
 package com.inu.cafeteria.feature.support.faq
 
-import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.Config
+import com.inu.cafeteria.common.base.WebViewOnlyFragment
+import org.koin.core.inject
 
-class FaqFragment : BaseFragment() {
+class FaqFragment : WebViewOnlyFragment() {
+    private val config: Config by inject()
+    private val faqPageUrl = config.baseUrl + config.faqPagePath
+
+    override fun getPageUrl() = faqPageUrl
 }

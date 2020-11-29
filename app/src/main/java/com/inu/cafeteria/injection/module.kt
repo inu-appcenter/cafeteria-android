@@ -48,7 +48,8 @@ val myModules = module {
                 "productionserver" -> "https://api.inu-cafeteria.app"
                 else -> "https://api.inu-cafeteria.app"
             },
-            serviceManualPagePath = "/res/pages/manual/index.html"
+            serviceManualPagePath = "/res/pages/manual/index.html",
+            faqPagePath = "/res/pages/faq/index.html"
         )
     }
 

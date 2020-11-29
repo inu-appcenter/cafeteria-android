@@ -21,5 +21,6 @@ package com.inu.cafeteria.common
 
 data class Config(
     val baseUrl: String,
-    val serviceManualPagePath: String
+    val serviceManualPagePath: String,
+    val faqPagePath: String,
 )
