@@ -33,7 +33,7 @@
     <string name="dialog_server_not_respond">서버가 응답하지 않습니다. 네트워크 문제일 수 있습니다. 잠시 후 다시 시도해주세요.</string>
     <string name="fail_no_barcode">바코드 정보가 없습니다.</string>
     <string name="fail_response">서버 요청에 실패했습니다.</string>
-    <string name="fail_server">서버와의 통신 중에 문제가 발생했습니다.</string>
+    <string name="fail_server">서버와의 통신 중에 문제가 발생했습니다. 잠시 후에 다시 시도해 주세요.</string>
     <string name="fail_token_invalid">다시 로그인해주세요.</string>
     <string name="fail_unexpected">알 수 없는 오류가 발생했습니다.</string>
     <string name="fail_wrong_auth">학번과 비밀번호를 확인해주세요.</string>
@@ -110,5 +110,25 @@
     <string name="egg_gmg">하웁하웁</string>
     <string name="app_name">카페테리아</string>
     <string name="title_feedback">피드백</string>
+    <string name="wait">자..잠시만요..!</string>
+    <string name="description_updated_needed">앱을 계속 사용하시려면 업데이트가 필요합니다! 업데이트 버튼을 누르시면 플레이스토어로 이동합니다.</string>
+    <string name="title_support">지원</string>
+    <string name="title_inu_appcenter">인천대학교 앱센터</string>
+    <string name="button_kakaotalk">카카오톡으로 문의하기</string>
+    <string name="title_faq">자주묻는 질문</string>
+    <string name="title_ask">1:1 문의하기</string>
+    <string name="title_questions">문의 내역</string>
+    <string name="title_service_manual">서비스 이용안내</string>
+    <string name="hint_ask_anything">문의하실 내용을 입력해 주세요 :)</string>
+    <string name="button_ask">문의하기</string>
+    <string name="notify_ask_succeeded">문의가 접수되었습니다.</string>
+    <string name="description_on_ask">문의가 접수된 후 72시간 이내에 답변 드리도록 노력합니다! 관리자가 학생이라 조금 늦어질 수도 있으나 최선을 다해 운영중이니 조금만 기다려 주시면 감사하겠습니다 :)</string>
+    <string name="description_app_version">앱 버전: %s</string>
+    <string name="title_question">질문</string>
+    <string name="desc_reply">답변 아이콘입니다.</string>
+    <string name="no_questions">문의하신 내역이 없습니다</string>
+    <string name="button_call_uicoop">전화로 문의하기</string>
+    <string name="description_answered">답변 완료</string>
+    <string name="description_not_answered">답변 대기중</string>
 
 </resources>

@@ -27,7 +27,7 @@ import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.exception.UnauthorizedException
-import com.inu.cafeteria.model.NoAccountException
+import com.inu.cafeteria.exception.NoAccountException
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.ActivateBarcode
@@ -64,6 +64,8 @@ class DiscountViewModel : BaseViewModel() {
 
     private val _studentId = MutableLiveData<String>(null)
     val studentId: LiveData<String> = _studentId
+
+    val loggedInStatus = accountService.loggedInStatus()
 
     fun preload() {
         _barcodeCardReady.value = false

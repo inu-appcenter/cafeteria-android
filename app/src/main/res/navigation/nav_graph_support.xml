@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_support"
+    app:startDestination="@id/support_dest">
+
+    <fragment
+        android:id="@+id/support_dest"
+        android:name="com.inu.cafeteria.feature.support.SupportFragment"
+        android:label="@string/title_support"
+        tools:layout="@layout/support_fragment" >
+
+        <action
+            android:id="@+id/action_support_manual"
+            app:destination="@id/support_manual_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left" />
+
+        <action
+            android:id="@+id/action_support_faq"
+            app:destination="@id/support_faq_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left" />
+
+        <action
+            android:id="@+id/action_support_ask"
+            app:destination="@id/support_ask_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left" />
+
+        <action
+            android:id="@+id/action_support_questions"
+            app:destination="@id/support_questions_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_left" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/support_manual_dest"
+        android:name="com.inu.cafeteria.feature.support.manual.ManualFragment"
+        android:label="@string/title_service_manual"
+        tools:layout="@layout/web_view_only_fragment" />
+
+    <fragment
+        android:id="@+id/support_faq_dest"
+        android:name="com.inu.cafeteria.feature.support.faq.FaqFragment"
+        android:label="@string/title_faq"
+        tools:layout="@layout/web_view_only_fragment" />
+
+    <fragment
+        android:id="@+id/support_ask_dest"
+        android:name="com.inu.cafeteria.feature.support.ask.AskFragment"
+        android:label="@string/title_ask"
+        tools:layout="@layout/ask_fragment" />
+
+    <fragment
+        android:id="@+id/support_questions_dest"
+        android:name="com.inu.cafeteria.feature.support.questions.QuestionsFragment"
+        android:label="@string/title_questions"
+        tools:layout="@layout/questions_fragment" />
+
+</navigation>

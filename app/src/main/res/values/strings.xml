@@ -118,5 +118,25 @@
     <string name="egg_gmg">HAUP-HAUP</string>
     <string name="heart" translatable="false">❤</string>
     <string name="title_feedback">Feedback</string>
+    <string name="wait">Hey..!</string>
+    <string name="description_updated_needed">You need to update this application! You will be connected to Play Store after you click Update.</string>
+    <string name="title_support">Support</string>
+    <string name="title_inu_appcenter">INU Appcenter</string>
+    <string name="button_kakaotalk">KakaoTalk Chat</string>
+    <string name="title_faq">FAQ</string>
+    <string name="title_ask">Ask</string>
+    <string name="title_questions">My questions</string>
+    <string name="title_service_manual">Service manual</string>
+    <string name="hint_ask_anything">Feel free to ask anything :)</string>
+    <string name="button_ask">Send</string>
+    <string name="notify_ask_succeeded">Submit succeeded</string>
+    <string name="description_on_ask">You might be replied in 72 hours.</string>
+    <string name="description_app_version">App version: %s</string>
+    <string name="title_question">Question</string>
+    <string name="desc_reply">Reply icon</string>
+    <string name="no_questions">No history</string>
+    <string name="button_call_uicoop">Call UICOOP</string>
+    <string name="description_answered">replied</string>
+    <string name="description_not_answered">waiting</string>
 
 </resources>

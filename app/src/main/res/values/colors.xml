@@ -46,6 +46,7 @@
 
     <color name="pointBlue">#38b1e4</color>
     <color name="lightGray">#e5e5e5</color>
+    <color name="moreLightGray">#F1F1F1</color>
 
     <color name="dimmedBackground">#77000000</color>
 
@@ -55,5 +56,8 @@
     <color name="breakfast">#FC4B00</color>
     <color name="lunch">#FD9A2B</color>
     <color name="dinner">#166F9F</color>
+
+    <color name="kakaoYellow">#FEE500</color>
+    <color name="orange">#ffff8800</color>
 
 </resources>

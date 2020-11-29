@@ -24,10 +24,10 @@ import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.extension.getOrThrow
-import com.inu.cafeteria.model.scheme.CafeteriaResult
-import com.inu.cafeteria.model.scheme.CornerResult
-import com.inu.cafeteria.model.scheme.MenuResult
-import com.inu.cafeteria.service.CafeteriaNetworkService
+import com.inu.cafeteria.retrofit.scheme.CafeteriaResult
+import com.inu.cafeteria.retrofit.scheme.CornerResult
+import com.inu.cafeteria.retrofit.scheme.MenuResult
+import com.inu.cafeteria.retrofit.CafeteriaNetworkService
 import com.inu.cafeteria.util.Cache
 import com.inu.cafeteria.util.PairedCache
 import java.util.*
@@ -54,7 +54,7 @@ class CafeteriaRepositoryImpl(
             networkService.getMenus(date).getOrThrow()
         } ?: return listOf()
 
-        return ResultGatherer(cafeteria, corners, menus).combine()
+        return CafeteriaResultGatherer(cafeteria, corners, menus).combine()
     }
 
     override fun getCafeteriaOnly(): List<Cafeteria> {

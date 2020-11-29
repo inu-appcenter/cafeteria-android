@@ -24,16 +24,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
 import com.inu.cafeteria.common.extension.fadeIn
 import com.inu.cafeteria.common.extension.fadeOut
+import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.navigation.rootDestinations
 import com.inu.cafeteria.util.Fun
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.main_activity.*
 import org.koin.core.inject
+import timber.log.Timber
+import java.util.*
 
 class MainActivity : NavigationActivity() {
 
@@ -60,16 +64,28 @@ class MainActivity : NavigationActivity() {
             navHostId = R.id.nav_host_discount,
             tabItemId = R.id.tab_discount,
             rootDests = rootDestinations
+        ),
+
+        /** Support */
+        NavigationHostFragment.createArguments(
+            layoutRes = R.layout.content_support_base,
+            toolbarId = R.id.toolbar_support,
+            navHostId = R.id.nav_host_support,
+            tabItemId = R.id.tab_support,
+            rootDests = rootDestinations
         )
     )
 
+    private val viewModel: MainViewModel by viewModels()
     private val eventHandler: LifecycleEventHandler by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        eventHandler.onCreate(this)
 
         setOfflineView()
-        eventHandler.onCreate(this)
+        setSupportTabBadge()
+        observeLoginEvent() // to fetch notifications(unread answers).
     }
 
     private fun setOfflineView() {
@@ -111,6 +127,36 @@ class MainActivity : NavigationActivity() {
         )
     )
 
+    private fun setSupportTabBadge() {
+        with(bottom_nav) {
+
+            observe(viewModel.numberOfUnreadAnswers) { numberOfNotifications ->
+                numberOfNotifications ?: return@observe
+
+                val badge = getOrCreateBadge(R.id.tab_support).apply {
+                    backgroundColor = getColor(R.color.orange)
+                }
+
+                Timber.i("Notifications left: $numberOfNotifications")
+
+                with(badge) {
+                    isVisible = numberOfNotifications > 0
+                    number = numberOfNotifications
+                }
+            }
+        }
+    }
+
+    private fun observeLoginEvent() {
+        with(viewModel) {
+            observe(loggedInStatus) {
+                it?.takeIf { it }?.let {
+                    onLoggedIn()
+                }
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -124,6 +170,10 @@ class MainActivity : NavigationActivity() {
     }
 
     override fun onNetworkStateChange(available: Boolean) {
+        if (available) {
+            viewModel.load(this)
+        }
+
         with(offline_view) {
             if (available) {
                 fadeOut(250L)

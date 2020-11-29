@@ -57,9 +57,11 @@ class LoginFragment : BaseFragment() {
         }
 
         with(viewModel) {
-            observe(loginSuccessEvent) {
-                view.password_field.hideKeyboard() // Keyboard does not disappear automatically.
-                finishActivity()
+            observe(loggedInStatus) {
+                if (it == true) {
+                    view.password_field.hideKeyboard() // Keyboard does not disappear automatically.
+                    finishActivity()
+                }
             }
         }
     }

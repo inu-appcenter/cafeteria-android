@@ -175,5 +175,10 @@
         <item name="android:indeterminateTint">?android:attr/colorPrimary</item>
     </style>
 
+    <!-- Bottom sheet -->
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/top_rounded</item>
+    </style>
+
 </resources>
 

@@ -26,25 +26,28 @@ import android.net.Uri
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
-import com.inu.cafeteria.BuildConfig
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.extension.hideKeyboard
 import com.inu.cafeteria.common.extension.requestFocusWithKeyboard
-import com.inu.cafeteria.common.widget.ThemedDialog
+import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
 import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
+import kotlinx.android.synthetic.main.notice_view.view.*
 import org.koin.core.KoinComponent
 import timber.log.Timber
-import kotlin.system.exitProcess
 
 /**
  * Go everywhere.
  */
 
 class Navigator(
-    private val context: Context
+    private val context: Context,
+    private val globalConfig: GlobalConfig
 ) : KoinComponent {
+
 
     fun showMain() {
         startActivity(
@@ -64,6 +67,49 @@ class Navigator(
         )
     }
 
+    fun showNotice(activity: FragmentActivity, notice: Notice, onDismiss: () -> Unit) {
+        val dialog = BottomSheetDialog(activity)
+        val noticeView = activity.layoutInflater.inflate(R.layout.notice_view, null).apply {
+            with(this.title) {
+                text = notice.title
+            }
+
+            with(this.body) {
+                text = notice.body
+            }
+
+            with(this.dismiss) {
+                setOnClickListener {
+                    dialog.dismiss()
+                    onDismiss()
+                }
+            }
+        }
+
+        dialog.setContentView(noticeView)
+        dialog.show()
+    }
+
+    fun showUpdate(activity: FragmentActivity) {
+        AlertDialog
+            .Builder(activity)
+            .setTitle(context.getString(R.string.wait))
+            .setMessage(context.getString(R.string.description_updated_needed))
+            .setPositiveButton(context.getString(R.string.button_update)) { _, _ ->
+                showStore()
+            }
+            .setCancelable(false) // Force!
+            .show()
+    }
+
+    fun showStore() {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse("market://details?id=" + globalConfig.appId)
+        }
+
+        startActivity(intent)
+    }
+
     @SuppressLint("RestrictedApi")
     fun showFeedbackDialog(activity: FragmentActivity, sendFeedback: (String) -> Unit) {
         val textInput = EditText(activity).apply {
@@ -72,7 +118,7 @@ class Navigator(
 
         AlertDialog.Builder(activity)
             .setTitle("피드백")
-            .setMessage("개선이 필요한 부분을 알려주세요!\n(버전 ${BuildConfig.VERSION_NAME})")
+            .setMessage("개선이 필요한 부분을 알려주세요!\n(버전 ${globalConfig.version})")
             .setView(textInput, 60, 0, 60, 0)
             .setPositiveButton("보내기") { dialog, _ ->
                 sendFeedback(textInput.text.toString())

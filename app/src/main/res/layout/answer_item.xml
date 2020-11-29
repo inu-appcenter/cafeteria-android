@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="answer"
+            type="com.inu.cafeteria.feature.support.questions.AnswerView" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="@{(answer == null) ? View.GONE : View.VISIBLE}">
+
+        <!-- Reply arrow -->
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mid_space"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_subdirectory_arrow_right_24px"
+            app:tint="@color/dimmedBackground"
+            android:contentDescription="@string/desc_reply" />
+
+        <!-- Title and body -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/arrow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/mid_space"
+            android:layout_marginStart="@dimen/close_space"
+            android:layout_marginEnd="@dimen/mid_space"
+            android:padding="@dimen/near_space"
+            android:background="@drawable/rounded_rectangle_12dp"
+            android:backgroundTint="@color/moreLightGray"
+            android:orientation="vertical">
+
+            <!-- Title -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <!-- Text -->
+                <TextView
+                    android:id="@+id/question_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="@dimen/textSecondary"
+                    android:textStyle="bold"
+                    android:text='@{answer.title ?? ""}'
+                    tools:text="그게말입니다"/>
+
+                <!-- New dot -->
+                <ImageView
+                    android:id="@+id/new_dot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/notification_dot"
+                    android:padding="@dimen/close_space"
+                    android:contentDescription="@string/desc_reply"
+                    android:visibility="@{answer.read ? View.GONE : View.VISIBLE}"/>
+
+            </LinearLayout>
+
+            <!-- Content -->
+            <TextView
+                android:id="@+id/answer_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="@dimen/textSecondary"
+                android:text='@{answer.body ?? ""}'
+                tools:text="그게 사실은 이러이러해서 이렇게 된건데 말이죠, 자세한건 전화주세요." />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

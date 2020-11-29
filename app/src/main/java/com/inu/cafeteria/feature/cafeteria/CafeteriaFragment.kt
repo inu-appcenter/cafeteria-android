@@ -38,13 +38,14 @@ import org.koin.core.inject
 
 class CafeteriaFragment : BaseFragment() {
 
-    override val optionMenuId: Int? = R.menu.cafeteria_menu
+    override val optionMenuId: Int = R.menu.cafeteria_menu
 
     private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
     private val eventHub: EventHub by inject()
 
     private val adapter = CafeteriaAdapter()
 
+    // Reuse view after lifecycle!
     private var persistentView: View? = null
 
     override fun onNetworkChange(available: Boolean) {

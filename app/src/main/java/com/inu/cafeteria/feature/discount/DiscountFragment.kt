@@ -38,7 +38,6 @@ import org.koin.core.inject
 class DiscountFragment : BaseFragment() {
 
     private val viewModel: DiscountViewModel by viewModels()
-    private val eventHub: EventHub by inject()
 
     override fun onNetworkChange(available: Boolean) {
         if (available) {
@@ -53,7 +52,7 @@ class DiscountFragment : BaseFragment() {
         viewModel.preload()
     }
 
-    override fun onCreateView(viewCreator: ViewCreator): View? =
+    override fun onCreateView(viewCreator: ViewCreator): View =
         viewCreator<DiscountFragmentBinding> {
             initializeView(root)
             vm = viewModel
@@ -66,8 +65,8 @@ class DiscountFragment : BaseFragment() {
             })
         }
 
-        with(eventHub) {
-            observe(loginEvent) {
+        with(viewModel) {
+            observe(loggedInStatus) {
                 viewModel.load()
             }
         }

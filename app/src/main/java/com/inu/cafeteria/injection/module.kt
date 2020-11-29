@@ -21,13 +21,15 @@ package com.inu.cafeteria.injection
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.os.Build
 import com.inu.cafeteria.BuildConfig
+import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.EventHub
-import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.db.SharedPreferenceWrapper
-import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplBetaTest
-import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplMaster
+import com.inu.cafeteria.feature.main.LifecycleEventHandler
+import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplBeta
+import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplFinal
 import com.inu.cafeteria.repository.*
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.*
@@ -37,20 +39,44 @@ import org.koin.dsl.module
 val myModules = module {
 
     /*****************************
+     * Global config
+     *****************************/
+
+    single {
+        GlobalConfig(
+            baseUrl = when (BuildConfig.FLAVOR_server) {
+                "localserver" -> "http://10.0.1.10:9999"
+                "productionserver" -> "https://api.inu-cafeteria.app"
+                else -> "https://api.inu-cafeteria.app"
+            },
+            serviceManualPagePath = "/res/pages/manual/index.html",
+            faqPagePath = "/res/pages/faq/index.html",
+            deviceInfo = "android " + Build.VERSION.RELEASE,
+            version = BuildConfig.VERSION_NAME,
+            appId = BuildConfig.APPLICATION_ID,
+            kakaoPlusFriendLink = "kakaoplus://plusfriend/home/_xgxaSLd",
+            uicoopPhoneNumber = "0328354720"
+        )
+    }
+
+
+    /*****************************
      * General
      *****************************/
 
     /** Navigator */
     single {
         Navigator(
-            context = get()
+            context = get(),
+            globalConfig = get()
         )
     }
 
     /** Network Service */
     single {
         RetrofitFactory.createCafeteriaNetworkService(
-            context = get()
+            context = get(),
+            baseUrl = get<GlobalConfig>().baseUrl
         )
     }
 
@@ -66,10 +92,10 @@ val myModules = module {
 
     /** Main activity event handler */
     single {
-        when (BuildConfig.FLAVOR) {
-            "betatest" -> LifecycleEventHandlerImplBetaTest(context = get())
-            "master" -> LifecycleEventHandlerImplMaster()
-            else -> LifecycleEventHandlerImplMaster()
+        when (BuildConfig.FLAVOR_stage) {
+            "betatest" -> LifecycleEventHandlerImplBeta(context = get())
+            "finalstage" -> LifecycleEventHandlerImplFinal()
+            else -> LifecycleEventHandlerImplFinal()
         } as LifecycleEventHandler
     }
 
@@ -113,6 +139,28 @@ val myModules = module {
         ) as DeviceStatusRepository
     }
 
+    /** Notice repository */
+    single {
+        NoticeRepositoryImpl(
+            networkService = get(),
+            db = get()
+        ) as NoticeRepository
+    }
+
+    /** Version repository */
+    single {
+        VersionRepositoryImpl(
+            networkService = get()
+        ) as VersionRepository
+    }
+
+    /** Interaction repository */
+    single {
+        InteractionRepositoryImpl(
+            networkService = get(),
+            globalConfig = get()
+        ) as InteractionRepository
+    }
 
     /*****************************
      * Use Case
@@ -190,6 +238,55 @@ val myModules = module {
     single {
         GetSavedAccount(
             accountService = get()
+        )
+    }
+
+    /** Check new notice */
+    single {
+        GetNewNotice(
+            noticeRepo = get()
+        )
+    }
+
+    /** Dismiss notice */
+    single {
+        DismissNotice(
+            noticeRepo = get()
+        )
+    }
+
+    /** Check for update */
+    single {
+        CheckForUpdate(
+            versionRepo = get()
+        )
+    }
+
+    /** Ask */
+    single {
+        Ask(
+            interactionRepo = get()
+        )
+    }
+
+    /** Get questions ans answers */
+    single {
+        GetQuestionsAndAnswers(
+            interactionRepo = get()
+        )
+    }
+
+    /** Mark answer read */
+    single {
+        MarkAnswerRead(
+            interactionRepo = get()
+        )
+    }
+
+    /** Mark answer read */
+    single {
+        FetchNotifications(
+            interactionRepository = get()
         )
     }
 }
