@@ -26,15 +26,19 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
 import com.inu.cafeteria.common.extension.fadeIn
 import com.inu.cafeteria.common.extension.fadeOut
+import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.common.extension.setBackgroundTint
 import com.inu.cafeteria.common.navigation.rootDestinations
 import com.inu.cafeteria.util.Fun
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.android.synthetic.main.main_activity.*
 import org.koin.core.inject
+import timber.log.Timber
 import java.util.*
 
 class MainActivity : NavigationActivity() {
@@ -79,9 +83,11 @@ class MainActivity : NavigationActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        eventHandler.onCreate(this)
 
         setOfflineView()
-        eventHandler.onCreate(this)
+        setSupportTabBadge()
+        observeLoginEvent() // to fetch notifications(unread answers).
     }
 
     private fun setOfflineView() {
@@ -122,6 +128,36 @@ class MainActivity : NavigationActivity() {
             }
         )
     )
+
+    private fun setSupportTabBadge() {
+        with(bottom_nav) {
+            val badge = getOrCreateBadge(R.id.tab_support).apply {
+                isVisible = false
+                backgroundColor = getColor(R.color.orange)
+            }
+
+            observe(viewModel.numberOfUnreadAnswers) { numberOfNotifications ->
+                numberOfNotifications ?: return@observe
+
+                Timber.i("Notifications left: $numberOfNotifications")
+
+                with(badge) {
+                    isVisible = numberOfNotifications > 0
+                    number = numberOfNotifications
+                }
+            }
+        }
+    }
+
+    private fun observeLoginEvent() {
+        with(viewModel) {
+            observe(loggedInStatus) {
+                it?.takeIf { it }?.let {
+                    onLoggedIn()
+                }
+            }
+        }
+    }
 
     override fun onResume() {
         super.onResume()

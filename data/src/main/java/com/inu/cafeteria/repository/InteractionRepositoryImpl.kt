@@ -38,10 +38,6 @@ class InteractionRepositoryImpl(
 
     private val numberOfUnreadAnswers = MutableLiveData(0)
 
-    init {
-        fetchNumberOfUnreadAnswers()
-    }
-
     override fun ask(content: String) {
         networkService.ask(
             AskParams(
@@ -74,14 +70,12 @@ class InteractionRepositoryImpl(
         answerCache.clear()
     }
 
-    private fun fetchNumberOfUnreadAnswers() {
-        numberOfUnreadAnswers.value = getNumberOfUnreadAnswers()
+    override fun fetchNumberOfUnreadAnswers() {
+        numberOfUnreadAnswers.postValue(getNumberOfUnreadAnswers())
     }
 
     private fun getNumberOfUnreadAnswers(): Int {
-        val answers = cachedFetch(answerCache) {
-            networkService.getAllAnswers(unreadOnly = true).getOrThrow()
-        } ?: return 0
+        val answers = networkService.getAllAnswers(unreadOnly = true).getOrThrow() ?: return 0
 
         return answers.size
     }

@@ -63,7 +63,7 @@
         app:layout_constraintBottom_toTopOf="@id/bottom_nav"
         app:cardElevation="6dp"
         app:cardCornerRadius="12dp"
-        app:cardBackgroundColor="@android:color/holo_orange_dark"
+        app:cardBackgroundColor="@color/orange"
         android:visibility="gone"
         tools:visibility="visible">
 

@@ -23,9 +23,19 @@ import com.inu.cafeteria.R
 
 data class SupportOption(
     val title: Int,
-    val navigateTo: Int
+    val navigateTo: Int,
+    val somethingNew: Boolean = false,
 ) {
     companion object {
+        // Logged in + have unread answers
+        val availableSupportOptionsForThoseHaveNotification = listOf(
+            SupportOption(R.string.title_service_manual, R.id.action_support_manual),
+            SupportOption(R.string.title_faq, R.id.action_support_faq),
+            SupportOption(R.string.title_ask, R.id.action_support_ask),
+            SupportOption(R.string.title_questions, R.id.action_support_questions, true),
+        )
+
+        // Logged in + no unread answers
         val availableSupportOptionsForThoseLoggedIn = listOf(
             SupportOption(R.string.title_service_manual, R.id.action_support_manual),
             SupportOption(R.string.title_faq, R.id.action_support_faq),
@@ -33,6 +43,7 @@ data class SupportOption(
             SupportOption(R.string.title_questions, R.id.action_support_questions),
         )
 
+        // Not logged in + have unread answers
         val availableSupportOptionsForThoseNotLoggedIn = listOf(
             SupportOption(R.string.title_service_manual, R.id.action_support_manual),
             SupportOption(R.string.title_faq, R.id.action_support_faq),

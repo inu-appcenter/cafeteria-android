@@ -17,16 +17,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.usecase
 
-import androidx.lifecycle.LiveData
-import com.inu.cafeteria.entities.Question
+import com.inu.cafeteria.functional.Result
+import com.inu.cafeteria.interactor.UseCase
+import com.inu.cafeteria.repository.InteractionRepository
 
-interface InteractionRepository {
-    fun ask(content: String)
-    fun getAllQuestions(): List<Question>
-    fun markAnswerRead(answerId: Int)
+class FetchNotifications(
+    private val interactionRepository: InteractionRepository
+) : UseCase<Unit, Unit>() {
 
-    fun fetchNumberOfUnreadAnswers()
-    fun getNumberOfUnreadAnswersLiveData(): LiveData<Int>
+    override fun run(params: Unit) = Result.of {
+        interactionRepository.fetchNumberOfUnreadAnswers()
+    }
 }

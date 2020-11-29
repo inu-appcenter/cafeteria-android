@@ -23,6 +23,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="item"
             type="com.inu.cafeteria.feature.support.SupportOption" />
@@ -34,7 +35,9 @@
         android:background="?android:attr/selectableItemBackground"
         android:padding="@dimen/mid_space">
 
+        <!-- Title -->
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +48,20 @@
             android:textColor="?android:attr/textColorPrimary"
             tools:text="자주묻는 질문" />
 
+        <!-- New dot -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/mid_space"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/title"
+            app:tint="@color/orange"
+            android:src="@drawable/notification_dot"
+            android:visibility="@{item.somethingNew ? View.VISIBLE : View.GONE}"
+            android:contentDescription="@string/desc_reply" />
+
+        <!-- Arrow -->
         <ImageView
             android:contentDescription="@string/desc_more_button"
             android:layout_width="wrap_content"

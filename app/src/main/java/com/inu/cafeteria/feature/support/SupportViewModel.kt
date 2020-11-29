@@ -24,8 +24,10 @@ import androidx.lifecycle.MediatorLiveData
 import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.feature.support.SupportOption.Companion.availableSupportOptionsForThoseHaveNotification
 import com.inu.cafeteria.feature.support.SupportOption.Companion.availableSupportOptionsForThoseLoggedIn
 import com.inu.cafeteria.feature.support.SupportOption.Companion.availableSupportOptionsForThoseNotLoggedIn
+import com.inu.cafeteria.repository.InteractionRepository
 import com.inu.cafeteria.service.AccountService
 import org.koin.core.inject
 
@@ -33,6 +35,7 @@ class SupportViewModel : BaseViewModel() {
 
     private val globalConfig: GlobalConfig by inject()
     private val accountService: AccountService by inject()
+    private val interactionRepo: InteractionRepository by inject()
 
     private val _supportOptions = MediatorLiveData<List<SupportOption>>().apply {
         addSource(accountService.loggedInStatus()) { loggedIn ->
@@ -40,6 +43,16 @@ class SupportViewModel : BaseViewModel() {
                 postValue(availableSupportOptionsForThoseLoggedIn)
             } else {
                 postValue(availableSupportOptionsForThoseNotLoggedIn)
+            }
+        }
+
+        addSource(interactionRepo.getNumberOfUnreadAnswersLiveData()) { number ->
+            // This update will happen only when logged in,
+            // because the only trigger that fetches happen after login.
+            if (number > 0) {
+                postValue(availableSupportOptionsForThoseHaveNotification)
+            } else {
+                postValue(availableSupportOptionsForThoseLoggedIn)
             }
         }
     }

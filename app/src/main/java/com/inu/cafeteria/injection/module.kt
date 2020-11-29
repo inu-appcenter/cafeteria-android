@@ -280,4 +280,11 @@ val myModules = module {
             interactionRepo = get()
         )
     }
+
+    /** Mark answer read */
+    single {
+        FetchNotifications(
+            interactionRepository = get()
+        )
+    }
 }

@@ -23,9 +23,9 @@ import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Notice
-import com.inu.cafeteria.usecase.CheckForUpdate
-import com.inu.cafeteria.usecase.GetNewNotice
-import com.inu.cafeteria.usecase.DismissNotice
+import com.inu.cafeteria.repository.InteractionRepository
+import com.inu.cafeteria.service.AccountService
+import com.inu.cafeteria.usecase.*
 import org.koin.core.inject
 import timber.log.Timber
 
@@ -36,10 +36,22 @@ class MainViewModel : BaseViewModel() {
     private val getNewNotice: GetNewNotice by inject()
     private val dismissNotice: DismissNotice by inject()
     private val shouldIUpdate: CheckForUpdate by inject()
+    private val fetchNotifications: FetchNotifications by inject()
+
+    private val interactionRepository: InteractionRepository by inject()
+    val numberOfUnreadAnswers = interactionRepository.getNumberOfUnreadAnswersLiveData()
+
+    private val accountService: AccountService by inject()
+    val loggedInStatus = accountService.loggedInStatus()
 
     fun load(activity: MainActivity) {
         checkNewNotice(activity)
         checkForUpdate(activity)
+    }
+
+    fun onLoggedIn() {
+        // This is a global thing, so that it happens on MainViewModel.
+        checkForNotifications()
     }
 
     private fun checkNewNotice(activity: MainActivity) {
@@ -71,6 +83,12 @@ class MainViewModel : BaseViewModel() {
                     Timber.i("No need for update!")
                 }
             }.onError(::handleFailure)
+        }
+    }
+
+    private fun checkForNotifications() {
+        fetchNotifications(Unit) {
+            it.onError(::handleFailure)
         }
     }
 }

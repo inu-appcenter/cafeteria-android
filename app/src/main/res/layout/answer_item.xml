@@ -76,7 +76,7 @@
             app:layout_constraintTop_toTopOf="@id/question_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/question_title"
-            app:tint="@android:color/holo_orange_dark"
+            app:tint="@color/orange"
             android:src="@drawable/notification_dot"
             android:visibility="@{answer.read ? View.GONE : View.VISIBLE}"
             android:contentDescription="@string/desc_reply" />
