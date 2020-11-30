@@ -108,8 +108,6 @@ class MainActivity : NavigationActivity() {
     private fun getEasterEggs() = Fun(
         listOf(
             Fun.Event(9) {
-                Toast.makeText(this, getString(R.string.egg_wow), Toast.LENGTH_SHORT).show()
-
                 ParticleSystem(this, 50, R.drawable.dot, 3000)
                     .setSpeedRange(0.2f, 0.7f)
                     .oneShot(offline_view, 50)

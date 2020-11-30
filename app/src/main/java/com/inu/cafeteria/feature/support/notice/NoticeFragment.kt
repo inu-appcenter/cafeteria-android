@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.databinding.NoticeFragmentBinding
 import kotlinx.android.synthetic.main.notice_fragment.view.*
+import timber.log.Timber
 
 class NoticeFragment : BaseFragment() {
 
@@ -72,9 +73,8 @@ class NoticeFragment : BaseFragment() {
         @JvmStatic
         @BindingAdapter("isNoticesLoading")
         fun setNoticesLoading(view: RecyclerView, isNoticesLoading: Boolean?) {
-            isNoticesLoading?.let {
-                (view.adapter as? NoticeAdapter)?.isLoading = it
-            }
+            Timber.i("Set loading!!!!!!!!!!!!!!!!!!!!!!!!$isNoticesLoading")
+            (view.adapter as? NoticeAdapter)?.isLoading = isNoticesLoading ?: true
         }
     }
 }

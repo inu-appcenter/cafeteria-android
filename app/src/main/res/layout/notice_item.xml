@@ -31,15 +31,13 @@
         android:id="@+id/summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground">
+        android:padding="@dimen/mid_space">
 
         <!-- Date -->
         <TextView
             android:id="@+id/date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/mid_space"
-            android:paddingTop="@dimen/mid_space"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:textSize="@dimen/textTertiary"
@@ -51,8 +49,6 @@
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/mid_space"
-            android:paddingBottom="@dimen/mid_space"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/more_close"
             app:layout_constraintTop_toBottomOf="@id/date"
@@ -80,7 +76,8 @@
         android:id="@+id/body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/mid_space"
+        android:paddingHorizontal="@dimen/mid_space"
+        android:paddingVertical="@dimen/distant_space"
         app:layout_constraintTop_toBottomOf="@id/title"
         android:background="@color/moreLightGray"
         android:textColor="?android:attr/textColorPrimary"

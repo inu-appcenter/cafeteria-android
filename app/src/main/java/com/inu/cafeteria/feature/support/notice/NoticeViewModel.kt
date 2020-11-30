@@ -35,7 +35,7 @@ class NoticeViewModel : BaseViewModel() {
     private val _notices = MutableLiveData<List<NoticeView>>()
     val notices: LiveData<List<NoticeView>> = _notices
 
-    private val _loading = MutableLiveData(false)
+    private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
 
     fun load() {
