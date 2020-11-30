@@ -23,19 +23,13 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.extension.fadeIn
-import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.usecase.SendAppFeedback
-import com.inu.cafeteria.util.ShakeListener
 import com.plattysoft.leonids.ParticleSystem
-import kotlinx.android.synthetic.main.main_activity.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 

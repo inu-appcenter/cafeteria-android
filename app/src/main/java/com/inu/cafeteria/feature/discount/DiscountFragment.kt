@@ -27,13 +27,11 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
 import kotlinx.android.synthetic.main.discount_fragment.view.*
-import org.koin.core.inject
 
 class DiscountFragment : BaseFragment() {
 

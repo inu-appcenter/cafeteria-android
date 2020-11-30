@@ -23,7 +23,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.core.KoinComponent

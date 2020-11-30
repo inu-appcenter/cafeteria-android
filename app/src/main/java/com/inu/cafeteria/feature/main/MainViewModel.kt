@@ -25,7 +25,10 @@ import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.repository.InteractionRepository
 import com.inu.cafeteria.service.AccountService
-import com.inu.cafeteria.usecase.*
+import com.inu.cafeteria.usecase.CheckForUpdate
+import com.inu.cafeteria.usecase.DismissNotice
+import com.inu.cafeteria.usecase.FetchNotifications
+import com.inu.cafeteria.usecase.GetNewNotice
 import org.koin.core.inject
 import timber.log.Timber
 
