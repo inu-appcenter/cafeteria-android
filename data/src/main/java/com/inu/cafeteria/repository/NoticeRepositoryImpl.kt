@@ -74,6 +74,6 @@ class NoticeRepositoryImpl(
     )
 
     companion object {
-        private const val KEY_LAST_SEEN_NOTICE_ID = "last_seen_notice_id"
+        private const val KEY_LAST_SEEN_NOTICE_ID = "key_last_seen_notice_id"
     }
 }
