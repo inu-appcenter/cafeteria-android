@@ -20,12 +20,14 @@
 package com.inu.cafeteria.usecase
 
 import android.content.Context
+import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
 import com.inu.cafeteria.util.Request
 
 class SendAppFeedback(
-    val context: Context
+    val context: Context,
+    val globalConfig: GlobalConfig
 ) : UseCase<String, String>() {
 
     override fun run(params: String): Result<String> {
@@ -33,7 +35,7 @@ class SendAppFeedback(
         return Result.of {
             Request.post(
                 context,
-                "https://i2i5oeq2j0.execute-api.ap-northeast-2.amazonaws.com/feedback",
+                globalConfig.feedbackUrl,
                 params.toByteArray()
             )
         }

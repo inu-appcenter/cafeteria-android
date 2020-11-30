@@ -55,7 +55,8 @@ val myModules = module {
             version = BuildConfig.VERSION_NAME,
             appId = BuildConfig.APPLICATION_ID,
             kakaoPlusFriendLink = "kakaoplus://plusfriend/home/_xgxaSLd",
-            uicoopPhoneNumber = "0328354720"
+            uicoopPhoneNumber = "0328354720",
+            feedbackUrl = "https://beta.inu-cafeteria.app/feedback"
         )
     }
 
@@ -216,7 +217,8 @@ val myModules = module {
     /** Send app feedback */
     single {
         SendAppFeedback(
-            context = get()
+            context = get(),
+            globalConfig = get()
         )
     }
 
