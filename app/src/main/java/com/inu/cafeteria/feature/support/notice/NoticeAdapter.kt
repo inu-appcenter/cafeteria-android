@@ -67,10 +67,25 @@ class NoticeAdapter : BaseAdapter<NoticeView, NoticeAdapter.NoticeViewHolder>() 
 
             with(itemView.summary) {
                 setOnClickListener {
-                    item.expanded = !item.expanded
-
-                    itemView.body.isVisible = item.expanded
+                    toggleExpanded(item)
                 }
+            }
+        }
+
+        private fun toggleExpanded(item: NoticeView) {
+            item.expanded = !item.expanded
+
+            with(itemView.more_close) {
+                setImageResource(
+                    when (item.expanded) {
+                        true -> R.drawable.ic_keyboard_arrow_up_24px
+                        else -> R.drawable.ic_keyboard_arrow_down_24px
+                    }
+                )
+            }
+
+            with(itemView.body) {
+                isVisible = item.expanded
             }
         }
     }
