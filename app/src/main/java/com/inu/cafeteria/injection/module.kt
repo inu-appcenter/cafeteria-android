@@ -51,7 +51,7 @@ val myModules = module {
             },
             serviceManualPagePath = "/res/pages/manual/index.html",
             faqPagePath = "/res/pages/faq/index.html",
-            deviceInfo = "android " + Build.VERSION.RELEASE,
+            deviceInfo = "${Build.MANUFACTURER} ${Build.MODEL}, android ${Build.VERSION.RELEASE}" ,
             version = BuildConfig.VERSION_NAME,
             appId = BuildConfig.APPLICATION_ID,
             kakaoPlusFriendLink = "kakaoplus://plusfriend/home/_xgxaSLd",
