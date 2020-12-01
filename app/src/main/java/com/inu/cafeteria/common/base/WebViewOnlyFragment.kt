@@ -19,6 +19,7 @@
 
 package com.inu.cafeteria.common.base
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,7 @@ abstract class WebViewOnlyFragment : BaseFragment() {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initializeView(view: View) {
         with(view.web_view) {
             webChromeClient = object: WebChromeClient() {
@@ -54,6 +56,11 @@ abstract class WebViewOnlyFragment : BaseFragment() {
                         }
                     }
                 }
+            }
+
+            with(settings) {
+                javaScriptEnabled = true
+                defaultTextEncodingName = "utf-8"
             }
 
             loadUrl(getPageUrl())
