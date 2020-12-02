@@ -81,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@id/title"
         android:background="@color/moreLightGray"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="@dimen/textTertiary"
+        android:textSize="@dimen/textSecondary"
         tools:text="하아하아아아아하하ㅏ하하하ㅏ"/>
 
 </LinearLayout>
