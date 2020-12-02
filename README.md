@@ -46,10 +46,15 @@
 
 
 ## 개발자이신가요
+
 개발 문서는 [여기](docs/TECH.md)로
 
 
 ## 업데이트 로그
+
+### 2020.12.2 v4.1.0b3
+- 메인 테마 컬러 교체
+- 공지 폰트 크기 변경
 
 ### 2020.12.1 v4.1.0-beta02
 - 웹뷰 개선
@@ -102,10 +107,3 @@
 - 디자인 변경
 - 소스 다시 작성
 
-
-## 스페셜 땡스 투
-
-- [훌륭한 레퍼런스](https://fernandocejas.com/2018/05/07/architecting-android-reloaded/) 제공해준 [Fernando Cejas](https://fernandocejas.com)
-- [안드로이드 학습하는 데에 큰 도움이 된 앱](https://github.com/moezbhatti/qksms)을 만들고 관리하는 [Moez Bhatti](https://github.com/moezbhatti)
-- 먼저 왔다 가신 1기, 2기 개발팀
-- 그리고 우리 팀
