@@ -35,7 +35,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/backgroundLight</item>
 
-        <item name="colorPrimary">@color/themeBlue</item>
+        <item name="colorPrimary">@color/pointBlue</item>
         <item name="colorAccent">@color/pointBlue</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
 
