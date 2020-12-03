@@ -65,7 +65,10 @@ class DiscountFragment : BaseFragment() {
 
         with(viewModel) {
             observe(loggedInStatus) {
-                viewModel.load()
+                if (isOnline()) {
+                    // Same pattern as in MainActivity.
+                    viewModel.load()
+                }
             }
         }
     }

@@ -30,15 +30,10 @@ class DeviceStatusRepositoryImpl(
     private val manager: ConnectivityManager
 ) : DeviceStatusRepository {
 
-    private val online = MutableLiveData<Boolean>(null)
+    private val online = MutableLiveData(isOnline())
 
     override fun init() {
-        applyCurrentNetworkStateToLiveData()
         startObservingNetworkState()
-    }
-
-    private fun applyCurrentNetworkStateToLiveData() {
-        online.value = isOnline()
     }
 
     private fun startObservingNetworkState() {
@@ -53,7 +48,10 @@ class DeviceStatusRepositoryImpl(
         // the network doesn't work for a while.
         // So we need to wait for it become 'really' available.
         Handler(Looper.getMainLooper()).postDelayed({
-            online.postValue(true)
+            if (online.value != true) {
+                // Prevent duplicated event!
+                online.postValue(true)
+            }
         }, 500)
     }
 

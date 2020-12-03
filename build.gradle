@@ -20,7 +20,7 @@
 buildscript {
 
     /** THE VERSION NAME! */
-    ext.version_name = '4.1.0b4'
+    ext.version_name = '4.1.0b5'
 
     ext.kotlin_version = '1.4.20'
     ext.gradle_version = '4.1.1'
@@ -86,6 +86,6 @@ task clean(type: Delete) {
  * @return the git revision count, integer.
  */
 static def getRevisionCount() {
-    return Integer.parseInt('git rev-list --count HEAD'.execute().text.trim())
+    return Integer.parseInt('git rev-list --count --all'.execute().text.trim())
 }
 
