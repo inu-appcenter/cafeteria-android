@@ -18,7 +18,8 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -39,6 +40,7 @@
             android:layout_margin="@dimen/far_space"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintDimensionRatio="1.5"
+            android:maxLength="@dimen/question_max_length"
             android:text="@={vm.content}"
             android:gravity="top|start"
             android:inputType="textMultiLine"

@@ -110,4 +110,7 @@
     <!-- Notice bottom sheet -->
     <dimen name="notice_sheet_height">180dp</dimen>
 
+    <!-- Question -->
+    <dimen name="question_max_length">500</dimen>
+
 </resources>
