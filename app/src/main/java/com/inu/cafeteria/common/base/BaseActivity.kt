@@ -27,26 +27,41 @@ import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import timber.log.Timber
 
 abstract class BaseActivity : AppCompatActivity(), KoinComponent {
 
     protected val mContext: Context by inject()
     private val deviceStatusRepository: DeviceStatusRepository by inject()
 
+    private var eventHasNotEmittedSinceLastRecreation: Boolean = true
+
     open fun onNetworkStateChange(available: Boolean) {}
+
+    internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        observeNetworkStateChange()
+        observeNetworkStateChange(!firstTimeCreated(savedInstanceState))
     }
 
-    private fun observeNetworkStateChange() {
-        observe(deviceStatusRepository.isOnlineLiveData()) {
+    private fun observeNetworkStateChange(isThisActivityRecreated: Boolean) {
+        observe(deviceStatusRepository.isOnlineEvent()) {
             it?.let {
-                onNetworkStateChange(it)
+                propagateNetworkChangeOrNot(isThisActivityRecreated, it)
             }
         }
+    }
+
+    private fun propagateNetworkChangeOrNot(activityRecreated: Boolean, newNetworkState: Boolean) {
+        if (activityRecreated && eventHasNotEmittedSinceLastRecreation) {
+            Timber.i("Ignoring LiveData event on observe because this is right after Activity recreation!")
+            eventHasNotEmittedSinceLastRecreation = false
+            return
+        }
+
+        onNetworkStateChange(newNetworkState)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

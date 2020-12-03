@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentActivity
 
 class LifecycleEventHandlerImplFinal : LifecycleEventHandler {
 
-    override fun onCreate(activity: FragmentActivity) {
+    override fun onFirstCreate(activity: FragmentActivity) {
         // Do nothing
     }
 

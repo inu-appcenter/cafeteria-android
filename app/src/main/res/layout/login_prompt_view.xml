@@ -74,8 +74,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textColor="?android:attr/textColorPrimaryInverse"
-            android:backgroundTint="?android:attr/colorPrimary"
             android:text="@string/button_login"
             android:onClick="@{v -> vm.onClickLogin()}"/>
 

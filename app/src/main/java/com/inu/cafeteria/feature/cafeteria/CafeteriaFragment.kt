@@ -48,7 +48,7 @@ class CafeteriaFragment : BaseFragment() {
     // Reuse view after lifecycle!
     private var persistentView: View? = null
 
-    override fun onNetworkChange(available: Boolean) {
+    override fun onNetworkStateChange(available: Boolean) {
         if (available) {
             viewModel.load()
         }

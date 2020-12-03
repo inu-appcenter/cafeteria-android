@@ -25,5 +25,5 @@ interface DeviceStatusRepository {
     fun init()
 
     fun isOnline(): Boolean
-    fun isOnlineLiveData(): LiveData<Boolean>
+    fun isOnlineEvent(): LiveData<Boolean>
 }

@@ -36,7 +36,6 @@ import kotlinx.android.synthetic.main.kakao_chat_button.view.*
 import kotlinx.android.synthetic.main.support_fragment.view.*
 import kotlinx.android.synthetic.main.uicoop_call_button.view.*
 
-
 class SupportFragment : BaseFragment() {
 
     private val viewModel: SupportViewModel by viewModels()

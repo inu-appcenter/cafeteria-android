@@ -81,7 +81,9 @@ class MainActivity : NavigationActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        eventHandler.onCreate(this)
+        if (firstTimeCreated(savedInstanceState)) {
+            eventHandler.onFirstCreate(this)
+        }
 
         setOfflineView()
         setSupportTabBadge()

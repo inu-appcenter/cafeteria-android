@@ -28,7 +28,7 @@ class DeviceStatusRepositoryImpl(
     private val manager: ConnectivityManager
 ) : DeviceStatusRepository {
 
-    private val _online = MutableLiveData<Boolean>(null)
+    private val online = MutableLiveData<Boolean>(null)
 
     override fun init() {
         applyCurrentNetworkStateToLiveData()
@@ -36,12 +36,12 @@ class DeviceStatusRepositoryImpl(
     }
 
     private fun applyCurrentNetworkStateToLiveData() {
-        _online.value = isOnline()
+        online.value = isOnline()
     }
 
     private fun startObservingNetworkState() {
-        val onOnline = { _online.postValue(true) }
-        val onOffline = { _online.postValue(false) }
+        val onOnline = { online.postValue(true) }
+        val onOffline = { online.postValue(false) }
 
         NetworkHelper.onNetworkChange(manager, onOnline, onOffline)
     }
@@ -50,5 +50,5 @@ class DeviceStatusRepositoryImpl(
         return NetworkHelper.isOnline(manager)
     }
 
-    override fun isOnlineLiveData(): LiveData<Boolean> = _online
+    override fun isOnlineEvent(): LiveData<Boolean> = online
 }
