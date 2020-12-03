@@ -67,6 +67,7 @@ class Navigator(
         )
     }
 
+    @SuppressLint("InflateParams")
     fun showNotice(activity: FragmentActivity, notice: Notice, onDismiss: () -> Unit) {
         val dialog = BottomSheetDialog(activity)
         val noticeView = activity.layoutInflater.inflate(R.layout.notice_view, null).apply {
@@ -113,12 +114,12 @@ class Navigator(
     @SuppressLint("RestrictedApi")
     fun showFeedbackDialog(activity: FragmentActivity, sendFeedback: (String) -> Unit) {
         val textInput = EditText(activity).apply {
-            hint = "피드백을 작성해주세요 :)"
+            hint = "관심 가져주셔서 감사합니다 :)"
         }
 
         AlertDialog.Builder(activity)
             .setTitle("피드백")
-            .setMessage("개선이 필요한 부분을 알려주세요!\n(버전 ${globalConfig.version})")
+            .setMessage("개선이 필요한 부분을 알려주세요!\uD83D\uDE0A")
             .setView(textInput, 60, 0, 60, 0)
             .setPositiveButton("보내기") { dialog, _ ->
                 sendFeedback(textInput.text.toString())

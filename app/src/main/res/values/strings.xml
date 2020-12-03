@@ -140,5 +140,6 @@
     <string name="description_not_answered">waiting</string>
     <string name="title_notice">Notices</string>
     <string name="no_notices">No notices</string>
+    <string name="fail_no_activity">No activity to handle request. Please check if that app is installed.</string>
 
 </resources>

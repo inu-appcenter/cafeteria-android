@@ -132,5 +132,6 @@
     <string name="description_not_answered">답변 대기중</string>
     <string name="title_notice">공지</string>
     <string name="no_notices">등록된 공지가 없습니다.</string>
+    <string name="fail_no_activity">앱이 설치되어 있는지 확인해 주세요.</string>
 
 </resources>
