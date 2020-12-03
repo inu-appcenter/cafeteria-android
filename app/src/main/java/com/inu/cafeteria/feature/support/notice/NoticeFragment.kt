@@ -34,7 +34,7 @@ class NoticeFragment : BaseFragment() {
 
     private val adapter = NoticeAdapter()
 
-    override fun onNetworkChange(available: Boolean) {
+    override fun onNetworkStateChange(available: Boolean) {
         if (available) {
             viewModel.load()
         }

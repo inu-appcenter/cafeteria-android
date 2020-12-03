@@ -40,13 +40,12 @@ class LifecycleEventHandlerImplBeta(
     private val navigator: Navigator by inject()
     private val sendAppFeedback: SendAppFeedback by inject()
 
-    override fun onCreate(activity: FragmentActivity) {
+    override fun onFirstCreate(activity: FragmentActivity) {
         if (activity !is MainActivity) {
             return
         }
 
         showWelcomeMessage(activity)
-        showFeedbackButton(activity)
      }
 
     private fun showWelcomeMessage(activity: MainActivity) {
@@ -87,7 +86,7 @@ class LifecycleEventHandlerImplBeta(
     }
 
     override fun onResume(activity: FragmentActivity) {
-        // No shake detection!
+        showFeedbackButton(activity)
     }
 
     override fun onPause(activity: FragmentActivity) {

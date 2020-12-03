@@ -58,8 +58,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/content"
-            android:textColor="?android:attr/textColorPrimaryInverse"
-            android:backgroundTint="?android:attr/colorPrimary"
             android:text="@string/button_ask"
             android:enabled="@{vm.contentValid}"
             android:onClick="@{() -> vm.submit()}"

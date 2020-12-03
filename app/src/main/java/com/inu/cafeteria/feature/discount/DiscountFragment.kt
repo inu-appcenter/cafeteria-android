@@ -37,7 +37,7 @@ class DiscountFragment : BaseFragment() {
 
     private val viewModel: DiscountViewModel by viewModels()
 
-    override fun onNetworkChange(available: Boolean) {
+    override fun onNetworkStateChange(available: Boolean) {
         if (available) {
             viewModel.load()
         }

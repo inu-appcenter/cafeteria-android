@@ -75,11 +75,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/password_field"
-            android:textColor="?android:attr/textColorPrimaryInverse"
-            android:backgroundTint="?android:attr/colorPrimary"
             android:text="@string/button_login"
             android:enabled="@{vm.formValid}"
-            android:alpha="@{vm.formValid ? 1.0f : 0.5f}"
             android:onClick="@{v -> vm.performLogin()}"
             tools:enabled="false" />
 

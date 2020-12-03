@@ -34,7 +34,7 @@ class QuestionsFragment : BaseFragment() {
 
     private val adapter = QuestionsAdapter()
 
-    override fun onNetworkChange(available: Boolean) {
+    override fun onNetworkStateChange(available: Boolean) {
         if (available) {
             viewModel.load()
         }

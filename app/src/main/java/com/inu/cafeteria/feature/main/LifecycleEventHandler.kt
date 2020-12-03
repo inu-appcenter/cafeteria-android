@@ -22,7 +22,7 @@ package com.inu.cafeteria.feature.main
 import androidx.fragment.app.FragmentActivity
 
 interface LifecycleEventHandler {
-    fun onCreate(activity: FragmentActivity)
+    fun onFirstCreate(activity: FragmentActivity)
     fun onResume(activity: FragmentActivity)
     fun onPause(activity: FragmentActivity)
 }
