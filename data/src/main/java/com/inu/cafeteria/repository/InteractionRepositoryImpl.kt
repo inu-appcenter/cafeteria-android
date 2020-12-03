@@ -53,14 +53,17 @@ class InteractionRepositoryImpl(
         questionsCache.clear()
     }
 
-    override fun getAllQuestions(): List<Question> {
-        val questions = cachedFetch(questionsCache) {
+    override fun getAllQuestions(invalidateCache: Boolean): List<Question> {
+        val questions = cachedFetch(questionsCache, invalidateCache) {
             networkService.getAllQuestions().getOrThrow()
         } ?: return listOf()
 
-        val answers = cachedFetch(answerCache) {
+        val answers = cachedFetch(answerCache, invalidateCache) {
             networkService.getAllAnswers().getOrThrow()
         } ?: return listOf()
+
+        // A little hook.
+        numberOfUnreadAnswers.postValue(answers.count { !it.read })
 
         return InteractionResultGatherer(questions, answers).combine()
     }
@@ -90,7 +93,11 @@ class InteractionRepositoryImpl(
     }
 
     @Synchronized
-    private fun <T> cachedFetch(cache: Cache<T>, fetch: () -> T?): T? {
+    private fun <T> cachedFetch(cache: Cache<T>, invalidate: Boolean = false, fetch: () -> T?): T? {
+        if (invalidate) {
+            cache.invalidate()
+        }
+
         return (if (cache.isValid) cache.get() else null) ?: fetch()?.also(cache::set)
     }
 }

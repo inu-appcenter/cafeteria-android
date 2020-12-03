@@ -26,9 +26,9 @@ import com.inu.cafeteria.repository.InteractionRepository
 
 class GetQuestionsAndAnswers(
     private val interactionRepo: InteractionRepository
-) : UseCase<Unit, List<Question>>() {
+) : UseCase<Boolean, List<Question>>() {
 
-    override fun run(params: Unit) = Result.of {
-        interactionRepo.getAllQuestions()
+    override fun run(params: Boolean) = Result.of {
+        interactionRepo.getAllQuestions(params)
     }
 }

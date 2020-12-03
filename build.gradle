@@ -32,7 +32,7 @@ buildscript {
     ext.recyclerview_version = '1.1.0'
     ext.constraintlayout_version = '2.0.4'
     ext.lifecycle_version = '2.2.0'
-    ext.material_version = '1.3.0-alpha03'
+    ext.material_version = '1.3.0-alpha04'
     ext.retrofit_version = '2.9.0'
     ext.gson_version = '2.8.6'
     ext.cookiejar_version = 'v1.0.1'
@@ -49,6 +49,8 @@ buildscript {
     ext.koin_test_version = '2.0.1'
     ext.kotlinx_coroutine_version = '1.4.1-native-mt'
     ext.volley_version = '1.1.1'
+    ext.leonids_version = '1.3.2'
+    ext.swipe_refresh_layout_version = '1.1.0'
 
     repositories {
         google()

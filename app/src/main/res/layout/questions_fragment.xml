@@ -33,14 +33,21 @@
         android:layout_height="match_parent">
 
         <!-- Questions -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/questions_recycler"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresher"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            questions="@{vm.questions}"
-            isQuestionsLoading="@{vm.loading}"/>
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/questions_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                questions="@{vm.questions}"
+                isQuestionsLoading="@{vm.loading}"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <!-- Empty view -->
         <TextView

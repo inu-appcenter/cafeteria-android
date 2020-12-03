@@ -127,7 +127,10 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     /** Particle system */
-    implementation 'com.plattysoft.leonids:LeonidsLib:1.3.2'
+    implementation "com.plattysoft.leonids:LeonidsLib:$leonids_version"
+
+    /** Swipe refresh layout */
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_layout_version"
 }
 
 repositories {
