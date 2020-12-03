@@ -24,7 +24,7 @@ import com.inu.cafeteria.entities.Question
 
 interface InteractionRepository {
     fun ask(content: String)
-    fun getAllQuestions(): List<Question>
+    fun getAllQuestions(invalidateCache: Boolean): List<Question>
     fun markAnswerRead(answerId: Int)
 
     fun fetchNumberOfUnreadAnswers()

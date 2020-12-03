@@ -61,6 +61,14 @@ class QuestionsFragment : BaseFragment() {
             emptyView = view.empty_view
             loadingView = view.loading_view
         }
+
+        with(view.swipe_refresher) {
+            setOnRefreshListener {
+                viewModel.reload {
+                    isRefreshing = false
+                }
+            }
+        }
     }
 
     companion object {

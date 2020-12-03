@@ -40,12 +40,19 @@ class QuestionsViewModel : BaseViewModel() {
     private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
 
-    fun load() {
-        getQuestionsAndAnswers(Unit) {
+    fun load(invalidateCache: Boolean = false, afterLoadingFinished: () -> Unit = {}) {
+        getQuestionsAndAnswers(invalidateCache) {
             _loading.value = true
 
-            it.onSuccess(::handleResult).onError(::handleFailure).finally { _loading.value = false }
+            it.onSuccess(::handleResult).onError(::handleFailure).finally {
+                _loading.value = false
+                afterLoadingFinished()
+            }
         }
+    }
+
+    fun reload(afterReloadFinished: () -> Unit) {
+        load(true, afterReloadFinished)
     }
 
     private fun handleResult(result: List<Question>) {
