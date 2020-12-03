@@ -81,9 +81,7 @@ class MainActivity : NavigationActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (firstTimeCreated(savedInstanceState)) {
-            eventHandler.onFirstCreate(this)
-        }
+        eventHandler.onCreate(this, savedInstanceState)
 
         setOfflineView()
         setSupportTabBadge()
@@ -103,6 +101,13 @@ class MainActivity : NavigationActivity() {
             setOnClickListener {
                 startAnimation(animation)
                 eggs.haveSomeFun()
+            }
+
+            // Apply when activity created.
+            if (isOnline()) {
+                fadeOut(250L)
+            } else {
+                fadeIn(250L)
             }
         }
     }
@@ -176,6 +181,7 @@ class MainActivity : NavigationActivity() {
             viewModel.load(this)
         }
 
+        // Apply when updated (while activity staying alive).
         with(offline_view) {
             if (available) {
                 fadeOut(250L)

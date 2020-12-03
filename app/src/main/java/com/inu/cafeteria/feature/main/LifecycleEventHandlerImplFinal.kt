@@ -19,11 +19,12 @@
 
 package com.inu.cafeteria.feature.main
 
+import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 
 class LifecycleEventHandlerImplFinal : LifecycleEventHandler {
 
-    override fun onFirstCreate(activity: FragmentActivity) {
+    override fun onCreate(activity: FragmentActivity, savedInstanceState: Bundle?) {
         // Do nothing
     }
 

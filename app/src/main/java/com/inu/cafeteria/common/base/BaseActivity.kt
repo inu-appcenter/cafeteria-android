@@ -38,6 +38,8 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
 
     open fun onNetworkStateChange(available: Boolean) {}
 
+    final fun isOnline() = deviceStatusRepository.isOnline()
+
     internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
 
     override fun onCreate(savedInstanceState: Bundle?) {

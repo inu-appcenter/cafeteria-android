@@ -20,6 +20,7 @@
 package com.inu.cafeteria.feature.main
 
 import android.content.Context
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
@@ -40,13 +41,17 @@ class LifecycleEventHandlerImplBeta(
     private val navigator: Navigator by inject()
     private val sendAppFeedback: SendAppFeedback by inject()
 
-    override fun onFirstCreate(activity: FragmentActivity) {
+    override fun onCreate(activity: FragmentActivity, savedInstanceState: Bundle?) {
         if (activity !is MainActivity) {
             return
         }
 
-        showWelcomeMessage(activity)
-     }
+        if (savedInstanceState == null) {
+            showWelcomeMessage(activity)
+        }
+
+        showFeedbackButton(activity)
+    }
 
     private fun showWelcomeMessage(activity: MainActivity) {
         Toast.makeText(activity, "테스트에 참여하여 주셔서 감사합니다!", Toast.LENGTH_SHORT).show()
@@ -86,10 +91,8 @@ class LifecycleEventHandlerImplBeta(
     }
 
     override fun onResume(activity: FragmentActivity) {
-        showFeedbackButton(activity)
     }
 
     override fun onPause(activity: FragmentActivity) {
-        // No shake detection!
     }
 }

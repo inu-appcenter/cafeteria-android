@@ -33,8 +33,7 @@ class NetworkHelper {
             var result = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val networkCapabilities = connectivityManager.activeNetwork ?: return false
-                val actNw =
-                    connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+                val actNw = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
                 result = when {
                     actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
                     actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
@@ -68,22 +67,25 @@ class NetworkHelper {
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .build()
 
-            connectivityManager.registerNetworkCallback(networkRequest, object: ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: Network) {
-                    super.onAvailable(network)
-                    onAvailable()
-                }
+            connectivityManager.registerNetworkCallback(
+                networkRequest,
+                object : ConnectivityManager.NetworkCallback() {
+                    override fun onAvailable(network: Network) {
+                        super.onAvailable(network)
 
-                override fun onUnavailable() {
-                    super.onUnavailable()
-                    onUnavailable()
-                }
+                        onAvailable()
+                    }
 
-                override fun onLost(network: Network) {
-                    super.onLost(network)
-                    onUnavailable()
-                }
-            })
+                    override fun onUnavailable() {
+                        super.onUnavailable()
+                        onUnavailable()
+                    }
+
+                    override fun onLost(network: Network) {
+                        super.onLost(network)
+                        onUnavailable()
+                    }
+                })
         }
     }
 }

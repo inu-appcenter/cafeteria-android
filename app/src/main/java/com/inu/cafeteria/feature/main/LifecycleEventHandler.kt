@@ -19,10 +19,11 @@
 
 package com.inu.cafeteria.feature.main
 
+import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 
 interface LifecycleEventHandler {
-    fun onFirstCreate(activity: FragmentActivity)
+    fun onCreate(activity: FragmentActivity, savedInstanceState: Bundle?)
     fun onResume(activity: FragmentActivity)
     fun onPause(activity: FragmentActivity)
 }

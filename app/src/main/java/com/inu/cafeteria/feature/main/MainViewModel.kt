@@ -23,6 +23,7 @@ import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Notice
+import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.repository.InteractionRepository
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.CheckForUpdate
@@ -41,6 +42,8 @@ class MainViewModel : BaseViewModel() {
     private val shouldIUpdate: CheckForUpdate by inject()
     private val fetchNotifications: FetchNotifications by inject()
 
+    private val statusRepository: DeviceStatusRepository by inject()
+
     private val interactionRepository: InteractionRepository by inject()
     val numberOfUnreadAnswers = interactionRepository.getNumberOfUnreadAnswersLiveData()
 
@@ -48,11 +51,21 @@ class MainViewModel : BaseViewModel() {
     val loggedInStatus = accountService.loggedInStatus()
 
     fun load(activity: MainActivity) {
+        if (!statusRepository.isOnline()) {
+            Timber.d("Device is offline. Pending loading main view model.")
+            return
+        }
+
         checkNewNotice(activity)
         checkForUpdate(activity)
     }
 
     fun onLoggedIn() {
+        if (!statusRepository.isOnline()) {
+            Timber.d("Device is offline. Pending calling onLoggedIn callback in main view model.")
+            return
+        }
+
         // This is a global thing, so that it happens on MainViewModel.
         checkForNotifications()
     }

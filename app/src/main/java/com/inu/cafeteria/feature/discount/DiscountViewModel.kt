@@ -46,7 +46,7 @@ class DiscountViewModel : BaseViewModel() {
 
     private val accountService: AccountService by inject()
 
-    private val statusRepo: DeviceStatusRepository by inject()
+    private val statusRepository: DeviceStatusRepository by inject()
 
     private val navigator: Navigator by inject()
 
@@ -73,7 +73,7 @@ class DiscountViewModel : BaseViewModel() {
     }
 
     fun load() {
-        if (!statusRepo.isOnline()) {
+        if (!statusRepository.isOnline()) {
             Timber.d("Device is offline. Pending loading discount view model.")
             return
         }

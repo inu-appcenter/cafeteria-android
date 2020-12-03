@@ -20,6 +20,8 @@
 package com.inu.cafeteria.repository
 
 import android.net.ConnectivityManager
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.util.NetworkHelper
@@ -40,10 +42,19 @@ class DeviceStatusRepositoryImpl(
     }
 
     private fun startObservingNetworkState() {
-        val onOnline = { online.postValue(true) }
+        val onOnline = { postAfterSomeTime() }
         val onOffline = { online.postValue(false) }
 
         NetworkHelper.onNetworkChange(manager, onOnline, onOffline)
+    }
+
+    private fun postAfterSomeTime() {
+        // Don't know why but after network turned available and isOnline() returns true,
+        // the network doesn't work for a while.
+        // So we need to wait for it become 'really' available.
+        Handler(Looper.getMainLooper()).postDelayed({
+            online.postValue(true)
+        }, 500)
     }
 
     override fun isOnline(): Boolean {
