@@ -87,7 +87,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/title_feedback"
         app:icon="@drawable/ic_email_24px"
-        android:backgroundTint="@color/pointBlue"
+        android:backgroundTint="?android:attr/colorPrimary"
         android:textColor="?android:attr/textColorPrimaryInverse"
         app:iconTint="?android:attr/textColorPrimaryInverse"
         android:visibility="gone"

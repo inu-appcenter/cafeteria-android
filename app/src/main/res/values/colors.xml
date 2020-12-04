@@ -39,13 +39,12 @@
 
     <color name="separatorLight">#FFDDDDDD</color>
 
-    <color name="pointBlue">#38b1e4</color>
     <color name="lightGray">#e5e5e5</color>
     <color name="moreLightGray">#F1F1F1</color>
 
     <color name="dimmedBackground">#77000000</color>
 
-    <color name="themeBlue">#00D0FF</color>
+    <color name="themeBlue">#3DBEF4</color>
     <color name="themeRed">#FF2841</color>
 
     <color name="breakfast">#FC4B00</color>
