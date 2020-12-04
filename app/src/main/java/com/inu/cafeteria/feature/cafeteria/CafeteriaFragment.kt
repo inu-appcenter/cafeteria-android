@@ -31,9 +31,7 @@ import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
-import kotlinx.android.synthetic.main.cafeteria_fragment.view.*
-import kotlinx.android.synthetic.main.date_selection_tab_bar.view.*
-import kotlinx.android.synthetic.main.empty_view.view.*
+import com.inu.cafeteria.extension.withNonNull
 import org.koin.core.inject
 
 class CafeteriaFragment : BaseFragment() {
@@ -57,25 +55,25 @@ class CafeteriaFragment : BaseFragment() {
     override fun onCreateView(viewCreator: ViewCreator) =
         persistentView?.apply { removeFromParent() } ?:
         viewCreator<CafeteriaFragmentBinding> {
-            initializeView(root)
+            initializeView(this)
             vm = viewModel
             persistentView = root
         }
 
-    private fun initializeView(view: View) {
-        setSupportActionBar(view.toolbar_cafeteria)
+    private fun initializeView(binding: CafeteriaFragmentBinding) {
+        setSupportActionBar(binding.toolbarCafeteria)
 
-        with(view.cafeteria_recycler) {
+        with(binding.cafeteriaRecycler) {
             adapter = this@CafeteriaFragment.adapter.apply {
                 onClickMore = viewModel::onViewMore
-                emptyView = view.empty_view
-                loadingView = view.loading_view
+                emptyView = binding.emptyView
+                loadingView = binding.loadingView
 
                 positions = viewModel.menuPagePositions
             }
         }
 
-        with(view.date_selector) {
+        with(binding.dateSelectionPart.dateSelector) {
             // Restoring tab position.
             getTabAt(viewModel.currentDateTabPosition)?.select()
 
@@ -84,7 +82,7 @@ class CafeteriaFragment : BaseFragment() {
             }
         }
 
-        with(view.logo_image) {
+        with(binding.logoImage) {
             withinAlphaAnimation(0f, 1f)
         }
 
@@ -94,7 +92,9 @@ class CafeteriaFragment : BaseFragment() {
             }
 
             observe(animateEvent) {
-                view.cafeteria_recycler.slideInWithFade(it ?: 0)
+                with(binding.cafeteriaRecycler) {
+                    slideInWithFade(it ?: 0)
+                }
             }
         }
 
@@ -106,8 +106,10 @@ class CafeteriaFragment : BaseFragment() {
     }
 
     private fun reloadCurrentTab() {
-        view?.cafeteria_recycler?.withinAlphaAnimation(0f, 1f) {
-            viewModel.reselectCurrentDateTab()
+        withNonNull(view?.findViewById<RecyclerView>(R.id.cafeteria_recycler)) {
+            withinAlphaAnimation(0f, 1f) {
+                viewModel.reselectCurrentDateTab()
+            }
         }
     }
 

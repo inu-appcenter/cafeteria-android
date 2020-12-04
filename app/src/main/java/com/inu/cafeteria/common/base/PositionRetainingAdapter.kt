@@ -21,11 +21,12 @@ package com.inu.cafeteria.common.base
 
 import android.util.SparseIntArray
 import androidx.annotation.CallSuper
+import timber.log.Timber
 
 /**
  * This adapter handles loading/empty view visibility.
  */
-abstract class PositionRetainingAdapter<T> : BaseAdapter<T, PositionRetainingViewHolder>() {
+abstract class PositionRetainingAdapter<T> : PlainAdapter<T, PositionRetainingViewHolder>() {
 
     var positions = SparseIntArray()
 
@@ -36,11 +37,15 @@ abstract class PositionRetainingAdapter<T> : BaseAdapter<T, PositionRetainingVie
         val position = holder.adapterPosition
         val firstVisiblePosition = holder.layoutManager?.findFirstVisibleItemPosition() ?: -1
 
+        Timber.i("Save cafeteria menu page ${position}'s page number: $firstVisiblePosition")
+
         positions.put(position, firstVisiblePosition)
     }
 
     private fun restoreViewHolderPosition(holder: PositionRetainingViewHolder) {
-        positions.get(holder.adapterPosition, 0).takeIf { it >= 0 }?.let {
+        positions.get(holder.adapterPosition, -1).takeIf { it >= 0 }?.let {
+            Timber.i("Restore holder's page number: $it")
+
             holder.layoutManager?.scrollToPositionWithOffset(it, 0)
         }
     }

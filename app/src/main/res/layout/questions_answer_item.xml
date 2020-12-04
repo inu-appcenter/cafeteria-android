@@ -35,11 +35,13 @@
 
         <!-- Question -->
         <include
+            android:id="@+id/question_part"
             layout="@layout/question_item"
             question="@{question}" />
 
         <!-- Answer -->
         <include
+            android:id="@+id/answer_part"
             layout="@layout/answer_item"
             answer="@{question.answer}" />
 

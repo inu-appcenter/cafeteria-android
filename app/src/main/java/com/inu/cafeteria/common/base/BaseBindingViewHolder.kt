@@ -19,4 +19,13 @@
 
 package com.inu.cafeteria.common.base
 
-abstract class DefaultAdapter<T> : BaseAdapter<T, BaseViewHolder>()
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
+
+open class BaseBindingViewHolder<T: ViewDataBinding>(protected val binding: T) : RecyclerView.ViewHolder(binding.root) {
+    constructor(parent: ViewGroup, @LayoutRes layout: Int) : this(DataBindingUtil.inflate<T>(LayoutInflater.from(parent.context), layout, parent, false))
+}

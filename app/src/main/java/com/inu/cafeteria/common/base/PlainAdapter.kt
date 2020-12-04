@@ -26,7 +26,7 @@ import com.inu.cafeteria.common.extension.setVisible
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
-abstract class BaseAdapter<T, VH: BaseViewHolder> : RecyclerView.Adapter<VH>(), KoinComponent {
+abstract class PlainAdapter<T, VH: PlainViewHolder> : RecyclerView.Adapter<VH>(), KoinComponent {
 
     /**
      * loadingView will be shown when it is not null and isLoading is true.

@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.databinding.NoticeFragmentBinding
-import kotlinx.android.synthetic.main.notice_fragment.view.*
 
 class NoticeFragment : BaseFragment() {
 
@@ -42,20 +41,20 @@ class NoticeFragment : BaseFragment() {
 
     override fun onCreateView(viewCreator: ViewCreator): View {
         return viewCreator.createView<NoticeFragmentBinding> {
-            initializeView(root)
+            initializeView(this)
             vm = viewModel
         }
     }
 
-    private fun initializeView(view: View) {
-        with(view.notice_recycler) {
+    private fun initializeView(binding: NoticeFragmentBinding) {
+        with(binding.noticeRecycler) {
             adapter = this@NoticeFragment.adapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
         with(adapter) {
-            emptyView = view.empty_view
-            loadingView = view.loading_view
+            emptyView = binding.emptyView
+            loadingView = binding.loadingView
         }
     }
 

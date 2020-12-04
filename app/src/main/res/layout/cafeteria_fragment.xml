@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ This file is part of INU Cafeteria.
   ~
   ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
@@ -18,13 +17,14 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.inu.cafeteria.feature.cafeteria.CafeteriaViewModel" />
@@ -36,52 +36,58 @@
 
         <!-- Toolbar group -->
         <com.google.android.material.appbar.AppBarLayout
-            style="@style/AppBar"
-            android:id="@+id/app_bar">
+            android:id="@+id/app_bar"
+            style="@style/AppBar">
 
-                <androidx.appcompat.widget.Toolbar
-                    style="@style/CustomToolbar"
-                    android:id="@+id/toolbar_cafeteria"
-                    app:layout_scrollFlags="scroll|enterAlways">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_cafeteria"
+                style="@style/CustomToolbar"
+                app:layout_scrollFlags="scroll|enterAlways">
 
-                    <!-- Logo in the toolbar -->
-                    <ImageView
-                        style="@style/HorizontallyFullSizedView"
-                        android:id="@+id/logo_image"
-                        android:layout_height="@dimen/logo_height"
-                        android:layout_marginStart="@dimen/option_menu_item_width"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/logo_new"
-                        android:contentDescription="@string/desc_logo" />
+                <!-- Logo in the toolbar -->
+                <ImageView
+                    android:id="@+id/logo_image"
+                    style="@style/HorizontallyFullSizedView"
+                    android:layout_height="@dimen/logo_height"
+                    android:layout_marginStart="@dimen/option_menu_item_width"
+                    android:contentDescription="@string/desc_logo"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/logo_new" />
 
-                </androidx.appcompat.widget.Toolbar>
+            </androidx.appcompat.widget.Toolbar>
 
             <!-- Date selection tab bar -->
-            <include layout="@layout/date_selection_tab_bar" />
+            <include
+                android:id="@+id/date_selection_part"
+                layout="@layout/date_selection_tab_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbar_cafeteria" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Content -->
         <androidx.core.widget.NestedScrollView
-            style="@style/FullSizedView"
             android:id="@+id/cafeteria_recycler_holder"
+            style="@style/FullSizedView"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.inu.cafeteria.common.widget.ShyRecyclerView
-                style="@style/FullSizedView"
                 android:id="@+id/cafeteria_recycler"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}"
+                style="@style/FullSizedView"
                 cafeteria="@{vm.cafeteria}"
                 isLoading="@{vm.loading}"
-                android:paddingBottom="16dp"
                 android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/cafeteria" />
 
         </androidx.core.widget.NestedScrollView>
 
         <!-- Empty view -->
         <include
+            android:id="@+id/empty_view"
             layout="@layout/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -90,8 +96,8 @@
 
         <!-- Loading view -->
         <ProgressBar
-            style="@style/NonFunctionalProgressBar"
-            android:id="@+id/loading_view" />
+            android:id="@+id/loading_view"
+            style="@style/NonFunctionalProgressBar" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

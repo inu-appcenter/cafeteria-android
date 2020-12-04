@@ -26,9 +26,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.widget.ProgressBar
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.extension.setVisible
-import kotlinx.android.synthetic.main.web_view_only_fragment.view.*
+import com.inu.cafeteria.extension.withNonNull
 
 abstract class WebViewOnlyFragment : BaseFragment() {
 
@@ -46,10 +47,10 @@ abstract class WebViewOnlyFragment : BaseFragment() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initializeView(view: View) {
-        with(view.web_view) {
+        withNonNull(view.findViewById<WebView>(R.id.web_view)) {
             webChromeClient = object: WebChromeClient() {
                 override fun onProgressChanged(webView: WebView?, newProgress: Int) {
-                    with(view.progress_bar) {
+                    withNonNull(view.findViewById<ProgressBar>(R.id.progress_bar)) {
                         progress = newProgress
                         if (newProgress == 100) {
                             setVisible(false)

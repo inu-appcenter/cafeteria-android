@@ -29,7 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
  * Call PositionRetainingViewHolder#saveViewHolderPosition
  * when scroll state of the inner RecyclerView changes
  */
-abstract class PositionRetainingViewHolder(view: View) : BaseViewHolder(view) {
+abstract class PositionRetainingViewHolder(view: View) : PlainViewHolder(view) {
     constructor(parent: ViewGroup, @LayoutRes layoutId: Int)
             : this(LayoutInflater.from(parent.context).inflate(layoutId, parent, false))
 

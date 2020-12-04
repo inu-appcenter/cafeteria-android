@@ -23,7 +23,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -32,10 +34,10 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.extension.hideKeyboard
 import com.inu.cafeteria.common.extension.requestFocusWithKeyboard
 import com.inu.cafeteria.entities.Notice
+import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
 import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
-import kotlinx.android.synthetic.main.notice_view.view.*
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
@@ -71,15 +73,15 @@ class Navigator(
     fun showNotice(activity: FragmentActivity, notice: Notice, onDismiss: () -> Unit) {
         val dialog = BottomSheetDialog(activity)
         val noticeView = activity.layoutInflater.inflate(R.layout.notice_view, null).apply {
-            with(this.title) {
+            withNonNull(findViewById<TextView>(R.id.title)) {
                 text = notice.title
             }
 
-            with(this.body) {
+            withNonNull(findViewById<TextView>(R.id.body)) {
                 text = notice.body
             }
 
-            with(this.dismiss) {
+            withNonNull(findViewById<Button>(R.id.dismiss)) {
                 setOnClickListener {
                     dialog.dismiss()
                     onDismiss()

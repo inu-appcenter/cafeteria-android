@@ -1,76 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/HorizontallyFullSizedView"
-    android:paddingVertical="@dimen/menu_outer_space"
-    android:paddingHorizontal="@dimen/menu_outer_space"
-    android:background="?android:attr/selectableItemBackground">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.inu.cafeteria.common.widget.AvailableTimeView
-        style="@style/FitSizedView"
-        android:id="@+id/available_at"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="menu"
+            type="com.inu.cafeteria.feature.cafeteria.MenuView" />
+    </data>
 
-    <TextView
-        style="@style/HorizontallyFullSizedViewConstrained"
-        android:id="@+id/foods"
-        android:layout_marginStart="@dimen/near_space"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/available_at"
-        app:layout_constraintTop_toTopOf="parent"
-        android:ellipsize="end"
-        android:textSize="@dimen/textSecondary"
-        android:textColor="@color/textPrimary"
-        android:textStyle="bold"
-        tools:text="학식은, 맛없어, 퉤퉤, 메롱, 헤헤, 졸려, 집가고싶다, 히히" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/HorizontallyFullSizedView"
+        android:paddingVertical="@dimen/menu_outer_space"
+        android:paddingHorizontal="@dimen/menu_outer_space"
+        android:background="?android:attr/selectableItemBackground">
 
-    <TextView
-        style="@style/HorizontallyFullSizedViewConstrained"
-        android:id="@+id/corner_name"
-        android:layout_marginStart="@dimen/near_space"
-        app:layout_constraintTop_toBottomOf="@id/foods"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/available_at"
-        app:layout_constraintEnd_toStartOf="@id/calorie"
-        android:lines="1"
-        android:ellipsize="end"
-        android:textSize="@dimen/textSecondary"
-        android:textColor="?android:attr/textColorSecondary"
-        tools:text="2코너다아아" />
+        <!-- Available at -->
+        <com.inu.cafeteria.common.widget.AvailableTimeView
+            style="@style/FitSizedView"
+            android:id="@+id/available_at"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            availableAt="@{menu.availableAt}"/>
 
-    <TextView
-        style="@style/FitSizedView"
-        android:id="@+id/price"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/foods"
-        android:textSize="@dimen/textSecondary"
-        android:textColor="?android:attr/textColorSecondary"
-        tools:text="3,500원" />
+        <!-- Foods -->
+        <TextView
+            style="@style/HorizontallyFullSizedViewConstrained"
+            android:id="@+id/foods"
+            android:layout_marginStart="@dimen/near_space"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/available_at"
+            app:layout_constraintTop_toTopOf="parent"
+            android:ellipsize="end"
+            android:textSize="@dimen/textSecondary"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold"
+            android:text="@{menu.foods}"
+            android:maxLines="2"
+            tools:text="학식은, 맛없어, 퉤퉤, 메롱, 헤헤, 졸려, 집가고싶다, 히히" />
 
-    <TextView
-        style="@style/FitSizedView"
-        android:id="@+id/separator"
-        android:layout_marginEnd="@dimen/close_space"
-        app:layout_constraintEnd_toStartOf="@id/price"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/foods"
-        android:textSize="@dimen/textSecondary"
-        android:textColor="?android:attr/textColorSecondary"
-        android:text="@string/middle_dot" />
+        <!-- Corner name -->
+        <TextView
+            style="@style/HorizontallyFullSizedViewConstrained"
+            android:id="@+id/corner_name"
+            android:layout_marginStart="@dimen/near_space"
+            app:layout_constraintTop_toBottomOf="@id/foods"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/available_at"
+            app:layout_constraintEnd_toStartOf="@id/calorie"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/textSecondary"
+            android:textColor="?android:attr/textColorSecondary"
+            android:text="@{menu.cornerName}"
+            tools:text="2코너다아아" />
 
-    <TextView
-        style="@style/FitSizedView"
-        android:id="@+id/calorie"
-        android:layout_marginEnd="@dimen/close_space"
-        app:layout_constraintEnd_toStartOf="@id/separator"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/foods"
-        android:textSize="@dimen/textSecondary"
-        android:textColor="?android:attr/textColorSecondary"
-        tools:text="361kcal" />
+        <!-- Price -->
+        <TextView
+            style="@style/FitSizedView"
+            android:id="@+id/price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foods"
+            android:textSize="@dimen/textSecondary"
+            android:textColor="?android:attr/textColorSecondary"
+            android:text="@{@string/unit_krw(menu.price)}"
+            android:visibility="@{(menu.price != null) ? View.VISIBLE : View.GONE}"
+            tools:text="3,500원" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Dot -->
+        <TextView
+            style="@style/FitSizedView"
+            android:id="@+id/separator"
+            android:layout_marginEnd="@dimen/close_space"
+            app:layout_constraintEnd_toStartOf="@id/price"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foods"
+            android:textSize="@dimen/textSecondary"
+            android:textColor="?android:attr/textColorSecondary"
+            android:text="@string/middle_dot"
+            android:visibility="@{(menu.calorie != null &amp;&amp; menu.price != null) ? View.VISIBLE : View.GONE}" />
+
+        <!-- Calorie -->
+        <TextView
+            style="@style/FitSizedView"
+            android:id="@+id/calorie"
+            android:layout_marginEnd="@dimen/close_space"
+            app:layout_constraintEnd_toStartOf="@id/separator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foods"
+            android:textSize="@dimen/textSecondary"
+            android:textColor="?android:attr/textColorSecondary"
+            android:text="@{@string/unit_cal(menu.calorie)}"
+            android:visibility="@{(menu.calorie != null) ? View.VISIBLE : View.GONE}"
+            tools:text="361kcal" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

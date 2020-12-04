@@ -21,28 +21,27 @@ package com.inu.cafeteria.feature.reorder
 
 import android.view.MotionEvent
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.base.BaseViewHolder
-import com.inu.cafeteria.common.base.DefaultAdapter
+import com.inu.cafeteria.common.base.BaseBindingAdapter
+import com.inu.cafeteria.common.base.BaseBindingViewHolder
 import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
 import com.inu.cafeteria.common.widget.ItemTouchHelperViewHolder
-import kotlinx.android.synthetic.main.cafeteria.view.cafeteria_name
-import kotlinx.android.synthetic.main.cafeteria_reorder_item.view.*
+import com.inu.cafeteria.databinding.CafeteriaReorderItemBinding
 import java.util.*
 
 class CafeteriaReorderAdapter(
     private val onDragStart: (RecyclerView.ViewHolder) -> Any?
-) : DefaultAdapter<CafeteriaReorderView>(),
-    ItemTouchHelperAdapter {
+) : BaseBindingAdapter<CafeteriaReorderView, CafeteriaReorderAdapter.ReorderViewHolder>(), ItemTouchHelperAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ReorderViewHolder(parent, R.layout.cafeteria_reorder_item).also(::setTouchListener)
+        ReorderViewHolder(parent)
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        (holder as ReorderViewHolder).bind(getItem(position))
+    override fun onBindViewHolder(holder: ReorderViewHolder, position: Int) {
+        val item = getItem(position) ?: return
+
+        holder.bind(item)
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
@@ -65,31 +64,32 @@ class CafeteriaReorderAdapter(
         notifyItemRemoved(position)
     }
 
-    private fun setTouchListener(viewHolder: BaseViewHolder) {
-        viewHolder.view.handle.setOnTouchListener { v, event ->
-            v.performClick()
-            if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-                onDragStart(viewHolder)
-            }
-            false
-        }
-    }
+    inner class ReorderViewHolder(parent: ViewGroup) : BaseBindingViewHolder<CafeteriaReorderItemBinding>(parent, R.layout.cafeteria_reorder_item), ItemTouchHelperViewHolder {
 
-    class ReorderViewHolder(parent: ViewGroup, @LayoutRes layoutId: Int)
-        : BaseViewHolder(parent, layoutId), ItemTouchHelperViewHolder {
+        fun bind(item: CafeteriaReorderView) {
+            binding.cafeteria = item
 
-        fun bind(item: CafeteriaReorderView?) {
-            with(view.cafeteria_name) {
-                text = item?.displayName
+            with(binding.handle) {
+                setOnTouchListener { v, event ->
+                    v.performClick()
+                    if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+                        onDragStart(this@ReorderViewHolder)
+                    }
+                    false
+                }
             }
         }
 
         override fun onItemSelected() {
-            view.setBackgroundResource(R.color.selectedItemBackground)
+            with(binding.root) {
+                setBackgroundResource(R.color.selectedItemBackground)
+            }
         }
 
         override fun onItemClear() {
-            view.setBackgroundColor(0)
+            with(binding.root) {
+                setBackgroundColor(0)
+            }
         }
     }
 }

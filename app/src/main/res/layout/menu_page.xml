@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/FullSizedView"
-    android:layout_marginHorizontal="@dimen/menu_page_horizontal_space"
-    app:cardElevation="6dp"
-    app:cardCornerRadius="@dimen/mid_space">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.cardview.widget.CardView
         style="@style/FullSizedView"
-        android:id="@+id/menu_recycler"
-        android:nestedScrollingEnabled="false"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/menu"
-        android:tag="PositionTraceableRecyclerView"/>
+        android:layout_marginHorizontal="@dimen/menu_page_horizontal_space"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="@dimen/mid_space">
 
-</androidx.cardview.widget.CardView>
+        <androidx.recyclerview.widget.RecyclerView
+            style="@style/FullSizedView"
+            android:id="@+id/menu_recycler"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/menu"
+            android:tag="PositionTraceableRecyclerView"/>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

@@ -25,7 +25,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 
-open class BaseViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+open class PlainViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     constructor(parent: ViewGroup, @LayoutRes layoutId: Int)
             : this(LayoutInflater.from(parent.context).inflate(layoutId, parent, false))
 }

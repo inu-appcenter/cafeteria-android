@@ -29,8 +29,6 @@ import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.extension.supportActionBar
 import com.inu.cafeteria.databinding.CafeteriaDetailFragmentBinding
 import com.inu.cafeteria.extension.withNonNull
-import kotlinx.android.synthetic.main.cafeteria_detail_fragment.view.*
-import kotlinx.android.synthetic.main.empty_cafeteria_view.view.*
 
 class CafeteriaDetailFragment : BaseFragment() {
 
@@ -43,15 +41,15 @@ class CafeteriaDetailFragment : BaseFragment() {
         }
 
     private fun initializeView(view: View) {
-        setSupportActionBar(view.toolbar_cafeteria_detail, showTitle = true, showUpButton = true)
+        setSupportActionBar(view.findViewById(R.id.toolbar_cafeteria_detail), showTitle = true, showUpButton = true)
 
         withNonNull(supportActionBar) {
             title = viewModel.selected.value?.name
         }
 
-        with(view.menu_page_recycler) {
+        withNonNull(view.findViewById<RecyclerView>(R.id.menu_page_recycler)) {
             adapter = MenuPageAdapter(pageSize = 0 /* no paging */).apply {
-                emptyView = view.empty_cafeteria_view
+                emptyView = view.findViewById(R.id.empty_cafeteria_view)
             }
         }
     }

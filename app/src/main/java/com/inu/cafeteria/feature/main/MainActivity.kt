@@ -25,6 +25,8 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.cardview.widget.CardView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
@@ -32,9 +34,9 @@ import com.inu.cafeteria.common.extension.fadeIn
 import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.navigation.rootDestinations
+import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.util.Fun
 import com.plattysoft.leonids.ParticleSystem
-import kotlinx.android.synthetic.main.main_activity.*
 import org.koin.core.inject
 import timber.log.Timber
 import java.util.*
@@ -91,7 +93,7 @@ class MainActivity : NavigationActivity() {
     private fun setOfflineView() {
         val eggs = getEasterEggs()
 
-        with(offline_view) {
+        withNonNull(findViewById<CardView>(R.id.offline_view)) {
             val animation = AnimationUtils
                 .loadAnimation(this@MainActivity, R.anim.shake_once)
                 .apply {
@@ -117,7 +119,7 @@ class MainActivity : NavigationActivity() {
             Fun.Event(9) {
                 ParticleSystem(this, 50, R.drawable.dot, 3000)
                     .setSpeedRange(0.2f, 0.7f)
-                    .oneShot(offline_view, 50)
+                    .oneShot(findViewById<CardView>(R.id.offline_view), 50)
             },
             Fun.Event(17) {
                 Toast.makeText(this, getString(R.string.egg_help), Toast.LENGTH_SHORT).show()
@@ -133,7 +135,7 @@ class MainActivity : NavigationActivity() {
     )
 
     private fun setSupportTabBadge() {
-        with(bottom_nav) {
+        withNonNull(findViewById<BottomNavigationView>(R.id.bottom_nav)) {
 
             observe(viewModel.numberOfUnreadAnswers) { numberOfNotifications ->
                 numberOfNotifications ?: return@observe
@@ -182,7 +184,7 @@ class MainActivity : NavigationActivity() {
         }
 
         // Apply when updated (while activity staying alive).
-        with(offline_view) {
+        withNonNull(findViewById<CardView>(R.id.offline_view)) {
             if (available) {
                 fadeOut(250L)
             } else {

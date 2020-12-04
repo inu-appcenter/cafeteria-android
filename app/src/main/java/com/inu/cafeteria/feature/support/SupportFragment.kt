@@ -32,9 +32,6 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.SupportFragmentBinding
-import kotlinx.android.synthetic.main.kakao_chat_button.view.*
-import kotlinx.android.synthetic.main.support_fragment.view.*
-import kotlinx.android.synthetic.main.uicoop_call_button.view.*
 
 class SupportFragment : BaseFragment() {
 
@@ -44,13 +41,13 @@ class SupportFragment : BaseFragment() {
 
     override fun onCreateView(viewCreator: ViewCreator): View {
         return viewCreator.createView<SupportFragmentBinding> {
-            initializeView(root)
+            initializeView(this)
             vm = viewModel
         }
     }
 
-    private fun initializeView(view: View) {
-        with(view.support_options_recycler) {
+    private fun initializeView(binding: SupportFragmentBinding) {
+        with(binding.supportOptionsRecycler) {
             adapter = this@SupportFragment.adapter
         }
 
@@ -60,12 +57,12 @@ class SupportFragment : BaseFragment() {
             }
         }
 
-        with(view.kakaotalk_button) {
+        with(binding.kakaotalkButtonPart) {
             setVisible(isKakaoTalkInstalled())
             setOnClickListener { onKakaoTalkClick() }
         }
 
-        with(view.call_uicoop_button) {
+        with(binding.uicoopCallButtonPart) {
             setOnClickListener { onCallUiCoopClick() }
         }
     }

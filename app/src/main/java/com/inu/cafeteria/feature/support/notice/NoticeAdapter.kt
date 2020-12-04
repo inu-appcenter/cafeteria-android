@@ -20,19 +20,15 @@
 package com.inu.cafeteria.feature.support.notice
 
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
+import androidx.core.view.isVisible
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.base.BaseAdapter
-import com.inu.cafeteria.common.base.BaseViewHolder
-import com.inu.cafeteria.common.extension.isVisible
-import kotlinx.android.synthetic.main.notice_item.view.*
+import com.inu.cafeteria.common.base.BaseBindingAdapter
+import com.inu.cafeteria.common.base.BaseBindingViewHolder
+import com.inu.cafeteria.databinding.NoticeItemBinding
 
+class NoticeAdapter : BaseBindingAdapter<NoticeView, NoticeAdapter.NoticeViewHolder>() {
 
-class NoticeAdapter : BaseAdapter<NoticeView, NoticeAdapter.NoticeViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
-        return NoticeViewHolder(parent, R.layout.notice_item)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = NoticeViewHolder(parent)
 
     override fun onBindViewHolder(holder: NoticeViewHolder, position: Int) {
         val item = getItem(position) ?: return
@@ -40,32 +36,13 @@ class NoticeAdapter : BaseAdapter<NoticeView, NoticeAdapter.NoticeViewHolder>() 
         holder.bind(item)
     }
 
-    inner class NoticeViewHolder(parent: ViewGroup, @LayoutRes layoutId: Int) : BaseViewHolder(parent, layoutId) {
+    inner class NoticeViewHolder(parent: ViewGroup) : BaseBindingViewHolder<NoticeItemBinding>(parent, R.layout.notice_item) {
 
         fun bind(item: NoticeView) {
-            with(itemView.date) {
-                text = item.date
-            }
 
-            with(itemView.title) {
-                text = item.title
-            }
+            binding.notice = item
 
-            with(itemView.body) {
-                isVisible = item.expanded
-                text = item.body
-            }
-
-            with(itemView.more_close) {
-                setImageResource(
-                    when (item.expanded) {
-                        true -> R.drawable.ic_keyboard_arrow_up_24px
-                        else -> R.drawable.ic_keyboard_arrow_down_24px
-                    }
-                )
-            }
-
-            with(itemView.summary) {
+            with(binding.summary) {
                 setOnClickListener {
                     toggleExpanded(item)
                 }
@@ -75,7 +52,7 @@ class NoticeAdapter : BaseAdapter<NoticeView, NoticeAdapter.NoticeViewHolder>() 
         private fun toggleExpanded(item: NoticeView) {
             item.expanded = !item.expanded
 
-            with(itemView.more_close) {
+            with(binding.moreClose) {
                 setImageResource(
                     when (item.expanded) {
                         true -> R.drawable.ic_keyboard_arrow_up_24px
@@ -84,7 +61,7 @@ class NoticeAdapter : BaseAdapter<NoticeView, NoticeAdapter.NoticeViewHolder>() 
                 )
             }
 
-            with(itemView.body) {
+            with(binding.body) {
                 isVisible = item.expanded
             }
         }

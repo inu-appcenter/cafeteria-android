@@ -23,12 +23,13 @@ import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
-import kotlinx.android.synthetic.main.cafeteria_reorder_fragment.view.*
+import com.inu.cafeteria.extension.withNonNull
 import org.koin.core.inject
 
 class CafeteriaReorderFragment : BaseFragment() {
@@ -52,14 +53,14 @@ class CafeteriaReorderFragment : BaseFragment() {
         }
 
     private fun initializeView(view: View) {
-        setSupportActionBar(view.toolbar_reorder, showTitle = true, showUpButton = true)
+        setSupportActionBar(view.findViewById(R.id.toolbar_reorder), showTitle = true, showUpButton = true)
 
-        with(view.cafeteria_sort_recycler) {
+        withNonNull(view.findViewById<RecyclerView>(R.id.cafeteria_sort_recycler)) {
             adapterWrapper.setWithRecyclerView(this)
 
             with(adapterWrapper.adapter) {
-                emptyView = view.empty_view_group
-                loadingView = view.loading_view
+                emptyView = view.findViewById(R.id.empty_view_group)
+                loadingView = view.findViewById(R.id.loading_view)
             }
         }
     }

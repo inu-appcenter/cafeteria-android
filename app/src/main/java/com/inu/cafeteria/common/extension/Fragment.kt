@@ -20,21 +20,16 @@
 package com.inu.cafeteria.common.extension
 
 import android.content.Context
-import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelLazy
-import androidx.lifecycle.ViewModelProvider.Factory
-import androidx.lifecycle.ViewModelProviders
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.util.Notify
-import kotlinx.android.synthetic.main.single_fragment_activity.*
 
 /**
  * Do something in the middle of beginTransaction() and commitNow().
@@ -43,43 +38,19 @@ inline fun FragmentManager.inImmediateTransaction(func: FragmentTransaction.() -
     beginTransaction().func().commitNow()
 }
 
-/**
- * Get ViewModel of the fragment with SingleUseCaseViewModelFactory.
- */
-
-inline fun <reified T : ViewModel> Fragment.getViewModel(factory: Factory, body: T.() -> Unit = {}): T {
-    return ViewModelProviders.of(this, factory).get(T::class.java).apply(body)
-}
-
-/**
- * For Activity.
- * Get ViewModel of the fragment with SingleUseCaseViewModelFactory.
- */
-
-inline fun <reified T : ViewModel> FragmentActivity.getViewModel(factory: Factory, body: T.() -> Unit = {}): T {
-    return ViewModelProviders.of(this, factory).get(T::class.java).apply(body)
-}
-
-/**
- * For Activity
- * Get ViewModel of the fragment without SingleUseCaseViewModelFactory.
- */
-
-inline fun <reified T : ViewModel> FragmentActivity.getViewModel(body: T.() -> Unit = {}): T {
-    return ViewModelProviders.of(this).get(T::class.java).apply(body)
-}
 
 inline fun <reified T : ViewModel> Fragment.getViewModel(): Lazy<T> {
     return ViewModelLazy(T::class, ::getViewModelStore, ::getDefaultViewModelProviderFactory)
 }
 
 val Fragment.baseActivity: AppCompatActivity? get() = (activity as? AppCompatActivity)
-val Fragment.viewContainer: View? get() = (activity as? AppCompatActivity)?.fragment_container
 val Fragment.appContext: Context get() = activity?.applicationContext!!
 
 val Fragment.supportActionBar: ActionBar? get() = (activity as? AppCompatActivity)?.supportActionBar
 
-fun Fragment.setSupportActionBar(toolbar: Toolbar, showTitle: Boolean = false, showUpButton: Boolean = false) {
+fun Fragment.setSupportActionBar(toolbar: Toolbar?, showTitle: Boolean = false, showUpButton: Boolean = false) {
+    toolbar ?: return
+
     withNonNull(activity as? AppCompatActivity) {
         setSupportActionBar(toolbar)
 

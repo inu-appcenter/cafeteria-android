@@ -18,35 +18,38 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<com.google.android.material.tabs.TabLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/TabLayout"
-    android:id="@+id/date_selector"
-    android:layout_below="@id/toolbar_cafeteria">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.google.android.material.tabs.TabItem
-        style="@style/FitSizedView"
-        android:id="@+id/date_slot_0"
-        android:text="@string/item_today" />
+    <com.google.android.material.tabs.TabLayout
+        style="@style/TabLayout"
+        android:id="@+id/date_selector">
 
-    <com.google.android.material.tabs.TabItem
-        style="@style/FitSizedView"
-        android:id="@+id/date_slot_1"
-        android:text="@string/item_today2" />
+        <com.google.android.material.tabs.TabItem
+            style="@style/FitSizedView"
+            android:id="@+id/date_slot_0"
+            android:text="@string/item_today" />
 
-    <com.google.android.material.tabs.TabItem
-        style="@style/FitSizedView"
-        android:id="@+id/date_slot_2"
-        android:text="@string/item_today3" />
+        <com.google.android.material.tabs.TabItem
+            style="@style/FitSizedView"
+            android:id="@+id/date_slot_1"
+            android:text="@string/item_today2" />
 
-    <com.google.android.material.tabs.TabItem
-        style="@style/FitSizedView"
-        android:id="@+id/date_slot_3"
-        android:text="@string/item_today4" />
+        <com.google.android.material.tabs.TabItem
+            style="@style/FitSizedView"
+            android:id="@+id/date_slot_2"
+            android:text="@string/item_today3" />
 
-    <com.google.android.material.tabs.TabItem
-        style="@style/FitSizedView"
-        android:id="@+id/date_slot_4"
-        android:text="@string/item_today5" />
+        <com.google.android.material.tabs.TabItem
+            style="@style/FitSizedView"
+            android:id="@+id/date_slot_3"
+            android:text="@string/item_today4" />
 
-</com.google.android.material.tabs.TabLayout>
+        <com.google.android.material.tabs.TabItem
+            style="@style/FitSizedView"
+            android:id="@+id/date_slot_4"
+            android:text="@string/item_today5" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+</layout>

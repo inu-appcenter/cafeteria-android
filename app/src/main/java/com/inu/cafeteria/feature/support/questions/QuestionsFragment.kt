@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.databinding.QuestionsFragmentBinding
-import kotlinx.android.synthetic.main.questions_fragment.view.*
 
 class QuestionsFragment : BaseFragment() {
 
@@ -42,13 +41,13 @@ class QuestionsFragment : BaseFragment() {
 
     override fun onCreateView(viewCreator: ViewCreator): View {
         return viewCreator.createView<QuestionsFragmentBinding> {
-            initializeView(root)
+            initializeView(this)
             vm = viewModel
         }
     }
 
-    private fun initializeView(view: View) {
-        with(view.questions_recycler) {
+    private fun initializeView(binding: QuestionsFragmentBinding) {
+        with(binding.questionsRecycler) {
             adapter = this@QuestionsFragment.adapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
@@ -58,11 +57,11 @@ class QuestionsFragment : BaseFragment() {
                 viewModel.setAnswerRead(it)
             }
 
-            emptyView = view.empty_view
-            loadingView = view.loading_view
+            emptyView = binding.emptyView
+            loadingView = binding.loadingView
         }
 
-        with(view.swipe_refresher) {
+        with(binding.swipeRefresher) {
             setOnRefreshListener {
                 viewModel.reload {
                     isRefreshing = false

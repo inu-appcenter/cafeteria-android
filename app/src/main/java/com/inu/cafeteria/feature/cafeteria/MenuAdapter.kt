@@ -20,57 +20,49 @@
 package com.inu.cafeteria.feature.cafeteria
 
 import android.view.ViewGroup
+import androidx.databinding.BindingAdapter
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.base.BaseViewHolder
-import com.inu.cafeteria.common.base.DefaultAdapter
-import com.inu.cafeteria.common.extension.setVisible
-import kotlinx.android.synthetic.main.menu.view.*
+import com.inu.cafeteria.common.base.BaseBindingAdapter
+import com.inu.cafeteria.common.base.BaseBindingViewHolder
+import com.inu.cafeteria.common.widget.AvailableTimeView
+import com.inu.cafeteria.databinding.MenuBinding
 import timber.log.Timber
 
-class MenuAdapter : DefaultAdapter<MenuView>() {
+class MenuAdapter : BaseBindingAdapter<MenuView, MenuAdapter.MenuViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
         Timber.d("Inflate Menu view holder!")
 
-        return BaseViewHolder(parent, R.layout.menu)
+        return MenuViewHolder(parent)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         val menu = getItem(position) ?: return
 
-        with(holder.view) {
+        holder.bind(menu)
+    }
 
-            with(available_at) {
-                setAvailableTime(menu.availableAt)
-            }
+    class MenuViewHolder(parent: ViewGroup) : BaseBindingViewHolder<MenuBinding>(parent, R.layout.menu) {
 
-            with(corner_name) {
-                text = menu.cornerName
-            }
+        fun bind(item: MenuView) {
+            binding.menu = item
 
-            with(foods) {
-                text = menu.foods
-
-                // Initial
-                maxLines = 2
-
+            with(binding.foods) {
                 // On click
-                holder.view.setOnClickListener { maxLines = 5 }
-            }
-
-            with(price) {
-                setVisible(menu.price ?: 0 != 0)
-                text = context.getString(R.string.unit_krw, menu.price)
-            }
-
-            with(calorie) {
-                setVisible(menu.calorie ?: 0 != 0)
-                text = context.getString(R.string.unit_cal, menu.calorie)
-            }
-
-            with(separator) {
-                setVisible((menu.price ?: 0 != 0) && (menu.calorie ?: 0 != 0))
+                binding.root.setOnClickListener { maxLines = 5 }
             }
         }
+    }
+
+    companion object {
+
+        @JvmStatic
+        @BindingAdapter("availableAt")
+        fun setAvailableAt(view: AvailableTimeView, availableAt: Int?) {
+            availableAt?.let {
+                view.setAvailableTime(it)
+            }
+        }
+
     }
 }

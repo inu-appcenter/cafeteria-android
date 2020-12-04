@@ -22,10 +22,10 @@ package com.inu.cafeteria.feature.cafeteria
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.base.BaseViewHolder
-import com.inu.cafeteria.common.base.DefaultAdapter
+import com.inu.cafeteria.common.base.BaseBindingAdapter
+import com.inu.cafeteria.common.base.BaseBindingViewHolder
 import com.inu.cafeteria.common.extension.setLeftInsetDivider
-import kotlinx.android.synthetic.main.menu_page.view.*
+import com.inu.cafeteria.databinding.MenuPageBinding
 import timber.log.Timber
 import kotlin.math.ceil
 import kotlin.math.min
@@ -33,13 +33,11 @@ import kotlin.math.min
 class MenuPageAdapter(
     private val menuPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool(),
     private val pageSize: Int = DEFAULT_PAGE_SIZE
-) : DefaultAdapter<MenuView>() {
+) : BaseBindingAdapter<MenuView, MenuPageAdapter.MenuPageViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        return MenuPageViewHolder(parent)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MenuPageViewHolder(parent)
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MenuPageViewHolder, position: Int) {
         fun paginateProps(pageNumber: Int): List<MenuView> {
             val indexStart = pageNumber * pageSize
             val indexEnd = min(indexStart + pageSize - 1, data.size - 1)
@@ -47,7 +45,7 @@ class MenuPageAdapter(
             return data.slice(indexStart..indexEnd)
         }
 
-        (holder as MenuPageViewHolder).bind(
+        holder.bind(
             if (pageSize == 0) data else paginateProps(position)
         )
     }
@@ -56,7 +54,7 @@ class MenuPageAdapter(
         return if (pageSize == 0) 1 else ceil(data.size.toDouble() / pageSize).toInt()
     }
 
-    inner class MenuPageViewHolder(parent: ViewGroup) : BaseViewHolder(parent, R.layout.menu_page) {
+    inner class MenuPageViewHolder(parent: ViewGroup) : BaseBindingViewHolder<MenuPageBinding>(parent, R.layout.menu_page) {
 
         private val menuAdapter = MenuAdapter()
 
@@ -66,7 +64,7 @@ class MenuPageAdapter(
         }
 
         private fun setChildRecyclerView() {
-            with(itemView.menu_recycler) {
+            with(binding.menuRecycler) {
                 adapter = menuAdapter
 
                 setRecycledViewPool(menuPool)

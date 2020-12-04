@@ -19,14 +19,11 @@
 
 package com.inu.cafeteria.feature.login
 
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.LoginFragmentBinding
-import kotlinx.android.synthetic.main.login_fragment.view.*
-
 
 class LoginFragment : BaseFragment() {
 
@@ -34,18 +31,18 @@ class LoginFragment : BaseFragment() {
 
     override fun onCreateView(viewCreator: ViewCreator) =
         viewCreator<LoginFragmentBinding> {
-            initializeView(root)
+            initializeView(this)
             vm = viewModel
         }
 
-    private fun initializeView(view: View) {
-        setSupportActionBar(view.toolbar_login, showTitle = true, showUpButton = true)
+    private fun initializeView(binding: LoginFragmentBinding) {
+        setSupportActionBar(binding.toolbarLogin, showTitle = true, showUpButton = true)
 
-        with(view.id_field) {
+        with(binding.idField) {
             requestFocusWithKeyboard()
         }
 
-        with(view.password_field) {
+        with(binding.passwordField) {
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     viewModel.performLogin()
@@ -59,7 +56,7 @@ class LoginFragment : BaseFragment() {
         with(viewModel) {
             observe(loggedInStatus) {
                 if (it == true) {
-                    view.password_field.hideKeyboard() // Keyboard does not disappear automatically.
+                    binding.passwordField.hideKeyboard() // Keyboard does not disappear automatically.
                     finishActivity()
                 }
             }

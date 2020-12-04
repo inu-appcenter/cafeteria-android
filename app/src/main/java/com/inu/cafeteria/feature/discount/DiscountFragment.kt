@@ -31,7 +31,6 @@ import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
-import kotlinx.android.synthetic.main.discount_fragment.view.*
 
 class DiscountFragment : BaseFragment() {
 
@@ -52,12 +51,12 @@ class DiscountFragment : BaseFragment() {
 
     override fun onCreateView(viewCreator: ViewCreator): View =
         viewCreator<DiscountFragmentBinding> {
-            initializeView(root)
+            initializeView(this)
             vm = viewModel
         }
 
-    private fun initializeView(view: View) {
-        with(view.carrot) {
+    private fun initializeView(binding: DiscountFragmentBinding) {
+        with(binding.carrot) {
             startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_forever).apply {
                 duration = 200
             })

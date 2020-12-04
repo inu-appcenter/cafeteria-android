@@ -40,10 +40,14 @@
             android:paddingVertical="@dimen/mid_space">
 
             <!-- KakaoTalk chat -->
-            <include layout="@layout/kakao_chat_button" />
+            <include
+                android:id="@+id/kakaotalk_button_part"
+                layout="@layout/kakao_chat_button" />
 
             <!-- Call UICOOP chat -->
-            <include layout="@layout/uicoop_call_button" />
+            <include
+                android:id="@+id/uicoop_call_button_part"
+                layout="@layout/uicoop_call_button" />
 
             <!-- Other support options -->
             <androidx.recyclerview.widget.RecyclerView

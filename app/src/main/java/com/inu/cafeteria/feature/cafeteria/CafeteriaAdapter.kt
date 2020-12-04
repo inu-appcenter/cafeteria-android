@@ -20,6 +20,8 @@
 package com.inu.cafeteria.feature.cafeteria
 
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -27,8 +29,7 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.PositionRetainingAdapter
 import com.inu.cafeteria.common.base.PositionRetainingViewHolder
 import com.inu.cafeteria.common.extension.onScrollStateChange
-import kotlinx.android.synthetic.main.cafeteria.view.*
-import kotlinx.android.synthetic.main.empty_cafeteria_view.view.*
+import com.inu.cafeteria.extension.withNonNull
 import timber.log.Timber
 
 class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView>() {
@@ -52,7 +53,8 @@ class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView>() {
 
     inner class CafeteriaViewHolder(parent: ViewGroup) : PositionRetainingViewHolder(parent, R.layout.cafeteria) {
 
-        override val layoutManager: LinearLayoutManager? = view.menu_page_recycler?.layoutManager as? LinearLayoutManager
+        override val layoutManager: LinearLayoutManager? =
+            view.findViewById<RecyclerView>(R.id.menu_page_recycler)?.layoutManager as? LinearLayoutManager
 
         private val menuPageAdapter = MenuPageAdapter(menuPool)
 
@@ -63,11 +65,11 @@ class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView>() {
         }
 
         private fun setChildRecyclerView() {
-            with(view.menu_page_recycler) {
+            withNonNull(view.findViewById(R.id.menu_page_recycler) as RecyclerView) {
                 onScrollStateChange { saveViewHolderPosition(this@CafeteriaViewHolder) }
 
                 adapter = menuPageAdapter.apply {
-                    emptyView = itemView.empty_cafeteria_view
+                    emptyView = itemView.findViewById(R.id.empty_cafeteria_view)
                 }
 
                 setRecycledViewPool(menuPagePool)
@@ -79,10 +81,12 @@ class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView>() {
         fun bind(cafeteria: CafeteriaView?) {
             cafeteria ?: return
 
-            with(view) {
-                cafeteria_name.text = cafeteria.name
+            withNonNull(view.findViewById<TextView>(R.id.cafeteria_name)) {
+                text = cafeteria.name
+            }
 
-                more_button.setOnClickListener {
+            withNonNull(view.findViewById<ImageButton>(R.id.more_button)) {
+                setOnClickListener {
                     onClickMore(cafeteria)
                 }
             }
