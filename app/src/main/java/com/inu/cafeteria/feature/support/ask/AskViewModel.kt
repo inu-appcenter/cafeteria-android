@@ -22,6 +22,7 @@ package com.inu.cafeteria.feature.support.ask
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.extension.onChanged
 import com.inu.cafeteria.db.SharedPreferenceWrapper
@@ -52,19 +53,27 @@ class AskViewModel : BaseViewModel() {
     }
 
     private fun validateContent(): Boolean {
-        val currentContent = content.get() ?: return false
+        val currentContent = content.get()
 
-        return currentContent.isNotEmpty()
+        if (currentContent.isNullOrBlank()) {
+            return false
+        }
+
+        val allowedMaxLength = mContext.resources.getInteger(R.integer.question_max_length)
+        if (currentContent.length > allowedMaxLength) {
+            return false
+        }
+
+        return true
     }
 
     fun submit() {
-        val currentContent = content.get()
-        if (currentContent == null) {
-            Timber.w("No content to submit!!")
+        if (!validateContent()) {
+            Timber.w("Content is not valid to submit!!")
             return
         }
 
-        ask(currentContent) {
+        ask(content.get() ?: return) {
             it.onSuccess { onSubmitSuccess() }.onError(::handleFailure)
         }
     }
