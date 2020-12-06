@@ -45,7 +45,7 @@ val myModules = module {
     single {
         GlobalConfig(
             baseUrl = when (BuildConfig.FLAVOR_server) {
-                "localserver" -> "http://10.0.1.10:9999"
+                "localserver" -> "http://10.0.2.2:9999"
                 "productionserver" -> "https://api.inu-cafeteria.app"
                 else -> "https://api.inu-cafeteria.app"
             },
