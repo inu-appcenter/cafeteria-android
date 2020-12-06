@@ -73,7 +73,13 @@ class AskViewModel : BaseViewModel() {
             return
         }
 
-        ask(content.get() ?: return) {
+        val question = content.get()
+        if (question == null) {
+            Timber.w("Question is null after validation!!")
+            return
+        }
+
+        ask(question) {
             it.onSuccess { onSubmitSuccess() }.onError(::handleFailure)
         }
     }

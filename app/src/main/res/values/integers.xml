@@ -19,5 +19,5 @@
   -->
 
 <resources>
-    <integer name="question_max_length">5</integer>
+    <integer name="question_max_length">500</integer>
 </resources>
