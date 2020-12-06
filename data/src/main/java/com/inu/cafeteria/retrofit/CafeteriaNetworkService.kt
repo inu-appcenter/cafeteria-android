@@ -75,7 +75,7 @@ interface CafeteriaNetworkService {
     fun getCorners(): Call<List<CornerResult>>
 
     @GET("/menus")
-    fun getMenus(@Query("date") date: String? = null): Call<List<MenuResult>>
+    fun getMenus(@Query("date") date: String? = null, @Query("split") split: Boolean = false/* server-side false default */): Call<List<MenuResult>>
 
 
     /**

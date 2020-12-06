@@ -22,7 +22,7 @@ package com.inu.cafeteria.retrofit.scheme
 import com.google.gson.annotations.SerializedName
 
 data class MenuResult(
-    val foods: String,
+    val foods: List<String>,
     val price: Int,
     val calorie: Int,
 
