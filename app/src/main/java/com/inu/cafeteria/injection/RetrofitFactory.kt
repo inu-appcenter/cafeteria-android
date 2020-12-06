@@ -20,15 +20,58 @@
 package com.inu.cafeteria.injection
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitFactory {
+
+    // Original at https://jitpack.io/#danielceinos/Cooper
+    class CooperInterceptor(private val context: Context) : Interceptor {
+
+        private val userAgent: String by lazy {
+            buildUserAgent(context)
+        }
+
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val builder = chain.request().newBuilder()
+            builder.header("User-Agent", userAgent)
+            return chain.proceed(builder.build())
+        }
+
+        private fun buildUserAgent(context: Context): String {
+            with(context.packageManager) {
+                val versionName = try {
+                    getPackageInfo(context.packageName, 0).versionName
+                } catch (e: PackageManager.NameNotFoundException) {
+                    "nameNotFound"
+                }
+                val versionCode = try {
+                    getPackageInfo(context.packageName, 0).versionCode.toString()
+                } catch (e: PackageManager.NameNotFoundException) {
+                    "versionCodeNotFound"
+                }
+
+                val appName = context.packageName
+                val manufacturer = Build.MANUFACTURER
+                val model = Build.MODEL
+                val version = Build.VERSION.SDK_INT
+                val versionRelease = Build.VERSION.RELEASE
+
+                val installerName = getInstallerPackageName(context.packageName) ?: "StandAloneInstall"
+
+                return "$appName / $versionName($versionCode); $installerName; ($manufacturer; $model; SDK $version; Android $versionRelease)"
+            }
+        }
+    }
 
     companion object {
 
@@ -39,6 +82,7 @@ class RetrofitFactory {
             )
             val okHttpClient = OkHttpClient.Builder()
                 .cookieJar(cookieJar)
+                .addInterceptor(CooperInterceptor(context)) // Set user agent
                 .build()
 
             val builder = Retrofit.Builder()
