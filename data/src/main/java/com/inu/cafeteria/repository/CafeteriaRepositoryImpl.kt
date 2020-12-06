@@ -19,7 +19,6 @@
 
 package com.inu.cafeteria.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.format
@@ -51,7 +50,7 @@ class CafeteriaRepositoryImpl(
         } ?: return listOf()
 
         val menus = cachedFetch(menuCaches, date ?: Date().format()) {
-            networkService.getMenus(date).getOrThrow()
+            networkService.getMenus(date, split = true).getOrThrow()
         } ?: return listOf()
 
         return CafeteriaResultGatherer(cafeteria, corners, menus).combine()
@@ -85,9 +84,6 @@ class CafeteriaRepositoryImpl(
         return (if (cache.isValid(key)) cache.get(key) else null) ?: fetch()?.also { cache.set(key, it) }
     }
 
-
-    private val order = MutableLiveData<Array<Int>>()
-
     override fun getOrder(): Array<Int> {
         return getOrderInternal()
     }
@@ -105,8 +101,6 @@ class CafeteriaRepositoryImpl(
     }
 
     override fun setOrder(orderedIds: Array<Int>) {
-        order.postValue(orderedIds)
-
         db.putArrayInt(KEY_ORDER, orderedIds)
     }
 

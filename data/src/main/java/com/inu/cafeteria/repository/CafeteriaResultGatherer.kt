@@ -65,7 +65,7 @@ class CafeteriaResultGatherer(
             .filter { it.cornerId == cornerId }
             .map {
                 Menu(
-                    foods = it.foods.split(' '),
+                    foods = it.foods,
                     price = it.price,
                     calorie = it.calorie
                 )
