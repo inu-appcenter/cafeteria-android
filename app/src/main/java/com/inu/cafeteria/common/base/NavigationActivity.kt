@@ -22,6 +22,7 @@ package com.inu.cafeteria.common.base
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -57,6 +58,16 @@ abstract class NavigationActivity : BaseActivity(),
     private lateinit var bottomNavigation: BottomNavigationView
 
     private var lastRootLevelBackPress = 0L
+
+    /**
+     * For children.
+     * Use this method to completely mock user's tab touch behavior.
+     */
+    protected fun jumpToTab(@IdRes tabItemId: Int): Boolean {
+        val menuItem = bottomNavigation.menu.findItem(tabItemId)
+
+        return setItem(menuItem)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

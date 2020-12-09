@@ -56,7 +56,8 @@ val myModules = module {
             appId = BuildConfig.APPLICATION_ID,
             kakaoPlusFriendLink = "kakaoplus://plusfriend/home/_xgxaSLd",
             uicoopPhoneNumber = "0328354720",
-            feedbackUrl = "https://beta.inu-cafeteria.app/feedback"
+            feedbackUrl = "https://beta.inu-cafeteria.app/feedback",
+            viewOrdersAction = "view_orders"
         )
     }
 

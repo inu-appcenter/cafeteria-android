@@ -23,10 +23,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.cardview.widget.CardView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
@@ -35,8 +35,7 @@ import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.navigation.rootDestinations
 import com.inu.cafeteria.extension.withNonNull
-import com.inu.cafeteria.util.Fun
-import com.plattysoft.leonids.ParticleSystem
+import com.inu.cafeteria.feature.main.EasterEggHelper.Companion.getEasterEggs
 import org.koin.core.inject
 import timber.log.Timber
 import java.util.*
@@ -90,17 +89,49 @@ class MainActivity : NavigationActivity() {
     private val viewModel: MainViewModel by viewModels()
     private val eventHandler: LifecycleEventHandler by inject()
 
+    /**
+     * Called when brought to here by re-entering activity
+     * by firebase notification(or any launcher intent).
+     *
+     * MainActivity will always be called with
+     * FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP flags.
+     *
+     * If this activity is first created, onCreate is called.
+     * Otherwise, onNewIntent will be called.
+     */
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        val clickAction = intent?.getStringExtra("click_action") ?: return
+
+        handleFirebaseNotificationClickAction(clickAction)
+    }
+
+    private fun handleFirebaseNotificationClickAction(clickAction: String) {
+        val globalConfig: GlobalConfig by inject()
+
+        when (clickAction) {
+            globalConfig.viewOrdersAction -> {
+                Timber.i("Got action '$clickAction'. Jumping to 'order' tab!")
+                jumpToTab(R.id.tab_order)
+            }
+            else -> {
+                Timber.i("Don't know what to do with action '$clickAction'!")
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         eventHandler.onCreate(this, savedInstanceState)
 
         setOfflineView()
         setSupportTabBadge()
-        observeLoginEvent() // to fetch notifications(unread answers).
+        observeLoginEvent() // to then fetch unread answers.
     }
 
     private fun setOfflineView() {
-        val eggs = getEasterEggs()
+        val eggs = getEasterEggs(this)
 
         withNonNull(findViewById<CardView>(R.id.offline_view)) {
             val animation = AnimationUtils
@@ -122,26 +153,6 @@ class MainActivity : NavigationActivity() {
             }
         }
     }
-
-    private fun getEasterEggs() = Fun(
-        listOf(
-            Fun.Event(9) {
-                ParticleSystem(this, 50, R.drawable.dot, 3000)
-                    .setSpeedRange(0.2f, 0.7f)
-                    .oneShot(findViewById<CardView>(R.id.offline_view), 50)
-            },
-            Fun.Event(17) {
-                Toast.makeText(this, getString(R.string.egg_help), Toast.LENGTH_SHORT).show()
-            },
-            Fun.Event(22) {
-                Toast.makeText(this, getString(R.string.egg_upup), Toast.LENGTH_SHORT).show()
-            },
-            Fun.Event(99) {
-                Toast.makeText(this, getString(R.string.egg_gmg), Toast.LENGTH_SHORT).show()
-                Toast.makeText(this, getString(R.string.heart), Toast.LENGTH_SHORT).show()
-            }
-        )
-    )
 
     private fun setSupportTabBadge() {
         withNonNull(findViewById<BottomNavigationView>(R.id.bottom_nav)) {
