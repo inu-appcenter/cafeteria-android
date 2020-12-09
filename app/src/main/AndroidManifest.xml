@@ -33,7 +33,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- Activity -->
         <activity
             android:name=".feature.splash.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -56,6 +55,32 @@
         <activity
             android:name=".feature.login.LoginActivity"
             android:label="@string/title_login" />
+
+        <!-- Firebase service -->
+        <service
+            android:name=".common.service.CafeteriaFirebaseMessagingService"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+
+        </service>
+
+        <!-- Default notification icon -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification_alert" />
+
+        <!-- Default notification icon color -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/themeBlue" />
+
+        <!-- Default messaging channel -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
 
     </application>
 
