@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/order_dest"
-        android:name="com.inu.cafeteria.feature.discount.DiscountFragment"
+        android:name="com.inu.cafeteria.feature.order.OrderFragment"
         android:label="@string/title_order"
         tools:layout="@layout/order_fragment" />
 

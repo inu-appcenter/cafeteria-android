@@ -19,10 +19,14 @@
 
 package com.inu.cafeteria.feature.splash
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.inu.cafeteria.common.navigation.Navigator
+import com.inu.cafeteria.common.notification.ClickActionHelper
 import org.koin.android.ext.android.inject
+import timber.log.Timber
+
 
 class SplashActivity : AppCompatActivity() {
 
@@ -31,8 +35,39 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (checkIntent(intent)) {
+            return
+        }
+
         navigator.showMain()
+        finish()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        checkIntent(intent)
+    }
+
+    private fun checkIntent(intent: Intent?): Boolean {
+        intent ?: return false
+
+        if (!intent.hasExtra("click_action")) {
+            return false
+        }
+
+        val action = intent.getStringExtra("click_action")
+
+        Timber.i("Starting from click_action(${action})!")
+
+        ClickActionHelper.startActivity(
+            action,
+            intent.extras,
+            this
+        )
 
         finish()
+
+        return true
     }
 }

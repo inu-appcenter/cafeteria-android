@@ -46,7 +46,8 @@
 
         <activity
             android:name=".feature.main.MainActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleInstance" />
 
         <activity
             android:name=".feature.reorder.CafeteriaReorderActivity"

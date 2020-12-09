@@ -42,7 +42,7 @@ object NotificationChannelManager {
         // Create the NotificationChannel
         val channelId = context.getString(R.string.push_number_notification_channel_id)
         val name = context.getString(R.string.push_number_notification_channel_name)
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val importance = NotificationManager.IMPORTANCE_HIGH // We need to show it big and noisy!
 
         return NotificationChannel(channelId, name, importance).apply {
             description = context.getString(R.string.push_number_notification_channel_description)

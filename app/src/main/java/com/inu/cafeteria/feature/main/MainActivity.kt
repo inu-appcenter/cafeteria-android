@@ -59,6 +59,15 @@ class MainActivity : NavigationActivity() {
             rootDests = rootDestinations
         ),
 
+        /** Order notification */
+        NavigationHostFragment.createArguments(
+            layoutRes = R.layout.content_order_base,
+            toolbarId = R.id.toolbar_order,
+            navHostId = R.id.nav_host_order,
+            tabItemId = R.id.tab_order,
+            rootDests = rootDestinations
+        ),
+
         /** Discount */
         NavigationHostFragment.createArguments(
             layoutRes = R.layout.content_discount_base,

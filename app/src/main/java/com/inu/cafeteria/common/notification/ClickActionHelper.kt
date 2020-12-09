@@ -17,13 +17,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common.navigation
+package com.inu.cafeteria.common.notification
 
-import com.inu.cafeteria.R
+import android.content.Context
+import android.content.Intent
 
-val rootDestinations = intArrayOf(
-    R.id.cafeteria_list_dest,
-    R.id.order_dest,
-    R.id.discount_dest,
-    R.id.support_dest
-)
+import android.os.Bundle
+
+object ClickActionHelper {
+
+    fun startActivity(className: String?, extras: Bundle?, context: Context) {
+        val cls = try {
+            Class.forName(className!!)
+        } catch (e: ClassNotFoundException) {
+            return
+        }
+
+        val intent = Intent(context, cls).apply {
+            extras?.let { putExtras(extras) }
+
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            action = Intent.ACTION_MAIN
+            addCategory(Intent.CATEGORY_LAUNCHER)
+        }
+
+        context.startActivity(intent)
+    }
+}

@@ -19,7 +19,51 @@
 
 package com.inu.cafeteria.feature.order
 
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import android.view.View
+import androidx.fragment.app.viewModels
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.databinding.OrderFragmentBinding
 
 class OrderFragment : BaseFragment() {
+
+    private val viewModel: OrderViewModel by viewModels()
+
+    override fun onCreateView(viewCreator: ViewCreator): View {
+        return viewCreator.createView<OrderFragmentBinding> {
+            initializeView(this)
+            vm = viewModel
+        }
+    }
+
+    override fun onResume() {
+        // Check all notifications
+        super.onResume()
+        clearAllOrderNotifications()
+    }
+
+    private fun clearAllOrderNotifications() {
+        val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager ?: return
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Cancel notifications only on push number notification channel
+            val channelIdToClearNotifications = getString(R.string.push_number_notification_channel_id)
+
+            notificationManager.activeNotifications.forEach {
+                if (it.notification.channelId == channelIdToClearNotifications) {
+                    notificationManager.cancel(it.id)
+                }
+            }
+        } else {
+            // Cancel all notifications
+            notificationManager.cancelAll()
+        }
+    }
+
+    private fun initializeView(binding: OrderFragmentBinding) {
+
+    }
 }

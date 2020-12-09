@@ -19,6 +19,9 @@
 
 package com.inu.cafeteria.common.service
 
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import timber.log.Timber
@@ -41,8 +44,14 @@ class CafeteriaFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
+        /**
+         * Notification message in 'notification',
+         * The pushed number in 'data'
+         */
 
-
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(applicationContext, "${message.notification?.title}", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }
