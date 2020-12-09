@@ -19,6 +19,8 @@
 
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
+
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
@@ -131,6 +133,11 @@ dependencies {
 
     /** Swipe refresh layout */
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_layout_version"
+
+    /** Firebase */
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging'
 }
 
 repositories {
