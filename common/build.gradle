@@ -94,4 +94,9 @@ dependencies {
 
     /** Volley */
     api "com.android.volley:volley:$volley_version"
+
+    /** Firebase */
+    api platform("com.google.firebase:firebase-bom:$firebase_bom_version")
+    api 'com.google.firebase:firebase-analytics-ktx'
+    api 'com.google.firebase:firebase-messaging'
 }

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common
+package com.inu.cafeteria.common.navigation
 
 import android.annotation.SuppressLint
 import android.content.Context

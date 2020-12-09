@@ -20,6 +20,7 @@
 package com.inu.cafeteria.common
 
 import android.app.Application
+import com.inu.cafeteria.common.notification.NotificationChannelManager
 import com.inu.cafeteria.injection.myModules
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.android.ext.android.inject
@@ -40,6 +41,8 @@ class ThisApplication : Application() {
         }
 
         startDeviceStatusRepository()
+
+        NotificationChannelManager.addPushNumberNotificationChannel(this)
     }
 
     private fun startDeviceStatusRepository() {

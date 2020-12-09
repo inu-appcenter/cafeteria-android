@@ -25,7 +25,7 @@ import android.os.Build
 import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.EventHub
-import com.inu.cafeteria.common.Navigator
+import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplBeta
@@ -299,5 +299,10 @@ val myModules = module {
         FetchNotifications(
             interactionRepo = get()
         )
+    }
+
+    /** Get FCM token */
+    single {
+        GetFirebaseToken()
     }
 }

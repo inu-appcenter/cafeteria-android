@@ -27,8 +27,8 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.extension.fadeIn
+import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.usecase.SendAppFeedback
 import com.plattysoft.leonids.ParticleSystem
 import org.koin.core.KoinComponent

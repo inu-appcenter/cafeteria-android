@@ -17,22 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.splash
+package com.inu.cafeteria.usecase
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.inu.cafeteria.common.navigation.Navigator
-import org.koin.android.ext.android.inject
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.messaging.FirebaseMessaging
+import com.inu.cafeteria.functional.Result
+import com.inu.cafeteria.interactor.UseCase
 
-class SplashActivity : AppCompatActivity() {
+class GetFirebaseToken : UseCase<Unit, String>() {
 
-    private val navigator: Navigator by inject()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        navigator.showMain()
-
-        finish()
+    override fun run(params: Unit) = Result.of {
+        Tasks.await(FirebaseMessaging.getInstance().token)
     }
 }

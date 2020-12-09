@@ -20,9 +20,29 @@
 package com.inu.cafeteria.common.service
 
 import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
+import timber.log.Timber
 
 class CafeteriaFirebaseMessagingService : FirebaseMessagingService() {
-    override fun onCreate() {
-        super.onCreate()
+
+    override fun onNewToken(token: String) {
+        /**
+         * This will happen when:
+         * - The app deletes instance ID
+         * - The app is restored on a new device
+         * - The user uninstall/reinstall the app
+         * - The user clears app data
+         * (Not when app is updated!)
+         *
+         * Even after a token changed,
+         * the old token will still work for short period.
+         */
+        Timber.i("New token published: '$token'")
     }
+
+    override fun onMessageReceived(message: RemoteMessage) {
+
+
+    }
+
 }
