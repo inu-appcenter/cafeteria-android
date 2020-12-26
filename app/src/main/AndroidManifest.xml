@@ -82,6 +82,11 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/push_number_notification_channel_id" />
 
+        <!-- Download OCR model on install -->
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr" />
+
     </application>
 
 </manifest>

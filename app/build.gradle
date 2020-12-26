@@ -133,6 +133,9 @@ dependencies {
 
     /** Swipe refresh layout */
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_layout_version"
+
+    /** Text recognition */
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition:$mlkit_version"
 }
 
 repositories {
