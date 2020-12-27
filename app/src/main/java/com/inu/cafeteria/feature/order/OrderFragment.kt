@@ -21,8 +21,10 @@ package com.inu.cafeteria.feature.order
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
@@ -45,7 +47,16 @@ class OrderFragment : BaseFragment() {
         clearAllOrderNotifications()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 99 && resultCode == 1) {
+            val number = data?.getIntExtra("num", -1) ?: return
+
+            Toast.makeText(activity, "$number", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun clearAllOrderNotifications() {
+        // TODO: this does not work.
         val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager ?: return
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -64,6 +75,8 @@ class OrderFragment : BaseFragment() {
     }
 
     private fun initializeView(binding: OrderFragmentBinding) {
-
+        binding.openCameraButton.setOnClickListener {
+            startActivityForResult(Intent(activity, AddOrderActivity::class.java), 99)
+        }
     }
 }

@@ -66,7 +66,7 @@ class CafeteriaFragment : BaseFragment() {
         with(binding.cafeteriaRecycler) {
             adapter = this@CafeteriaFragment.adapter.apply {
                 onClickMore = viewModel::onViewMore
-                emptyView = binding.emptyView
+                emptyView = binding.emptyView.emptyView
                 loadingView = binding.loadingView
 
                 positions = viewModel.menuPagePositions

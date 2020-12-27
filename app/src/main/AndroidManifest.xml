@@ -21,6 +21,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.inu.cafeteria">
 
+    <uses-feature android:name="android.hardware.camera.any" />
+    
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -55,6 +58,8 @@
         <activity
             android:name=".feature.login.LoginActivity"
             android:label="@string/title_login" />
+
+        <activity android:name=".feature.order.AddOrderActivity" />
 
         <!-- Firebase service -->
         <service
