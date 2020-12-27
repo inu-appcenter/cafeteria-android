@@ -35,44 +35,15 @@ abstract class BaseFragment : Fragment(), KoinComponent {
     protected val mContext: Context by inject()
     private val deviceStatusRepository: DeviceStatusRepository by inject()
 
-    private var eventHasNotEmittedSinceLastRecreation: Boolean = true
-
-    open val optionMenuId: Int? = null
+    private var networkEventHasNotEmittedSinceLastRecreation: Boolean = true
 
     private var menu: Menu? = null
-    fun getOptionsMenu(): Menu? = menu
-
-    open fun onBackPressed() {}
-
-    open fun onNetworkStateChange(available: Boolean) {}
-
-    final fun isOnline() = deviceStatusRepository.isOnline()
-
-    internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(optionMenuId != null)
-        observeNetworkStateChange(!firstTimeCreated(savedInstanceState))
-    }
-
-    private fun observeNetworkStateChange(isThisFragmentRecreated: Boolean) {
-        observe(deviceStatusRepository.isOnlineEvent()) {
-            it?.let {
-                propagateNetworkChangeOrNot(isThisFragmentRecreated, it)
-            }
-        }
-    }
-
-    private fun propagateNetworkChangeOrNot(fragmentRecreated: Boolean, newNetworkState: Boolean) {
-        if (fragmentRecreated && eventHasNotEmittedSinceLastRecreation) {
-            Timber.i("Ignoring LiveData event on observe because this is right after Fragment recreation!")
-            eventHasNotEmittedSinceLastRecreation = false
-            return
-        }
-
-        onNetworkStateChange(newNetworkState)
+        observeNetworkStateChange(savedInstanceState != null)
     }
 
     override fun onCreateView(
@@ -84,6 +55,38 @@ abstract class BaseFragment : Fragment(), KoinComponent {
 
     protected open fun onCreateView(viewCreator: ViewCreator): View? = null
 
+    override fun onResume() {
+        super.onResume()
+
+        // This ensures option menu exists after orientation change for Fragments in ViewPager.
+        Timber.i("BaseFragment resumed!")
+        activity?.invalidateOptionsMenu()
+    }
+
+    // -----------------Code for network event------------------------------------------------------
+    protected fun isOnline() = deviceStatusRepository.isOnline()
+
+    private fun observeNetworkStateChange(isThisFragmentRecreated: Boolean) {
+        observe(deviceStatusRepository.isOnlineEvent()) {
+            it?.let {
+                propagateNetworkChangeOrNot(isThisFragmentRecreated, it)
+            }
+        }
+    }
+
+    private fun propagateNetworkChangeOrNot(fragmentRecreated: Boolean, newNetworkState: Boolean) {
+        if (fragmentRecreated && networkEventHasNotEmittedSinceLastRecreation) {
+            Timber.i("Ignoring LiveData event on observe because this is right after Fragment recreation!")
+            networkEventHasNotEmittedSinceLastRecreation = false
+            return
+        }
+
+        onNetworkStateChange(newNetworkState)
+    }
+
+    protected open fun onNetworkStateChange(available: Boolean) {}
+
+    // -----------------Code for options item-------------------------------------------------------
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
@@ -95,14 +98,13 @@ abstract class BaseFragment : Fragment(), KoinComponent {
         this.menu = menu
     }
 
-    override fun onResume() {
-        super.onResume()
+    protected fun getOptionsMenu(): Menu? = menu
 
-        // This ensures option menu exists after orientation change for Fragments in ViewPager.
-        Timber.i("BaseFragment resumed!")
-        activity?.invalidateOptionsMenu()
-    }
+    open fun onBackPressed() {}
 
+    open val optionMenuId: Int? = null
+
+    // -----------------Code for view---------------------------------------------------------------
     class ViewCreator(
         val fragment: BaseFragment,
         val inflater: LayoutInflater,
