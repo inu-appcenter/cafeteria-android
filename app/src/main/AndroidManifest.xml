@@ -59,8 +59,10 @@
             android:name=".feature.login.LoginActivity"
             android:label="@string/title_login" />
 
-        <activity android:name=".feature.order.AddOrderActivity"
-            android:theme="@style/FullScreenTheme"/>
+        <activity
+            android:name=".feature.order.AddOrderActivity"
+            android:theme="@style/FullScreenTheme"
+            android:screenOrientation="portrait" />
 
         <!-- Firebase service -->
         <service
