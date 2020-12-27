@@ -148,5 +148,7 @@
     <string name="description_close_button">This is a close button</string>
     <string name="description_shadow">This is a shadow</string>
     <string name="description_corner">This is a focus corner.</string>
+    <string name="title_scan">Scan</string>
+    <string name="description_scan_your_ticket">Place your ticket inside the frame.</string>
 
 </resources>

@@ -139,5 +139,7 @@
     <string name="description_close_button">닫기 버튼입니다.</string>
     <string name="description_shadow">그림자입니다.</string>
     <string name="description_corner">코너입니다.</string>
+    <string name="title_scan">식권 등록</string>
+    <string name="description_scan_your_ticket">식권을 스캔해주세요.</string>
 
 </resources>
