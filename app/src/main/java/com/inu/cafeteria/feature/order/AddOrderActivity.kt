@@ -171,6 +171,8 @@ class AddOrderActivity : BaseActivity() {
             }
         }
 
+        Toast.makeText(this, "$maxValue/5", Toast.LENGTH_SHORT).show()
+
         return maxKey
     }
 
