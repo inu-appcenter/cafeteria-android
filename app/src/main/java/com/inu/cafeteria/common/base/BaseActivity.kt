@@ -91,10 +91,6 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
         }
     }
 
-    private fun isPermissionGranted(context: Context, permission: String): Boolean {
-        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -111,7 +107,11 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
         }
     }
 
-    private fun allPermissionsGranted(): Boolean {
+    private fun isPermissionGranted(context: Context, permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    protected fun allPermissionsGranted(): Boolean {
         return requiredPermissions.all {
             isPermissionGranted(this, it)
         }

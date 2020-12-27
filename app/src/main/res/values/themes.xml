@@ -69,4 +69,9 @@
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
+    <!-- Full screen theme -->
+    <style name="FullScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

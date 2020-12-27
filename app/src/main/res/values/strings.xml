@@ -145,5 +145,8 @@
     <string name="push_number_notification_channel_name">Order ready</string>
     <string name="push_number_notification_channel_description">Delivers notification when order is ready</string>
     <string name="title_order">Orders</string>
+    <string name="description_close_button">This is a close button</string>
+    <string name="description_shadow">This is a shadow</string>
+    <string name="description_corner">This is a focus corner.</string>
 
 </resources>

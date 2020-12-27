@@ -49,7 +49,9 @@ class TicketRecognitionProcessor : VisionProcessorBase<Text>() {
         return OrderTicket(
             waitingNumber = extractWaitingNumber(allTexts) ?: return null,
             posNumber = extractPosNumber(allTexts) ?: return null
-        )
+        ).apply {
+            Timber.i("Ticket recognized: (waitingNumber: ${waitingNumber}, posNumber: ${posNumber})")
+        }
     }
 
     private fun extractWaitingNumber(text: String): Int? {

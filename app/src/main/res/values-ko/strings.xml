@@ -136,5 +136,8 @@
     <string name="push_number_notification_channel_name">번호 알림</string>
     <string name="push_number_notification_channel_description">주문한 음식이 조리 완료되었을 때 번호 알림을 띄웁니다</string>
     <string name="title_order">번호 알림</string>
+    <string name="description_close_button">닫기 버튼입니다.</string>
+    <string name="description_shadow">그림자입니다.</string>
+    <string name="description_corner">코너입니다.</string>
 
 </resources>

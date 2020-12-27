@@ -20,6 +20,7 @@
 package com.inu.cafeteria.common
 
 import android.app.Application
+import com.google.mlkit.common.MlKit
 import com.inu.cafeteria.common.notification.NotificationChannelManager
 import com.inu.cafeteria.injection.myModules
 import com.inu.cafeteria.repository.DeviceStatusRepository
@@ -43,10 +44,26 @@ class ThisApplication : Application() {
         startDeviceStatusRepository()
 
         NotificationChannelManager.addPushNumberNotificationChannel(this)
+
+        initializeMlKit()
     }
 
     private fun startDeviceStatusRepository() {
         val statusRepo: DeviceStatusRepository by inject()
         statusRepo.init()
+    }
+
+    private fun initializeMlKit() {
+        try {
+            /*
+             * This is not necessary on every launch.
+             * MlKit could have been both initialized or not initialized when we need to use it.
+             * Initializing MlKit after is has been initialized will throw an error.
+             * Therefore wee need to make sure it is initialized by doing it safely.
+             */
+            MlKit.initialize(this)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

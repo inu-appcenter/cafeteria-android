@@ -180,5 +180,9 @@
         <item name="android:background">@drawable/top_rounded</item>
     </style>
 
+    <style name="CornerStyle">
+        <item name="android:tint">@color/white</item>
+    </style>
+
 </resources>
 
