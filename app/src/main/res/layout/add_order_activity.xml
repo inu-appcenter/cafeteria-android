@@ -37,7 +37,7 @@
         android:layout_height="match_parent"
         app:holeMargin="@dimen/camera_frame_margin"
         app:holeRatio="@string/camera_frame_ratio"
-        android:background="#7F444444" />
+        android:background="#7F000000" />
 
     <!-- Top shadow -->
     <ImageView
