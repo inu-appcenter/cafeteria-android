@@ -151,5 +151,6 @@
     <string name="title_scan">Scan</string>
     <string name="description_scan_your_ticket">Place your ticket inside the frame.</string>
     <string name="camera_frame_ratio" translatable="false">0.8</string>
+    <string name="description_number_input_button">This is a number input button</string>
 
 </resources>

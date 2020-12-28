@@ -141,5 +141,6 @@
     <string name="description_corner">코너입니다.</string>
     <string name="title_scan">식권 등록</string>
     <string name="description_scan_your_ticket">식권을 스캔해주세요.</string>
+    <string name="description_number_input_button">숫자 입력 버튼입니다.</string>
 
 </resources>

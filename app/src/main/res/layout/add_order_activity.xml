@@ -131,11 +131,25 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/distant_space"
+        android:layout_marginTop="@dimen/distant_space"
+        app:layout_constraintTop_toBottomOf="@id/title"
         android:gravity="center"
         android:textSize="@dimen/textSecondary"
         android:textColor="?android:attr/textColorSecondaryInverse"
         android:text="@string/description_scan_your_ticket"/>
+
+    <!-- Keypad button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_pin"
+        app:backgroundTint="?android:attr/textColorPrimaryInverse"
+        app:tint="?android:attr/colorPrimary"
+        app:maxImageSize="36dp"
+        android:contentDescription="@string/description_number_input_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

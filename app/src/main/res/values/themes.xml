@@ -70,7 +70,7 @@
     </style>
 
     <!-- Full screen theme -->
-    <style name="FullScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="FullScreenTheme" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
     </style>
 
