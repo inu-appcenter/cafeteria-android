@@ -111,7 +111,6 @@
     <dimen name="notice_sheet_height">180dp</dimen>
 
     <!-- Camera corners -->
-    <dimen name="corner_horizontal_margin">24dp</dimen>
-    <dimen name="corner_vertical_margin">96dp</dimen>
+    <dimen name="camera_frame_margin">64dp</dimen>
 
 </resources>

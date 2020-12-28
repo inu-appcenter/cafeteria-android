@@ -181,7 +181,7 @@
     </style>
 
     <style name="CornerStyle">
-        <item name="android:tint">@color/white</item>
+        <item name="android:tint">@color/themeBlue</item>
     </style>
 
 </resources>

@@ -30,6 +30,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import androidx.annotation.DimenRes
+import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 
@@ -130,22 +131,19 @@ fun View.fadeOut(duration: Long=500L) {
     }.start()
 }
 
-fun View.fadeInAndAnimateMargin(@DimenRes marginHorizontal: Int, @DimenRes marginVertical: Int, duration: Long) {
-
-    val marginHorizontalPixels = resources.getDimensionPixelSize(marginHorizontal)
-    val marginVerticalPixels = resources.getDimensionPixelSize(marginVertical)
+fun View.fadeInAndAnimateMargin(@DimenRes margin: Int, @StringRes ratio: Int, duration: Long) {
+    val marginPixels = resources.getDimensionPixelSize(margin)
+    val ratioString = resources.getString(ratio)
 
     val animation = object: Animation() {
         override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
             alpha = interpolatedTime
 
             updateLayoutParams<ConstraintLayout.LayoutParams> {
-                setMargins(
-                    (marginHorizontalPixels * interpolatedTime).toInt(),
-                    (marginVerticalPixels * interpolatedTime).toInt(),
-                    (marginHorizontalPixels * interpolatedTime).toInt(),
-                    (marginVerticalPixels * interpolatedTime).toInt()
-                )
+                dimensionRatio = ratioString
+
+                val marginInPixels = (marginPixels * interpolatedTime).toInt()
+                setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels)
             }
         }
     }

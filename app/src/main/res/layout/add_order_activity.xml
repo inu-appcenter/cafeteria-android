@@ -31,10 +31,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.inu.cafeteria.feature.order.Viewport
+    <!-- Camera frame hole -->
+    <com.inu.cafeteria.feature.order.FrameHoleView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#7f000000" />
+        app:holeMargin="@dimen/camera_frame_margin"
+        app:holeRatio="@string/camera_frame_ratio"
+        android:background="#7F444444" />
 
     <!-- Top shadow -->
     <ImageView
@@ -52,7 +55,6 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="0.75"
         android:visibility="gone"
         tools:visibility="visible">
 

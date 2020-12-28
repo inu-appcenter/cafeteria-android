@@ -65,10 +65,9 @@ class AddOrderActivity : BaseActivity() {
         }
 
         with(binding.corners) {
-            // TODO: use ratio and margin!
             fadeInAndAnimateMargin(
-                R.dimen.corner_horizontal_margin,
-                R.dimen.corner_vertical_margin,
+                R.dimen.camera_frame_margin,
+                R.string.camera_frame_ratio,
                 500
             )
         }
