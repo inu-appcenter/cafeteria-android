@@ -45,7 +45,7 @@ class FrameHoleView @JvmOverloads constructor(
 
     private val holeWidth: Float
         get() {
-            return width.toFloat() - (2*holeMargin)
+            return width.toFloat() - (2 * holeMargin)
         }
     private val holeHeight: Float
         get() {
@@ -99,10 +99,10 @@ class FrameHoleView @JvmOverloads constructor(
 
     private fun setRect(offset: Float = 0f) {
         rect.set(
-            ((width - holeWidth)/2) - offset,
-            ((height - holeHeight)/2) - offset,
-            ((width - holeWidth)/2 + holeWidth) + offset,
-            ((height - holeHeight)/2 + holeHeight) + offset
+            ((width - holeWidth) / 2) - offset,
+            ((height - holeHeight) / 2) - offset,
+            ((width - holeWidth) / 2 + holeWidth) + offset,
+            ((height - holeHeight) / 2 + holeHeight) + offset
         )
     }
 }
