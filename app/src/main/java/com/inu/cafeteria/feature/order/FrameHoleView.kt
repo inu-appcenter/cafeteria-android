@@ -53,7 +53,6 @@ class FrameHoleView @JvmOverloads constructor(
         }
 
     private val eraser = Paint().apply {
-        isAntiAlias = true
         xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
@@ -79,7 +78,7 @@ class FrameHoleView @JvmOverloads constructor(
         path.rewind()
         path.addRoundRect(
             rect.apply {
-                setRect(-28f + 1f/*border*/)
+                setRect(-28f + 1f/*border width*/)
             },
             holeBorderRadius,
             holeBorderRadius,
@@ -96,7 +95,6 @@ class FrameHoleView @JvmOverloads constructor(
             },
             holeBorderRadius, holeBorderRadius, eraser
         )
-
     }
 
     private fun setRect(offset: Float = 0f) {
