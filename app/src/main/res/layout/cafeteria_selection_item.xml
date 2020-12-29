@@ -42,9 +42,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/mid_space"
-            android:layout_marginVertical="@dimen/near_space"
+            android:layout_marginVertical="@dimen/mid_space"
             android:text="@{item.displayName}"
             android:textColor="?android:attr/colorPrimary"
+            android:textStyle="bold"
             tools:text="학생식당" />
 
     </androidx.cardview.widget.CardView>

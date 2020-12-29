@@ -44,7 +44,7 @@
 
     <color name="dimmedBackground">#77000000</color>
 
-    <color name="darkBackground">#FF424242</color>
+    <color name="darkBackground">#2E2E2E</color>
 
     <color name="themeBlue">#3DBEF4</color>
     <color name="themeRed">#FF2841</color>
