@@ -110,7 +110,6 @@
             android:src="@drawable/ic_camera_alt_black_18dp"
             app:backgroundTint="?android:attr/textColorPrimaryInverse"
             app:tint="?android:attr/colorPrimary"
-            app:maxImageSize="32dp"
             android:onClick="@{() -> vm.changeToCameraScan()}"
             android:contentDescription="@string/description_number_input_button" />
 

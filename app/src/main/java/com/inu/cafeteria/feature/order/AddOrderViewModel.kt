@@ -61,6 +61,7 @@ class AddOrderViewModel : BaseViewModel() {
         }
     }
 
+    val toggleFlashEvent = SingleLiveEvent<Boolean>()
     val orderSuccessfullyAddedEvent = SingleLiveEvent<Unit>()
 
     fun getProcessorCameraProvider(): LiveData<ProcessCameraProvider> {
@@ -93,6 +94,10 @@ class AddOrderViewModel : BaseViewModel() {
 
     fun changeToCameraScan() {
         setInputMode(InputMode.MODE_CAMERA)
+    }
+
+    fun toggleFlash() {
+        toggleFlashEvent.value = !(toggleFlashEvent.value ?: false)
     }
 
     private fun setInputMode(mode: InputMode) {

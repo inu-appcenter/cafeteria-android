@@ -113,17 +113,33 @@
 
         <!-- Keypad button -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/change_to_manual_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/toggle_flash_button"
             app:layout_constraintBottom_toBottomOf="parent"
             android:src="@drawable/ic_pin"
             app:backgroundTint="?android:attr/textColorPrimaryInverse"
             app:tint="?android:attr/colorPrimary"
-            app:maxImageSize="36dp"
+            app:maxImageSize="32dp"
             android:onClick="@{() -> vm.changeToManualInput()}"
+            android:contentDescription="@string/description_number_input_button" />
+
+        <!-- Flash button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/toggle_flash_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
+            app:layout_constraintStart_toEndOf="@id/change_to_manual_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_flash_on_24px"
+            app:backgroundTint="?android:attr/textColorPrimaryInverse"
+            app:tint="?android:attr/colorPrimary"
+            android:onClick="@{() -> vm.toggleFlash()}"
             android:contentDescription="@string/description_number_input_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

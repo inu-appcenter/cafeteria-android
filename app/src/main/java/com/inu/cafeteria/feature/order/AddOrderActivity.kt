@@ -47,8 +47,10 @@ class AddOrderActivity : BaseActivity() {
     private val viewModel: AddOrderViewModel by viewModels()
 
     private var cameraRunning: Boolean = false
+
+    private var cameraProvider: ProcessCameraProvider? = null // Reusable
+    private var cameraControl: CameraControl? = null
     private var ticketProcessor: TicketRecognitionProcessor? = null
-    private var cameraProvider: ProcessCameraProvider? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,16 +107,22 @@ class AddOrderActivity : BaseActivity() {
             }
         }
 
-        observe(viewModel.orderSuccessfullyAddedEvent) {
-            finish()
-        }
-
         observe(viewModel.waitingNumberInputDone) {
             it?.takeIf { it } ?: return@observe
 
             with(binding.manualPart.waitingNumberInput) {
                 hideKeyboard()
             }
+        }
+
+        observe(viewModel.toggleFlashEvent) {
+            it ?: return@observe
+
+            cameraControl?.enableTorch(it)
+        }
+
+        observe(viewModel.orderSuccessfullyAddedEvent) {
+            finish()
         }
     }
 
@@ -163,9 +171,10 @@ class AddOrderActivity : BaseActivity() {
 
         bindPreviewUseCase(cameraProvider)
         bindAnalysisUseCase(cameraProvider)
+
+        obtainCameraControl(cameraProvider)
     }
 
-    @SuppressLint("RestrictedApi")
     private fun bindPreviewUseCase(cameraProvider: ProcessCameraProvider) {
         val previewUseCase = Preview.Builder().build().apply {
             setSurfaceProvider(binding.cameraPart.previewView.createSurfaceProvider())
@@ -209,9 +218,14 @@ class AddOrderActivity : BaseActivity() {
         }
     }
 
+    private fun obtainCameraControl(cameraProvider: ProcessCameraProvider) {
+        cameraControl = cameraProvider.bindToLifecycle(this, getCameraSelector(cameraProvider)).cameraControl
+    }
+
     private fun stopCamera() {
-        ticketProcessor?.stop()
         cameraProvider?.unbindAll()
+        cameraControl?.enableTorch(false)
+        ticketProcessor?.stop()
 
         cameraRunning = false
     }
