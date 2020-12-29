@@ -25,13 +25,14 @@ import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.inu.cafeteria.common.vision.VisionProcessorBase
+import com.inu.cafeteria.entities.OrderInput
 import timber.log.Timber
 
 class TicketRecognitionProcessor : VisionProcessorBase<Text>() {
 
     private val textRecognizer: TextRecognizer = TextRecognition.getClient()
 
-    var onOrderRecognized: (OrderTicket) -> Unit = {}
+    var onOrderRecognized: (OrderInput.Ticket) -> Unit = {}
 
     override fun detectInImage(image: InputImage): Task<Text> {
         return textRecognizer.process(image)
@@ -43,10 +44,10 @@ class TicketRecognitionProcessor : VisionProcessorBase<Text>() {
         }
     }
 
-    private fun extractTicketContentIfFound(text: Text): OrderTicket? {
+    private fun extractTicketContentIfFound(text: Text): OrderInput.Ticket? {
         val allTexts = text.text
 
-        return OrderTicket(
+        return OrderInput.Ticket(
             waitingNumber = extractWaitingNumber(allTexts) ?: return null,
             posNumber = extractPosNumber(allTexts) ?: return null
         ).apply {

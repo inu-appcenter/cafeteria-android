@@ -152,5 +152,8 @@
     <string name="description_scan_your_ticket">Place your ticket inside the frame.</string>
     <string name="camera_frame_ratio" translatable="false">0.8</string>
     <string name="description_number_input_button">This is a number input button</string>
+    <string name="description_enter_your_number">Please enter your number.</string>
+    <string name="hint_enter_number">Enter your waiting number</string>
+    <string name="title_where_are_you_at">Where are you at?</string>
 
 </resources>

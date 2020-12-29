@@ -306,4 +306,8 @@ val myModules = module {
     single {
         GetFirebaseToken()
     }
+
+    single {
+        AddWaitingOrder()
+    }
 }

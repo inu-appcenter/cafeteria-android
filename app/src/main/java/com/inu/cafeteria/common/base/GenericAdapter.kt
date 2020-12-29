@@ -26,6 +26,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * Complete generic adapter.
+ */
 abstract class GenericAdapter<E, T: ViewDataBinding> : RecyclerView.Adapter<GenericAdapter<E, T>.GenericViewHolder>() {
 
     var items: List<E> = listOf()

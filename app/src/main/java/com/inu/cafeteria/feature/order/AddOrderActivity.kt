@@ -22,16 +22,19 @@ package com.inu.cafeteria.feature.order
 import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.google.mlkit.common.MlKitException
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseActivity
 import com.inu.cafeteria.common.extension.fadeInAndAnimateMargin
+import com.inu.cafeteria.common.extension.hideKeyboard
 import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.common.extension.requestFocusWithKeyboard
 import com.inu.cafeteria.databinding.AddOrderActivityBinding
 import timber.log.Timber
 
@@ -43,6 +46,7 @@ class AddOrderActivity : BaseActivity() {
     private lateinit var binding: AddOrderActivityBinding
     private val viewModel: AddOrderViewModel by viewModels()
 
+    private var cameraRunning: Boolean = false
     private var ticketProcessor: TicketRecognitionProcessor? = null
     private var cameraProvider: ProcessCameraProvider? = null
 
@@ -52,6 +56,9 @@ class AddOrderActivity : BaseActivity() {
         binding = AddOrderActivityBinding.inflate(layoutInflater).apply {
             setContentView(root)
             initializeView(this)
+
+            lifecycleOwner = this@AddOrderActivity
+            vm = viewModel
         }
 
         startCameraWhenReady()
@@ -64,11 +71,50 @@ class AddOrderActivity : BaseActivity() {
             }
         }
 
-        with(binding.corners) {
-            fadeInAndAnimateMargin(
-                R.dimen.camera_frame_margin,
-                500
-            )
+        with(binding.manualPart.cafeteriaSelectionRecycler) {
+            adapter = CafeteriaSelectionAdapter().apply {
+                onClickRootLayout = viewModel::handleManualCafeteriaSelection
+            }
+        }
+
+        observe(viewModel.cameraViewVisible) {
+            it?.takeIf { it } ?: return@observe
+
+            startCamera()
+
+            with(binding.cameraPart.corners) {
+                fadeInAndAnimateMargin(
+                    R.dimen.camera_frame_margin,
+                    500
+                )
+            }
+        }
+
+        observe(viewModel.manualViewVisible) {
+            it?.takeIf { it } ?: return@observe
+
+            stopCamera()
+
+            viewModel.fetchCafeteriaSelectionOptions()
+
+            with(binding.manualPart.waitingNumberInput) {
+                post {
+                    // Calling requestFocusWithKeyboard right away does not work.
+                    requestFocusWithKeyboard()
+                }
+            }
+        }
+
+        observe(viewModel.orderAddedEvent) {
+            finish()
+        }
+
+        observe(viewModel.waitingNumberInputDone) {
+            it?.takeIf { it } ?: return@observe
+
+            with(binding.manualPart.waitingNumberInput) {
+                hideKeyboard()
+            }
         }
     }
 
@@ -79,16 +125,12 @@ class AddOrderActivity : BaseActivity() {
 
     override fun onPause() {
         super.onPause()
-        ticketProcessor?.stop()
+        stopCamera()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        ticketProcessor?.stop()
-    }
-
-    private fun onOrderRecognized(ticket: OrderTicket) {
-        Toast.makeText(this, "대기번호: ${ticket.waitingNumber}, POS번호: ${ticket.posNumber}", Toast.LENGTH_SHORT).show()
+        stopCamera()
     }
 
     // -----------------Code for camera-------------------------------------------------------------
@@ -100,12 +142,17 @@ class AddOrderActivity : BaseActivity() {
     }
 
     private fun startCamera() {
+        if (cameraRunning) {
+            return
+        }
+
         if (!allPermissionsGranted()) {
             return
         }
 
         try {
             bindAllCameraUseCases(cameraProvider ?: return)
+            cameraRunning = true
         } catch (e: Exception) {
             Timber.e("Use case binding failed: ${e.message}")
         }
@@ -121,7 +168,7 @@ class AddOrderActivity : BaseActivity() {
     @SuppressLint("RestrictedApi")
     private fun bindPreviewUseCase(cameraProvider: ProcessCameraProvider) {
         val previewUseCase = Preview.Builder().build().apply {
-            setSurfaceProvider(binding.previewView.createSurfaceProvider())
+            setSurfaceProvider(binding.cameraPart.previewView.createSurfaceProvider())
         }
 
         cameraProvider.bindToLifecycle(this, getCameraSelector(cameraProvider), previewUseCase)
@@ -130,7 +177,7 @@ class AddOrderActivity : BaseActivity() {
     @SuppressLint("UnsafeExperimentalUsageError")
     private fun bindAnalysisUseCase(cameraProvider: ProcessCameraProvider) {
         ticketProcessor = TicketRecognitionProcessor().apply {
-            onOrderRecognized = this@AddOrderActivity::onOrderRecognized
+            onOrderRecognized = viewModel::handleOrderInput
         }
 
         val analyzer = { imageProxy: ImageProxy ->
@@ -162,6 +209,13 @@ class AddOrderActivity : BaseActivity() {
         }
     }
 
+    private fun stopCamera() {
+        ticketProcessor?.stop()
+        cameraProvider?.unbindAll()
+
+        cameraRunning = false
+    }
+
     // -----------------Code for permissions--------------------------------------------------------
     override val requiredPermissions: Array<String>
         get() = REQUIRED_PERMISSIONS
@@ -176,5 +230,13 @@ class AddOrderActivity : BaseActivity() {
 
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+
+        @JvmStatic
+        @BindingAdapter("cafeteriaToChoose")
+        fun setCafeteriaToChoose(view: RecyclerView, cafeteriaToChoose: List<CafeteriaSelectionView>?) {
+            cafeteriaToChoose ?: return
+
+            (view.adapter as? CafeteriaSelectionAdapter)?.items = cafeteriaToChoose
+        }
     }
 }

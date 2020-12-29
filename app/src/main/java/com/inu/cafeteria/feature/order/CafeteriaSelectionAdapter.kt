@@ -19,7 +19,10 @@
 
 package com.inu.cafeteria.feature.order
 
-data class OrderTicket(
-    val waitingNumber: Int,
-    val posNumber: Int
-)
+import com.inu.cafeteria.R
+import com.inu.cafeteria.common.base.GenericAdapter
+import com.inu.cafeteria.databinding.CafeteriaSelectionItemBinding
+
+class CafeteriaSelectionAdapter : GenericAdapter<CafeteriaSelectionView, CafeteriaSelectionItemBinding>() {
+    override fun getLayoutIdForPosition(position: Int) = R.layout.cafeteria_selection_item
+}
