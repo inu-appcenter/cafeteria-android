@@ -105,7 +105,7 @@ class AddOrderActivity : BaseActivity() {
             }
         }
 
-        observe(viewModel.orderAddedEvent) {
+        observe(viewModel.orderSuccessfullyAddedEvent) {
             finish()
         }
 

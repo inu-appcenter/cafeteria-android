@@ -61,7 +61,7 @@ class AddOrderViewModel : BaseViewModel() {
         }
     }
 
-    val orderAddedEvent = SingleLiveEvent<Unit>()
+    val orderSuccessfullyAddedEvent = SingleLiveEvent<Unit>()
 
     fun getProcessorCameraProvider(): LiveData<ProcessCameraProvider> {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(mContext)
@@ -81,7 +81,7 @@ class AddOrderViewModel : BaseViewModel() {
     fun handleOrderInput(input: OrderInput) {
         // It is its responsibility to add the order to repository.
         addWaitingOrder(input) {
-            it.onSuccess { orderAddedEvent.call() }.onError(::handleFailure)
+            it.onSuccess { orderSuccessfullyAddedEvent.call() }.onError(::handleFailure)
         }
     }
 
