@@ -58,7 +58,7 @@ class WaitingOrderViewModel : BaseViewModel() {
         _orders.value = orders.map { order ->
             WaitingOrderView(
                 orderId = order.id,
-                waitingNumber = order.number,
+                waitingNumber = order.number.toString() /*this is necessary*/,
                 cafeteriaDisplayName = getCafeteriaNameById(cafeteria, order.cafeteriaId)
             )
         }

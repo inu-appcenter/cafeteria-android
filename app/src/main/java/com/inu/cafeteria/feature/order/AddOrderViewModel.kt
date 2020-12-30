@@ -68,6 +68,9 @@ class AddOrderViewModel : BaseViewModel() {
     val toggleFlashEvent = SingleLiveEvent<Boolean>()
     val orderSuccessfullyAddedEvent = SingleLiveEvent<Unit>()
 
+    private var pauseHandling: Boolean = false
+    private val rejectedOrderInputs = mutableListOf<OrderInput>()
+
     fun getProcessorCameraProvider(): LiveData<ProcessCameraProvider> {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(mContext)
 
@@ -84,8 +87,24 @@ class AddOrderViewModel : BaseViewModel() {
 
     /** Final destination */
     fun handleOrderInput(input: OrderInput) {
+        if (pauseHandling) {
+            Timber.v("Hey! calm down!")
+            return
+        }
+
+        if (input in rejectedOrderInputs) {
+            Timber.v("Oh, we don't try request with it anymore: $input")
+            return
+        }
+
+        pauseHandling = true // Stop until we get response.
+
         addWaitingOrder(input) {
-            it.onSuccess { orderSuccessfullyAddedEvent.call() }.onError(::handleFailure)
+            it
+                .onSuccess { orderSuccessfullyAddedEvent.call() }
+                .onError(::handleFailure)
+                .onError { rejectedOrderInputs.add(input) } // To remember and not to send a request with the same input again.
+                .finally { pauseHandling = false }
         }
     }
 
@@ -104,6 +123,8 @@ class AddOrderViewModel : BaseViewModel() {
     }
 
     private fun setInputMode(mode: InputMode) {
+        pauseHandling = false
+
         _cameraViewVisible.value = (mode == InputMode.MODE_CAMERA)
         _manualViewVisible.value = (mode == InputMode.MODE_MANUAL)
     }

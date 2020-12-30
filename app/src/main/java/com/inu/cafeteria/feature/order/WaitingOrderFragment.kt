@@ -24,7 +24,10 @@ import android.content.Context
 import android.os.Build
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.navigation.Navigator
@@ -47,6 +50,14 @@ class WaitingOrderFragment : BaseFragment() {
     }
 
     private fun initializeView(binding: WaitingOrderFragmentBinding) {
+        with(binding.waitingOrdersRecycler) {
+            adapter = WaitingOrderAdapter().apply {
+                emptyView = binding.emptyView
+                loadingView = binding.loadingView
+            }
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
+
         with(binding.addOrderButton) {
             setOnClickListener {
                 navigator.showAddWaitingOrder()
@@ -56,8 +67,11 @@ class WaitingOrderFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+
         emphasizeAddButton()
         clearAllOrderNotifications()
+
+        viewModel.fetchWaitingOrders()
     }
 
     private fun emphasizeAddButton() {
@@ -84,6 +98,16 @@ class WaitingOrderFragment : BaseFragment() {
         } else {
             // Cancel all notifications
             notificationManager.cancelAll()
+        }
+    }
+
+    companion object {
+        @JvmStatic
+        @BindingAdapter("waitingOrders")
+        fun setWaitingOrders(view: RecyclerView, orders: List<WaitingOrderView>?) {
+            orders ?: return
+
+            (view.adapter as? WaitingOrderAdapter)?.items = orders
         }
     }
 }

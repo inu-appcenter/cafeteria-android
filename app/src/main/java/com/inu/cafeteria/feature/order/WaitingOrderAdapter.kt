@@ -19,8 +19,10 @@
 
 package com.inu.cafeteria.feature.order
 
-data class WaitingOrderView(
-    val orderId: Int,
-    val waitingNumber: String,
-    val cafeteriaDisplayName: String
-)
+import com.inu.cafeteria.R
+import com.inu.cafeteria.common.base.GenericAdapter
+import com.inu.cafeteria.databinding.WaitingOrderItemBinding
+
+class WaitingOrderAdapter : GenericAdapter<WaitingOrderView, WaitingOrderItemBinding>() {
+    override fun getLayoutIdForPosition(position: Int) = R.layout.waiting_order_item
+}

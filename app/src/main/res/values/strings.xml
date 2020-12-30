@@ -161,5 +161,6 @@
     <string name="fail_wrong_request">Request has a problem.</string>
     <string name="fail_that_order_already_exists">The order you requeested is already registered.</string>
     <string name="button_add_order">Add order</string>
+    <string name="no_orders">No waiting orders yet :)</string>
 
 </resources>

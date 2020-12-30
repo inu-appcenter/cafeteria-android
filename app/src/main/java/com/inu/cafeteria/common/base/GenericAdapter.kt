@@ -20,22 +20,57 @@
 package com.inu.cafeteria.common.base
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
+import com.inu.cafeteria.common.extension.setVisible
 
 /**
  * Complete generic adapter.
  */
 abstract class GenericAdapter<E, T: ViewDataBinding> : RecyclerView.Adapter<GenericAdapter<E, T>.GenericViewHolder>() {
 
+    /**
+     * loadingView will be shown when it is not null and isLoading is true.
+     */
+    var loadingView: View? = null
+        set(value) {
+            field = value
+            updatePeripheralViews()
+        }
+
+    var isLoading: Boolean = false
+        set(value) {
+            field = value
+            updatePeripheralViews()
+        }
+
+    /**
+     * emptyView will be shown when it is not null and data.isEmpty() returns true
+     */
+    var emptyView: View? = null
+        set(value) {
+            field = value
+            updatePeripheralViews()
+        }
+
     var items: List<E> = listOf()
         set(value) {
             field = value
+
             notifyDataSetChanged()
+            updatePeripheralViews()
         }
+
+    @CallSuper
+    protected open fun updatePeripheralViews() {
+        emptyView?.setVisible(items.isEmpty() && !isLoading)
+        loadingView?.setVisible(isLoading)
+    }
 
     var onClickRootLayout: (item: E) -> Unit = {}
 
