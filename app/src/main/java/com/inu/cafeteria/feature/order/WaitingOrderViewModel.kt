@@ -59,7 +59,8 @@ class WaitingOrderViewModel : BaseViewModel() {
             WaitingOrderView(
                 orderId = order.id,
                 waitingNumber = String.format("%04d", order.number) /*this is necessary*/,
-                cafeteriaDisplayName = getCafeteriaNameById(cafeteria, order.cafeteriaId)
+                cafeteriaDisplayName = getCafeteriaNameById(cafeteria, order.cafeteriaId),
+                done = false
             )
         }
     }
@@ -73,6 +74,16 @@ class WaitingOrderViewModel : BaseViewModel() {
     fun deleteWaitingOrder(orderId: Int) {
         deleteWaitingOrder(orderId) {
             it.onSuccess { fetchWaitingOrders()/*refresh*/ }.onError(::handleFailure)
+        }
+    }
+
+    fun markOrderReady(orderId: Int) {
+        _orders.value = _orders.value?.map {
+            if (it.orderId == orderId) {
+                it.copy(done = true)
+            } else {
+                it
+            }
         }
     }
 

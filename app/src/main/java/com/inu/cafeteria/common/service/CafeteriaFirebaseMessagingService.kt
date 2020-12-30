@@ -19,9 +19,7 @@
 
 package com.inu.cafeteria.common.service
 
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
+import android.content.Intent
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.inu.cafeteria.repository.ExternalCredentialsRepository
@@ -55,9 +53,14 @@ class CafeteriaFirebaseMessagingService : FirebaseMessagingService() {
          * The pushed number in 'data'
          */
 
-        Handler(Looper.getMainLooper()).post {
-            Toast.makeText(applicationContext, "${message.notification?.title}", Toast.LENGTH_SHORT).show()
-        }
+        // Notify this app-wide
+        sendBroadcast(Intent().apply {
+            action = ACTION_PUSH_NUMBER_NOTIFICATION
+            putExtra("message", message)
+        })
     }
 
+    companion object {
+        const val ACTION_PUSH_NUMBER_NOTIFICATION = "com.inu.cafeteria.push_number_notification"
+    }
 }

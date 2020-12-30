@@ -20,17 +20,23 @@
 package com.inu.cafeteria.feature.order
 
 import android.app.NotificationManager
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
+import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.messaging.RemoteMessage
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.navigation.Navigator
+import com.inu.cafeteria.common.service.CafeteriaFirebaseMessagingService
 import com.inu.cafeteria.databinding.WaitingOrderFragmentBinding
 import org.koin.core.inject
 import kotlin.concurrent.timer
@@ -42,12 +48,47 @@ class WaitingOrderFragment : BaseFragment() {
 
     private val navigator: Navigator by inject()
 
+    /** Receives in-app firebase notification when app is active */
+    private val pushNumberNotificationReceiver = object: BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            handleNotificationMessage(
+                intent?.getParcelableExtra("message") ?: return
+            )
+        }
+    }
+
+    private val pushNumberNotificationFilter = IntentFilter().apply {
+        addAction(CafeteriaFirebaseMessagingService.ACTION_PUSH_NUMBER_NOTIFICATION)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        context?.registerReceiver(
+            pushNumberNotificationReceiver,
+            pushNumberNotificationFilter
+        )
+    }
+
     override fun onCreateView(viewCreator: ViewCreator): View {
         return viewCreator.createView<WaitingOrderFragmentBinding> {
             initializeView(this)
             binding = this
             vm = viewModel
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        clearAllOrderNotifications()
+
+        viewModel.fetchWaitingOrders()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        context?.unregisterReceiver(pushNumberNotificationReceiver)
     }
 
     private fun initializeView(binding: WaitingOrderFragmentBinding) {
@@ -86,13 +127,6 @@ class WaitingOrderFragment : BaseFragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        clearAllOrderNotifications()
-
-        viewModel.fetchWaitingOrders()
-    }
-
     private fun clearAllOrderNotifications() {
         // TODO: this does not work.
         val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager ?: return
@@ -109,6 +143,16 @@ class WaitingOrderFragment : BaseFragment() {
         } else {
             // Cancel all notifications
             notificationManager.cancelAll()
+        }
+    }
+
+    private fun handleNotificationMessage(message: RemoteMessage) {
+        val orderId = message.data["order_id"]?.toInt() ?: return
+
+        viewModel.markOrderReady(orderId)
+
+        navigator.showOrderFinishedNotification(activity ?: return) {
+            viewModel.fetchWaitingOrders()
         }
     }
 

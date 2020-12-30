@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/cafeteria_name"
             android:text="@{item.waitingNumber}"
-            android:textColor="?android:attr/textColorPrimary"
+            android:textColor="@{item.done ? @color/orange : @color/textPrimary}"
             android:textSize="@dimen/textBig"
             android:textStyle="bold"
             tools:text="3829"/>

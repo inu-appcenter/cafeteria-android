@@ -23,4 +23,5 @@ data class WaitingOrderView(
     val orderId: Int,
     val waitingNumber: String,
     val cafeteriaDisplayName: String,
+    val done: Boolean
 )

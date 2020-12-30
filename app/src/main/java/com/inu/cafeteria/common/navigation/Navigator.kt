@@ -135,6 +135,18 @@ class Navigator(
             .show()
     }
 
+    fun showOrderFinishedNotification(activity: FragmentActivity, onConfirm: () -> Unit) {
+        AlertDialog
+            .Builder(activity)
+            .setTitle(context.getString(R.string.title_order_ready))
+            .setMessage(context.getString(R.string.description_order_ready))
+            .setPositiveButton(context.getString(R.string.button_confirm)) { _, _ ->
+                onConfirm()
+            }
+            .setCancelable(false) // Force!
+            .show()
+    }
+
     fun showTermsAndConditions() {
         startActivity(
             Intent(Intent.ACTION_VIEW, Uri.parse(globalConfig.termsAndConditionsUrl))

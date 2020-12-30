@@ -57,18 +57,6 @@ class DiscountFragment : BaseFragment() {
             vm = viewModel
         }
 
-    override fun onResume() {
-        super.onResume()
-
-        applyBrightness()
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        resetBrightness()
-    }
-
     private fun initializeView(binding: DiscountFragmentBinding) {
         with(binding.carrot) {
             startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_forever).apply {
@@ -88,6 +76,18 @@ class DiscountFragment : BaseFragment() {
                 applyBrightness()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        applyBrightness()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        resetBrightness()
     }
 
     private fun applyBrightness() {
