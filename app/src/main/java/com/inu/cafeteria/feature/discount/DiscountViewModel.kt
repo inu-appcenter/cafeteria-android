@@ -67,6 +67,9 @@ class DiscountViewModel : BaseViewModel() {
 
     val loggedInStatus = accountService.loggedInStatus()
 
+    private val _bright = MutableLiveData(false)
+    val bright: LiveData<Boolean> = _bright
+
     fun preload() {
         _barcodeCardReady.value = false
         _onceLoggedIn.value = accountService.isLoggedIn() || accountService.hasSavedAccount()
@@ -102,6 +105,10 @@ class DiscountViewModel : BaseViewModel() {
 
     fun onClickLogin() {
         navigator.showLogin()
+    }
+
+    fun onToggleBrightness() {
+        _bright.value = !(_bright.value ?: false)
     }
 
     private fun showBarcode() {

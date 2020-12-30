@@ -29,6 +29,8 @@ import androidx.fragment.app.viewModels
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.common.extension.resetBrightness
+import com.inu.cafeteria.common.extension.setBrightness
 import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
 
@@ -55,6 +57,18 @@ class DiscountFragment : BaseFragment() {
             vm = viewModel
         }
 
+    override fun onResume() {
+        super.onResume()
+
+        applyBrightness()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        resetBrightness()
+    }
+
     private fun initializeView(binding: DiscountFragmentBinding) {
         with(binding.carrot) {
             startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_forever).apply {
@@ -69,7 +83,23 @@ class DiscountFragment : BaseFragment() {
                     viewModel.load()
                 }
             }
+
+            observe(bright) {
+                applyBrightness()
+            }
         }
+    }
+
+    private fun applyBrightness() {
+        if (viewModel.bright.value == true) {
+            activity?.setBrightness(1f)
+        } else {
+            activity?.resetBrightness()
+        }
+    }
+
+    private fun resetBrightness() {
+        activity?.resetBrightness()
     }
 
     companion object {
