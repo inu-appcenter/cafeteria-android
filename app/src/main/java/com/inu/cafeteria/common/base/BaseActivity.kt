@@ -20,9 +20,12 @@
 package com.inu.cafeteria.common.base
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.core.KoinComponent
@@ -34,19 +37,17 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
     protected val mContext: Context by inject()
     private val deviceStatusRepository: DeviceStatusRepository by inject()
 
-    private var eventHasNotEmittedSinceLastRecreation: Boolean = true
-
-    open fun onNetworkStateChange(available: Boolean) {}
-
-    final fun isOnline() = deviceStatusRepository.isOnline()
-
-    internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
+    private var networkEventHasNotEmittedSinceLastRecreation: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        observeNetworkStateChange(!firstTimeCreated(savedInstanceState))
+        observeNetworkStateChange(savedInstanceState != null)
+        getRuntimePermissions()
     }
+
+    // -----------------Code for network event------------------------------------------------------
+    protected fun isOnline() = deviceStatusRepository.isOnline()
 
     private fun observeNetworkStateChange(isThisActivityRecreated: Boolean) {
         observe(deviceStatusRepository.isOnlineEvent()) {
@@ -57,15 +58,18 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
     }
 
     private fun propagateNetworkChangeOrNot(activityRecreated: Boolean, newNetworkState: Boolean) {
-        if (activityRecreated && eventHasNotEmittedSinceLastRecreation) {
+        if (activityRecreated && networkEventHasNotEmittedSinceLastRecreation) {
             Timber.i("Ignoring LiveData event on observe because this is right after Activity recreation!")
-            eventHasNotEmittedSinceLastRecreation = false
+            networkEventHasNotEmittedSinceLastRecreation = false
             return
         }
 
         onNetworkStateChange(newNetworkState)
     }
 
+    protected open fun onNetworkStateChange(available: Boolean) {}
+
+    // -----------------Code for options item-------------------------------------------------------
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -74,5 +78,52 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    // -----------------Code for permissions--------------------------------------------------------
+    private fun getRuntimePermissions() {
+        val allNeededPermissions = requiredPermissions
+            .filter { !isPermissionGranted(this, it) }
+            .toTypedArray()
+
+        if (allNeededPermissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, allNeededPermissions, REQUEST_CODE_PERMISSIONS)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode != REQUEST_CODE_PERMISSIONS) {
+            return
+        }
+
+        if (allPermissionsGranted()) {
+            onAllPermissionsGranted()
+        } else {
+            onPermissionNotGranted()
+        }
+    }
+
+    private fun isPermissionGranted(context: Context, permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    protected fun allPermissionsGranted(): Boolean {
+        return requiredPermissions.all {
+            isPermissionGranted(this, it)
+        }
+    }
+
+    protected open val requiredPermissions: Array<String> = arrayOf()
+
+    protected open fun onAllPermissionsGranted() {}
+
+    protected open fun onPermissionNotGranted() {}
+
+    companion object {
+        private const val REQUEST_CODE_PERMISSIONS = 10
     }
 }

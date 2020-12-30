@@ -27,6 +27,11 @@ import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.Transformation
+import androidx.annotation.DimenRes
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 
 fun View.cancelTransition() {
     transitionName = null
@@ -123,4 +128,26 @@ fun View.fadeOut(duration: Long=500L) {
     animate().alpha(0f).setDuration(duration).withEndAction {
         setVisible(false)
     }.start()
+}
+
+fun View.fadeInAndAnimateMargin(@DimenRes margin: Int, duration: Long) {
+    val marginPixels = resources.getDimensionPixelSize(margin)
+
+    val animation = object: Animation() {
+        override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
+            alpha = interpolatedTime
+
+            updateLayoutParams<ConstraintLayout.LayoutParams> {
+                val marginInPixels = (marginPixels * interpolatedTime).toInt()
+                setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels)
+            }
+        }
+    }
+
+    alpha = 0f
+    setVisible(true)
+
+    startAnimation(animation.apply {
+        setDuration(duration)
+    })
 }

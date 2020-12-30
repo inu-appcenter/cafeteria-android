@@ -21,8 +21,8 @@ package com.inu.cafeteria.repository
 
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Notice
-import com.inu.cafeteria.exception.DataNotFoundException
 import com.inu.cafeteria.exception.NullBodyException
+import com.inu.cafeteria.exception.ResourceNotFoundException
 import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
 import com.inu.cafeteria.retrofit.scheme.NoticeResult
@@ -35,7 +35,7 @@ class NoticeRepositoryImpl(
     override fun getNewNotice(os: String, version: String): Notice? {
         val notice = try {
             getLatestNotice(os, version)
-        } catch (exception: DataNotFoundException) {
+        } catch (exception: ResourceNotFoundException) {
             return null
         }
 

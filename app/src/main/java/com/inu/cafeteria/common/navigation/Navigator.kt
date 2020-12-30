@@ -17,12 +17,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common
+/**
+ * This file is part of INU Cafeteria.
+ *
+ * Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+ *
+ * INU Cafeteria is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * INU Cafeteria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package com.inu.cafeteria.common.navigation
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -37,6 +57,7 @@ import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
+import com.inu.cafeteria.feature.order.AddOrderActivity
 import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
 import org.koin.core.KoinComponent
 import timber.log.Timber
@@ -50,10 +71,13 @@ class Navigator(
     private val globalConfig: GlobalConfig
 ) : KoinComponent {
 
-
-    fun showMain() {
+    fun showMain(extras: Bundle? = null) {
         startActivity(
-            MainActivity.callingIntent(context)
+            MainActivity.callingIntent(context).apply {
+                extras?.let(::putExtras)
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            }
         )
     }
 
@@ -66,6 +90,12 @@ class Navigator(
     fun showSorting() {
         startActivity(
             CafeteriaReorderActivity.callingIntent(context)
+        )
+    }
+
+    fun showAddWaitingOrder() {
+        startActivity(
+            AddOrderActivity.callingIntent(context)
         )
     }
 
@@ -105,6 +135,12 @@ class Navigator(
             .show()
     }
 
+    fun showTermsAndConditions() {
+        startActivity(
+            Intent(Intent.ACTION_VIEW, Uri.parse(globalConfig.termsAndConditionsUrl))
+        )
+    }
+
     fun showStore() {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse("market://details?id=" + globalConfig.appId)
@@ -114,7 +150,7 @@ class Navigator(
     }
 
     @SuppressLint("RestrictedApi")
-    fun showFeedbackDialog(activity: FragmentActivity, sendFeedback: (String) -> Unit) {
+    fun showBetaTestFeedbackDialog(activity: FragmentActivity, sendFeedback: (String) -> Unit) {
         val textInput = EditText(activity).apply {
             hint = "관심 가져주셔서 감사합니다 :)"
         }
@@ -142,7 +178,7 @@ class Navigator(
         // to start activity from non-activity context.
         context.startActivity(
             intent.apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 Timber.i("Starting ${this.component?.className}.")
             }
         )

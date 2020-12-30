@@ -26,6 +26,9 @@ import com.inu.cafeteria.common.extension.setVisible
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
+/**
+ * A base adapter that uses BaseBindingViewHolder, which has ViewDataBinding instance.
+ */
 abstract class BaseBindingAdapter<T, VH: BaseBindingViewHolder<*>> : RecyclerView.Adapter<VH>(), KoinComponent {
 
     /**

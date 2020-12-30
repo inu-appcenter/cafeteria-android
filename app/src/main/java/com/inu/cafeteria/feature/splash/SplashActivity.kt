@@ -21,8 +21,9 @@ package com.inu.cafeteria.feature.splash
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.inu.cafeteria.common.Navigator
+import com.inu.cafeteria.common.navigation.Navigator
 import org.koin.android.ext.android.inject
+
 
 class SplashActivity : AppCompatActivity() {
 
@@ -31,8 +32,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        navigator.showMain()
-
+        navigator.showMain(intent?.extras)
         finish()
     }
 }

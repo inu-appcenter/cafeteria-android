@@ -23,8 +23,8 @@ import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.exception.NoAccountException
 import com.inu.cafeteria.exception.UnauthorizedException

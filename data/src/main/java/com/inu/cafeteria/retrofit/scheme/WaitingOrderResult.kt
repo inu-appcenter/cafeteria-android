@@ -17,10 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.exception
+package com.inu.cafeteria.retrofit.scheme
 
-/**
- * Thrown when tried to get data of invalid index or key.
- */
+import com.google.gson.annotations.SerializedName
 
-class DataNotFoundException(message: String = "") : Exception(message)
+data class WaitingOrderResult(
+    val id: Int,
+    val number: Int,
+    @SerializedName("cafeteria-id") val cafeteriaId: Int
+)

@@ -34,15 +34,16 @@ class Barcode {
                     width,
                     height
                 )
+
                 val bitmap = Bitmap.createBitmap(
                     width,
                     height, Bitmap.Config.ARGB_8888)
 
-                for (i in 0 until width)
-
+                for (i in 0 until width) {
                     for (j in 0 until height) {
                         bitmap.setPixel(i, j, if (byteMap.get(i, j)) Color.BLACK else Color.WHITE)
                     }
+                }
 
                 bitmap
             }

@@ -57,12 +57,12 @@ class SupportFragment : BaseFragment() {
             }
         }
 
-        with(binding.kakaotalkButtonPart) {
+        with(binding.kakaotalkButtonPart.kakaotalkButton) {
             setVisible(isKakaoTalkInstalled())
             setOnClickListener { onKakaoTalkClick() }
         }
 
-        with(binding.uicoopCallButtonPart) {
+        with(binding.uicoopCallButtonPart.callUicoopButton) {
             setOnClickListener { onCallUiCoopClick() }
         }
     }

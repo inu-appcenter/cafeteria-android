@@ -26,6 +26,11 @@
         android:title="@string/title_menus" />
 
     <item
+        android:id="@+id/tab_order"
+        android:icon="@drawable/ic_notification_alert"
+        android:title="@string/title_order" />
+
+    <item
         android:id="@+id/tab_discount"
         android:icon="@drawable/ic_barcode_20dp"
         android:title="@string/title_discount" />

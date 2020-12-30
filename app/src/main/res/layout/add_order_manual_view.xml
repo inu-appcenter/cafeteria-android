@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.inu.cafeteria.feature.order.AddOrderViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@color/darkBackground">
+
+        <!-- Waiting number input -->
+        <EditText
+            android:id="@+id/waiting_number_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/mid_space"
+            app:layout_constraintTop_toBottomOf="@id/description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.2"
+            android:text="@={vm.waitingNumberInput}"
+            android:maxLength="4"
+            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:textColorHint="?android:attr/textColorTertiaryInverse"
+            android:inputType="number"
+            android:hint="@string/hint_enter_number"
+            android:autofillHints="@string/hint_enter_number"/>
+
+        <!-- Cafeteria selection -->
+        <TextView
+            android:id="@+id/cafeteria_selection_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/mid_space"
+            app:layout_constraintTop_toBottomOf="@id/waiting_number_input"
+            android:text="@string/title_where_are_you_at"
+            android:textColor="?android:attr/textColorSecondaryInverse"
+            android:textSize="@dimen/textSecondary"
+            android:visibility="@{vm.waitingNumberInputDone ? View.VISIBLE : View.GONE}" />
+
+        <!-- Cafeteria selection header -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cafeteria_selection_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="@dimen/mid_space"
+            app:layout_constraintTop_toBottomOf="@id/cafeteria_selection_header"
+            app:layout_constraintBottom_toTopOf="@id/change_to_camera_button"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            cafeteriaToChoose="@{vm.cafeteriaToChoose}"
+            android:visibility="@{vm.waitingNumberInputDone ? View.VISIBLE : View.GONE}"
+            tools:listitem="@layout/cafeteria_selection_item" />
+
+        <!-- Cafeteria options fading -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            app:layout_constraintBottom_toBottomOf="@id/cafeteria_selection_recycler"
+            android:src="@drawable/fading_bar"
+            android:contentDescription="@string/description_shadow"
+            app:tint="@color/darkBackground" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/toolbarHeight"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"
+            android:textSize="@dimen/textSecondary"
+            android:textColor="?android:attr/textColorSecondaryInverse"
+            android:text="@string/description_enter_your_number"/>
+
+        <!-- Camera button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/change_to_camera_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_camera_alt_black_18dp"
+            app:backgroundTint="?android:attr/textColorPrimaryInverse"
+            app:tint="?android:attr/colorPrimary"
+            android:onClick="@{() -> vm.changeToCameraScan()}"
+            android:contentDescription="@string/description_number_input_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

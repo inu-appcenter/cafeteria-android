@@ -109,7 +109,7 @@
     <string name="login_prompt_subtitle">You can get a discount. Sign in to proceed.</string>
     <string name="error_check_login_form">Please check your id and password.</string>
     <string name="error_login_fail">Please check your id and password. Or try again later.</string>
-    <string name="barcode_ratio" translatable="false">2.5</string>
+    <string name="barcode_ratio" translatable="false">2.75</string>
     <string name="discount_notice">제1 기숙사 식당, 사범대 식당, 학생식당에서 사용하실 수 있습니다. 할인 제공 여부와 시점은 식당 사정에 따라 달라질 수 있습니다.</string>
     <string name="description_offline">You\'re not connected to the internet. We will keep trying to reconnect you.</string>
     <string name="egg_wow">Wow!</string>
@@ -141,5 +141,28 @@
     <string name="title_notice">Notices</string>
     <string name="no_notices">No notices</string>
     <string name="fail_no_activity">No activity to handle request. Please check if that app is installed.</string>
+    <string name="push_number_notification_channel_id" translatable="false">99</string>
+    <string name="push_number_notification_channel_name">Order ready</string>
+    <string name="push_number_notification_channel_description">Delivers notification when order is ready</string>
+    <string name="title_order">Orders</string>
+    <string name="description_close_button">This is a close button</string>
+    <string name="description_shadow">This is a shadow</string>
+    <string name="description_corner">This is a focus corner.</string>
+    <string name="title_scan">Scan</string>
+    <string name="description_scan_your_ticket">Place your ticket inside the frame.</string>
+    <string name="camera_frame_ratio" translatable="false">0.8</string>
+    <string name="description_number_input_button">This is a number input button</string>
+    <string name="description_enter_your_number">Please enter your number.</string>
+    <string name="hint_enter_number">Enter your waiting number</string>
+    <string name="title_where_are_you_at">Where are you at?</string>
+    <string name="fail_fcm_token_not_found">Sorry, something is missing.</string>
+    <string name="fail_that_order_does_not_exist">The order you requested deos not exist.</string>
+    <string name="fail_server_internal">Server\'s in trouble.</string>
+    <string name="fail_wrong_request">Request has a problem.</string>
+    <string name="fail_that_order_already_exists">The order you requeested is already registered.</string>
+    <string name="button_add_order">Add order</string>
+    <string name="no_orders">No waiting orders yet :)</string>
+    <string name="privacy_notion">Your data are sent encrypted and safely handled only for purpose of checking your availability for this service.</string>
+    <string name="terms_and_conditions"><u>Terms and conditions</u></string>
 
 </resources>

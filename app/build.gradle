@@ -19,6 +19,8 @@
 
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
+
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
@@ -48,6 +50,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 
     flavorDimensions "stage", "server"
@@ -131,6 +134,15 @@ dependencies {
 
     /** Swipe refresh layout */
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_layout_version"
+
+    /** Text recognition */
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition:$mlkit_version"
+
+    /** CameraX */
+    implementation "androidx.camera:camera-camera2:1.0.0-beta07"
+    implementation "androidx.camera:camera-lifecycle:1.0.0-beta07"
+    implementation "androidx.camera:camera-view:1.0.0-alpha14"
+
 }
 
 repositories {

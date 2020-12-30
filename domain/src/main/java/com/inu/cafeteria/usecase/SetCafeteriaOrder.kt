@@ -28,6 +28,6 @@ class SetCafeteriaOrder(
 ) : UseCase<Array<Int>, Unit>() {
 
     override fun run(params: Array<Int>) = Result.of {
-        cafeteriaRepo.setOrder(params)
+        cafeteriaRepo.setSortingOrder(params)
     }
 }

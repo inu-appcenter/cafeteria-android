@@ -25,8 +25,8 @@ import android.util.SparseIntArray
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.afterDays
 import com.inu.cafeteria.extension.applyOrder

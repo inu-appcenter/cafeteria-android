@@ -21,6 +21,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.inu.cafeteria">
 
+    <uses-feature android:name="android.hardware.camera.any" />
+    
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -33,7 +36,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- Activity -->
         <activity
             android:name=".feature.splash.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -56,6 +58,42 @@
         <activity
             android:name=".feature.login.LoginActivity"
             android:label="@string/title_login" />
+
+        <activity
+            android:name=".feature.order.AddOrderActivity"
+            android:theme="@style/FullScreenTheme"
+            android:screenOrientation="portrait" />
+
+        <!-- Firebase service -->
+        <service
+            android:name=".common.service.CafeteriaFirebaseMessagingService"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+
+        </service>
+
+        <!-- Default notification icon -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification_alert" />
+
+        <!-- Default notification icon color -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/themeBlue" />
+
+        <!-- Default messaging channel -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/push_number_notification_channel_id" />
+
+        <!-- Download OCR model on install -->
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr" />
 
     </application>
 

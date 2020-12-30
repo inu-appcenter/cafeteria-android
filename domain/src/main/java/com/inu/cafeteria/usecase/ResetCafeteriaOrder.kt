@@ -28,6 +28,6 @@ class ResetCafeteriaOrder(
 ) : UseCase<Unit, Unit>() {
 
     override fun run(params: Unit) = Result.of {
-        cafeteriaRepo.resetOrder()
+        cafeteriaRepo.resetSortingOrder()
     }
 }

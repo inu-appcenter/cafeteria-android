@@ -33,7 +33,7 @@ class AccountRepositoryImpl(
     private val db: SharedPreferenceWrapper
 ) : AccountRepository {
 
-    private var loggedIn = MutableLiveData<Boolean>(false)
+    private var loggedIn = MutableLiveData(false)
 
     override fun isLoggedIn(): Boolean {
         return loggedIn.value!!
@@ -91,8 +91,8 @@ class AccountRepositoryImpl(
 
     companion object {
 
-        private const val KEY_ID = "account_id"
-        private const val KEY_BARCODE = "account_barcode"
-        private const val KEY_TOKEN = "account_token"
+        private const val KEY_ID = "com.inu.cafeteria.account_id"
+        private const val KEY_BARCODE = "com.inu.cafeteria.account_barcode"
+        private const val KEY_TOKEN = "com.inu.cafeteria.account_token"
     }
 }

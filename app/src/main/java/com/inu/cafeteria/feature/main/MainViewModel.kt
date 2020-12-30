@@ -20,8 +20,8 @@
 package com.inu.cafeteria.feature.main
 
 import com.inu.cafeteria.GlobalConfig
-import com.inu.cafeteria.common.Navigator
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.repository.InteractionRepository

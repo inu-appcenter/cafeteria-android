@@ -29,6 +29,6 @@ class GetSavedAccount(
 ) : UseCase<Unit, Account>() {
 
     override fun run(params: Unit) = Result.of {
-        accountService.getSavedAccount() ?: throw Error("No saved account.")
+        accountService.getSavedAccount() ?: throw Exception("No saved account.")
     }
 }

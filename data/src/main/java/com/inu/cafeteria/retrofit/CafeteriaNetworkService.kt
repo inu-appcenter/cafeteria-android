@@ -29,28 +29,19 @@ import retrofit2.http.*
 
 interface CafeteriaNetworkService {
 
-    /**
-     * Notices
-     */
-
+    /** Notices */
     @GET("/notices")
     fun getAllNotices(@Query("os") os: String, @Query("version") version: String): Call<List<NoticeResult>>
 
     @GET("/notices/latest")
     fun getLatestNotice(@Query("os") os: String, @Query("version") version: String): Call<NoticeResult>
 
-
-    /**
-     * Versioning
-     */
-
+    /** Versioning */
     @GET("/shouldIUpdate")
     fun shouldIUpdate(@Query("os") os: String, @Query("version") version: String): Call<Boolean>
 
 
-    /**
-     * Interactions
-     */
+    /** Interactions */
     @POST("/ask")
     fun ask(@Body data: AskParams): Call<Unit>
 
@@ -64,10 +55,7 @@ interface CafeteriaNetworkService {
     fun markAnswerRead(@Path("answerId") answerId: Int): Call<Unit>
 
 
-    /**
-     * Cafeteria
-     */
-
+    /** Cafeteria */
     @GET("/cafeteria")
     fun getCafeteria(): Call<List<CafeteriaResult>>
 
@@ -78,13 +66,20 @@ interface CafeteriaNetworkService {
     fun getMenus(@Query("date") date: String? = null, @Query("split") split: Boolean = false/* server-side false default */): Call<List<MenuResult>>
 
 
-    /**
-     * Membership
-     */
-
+    /** Membership */
     @POST("/login")
     fun getLoginResult(@Body data: LoginParams): Call<LoginResult>
 
     @PUT("/activateBarcode")
     fun getActivateBarcodeResult(): Call<Unit>
+
+    /** Order waiting */
+    @GET("/orders")
+    fun getAllWaitingOrders(@Query("deviceIdentifier") deviceIdentifier/*fcm token*/: String): Call<List<WaitingOrderResult>>
+
+    @POST("/orders")
+    fun addWaitingOrder(@Body data: AddWaitingOrderParams): Call<Unit>
+
+    @DELETE("/orders/{orderId}")
+    fun deleteWaitingOrder(@Path("orderId") orderId: Int, @Query("deviceIdentifier") deviceIdentifier: String): Call<Unit>
 }

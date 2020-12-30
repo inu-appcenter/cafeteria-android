@@ -22,4 +22,10 @@
     <attr name="barBackground" format="reference" />
     <attr name="barTextColor" format="reference" />
     <attr name="barSelectedTextColor" format="reference" />
+
+    <declare-styleable name="FrameHoleView">
+        <attr name="holeRatio" format="string" />
+        <attr name="holeMargin" format="dimension" />
+        <attr name="holeBorderRadius" format="float" />
+    </declare-styleable>
 </resources>

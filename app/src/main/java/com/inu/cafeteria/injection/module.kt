@@ -25,7 +25,7 @@ import android.os.Build
 import com.inu.cafeteria.BuildConfig
 import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.EventHub
-import com.inu.cafeteria.common.Navigator
+import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplBeta
@@ -45,7 +45,7 @@ val myModules = module {
     single {
         GlobalConfig(
             baseUrl = when (BuildConfig.FLAVOR_server) {
-                "localserver" -> "http://10.0.2.2:9999" // 127.0.0.1 of host. For emulator.
+                "localserver" -> "http://10.0.1.10:9999" // For emulator, use http://10.0.2.2:9999
                 "productionserver" -> "https://api.inu-cafeteria.app"
                 else -> "https://api.inu-cafeteria.app"
             },
@@ -56,7 +56,9 @@ val myModules = module {
             appId = BuildConfig.APPLICATION_ID,
             kakaoPlusFriendLink = "kakaoplus://plusfriend/home/_xgxaSLd",
             uicoopPhoneNumber = "0328354720",
-            feedbackUrl = "https://beta.inu-cafeteria.app/feedback"
+            feedbackUrl = "https://beta.inu-cafeteria.app/feedback",
+            viewOrdersAction = "view_orders",
+            termsAndConditionsUrl = "https://raw.githubusercontent.com/inu-appcenter/terms-and-conditions/master/카페테리아-개인정보처리방침.txt"
         )
     }
 
@@ -161,6 +163,20 @@ val myModules = module {
             networkService = get(),
             globalConfig = get()
         ) as InteractionRepository
+    }
+
+    /** Waiting order repository */
+    single {
+        WaitingOrderRepositoryImpl(
+            networkService = get()
+        ) as WaitingOrderRepository
+    }
+
+    /** External credentials repository */
+    single {
+        ExternalCredentialsRepositoryImpl(
+            db = get()
+        ) as ExternalCredentialsRepository
     }
 
     /*****************************
@@ -298,6 +314,35 @@ val myModules = module {
     single {
         FetchNotifications(
             interactionRepo = get()
+        )
+    }
+
+    /** Get FCM token */
+    single {
+        GetFirebaseToken()
+    }
+
+    /** Get waiting orders */
+    single {
+        GetWaitingOrders(
+            waitingOrderRepo = get(),
+            externalCredentialsRepo = get()
+        )
+    }
+
+    /** Add waiting order */
+    single {
+        AddWaitingOrder(
+            waitingOrderRepo = get(),
+            externalCredentialsRepo = get()
+        )
+    }
+
+    /** Delete waiting orders */
+    single {
+        DeleteWaitingOrder(
+            waitingOrderRepo = get(),
+            externalCredentialsRepo = get()
         )
     }
 }

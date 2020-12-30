@@ -29,13 +29,16 @@
     <!-- Google's official status bar height. -->
 
     <!-- Toolbar height including status bar. -->
-    <dimen name="toolbarHeight">80dp</dimen>
+    <dimen name="toolbarAndStatusBarHeight">80dp</dimen>
+
+    <!-- Toolbar only height. -->
+    <dimen name="toolbarHeight">56dp</dimen>
 
     <!-- Expanded height of a collapsing toolbar -->
     <dimen name="expandedToolbarHeight">240dp</dimen>
 
     <!-- Collapsed height of a collapsing toolbar -->
-    <dimen name="collapsedToolbarHeight">@dimen/toolbarHeight</dimen>
+    <dimen name="collapsedToolbarHeight">@dimen/toolbarAndStatusBarHeight</dimen>
 
     <!--
     ~ Padding for placing 24dp drawable in vertical center of an appbar.
@@ -109,5 +112,8 @@
 
     <!-- Notice bottom sheet -->
     <dimen name="notice_sheet_height">180dp</dimen>
+
+    <!-- Camera corners -->
+    <dimen name="camera_frame_margin">64dp</dimen>
 
 </resources>

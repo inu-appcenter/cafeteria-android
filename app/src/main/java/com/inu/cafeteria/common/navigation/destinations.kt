@@ -23,6 +23,7 @@ import com.inu.cafeteria.R
 
 val rootDestinations = intArrayOf(
     R.id.cafeteria_list_dest,
+    R.id.order_dest,
     R.id.discount_dest,
     R.id.support_dest
 )

@@ -133,5 +133,26 @@
     <string name="title_notice">공지</string>
     <string name="no_notices">등록된 공지가 없습니다.</string>
     <string name="fail_no_activity">앱이 설치되어 있는지 확인해 주세요.</string>
+    <string name="push_number_notification_channel_name">번호 알림</string>
+    <string name="push_number_notification_channel_description">주문한 음식이 조리 완료되었을 때 번호 알림을 띄웁니다</string>
+    <string name="title_order">번호 알림</string>
+    <string name="description_close_button">닫기 버튼입니다.</string>
+    <string name="description_shadow">그림자입니다.</string>
+    <string name="description_corner">코너입니다.</string>
+    <string name="title_scan">식권 등록</string>
+    <string name="description_scan_your_ticket">식권을 스캔해주세요.</string>
+    <string name="description_number_input_button">숫자 입력 버튼입니다.</string>
+    <string name="description_enter_your_number">대기번호를 입력해 주세요.</string>
+    <string name="hint_enter_number">대기번호</string>
+    <string name="title_where_are_you_at">어느 곳에 계신가요?</string>
+    <string name="fail_fcm_token_not_found">죄송합니다. 앱을 재설치해 주시기 바랍니다ㅠ</string>
+    <string name="fail_that_order_does_not_exist">해당 대기 주문이 존재하지 않습니다.</string>
+    <string name="fail_server_internal">서버 내부에 문제가 생겼습니다!</string>
+    <string name="fail_wrong_request">서버에 보낸 요청에 문제가 있습니다.</string>
+    <string name="fail_that_order_already_exists">요청하신 주문은 이미 등록되어 있습니다.</string>
+    <string name="button_add_order">대기번호 등록하기</string>
+    <string name="no_orders">아직 대기중인 주문이 없습니다 :)</string>
+    <string name="privacy_notion">입력하신 개인정보는 암호화되어 전송되며, 본교 재학 여부를 판단하는 데에 사용된 후 즉시 폐기됩니다.</string>
+    <string name="terms_and_conditions"><u>개인정보처리방침</u></string>
 
 </resources>

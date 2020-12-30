@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.inu.cafeteria.feature.order.AddOrderViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/darkBackground">
+
+        <!-- Scan UI -->
+        <include
+            layout="@layout/add_order_camera_view"
+            android:id="@+id/camera_part"
+            android:visibility="@{vm.cameraViewVisible ? View.VISIBLE : View.GONE}"
+            app:vm="@{vm}"
+            tools:visibility="visible" />
+
+        <!-- Manual input UI -->
+        <include
+            layout="@layout/add_order_manual_view"
+            android:id="@+id/manual_part"
+            android:visibility="@{vm.manualViewVisible ? View.VISIBLE : View.GONE}"
+            app:vm="@{vm}"
+            tools:visibility="gone" />
+
+        <!-- Top shadow -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="4.0"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/dark_shadow"
+            android:contentDescription="@string/description_shadow" />
+
+        <!-- Close button -->
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="@dimen/far_space"
+            android:background="@null"
+            android:tint="?android:attr/textColorPrimaryInverse"
+            android:src="@drawable/ic_close_24px"
+            android:contentDescription="@string/description_close_button" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/close_button"
+            app:layout_constraintBottom_toBottomOf="@id/close_button"
+            android:gravity="center"
+            android:textSize="@dimen/textTitle"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:text="@string/title_scan"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

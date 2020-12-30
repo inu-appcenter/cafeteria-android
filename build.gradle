@@ -22,7 +22,7 @@ buildscript {
     /** THE VERSION NAME! */
     ext.version_name = '4.1.1'
 
-    ext.kotlin_version = '1.4.20'
+    ext.kotlin_version = '1.4.21'
     ext.gradle_version = '4.1.1'
     ext.koin_version = '2.0.1'
     ext.timber_version = '4.7.1'
@@ -32,7 +32,7 @@ buildscript {
     ext.recyclerview_version = '1.1.0'
     ext.constraintlayout_version = '2.0.4'
     ext.lifecycle_version = '2.2.0'
-    ext.material_version = '1.3.0-alpha04'
+    ext.material_version = '1.3.0-beta01'
     ext.retrofit_version = '2.9.0'
     ext.gson_version = '2.8.6'
     ext.cookiejar_version = 'v1.0.1'
@@ -51,6 +51,10 @@ buildscript {
     ext.volley_version = '1.1.1'
     ext.leonids_version = '1.3.2'
     ext.swipe_refresh_layout_version = '1.1.0'
+    ext.google_service_version = '4.3.4'
+    ext.firebase_bom_version = '26.1.1'
+    ext.mlkit_version = '16.1.2'
+    ext.camerax_version = '1.0.0-SNAPSHOT'
 
     repositories {
         google()
@@ -60,6 +64,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.gms:google-services:$google_service_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
