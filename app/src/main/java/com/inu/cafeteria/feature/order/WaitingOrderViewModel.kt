@@ -21,7 +21,10 @@ package com.inu.cafeteria.feature.order
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.entities.WaitingOrder
+import com.inu.cafeteria.exception.NoCredentialsException
 import com.inu.cafeteria.usecase.GetWaitingOrders
 import org.koin.core.inject
 
@@ -33,8 +36,23 @@ class WaitingOrderViewModel : BaseViewModel() {
     val orders: LiveData<List<WaitingOrderView>> = _orders
 
     fun fetchWaitingOrders() {
+        getWaitingOrders(Unit) {
+            it.onSuccess(::handleWaitingOrders).onError(::handleFailure)
+        }
+    }
+
+    private fun handleWaitingOrders(orders: List<WaitingOrder>) {
 
     }
 
-
+    override fun handleFailure(e: Exception) {
+        when (e) {
+            is NoCredentialsException -> {
+                handleFailure(R.string.notify_fcm_token_not_found)
+            }
+            else -> {
+                super.handleFailure(e)
+            }
+        }
+    }
 }

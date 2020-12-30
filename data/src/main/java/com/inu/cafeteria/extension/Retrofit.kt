@@ -136,11 +136,20 @@ fun <T> Call<T>.getResult(): Result<T?> {
             result.isSuccessful -> {
                 Result.Success(result.body())
             }
+            result.code() == 400 /* Bad request */ -> {
+                Result.Error(BadRequestException(result.errorBody()?.string() ?: ""))
+            }
             result.code() == 401 /* Unauthorized */ -> {
                 Result.Error(UnauthorizedException(result.errorBody()?.string() ?: ""))
             }
+            result.code() == 403 /* Forbidden */ -> {
+                Result.Error(ForbiddenException(result.errorBody()?.string() ?: ""))
+            }
             result.code() == 404 /* Not found */ -> {
-                Result.Error(DataNotFoundException(result.errorBody()?.string() ?: ""))
+                Result.Error(ResourceNotFoundException(result.errorBody()?.string() ?: ""))
+            }
+            result.code() == 500 /* Internal error */ -> {
+                Result.Error(ServerFailException(result.errorBody()?.string() ?: ""))
             }
             else -> {
                 Timber.w(result.errorBody()?.string())
