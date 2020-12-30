@@ -19,15 +19,20 @@
 
 package com.inu.cafeteria.repository
 
+import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.entities.OrderInput
 import com.inu.cafeteria.entities.WaitingOrder
 import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
 import com.inu.cafeteria.retrofit.scheme.AddWaitingOrderParams
+import timber.log.Timber
 
 class WaitingOrderRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
 ) : WaitingOrderRepository {
+
+    // Updated by getAllWaitingOrders() call.
+    private val numberOfFinishedOrders = MutableLiveData(0)
 
     override fun getAllWaitingOrders(deviceIdentifier: String): List<WaitingOrder> {
         // Not cached!
@@ -35,12 +40,17 @@ class WaitingOrderRepositoryImpl(
             deviceIdentifier = deviceIdentifier
         ).getOrThrow() ?: return listOf()
 
+        Timber.e("FETCH!!!")
+
         return orders.map {
             WaitingOrder(
                 id = it.id,
+                done = it.done,
                 number = it.number,
                 cafeteriaId = it.cafeteriaId
             )
+        }.apply {
+            numberOfFinishedOrders.postValue(count { it.done })
         }
     }
 
@@ -61,4 +71,6 @@ class WaitingOrderRepositoryImpl(
             deviceIdentifier = deviceIdentifier
         ).getOrThrow()
     }
+
+    override fun getNumberOfFinishedOrdersLiveData() = numberOfFinishedOrders
 }

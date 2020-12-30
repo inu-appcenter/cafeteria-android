@@ -24,7 +24,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
+import androidx.annotation.IdRes
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.LiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.R
@@ -126,9 +128,11 @@ class MainActivity : NavigationActivity() {
         eventHandler.onCreate(this, savedInstanceState)
 
         setOfflineView()
+        setWaitingOrderTabBadge()
         setSupportTabBadge()
         observeLoginEvent() // to then fetch unread answers.
     }
+
 
     private fun setOfflineView() {
         val eggs = getEasterEggs(this)
@@ -154,23 +158,28 @@ class MainActivity : NavigationActivity() {
         }
     }
 
-    private fun setSupportTabBadge() {
-        withNonNull(findViewById<BottomNavigationView>(R.id.bottom_nav)) {
+    private fun setWaitingOrderTabBadge() {
+        setTabBadge(viewModel.numberOfFinishedOrders, R.id.tab_order)
+    }
 
-            observe(viewModel.numberOfUnreadAnswers) { numberOfNotifications ->
+    private fun setSupportTabBadge() {
+        setTabBadge(viewModel.numberOfUnreadAnswers, R.id.tab_support)
+    }
+
+    private fun setTabBadge(numberOfNotifications: LiveData<Int>, @IdRes tabItemId: Int) {
+        withNonNull(findViewById<BottomNavigationView>(R.id.bottom_nav)) {
+            observe(numberOfNotifications) { numberOfNotifications ->
                 numberOfNotifications ?: return@observe
 
-                Timber.i("Notifications left: $numberOfNotifications")
-
                 if (numberOfNotifications > 0) {
-                    getOrCreateBadge(R.id.tab_support).apply {
+                    getOrCreateBadge(tabItemId).apply {
                         backgroundColor = getColor(R.color.orange)
                         isVisible = true
                         number = numberOfNotifications
                     }
                 } else {
-                    getBadge(R.id.tab_support)?.isVisible = false
-                    removeBadge(R.id.tab_support)
+                    getBadge(tabItemId)?.isVisible = false
+                    removeBadge(tabItemId)
                 }
             }
         }

@@ -15,8 +15,8 @@
             android:id="@+id/menu_recycler"
             android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/menu"
-            android:tag="PositionTraceableRecyclerView"/>
+            android:tag="PositionTraceableRecyclerView"
+            tools:listitem="@layout/menu" />
 
     </androidx.cardview.widget.CardView>
 

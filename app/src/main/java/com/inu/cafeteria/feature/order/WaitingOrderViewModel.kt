@@ -42,25 +42,38 @@ class WaitingOrderViewModel : BaseViewModel() {
     private val _orders = MutableLiveData<List<WaitingOrderView>>()
     val orders: LiveData<List<WaitingOrderView>> = _orders
 
+    private val _loading = MutableLiveData(false)
+    val loading: LiveData<Boolean> = _loading
+
     fun fetchWaitingOrders() {
+        _loading.value = true
+
         getWaitingOrders(Unit) {
-            it.onSuccess(::handleWaitingOrders).onError(::handleFailure)
+            it
+                .onSuccess(::handleWaitingOrders)
+                .onError(::handleFailure)
         }
     }
 
     private fun handleWaitingOrders(orders: List<WaitingOrder>) {
         getCafeteriaOnly(Unit) { result ->
-            result.onSuccess { handleWaitingOrdersWithCafeteria(orders, it) }.onError(::handleFailure)
+            result
+                .onSuccess { handleWaitingOrdersWithCafeteria(orders, it) }
+                .onError(::handleFailure)
+                .finally { _loading.value = false }
         }
     }
 
-    private fun handleWaitingOrdersWithCafeteria(orders: List<WaitingOrder>, cafeteria: List<Cafeteria>) {
+    private fun handleWaitingOrdersWithCafeteria(
+        orders: List<WaitingOrder>,
+        cafeteria: List<Cafeteria>
+    ) {
         _orders.value = orders.map { order ->
             WaitingOrderView(
                 orderId = order.id,
+                done = order.done,
                 waitingNumber = String.format("%04d", order.number) /*this is necessary*/,
-                cafeteriaDisplayName = getCafeteriaNameById(cafeteria, order.cafeteriaId),
-                done = false
+                cafeteriaDisplayName = getCafeteriaNameById(cafeteria, order.cafeteriaId)
             )
         }
     }
@@ -72,19 +85,20 @@ class WaitingOrderViewModel : BaseViewModel() {
     }
 
     fun deleteWaitingOrder(orderId: Int) {
+        _loading.value = true
+
         deleteWaitingOrder(orderId) {
-            it.onSuccess { fetchWaitingOrders()/*refresh*/ }.onError(::handleFailure)
+            it
+                .onSuccess { fetchWaitingOrders()/*refresh*/ }
+                .onError(::handleFailure)
+                .finally { _loading.value = false }
         }
     }
 
-    fun markOrderReady(orderId: Int) {
-        _orders.value = _orders.value?.map {
-            if (it.orderId == orderId) {
-                it.copy(done = true)
-            } else {
-                it
-            }
-        }
+    fun deleteFinishedOrders() {
+        _orders.value
+            ?.filter { it.done }
+            ?.forEach { deleteWaitingOrder(it.orderId) }
     }
 
     override fun handleFailure(e: Exception) {

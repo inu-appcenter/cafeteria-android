@@ -312,7 +312,7 @@ val myModules = module {
 
     /** Mark answer read */
     single {
-        FetchNotifications(
+        FetchUnreadAnswers(
             interactionRepo = get()
         )
     }

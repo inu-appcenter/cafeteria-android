@@ -40,6 +40,7 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             waitingOrders="@{vm.orders}"
+            areOrdersLoading="@{vm.loading}"
             tools:listitem="@layout/waiting_order_item" />
 
         <!-- Empty view -->
@@ -58,14 +59,14 @@
 
         <!-- Loading view -->
         <ProgressBar
+            style="@style/NonFunctionalProgressBar"
             android:id="@+id/loading_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/NonFunctionalProgressBar" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <!-- Add button -->
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

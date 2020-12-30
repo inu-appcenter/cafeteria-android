@@ -23,6 +23,7 @@ import com.google.gson.annotations.SerializedName
 
 data class WaitingOrderResult(
     val id: Int,
+    val done: Boolean,
     val number: Int,
     @SerializedName("cafeteria-id") val cafeteriaId: Int
 )

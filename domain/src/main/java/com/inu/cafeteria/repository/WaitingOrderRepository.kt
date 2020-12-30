@@ -19,6 +19,7 @@
 
 package com.inu.cafeteria.repository
 
+import androidx.lifecycle.LiveData
 import com.inu.cafeteria.entities.OrderInput
 import com.inu.cafeteria.entities.WaitingOrder
 
@@ -26,4 +27,6 @@ interface WaitingOrderRepository {
     fun getAllWaitingOrders(deviceIdentifier: String): List<WaitingOrder>
     fun addWaitingOrder(orderInput: OrderInput, deviceIdentifier: String)
     fun deleteWaitingOrder(orderId: Int, deviceIdentifier: String)
+
+    fun getNumberOfFinishedOrdersLiveData(): LiveData<Int>
 }

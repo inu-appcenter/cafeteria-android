@@ -19,6 +19,7 @@
 
 package com.inu.cafeteria.feature.order
 
+import android.view.animation.AnimationUtils
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.GenericAdapter
 import com.inu.cafeteria.databinding.WaitingOrderItemBinding
@@ -35,6 +36,16 @@ class WaitingOrderAdapter : GenericAdapter<WaitingOrderView, WaitingOrderItemBin
         with(holder.binding.closeButton) {
             setOnClickListener {
                 onClickDelete(item.orderId)
+            }
+        }
+        
+        with(holder.binding.number) {
+            clearAnimation()
+
+            if (item.done) {
+                startAnimation(
+                    AnimationUtils.loadAnimation(context, R.anim.alpha_animation)
+                )
             }
         }
     }

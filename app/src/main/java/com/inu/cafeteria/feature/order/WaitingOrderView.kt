@@ -21,7 +21,7 @@ package com.inu.cafeteria.feature.order
 
 data class WaitingOrderView(
     val orderId: Int,
+    val done: Boolean,
     val waitingNumber: String,
     val cafeteriaDisplayName: String,
-    val done: Boolean
 )

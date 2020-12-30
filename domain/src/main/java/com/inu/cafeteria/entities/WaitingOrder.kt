@@ -21,6 +21,7 @@ package com.inu.cafeteria.entities
 
 data class WaitingOrder(
     val id: Int,
+    val done: Boolean,
     val number: Int,
     val cafeteriaId: Int
 )

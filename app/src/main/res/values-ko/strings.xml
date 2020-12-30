@@ -156,5 +156,7 @@
     <string name="terms_and_conditions"><u>개인정보처리방침</u></string>
     <string name="title_order_ready">주문하신 음식이 나왔어요!</string>
     <string name="description_order_ready">픽업대에서 기다리고 있습니다 :)</string>
+    <string name="order_status_done">준비됨</string>
+    <string name="order_status_waiting">대기중</string>
 
 </resources>

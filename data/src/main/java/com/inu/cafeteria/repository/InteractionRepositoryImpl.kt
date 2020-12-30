@@ -19,7 +19,6 @@
 
 package com.inu.cafeteria.repository
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.entities.Question
@@ -88,9 +87,7 @@ class InteractionRepositoryImpl(
         return answers.size
     }
 
-    override fun getNumberOfUnreadAnswersLiveData(): LiveData<Int> {
-        return numberOfUnreadAnswers
-    }
+    override fun getNumberOfUnreadAnswersLiveData() = numberOfUnreadAnswers
 
     @Synchronized
     private fun <T> cachedFetch(cache: Cache<T>, invalidate: Boolean = false, fetch: () -> T?): T? {

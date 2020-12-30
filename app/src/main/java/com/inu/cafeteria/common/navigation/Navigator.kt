@@ -135,14 +135,12 @@ class Navigator(
             .show()
     }
 
-    fun showOrderFinishedNotification(activity: FragmentActivity, onConfirm: () -> Unit) {
+    fun showOrderFinishedNotification(activity: FragmentActivity, title: String, body: String) {
         AlertDialog
             .Builder(activity)
-            .setTitle(context.getString(R.string.title_order_ready))
-            .setMessage(context.getString(R.string.description_order_ready))
-            .setPositiveButton(context.getString(R.string.button_confirm)) { _, _ ->
-                onConfirm()
-            }
+            .setTitle(title)
+            .setMessage(body)
+            .setPositiveButton(context.getString(R.string.button_confirm)) { _, _ -> }
             .setCancelable(false) // Force!
             .show()
     }

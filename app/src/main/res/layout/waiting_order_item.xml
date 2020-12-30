@@ -54,16 +54,41 @@
         <TextView
             style="@style/TextSecondary"
             android:id="@+id/cafeteria_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/mid_space"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/close_button"
             app:layout_constraintTop_toBottomOf="@id/number"
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@{item.cafeteriaDisplayName}"
             tools:text="학생식당"/>
 
+        <!-- Dot -->
+        <TextView
+            style="@style/FitSizedView"
+            android:id="@+id/separator"
+            android:layout_marginHorizontal="@dimen/close_space"
+            app:layout_constraintStart_toEndOf="@id/cafeteria_name"
+            app:layout_constraintTop_toTopOf="@id/cafeteria_name"
+            app:layout_constraintBottom_toBottomOf="@id/cafeteria_name"
+            android:textSize="@dimen/textSecondary"
+            android:textColor="?android:attr/textColorSecondary"
+            android:text="@string/middle_dot" />
+
+        <!-- Cafeteria name -->
+        <TextView
+            style="@style/TextSecondary"
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/close_space"
+            app:layout_constraintStart_toEndOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@id/number"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@{item.done ? @string/order_status_done : @string/order_status_waiting}"
+            tools:text="대기중"/>
+
+        <!-- Delete button -->
         <ImageButton
             android:id="@+id/close_button"
             android:layout_width="wrap_content"

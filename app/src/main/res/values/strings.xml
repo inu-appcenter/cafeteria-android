@@ -166,5 +166,7 @@
     <string name="terms_and_conditions"><u>Terms and conditions</u></string>
     <string name="title_order_ready">Your order is ready!</string>
     <string name="description_order_ready">Yap.</string>
+    <string name="order_status_done">Ready</string>
+    <string name="order_status_waiting">Waiting</string>
 
 </resources>

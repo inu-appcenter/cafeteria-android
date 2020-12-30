@@ -26,8 +26,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -49,11 +52,9 @@ class WaitingOrderFragment : BaseFragment() {
     private val navigator: Navigator by inject()
 
     /** Receives in-app firebase notification when app is active */
-    private val pushNumberNotificationReceiver = object: BroadcastReceiver() {
+    private val pushNumberNotificationReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            handleNotificationMessage(
-                intent?.getParcelableExtra("message") ?: return
-            )
+            onPushNumberNotification(intent?.getParcelableExtra("message") ?: return)
         }
     }
 
@@ -83,6 +84,12 @@ class WaitingOrderFragment : BaseFragment() {
         clearAllOrderNotifications()
 
         viewModel.fetchWaitingOrders()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        viewModel.deleteFinishedOrders()
     }
 
     override fun onDestroy() {
@@ -128,32 +135,31 @@ class WaitingOrderFragment : BaseFragment() {
     }
 
     private fun clearAllOrderNotifications() {
-        // TODO: this does not work.
         val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager ?: return
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Cancel notifications only on push number notification channel
-            val channelIdToClearNotifications = getString(R.string.push_number_notification_channel_id)
-
-            notificationManager.activeNotifications.forEach {
-                if (it.notification.channelId == channelIdToClearNotifications) {
-                    notificationManager.cancel(it.id)
-                }
-            }
-        } else {
-            // Cancel all notifications
-            notificationManager.cancelAll()
-        }
+        // Warning: this will cancel notifications in other channels.
+        notificationManager.cancelAll()
     }
 
-    private fun handleNotificationMessage(message: RemoteMessage) {
-        val orderId = message.data["order_id"]?.toInt() ?: return
+    private fun onPushNumberNotification(message: RemoteMessage) {
+        viewModel.fetchWaitingOrders()
 
-        viewModel.markOrderReady(orderId)
-
-        navigator.showOrderFinishedNotification(activity ?: return) {
-            viewModel.fetchWaitingOrders()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrate()
         }
+
+        val title = message.notification?.title ?: context?.getString(R.string.title_order_ready) ?: "주문하신 음식이 나왔어요!"
+        val body = message.notification?.body ?: context?.getString(R.string.description_order_ready) ?: "픽업대에서 기다리고 있습니다 :)"
+
+        navigator.showOrderFinishedNotification(activity ?: return, title, body)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun vibrate() {
+        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        val effect = VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
+
+        vibrator?.vibrate(effect)
     }
 
     companion object {
@@ -163,6 +169,14 @@ class WaitingOrderFragment : BaseFragment() {
             orders ?: return
 
             (view.adapter as? WaitingOrderAdapter)?.items = orders
+        }
+
+        @JvmStatic
+        @BindingAdapter("areOrdersLoading")
+        fun setAreOrdersLoading(view: RecyclerView, isLoading: Boolean?) {
+            isLoading ?: return
+
+            (view.adapter as? WaitingOrderAdapter)?.isLoading = isLoading
         }
     }
 }

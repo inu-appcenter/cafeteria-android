@@ -25,11 +25,9 @@ import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.repository.InteractionRepository
+import com.inu.cafeteria.repository.WaitingOrderRepository
 import com.inu.cafeteria.service.AccountService
-import com.inu.cafeteria.usecase.CheckForUpdate
-import com.inu.cafeteria.usecase.DismissNotice
-import com.inu.cafeteria.usecase.FetchNotifications
-import com.inu.cafeteria.usecase.GetNewNotice
+import com.inu.cafeteria.usecase.*
 import org.koin.core.inject
 import timber.log.Timber
 
@@ -40,12 +38,16 @@ class MainViewModel : BaseViewModel() {
     private val getNewNotice: GetNewNotice by inject()
     private val dismissNotice: DismissNotice by inject()
     private val shouldIUpdate: CheckForUpdate by inject()
-    private val fetchNotifications: FetchNotifications by inject()
+    private val getWaitingOrders: GetWaitingOrders by inject()
+    private val fetchUnreadAnswers: FetchUnreadAnswers by inject()
 
     private val statusRepository: DeviceStatusRepository by inject()
 
     private val interactionRepository: InteractionRepository by inject()
     val numberOfUnreadAnswers = interactionRepository.getNumberOfUnreadAnswersLiveData()
+
+    private val waitingOrderRepository: WaitingOrderRepository by inject()
+    val numberOfFinishedOrders = waitingOrderRepository.getNumberOfFinishedOrdersLiveData()
 
     private val accountService: AccountService by inject()
     val loggedInStatus = accountService.loggedInStatus()
@@ -58,6 +60,9 @@ class MainViewModel : BaseViewModel() {
 
         checkNewNotice(activity)
         checkForUpdate(activity)
+
+        // This is a global thing, so that it happens on MainViewModel.
+        checkForFinishedOrders()
     }
 
     fun onLoggedIn() {
@@ -67,7 +72,7 @@ class MainViewModel : BaseViewModel() {
         }
 
         // This is a global thing, so that it happens on MainViewModel.
-        checkForNotifications()
+        checkForUnreadAnswers()
     }
 
     private fun checkNewNotice(activity: MainActivity) {
@@ -102,8 +107,15 @@ class MainViewModel : BaseViewModel() {
         }
     }
 
-    private fun checkForNotifications() {
-        fetchNotifications(Unit) {
+
+    private fun checkForFinishedOrders() {
+        getWaitingOrders(Unit) {
+            it.onError(::handleFailure)
+        }
+    }
+
+    private fun checkForUnreadAnswers() {
+        fetchUnreadAnswers(Unit) {
             it.onError(::handleFailure)
         }
     }
