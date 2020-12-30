@@ -324,21 +324,24 @@ val myModules = module {
     /** Get waiting orders */
     single {
         GetWaitingOrders(
-            waitingOrderRepo = get()
+            waitingOrderRepo = get(),
+            externalCredentialsRepo = get()
         )
     }
 
     /** Add waiting order */
     single {
         AddWaitingOrder(
-            waitingOrderRepo = get()
+            waitingOrderRepo = get(),
+            externalCredentialsRepo = get()
         )
     }
 
     /** Delete waiting orders */
     single {
         DeleteWaitingOrder(
-            waitingOrderRepo = get()
+            waitingOrderRepo = get(),
+            externalCredentialsRepo = get()
         )
     }
 }

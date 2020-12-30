@@ -17,24 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.order
+package com.inu.cafeteria.exception
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.inu.cafeteria.common.base.BaseViewModel
-import com.inu.cafeteria.usecase.GetWaitingOrders
-import org.koin.core.inject
-
-class WaitingOrderViewModel : BaseViewModel() {
-
-    private val getWaitingOrders: GetWaitingOrders by inject()
-
-    private val _orders = MutableLiveData<List<WaitingOrderView>>()
-    val orders: LiveData<List<WaitingOrderView>> = _orders
-
-    fun fetchWaitingOrders() {
-
-    }
-
-
-}
+class NoCredentialsException(message: String) : Exception(message)

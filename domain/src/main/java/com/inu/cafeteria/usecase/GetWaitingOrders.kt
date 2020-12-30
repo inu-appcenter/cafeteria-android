@@ -20,15 +20,20 @@
 package com.inu.cafeteria.usecase
 
 import com.inu.cafeteria.entities.WaitingOrder
+import com.inu.cafeteria.exception.NoCredentialsException
 import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
+import com.inu.cafeteria.repository.ExternalCredentialsRepository
 import com.inu.cafeteria.repository.WaitingOrderRepository
 
 class GetWaitingOrders(
-    private val waitingOrderRepo: WaitingOrderRepository
-) : UseCase<String, List<WaitingOrder>>() {
+    private val waitingOrderRepo: WaitingOrderRepository,
+    private val externalCredentialsRepo: ExternalCredentialsRepository
+) : UseCase<Unit, List<WaitingOrder>>() {
 
-    override fun run(params: String) = Result.of {
-        waitingOrderRepo.getAllWaitingOrders(params)
+    override fun run(params: Unit) = Result.of {
+        val deviceIdentifier = externalCredentialsRepo.getFirebaseToken() ?: throw NoCredentialsException("Firebase token not found!")
+
+        waitingOrderRepo.getAllWaitingOrders(deviceIdentifier)
     }
 }

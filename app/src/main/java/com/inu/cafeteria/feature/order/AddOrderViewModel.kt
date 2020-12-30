@@ -29,6 +29,7 @@ import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.extension.onChanged
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.OrderInput
+import com.inu.cafeteria.exception.NoCredentialsException
 import com.inu.cafeteria.repository.ExternalCredentialsRepository
 import com.inu.cafeteria.usecase.AddWaitingOrder
 import com.inu.cafeteria.usecase.GetCafeteriaOnly
@@ -84,14 +85,7 @@ class AddOrderViewModel : BaseViewModel() {
 
     /** Final destination */
     fun handleOrderInput(input: OrderInput) {
-        val deviceIdentifier = externalCredentialsRepo.getFirebaseToken()
-
-        if (deviceIdentifier == null) {
-            handleFailure(R.string.notify_fcm_token_not_found)
-            return
-        }
-
-        addWaitingOrder(Pair(input, deviceIdentifier)) {
+        addWaitingOrder(input) {
             it.onSuccess { orderSuccessfullyAddedEvent.call() }.onError(::handleFailure)
         }
     }
@@ -142,6 +136,17 @@ class AddOrderViewModel : BaseViewModel() {
     private enum class InputMode {
         MODE_CAMERA,
         MODE_MANUAL
+    }
+
+    override fun handleFailure(e: Exception) {
+        when (e) {
+            is NoCredentialsException -> {
+                handleFailure(R.string.notify_fcm_token_not_found)
+            }
+            else -> {
+                super.handleFailure(e)
+            }
+        }
     }
 
     companion object {
