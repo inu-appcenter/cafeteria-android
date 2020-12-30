@@ -107,7 +107,6 @@ class MainViewModel : BaseViewModel() {
         }
     }
 
-
     private fun checkForFinishedOrders() {
         getWaitingOrders(Unit) {
             it.onError(::handleFailure)
