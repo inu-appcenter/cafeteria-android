@@ -164,6 +164,13 @@ val myModules = module {
         ) as InteractionRepository
     }
 
+    /** Waiting order repository */
+    single {
+        WaitingOrderRepositoryImpl(
+            networkService = get()
+        ) as WaitingOrderRepository
+    }
+
     /*****************************
      * Use Case
      *****************************/

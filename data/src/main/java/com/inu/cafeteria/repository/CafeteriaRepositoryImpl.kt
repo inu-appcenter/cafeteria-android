@@ -84,7 +84,7 @@ class CafeteriaRepositoryImpl(
         return (if (cache.isValid(key)) cache.get(key) else null) ?: fetch()?.also { cache.set(key, it) }
     }
 
-    override fun getOrder(): Array<Int> {
+    override fun getSortingOrder(): Array<Int> {
         return getOrderInternal()
     }
 
@@ -93,22 +93,22 @@ class CafeteriaRepositoryImpl(
 
         if (result == null) {
             // The first attempt to get order.
-            resetOrder()
+            resetSortingOrder()
             return getOrderInternal()
         }
 
         return result
     }
 
-    override fun setOrder(orderedIds: Array<Int>) {
+    override fun setSortingOrder(orderedIds: Array<Int>) {
         db.putArrayInt(KEY_ORDER, orderedIds)
     }
 
-    override fun resetOrder() {
-        setOrder(getCafeteriaOnly().map { it.id }.toTypedArray())
+    override fun resetSortingOrder() {
+        setSortingOrder(getCafeteriaOnly().map { it.id }.toTypedArray())
     }
 
     companion object {
-        private const val KEY_ORDER = "cafeteria_sort_order"
+        private const val KEY_ORDER = "com.inu.cafeteria.cafeteria_sorting_order"
     }
 }

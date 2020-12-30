@@ -55,4 +55,25 @@ sealed class OrderInput {
         val waitingNumber: Int,
         val cafeteriaId: Int,
     ) : OrderInput()
+
+    fun waitingNumber(): Int {
+        return when (this) {
+            is Ticket -> waitingNumber
+            is UserFriendly -> waitingNumber
+        }
+    }
+
+    fun posNumber(): Int? {
+        return when (this) {
+            is Ticket -> posNumber
+            is UserFriendly -> null
+        }
+    }
+
+    fun cafeteriaId(): Int? {
+        return when (this) {
+            is Ticket -> null
+            is UserFriendly -> cafeteriaId
+        }
+    }
 }

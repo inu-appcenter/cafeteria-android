@@ -19,14 +19,11 @@
 
 package com.inu.cafeteria.repository
 
-import com.inu.cafeteria.entities.Cafeteria
+import com.inu.cafeteria.entities.OrderInput
+import com.inu.cafeteria.entities.WaitingOrder
 
-interface CafeteriaRepository {
-
-    fun getAllCafeteria(date: String? = null): List<Cafeteria>
-    fun getCafeteriaOnly(): List<Cafeteria>
-
-    fun getSortingOrder(): Array<Int>
-    fun setSortingOrder(orderedIds: Array<Int>)
-    fun resetSortingOrder()
+interface WaitingOrderRepository {
+    fun getAllWaitingOrders(deviceIdentifier: String): List<WaitingOrder>
+    fun addWaitingOrder(orderInput: OrderInput, deviceIdentifier: String)
+    fun deleteWaitingOrder(orderId: Int, deviceIdentifier: String)
 }

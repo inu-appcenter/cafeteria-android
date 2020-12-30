@@ -82,5 +82,4 @@ interface CafeteriaNetworkService {
 
     @DELETE("/orders/{orderId}")
     fun deleteWaitingOrder(@Path("orderId") orderId: Int, @Query("deviceIdentifier") deviceIdentifier: String): Call<Unit>
-
 }
