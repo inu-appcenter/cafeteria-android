@@ -162,5 +162,6 @@
     <string name="fail_that_order_already_exists">The order you requeested is already registered.</string>
     <string name="button_add_order">Add order</string>
     <string name="no_orders">No waiting orders yet :)</string>
+    <string name="privacy_notion">Your data are sent encrypted and safely handled only for purpose of checking your availability for this service.</string>
 
 </resources>

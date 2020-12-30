@@ -74,8 +74,8 @@
 
         <!-- Login prompt view -->
         <include
-            vm="@{vm}"
-            layout="@layout/login_prompt_view" />
+            layout="@layout/login_prompt_view"
+            vm="@{vm}"/>
 
         <!-- Loading view -->
         <ProgressBar

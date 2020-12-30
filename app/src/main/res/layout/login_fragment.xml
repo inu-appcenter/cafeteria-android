@@ -71,14 +71,25 @@
         <!-- Login button -->
         <Button
             style="@style/HorizontallyFullSizedViewConstrained"
+            android:id="@+id/login_button"
+            android:layout_height="@dimen/toolbarHeight"
             android:layout_margin="@dimen/far_space"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/password_field"
             android:text="@string/button_login"
+            android:textSize="@dimen/textPrimary"
             android:enabled="@{vm.formValid}"
             android:onClick="@{v -> vm.performLogin()}"
             tools:enabled="false" />
+
+        <!-- Privacy notion -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/far_space"
+            app:layout_constraintTop_toBottomOf="@id/login_button"
+            android:text="@string/privacy_notion"/>
 
         <!-- Loading view -->
         <ProgressBar
