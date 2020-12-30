@@ -92,14 +92,18 @@ abstract class GenericAdapter<E, T: ViewDataBinding> : RecyclerView.Adapter<Gene
         val item = items[position]
 
         holder.bind(item)
+
+        onBindFinished(item, holder)
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
+    open fun onBindFinished(item: E, holder: GenericViewHolder) {}
+
     inner class GenericViewHolder(
-        private val binding: ViewDataBinding
+        val binding: T
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: E) {

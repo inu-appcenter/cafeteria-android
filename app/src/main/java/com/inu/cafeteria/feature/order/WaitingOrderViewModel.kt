@@ -58,7 +58,7 @@ class WaitingOrderViewModel : BaseViewModel() {
         _orders.value = orders.map { order ->
             WaitingOrderView(
                 orderId = order.id,
-                waitingNumber = order.number.toString() /*this is necessary*/,
+                waitingNumber = String.format("%04d", order.number) /*this is necessary*/,
                 cafeteriaDisplayName = getCafeteriaNameById(cafeteria, order.cafeteriaId)
             )
         }
@@ -72,7 +72,7 @@ class WaitingOrderViewModel : BaseViewModel() {
 
     fun deleteWaitingOrder(orderId: Int) {
         deleteWaitingOrder(orderId) {
-            it.onSuccess { fetchWaitingOrders() /*refresh*/ }.onError(::handleFailure)
+            it.onSuccess { fetchWaitingOrders()/*refresh*/ }.onError(::handleFailure)
         }
     }
 

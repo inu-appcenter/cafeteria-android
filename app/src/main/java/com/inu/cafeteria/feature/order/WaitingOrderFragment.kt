@@ -33,6 +33,7 @@ import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.databinding.WaitingOrderFragmentBinding
 import org.koin.core.inject
+import kotlin.concurrent.timer
 
 class WaitingOrderFragment : BaseFragment() {
 
@@ -54,6 +55,8 @@ class WaitingOrderFragment : BaseFragment() {
             adapter = WaitingOrderAdapter().apply {
                 emptyView = binding.emptyView
                 loadingView = binding.loadingView
+
+                onClickDelete = viewModel::deleteWaitingOrder
             }
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
@@ -63,23 +66,31 @@ class WaitingOrderFragment : BaseFragment() {
                 navigator.showAddWaitingOrder()
             }
         }
+
+        periodicallyShakeAddButton(3000)
+    }
+
+    private fun periodicallyShakeAddButton(interval: Long) {
+        timer(period = interval) {
+            val orders = viewModel.orders.value ?: return@timer
+
+            if (orders.isNotEmpty()) {
+                return@timer
+            }
+
+            with(binding.addOrderButton) {
+                startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_once).apply {
+                    duration = 100
+                })
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
-
-        emphasizeAddButton()
         clearAllOrderNotifications()
 
         viewModel.fetchWaitingOrders()
-    }
-
-    private fun emphasizeAddButton() {
-        with(binding.addOrderButton) {
-            startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_once).apply {
-                duration = 100
-            })
-        }
     }
 
     private fun clearAllOrderNotifications() {

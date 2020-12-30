@@ -24,5 +24,18 @@ import com.inu.cafeteria.common.base.GenericAdapter
 import com.inu.cafeteria.databinding.WaitingOrderItemBinding
 
 class WaitingOrderAdapter : GenericAdapter<WaitingOrderView, WaitingOrderItemBinding>() {
+
+    var onClickDelete: (Int) -> Unit = {}
+
     override fun getLayoutIdForPosition(position: Int) = R.layout.waiting_order_item
+
+    override fun onBindFinished(item: WaitingOrderView, holder: GenericViewHolder) {
+        // Do additional jobs here, including setting click listeners.
+
+        with(holder.binding.closeButton) {
+            setOnClickListener {
+                onClickDelete(item.orderId)
+            }
+        }
+    }
 }
