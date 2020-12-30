@@ -23,6 +23,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
@@ -33,18 +34,20 @@ import org.koin.core.inject
 class WaitingOrderFragment : BaseFragment() {
 
     private val viewModel: WaitingOrderViewModel by viewModels()
+    private lateinit var binding: WaitingOrderFragmentBinding
 
     private val navigator: Navigator by inject()
 
     override fun onCreateView(viewCreator: ViewCreator): View {
         return viewCreator.createView<WaitingOrderFragmentBinding> {
             initializeView(this)
+            binding = this
             vm = viewModel
         }
     }
 
     private fun initializeView(binding: WaitingOrderFragmentBinding) {
-        with(binding.openCameraButton) {
+        with(binding.addOrderButton) {
             setOnClickListener {
                 navigator.showAddWaitingOrder()
             }
@@ -52,9 +55,17 @@ class WaitingOrderFragment : BaseFragment() {
     }
 
     override fun onResume() {
-        // Check all notifications
         super.onResume()
+        emphasizeAddButton()
         clearAllOrderNotifications()
+    }
+
+    private fun emphasizeAddButton() {
+        with(binding.addOrderButton) {
+            startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_once).apply {
+                duration = 100
+            })
+        }
     }
 
     private fun clearAllOrderNotifications() {

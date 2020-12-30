@@ -155,6 +155,11 @@
     <string name="description_enter_your_number">Please enter your number.</string>
     <string name="hint_enter_number">Enter your waiting number</string>
     <string name="title_where_are_you_at">Where are you at?</string>
-    <string name="notify_fcm_token_not_found">Sorry, something is missing.</string>
+    <string name="fail_fcm_token_not_found">Sorry, something is missing.</string>
+    <string name="fail_that_order_does_not_exist">The order you requested deos not exist.</string>
+    <string name="fail_server_internal">Server\'s in trouble.</string>
+    <string name="fail_wrong_request">Request has a problem.</string>
+    <string name="fail_that_order_already_exists">The order you requeested is already registered.</string>
+    <string name="button_add_order">Add order</string>
 
 </resources>

@@ -145,6 +145,11 @@
     <string name="description_enter_your_number">대기번호를 입력해 주세요.</string>
     <string name="hint_enter_number">대기번호</string>
     <string name="title_where_are_you_at">어느 곳에 계신가요?</string>
-    <string name="notify_fcm_token_not_found">죄송합니다. 앱을 재설치해 주시기 바랍니다ㅠ</string>
+    <string name="fail_fcm_token_not_found">죄송합니다. 앱을 재설치해 주시기 바랍니다ㅠ</string>
+    <string name="fail_that_order_does_not_exist">해당 대기 주문이 존재하지 않습니다.</string>
+    <string name="fail_server_internal">서버 내부에 문제가 생겼습니다!</string>
+    <string name="fail_wrong_request">서버에 보낸 요청에 문제가 있습니다.</string>
+    <string name="fail_that_order_already_exists">요청하신 주문은 이미 등록되어 있습니다.</string>
+    <string name="button_add_order">대기번호 등록하기</string>
 
 </resources>

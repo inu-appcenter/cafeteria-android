@@ -29,8 +29,9 @@ import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.extension.onChanged
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.OrderInput
+import com.inu.cafeteria.exception.BadRequestException
+import com.inu.cafeteria.exception.ForbiddenException
 import com.inu.cafeteria.exception.NoCredentialsException
-import com.inu.cafeteria.repository.ExternalCredentialsRepository
 import com.inu.cafeteria.usecase.AddWaitingOrder
 import com.inu.cafeteria.usecase.GetCafeteriaOnly
 import com.inu.cafeteria.util.SingleLiveEvent
@@ -41,8 +42,6 @@ class AddOrderViewModel : BaseViewModel() {
 
     private val addWaitingOrder: AddWaitingOrder by inject()
     private val getCafeteriaOnly: GetCafeteriaOnly by inject()
-
-    private val externalCredentialsRepo: ExternalCredentialsRepository by inject()
 
     private val cameraProviderLiveData = MutableLiveData<ProcessCameraProvider>()
 
@@ -141,7 +140,13 @@ class AddOrderViewModel : BaseViewModel() {
     override fun handleFailure(e: Exception) {
         when (e) {
             is NoCredentialsException -> {
-                handleFailure(R.string.notify_fcm_token_not_found)
+                handleFailure(R.string.fail_fcm_token_not_found)
+            }
+            is BadRequestException -> {
+                handleFailure(R.string.fail_wrong_request)
+            }
+            is ForbiddenException -> {
+                handleFailure(R.string.fail_that_order_already_exists)
             }
             else -> {
                 super.handleFailure(e)

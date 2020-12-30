@@ -27,6 +27,7 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.exception.NetworkException
 import com.inu.cafeteria.exception.NullBodyException
 import com.inu.cafeteria.exception.ResponseFailException
+import com.inu.cafeteria.exception.ServerFailException
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -38,6 +39,9 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
         val errorMessage = when (e) {
             is NetworkException -> {
                 mContext.getString(R.string.fail_server)
+            }
+            is ServerFailException -> {
+                mContext.getString(R.string.fail_server_internal)
             }
             is ResponseFailException -> {
                 mContext.getString(R.string.fail_response)
