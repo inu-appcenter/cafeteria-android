@@ -19,19 +19,19 @@
 
 package com.inu.cafeteria.usecase
 
-import com.inu.cafeteria.entities.OrderInput
 import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
 import com.inu.cafeteria.repository.WaitingOrderRepository
 
-class AddWaitingOrder(
+class DeleteWaitingOrder(
     private val waitingOrderRepo: WaitingOrderRepository
-) : UseCase<Pair<OrderInput, String>, Unit>() {
+) : UseCase<Pair<Int, String>, Unit>() {
 
-    override fun run(params: Pair<OrderInput, String>) = Result.of {
-        val orderInput = params.first
+
+    override fun run(params: Pair<Int, String>) = Result.of {
+        val orderId = params.first
         val deviceIdentifier = params.second
 
-        waitingOrderRepo.addWaitingOrder(orderInput, deviceIdentifier)
+        waitingOrderRepo.deleteWaitingOrder(orderId, deviceIdentifier)
     }
 }

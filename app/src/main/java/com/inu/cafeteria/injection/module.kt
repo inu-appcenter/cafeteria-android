@@ -314,7 +314,24 @@ val myModules = module {
         GetFirebaseToken()
     }
 
+    /** Get waiting orders */
     single {
-        AddWaitingOrder()
+        GetWaitingOrders(
+            waitingOrderRepo = get()
+        )
+    }
+
+    /** Add waiting order */
+    single {
+        AddWaitingOrder(
+            waitingOrderRepo = get()
+        )
+    }
+
+    /** Delete waiting orders */
+    single {
+        DeleteWaitingOrder(
+            waitingOrderRepo = get()
+        )
     }
 }
