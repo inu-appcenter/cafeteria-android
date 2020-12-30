@@ -66,9 +66,9 @@
                 vm="@{vm}"
                 layout="@layout/barcode_card"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
-                android:layout_marginVertical="48dp" />
+                android:layout_marginVertical="24dp" />
 
         </androidx.core.widget.NestedScrollView>
 
