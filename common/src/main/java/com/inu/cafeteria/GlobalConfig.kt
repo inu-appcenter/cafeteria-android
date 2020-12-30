@@ -29,5 +29,6 @@ data class GlobalConfig(
     val kakaoPlusFriendLink: String,
     val uicoopPhoneNumber: String,
     val feedbackUrl: String,
-    val viewOrdersAction: String
+    val viewOrdersAction: String,
+    val termsAndConditionsUrl: String,
 )

@@ -67,7 +67,7 @@ class LifecycleEventHandlerImplBeta(
     }
 
     private fun showFeedbackDialog(activity: FragmentActivity) {
-        navigator.showFeedbackDialog(activity) { feedbackMessage ->
+        navigator.showBetaTestFeedbackDialog(activity) { feedbackMessage ->
             sendAppFeedback(feedbackMessage) { result ->
                 result.onSuccess { body ->
                     welcomeUserWhoGaveUsFeedback(activity, body)

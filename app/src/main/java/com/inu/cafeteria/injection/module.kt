@@ -57,7 +57,8 @@ val myModules = module {
             kakaoPlusFriendLink = "kakaoplus://plusfriend/home/_xgxaSLd",
             uicoopPhoneNumber = "0328354720",
             feedbackUrl = "https://beta.inu-cafeteria.app/feedback",
-            viewOrdersAction = "view_orders"
+            viewOrdersAction = "view_orders",
+            termsAndConditionsUrl = "https://raw.githubusercontent.com/inu-appcenter/terms-and-conditions/master/카페테리아-개인정보처리방침.txt"
         )
     }
 

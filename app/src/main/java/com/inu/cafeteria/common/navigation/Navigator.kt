@@ -135,6 +135,12 @@ class Navigator(
             .show()
     }
 
+    fun showTermsAndConditions() {
+        startActivity(
+            Intent(Intent.ACTION_VIEW, Uri.parse(globalConfig.termsAndConditionsUrl))
+        )
+    }
+
     fun showStore() {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse("market://details?id=" + globalConfig.appId)
@@ -144,7 +150,7 @@ class Navigator(
     }
 
     @SuppressLint("RestrictedApi")
-    fun showFeedbackDialog(activity: FragmentActivity, sendFeedback: (String) -> Unit) {
+    fun showBetaTestFeedbackDialog(activity: FragmentActivity, sendFeedback: (String) -> Unit) {
         val textInput = EditText(activity).apply {
             hint = "관심 가져주셔서 감사합니다 :)"
         }

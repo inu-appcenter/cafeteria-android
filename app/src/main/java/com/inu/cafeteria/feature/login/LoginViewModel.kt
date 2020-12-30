@@ -25,6 +25,7 @@ import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.extension.onChanged
+import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.Login
 import org.koin.core.inject
@@ -33,6 +34,8 @@ class LoginViewModel : BaseViewModel() {
 
     private val login: Login by inject()
     private val accountService: AccountService by inject()
+
+    private val navigator: Navigator by inject()
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
@@ -70,6 +73,10 @@ class LoginViewModel : BaseViewModel() {
                 .onError(::handleFailure)
                 .finally { _loading.value = false }
         }
+    }
+
+    fun showTermsAndConditions() {
+        navigator.showTermsAndConditions()
     }
 
     private fun isItOkayToSendLoginRequestNow(): Boolean {
