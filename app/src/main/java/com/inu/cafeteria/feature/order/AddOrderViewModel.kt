@@ -24,10 +24,12 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.extension.onChanged
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.OrderInput
+import com.inu.cafeteria.repository.ExternalCredentialsRepository
 import com.inu.cafeteria.usecase.AddWaitingOrder
 import com.inu.cafeteria.usecase.GetCafeteriaOnly
 import com.inu.cafeteria.util.SingleLiveEvent
@@ -38,6 +40,8 @@ class AddOrderViewModel : BaseViewModel() {
 
     private val addWaitingOrder: AddWaitingOrder by inject()
     private val getCafeteriaOnly: GetCafeteriaOnly by inject()
+
+    private val externalCredentialsRepo: ExternalCredentialsRepository by inject()
 
     private val cameraProviderLiveData = MutableLiveData<ProcessCameraProvider>()
 
@@ -80,8 +84,14 @@ class AddOrderViewModel : BaseViewModel() {
 
     /** Final destination */
     fun handleOrderInput(input: OrderInput) {
-        // It is its responsibility to add the order to repository.
-        addWaitingOrder(input) {
+        val deviceIdentifier = externalCredentialsRepo.getFirebaseToken()
+
+        if (deviceIdentifier == null) {
+            handleFailure(R.string.notify_fcm_token_not_found)
+            return
+        }
+
+        addWaitingOrder(Pair(input, deviceIdentifier)) {
             it.onSuccess { orderSuccessfullyAddedEvent.call() }.onError(::handleFailure)
         }
     }

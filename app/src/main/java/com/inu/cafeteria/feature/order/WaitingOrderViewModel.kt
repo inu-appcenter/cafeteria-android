@@ -19,7 +19,13 @@
 
 package com.inu.cafeteria.feature.order
 
+import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.base.BaseViewModel
 
-class OrderViewModel : BaseViewModel() {
+class WaitingOrderViewModel : BaseViewModel() {
+
+    private val _orders = MutableLiveData<List<WaitingOrderView>>()
+
+
+
 }

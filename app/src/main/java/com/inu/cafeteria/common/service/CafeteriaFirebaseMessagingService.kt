@@ -24,9 +24,13 @@ import android.os.Looper
 import android.widget.Toast
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.inu.cafeteria.repository.ExternalCredentialsRepository
+import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 class CafeteriaFirebaseMessagingService : FirebaseMessagingService() {
+
+    private val externalCredentialsRepo: ExternalCredentialsRepository by inject()
 
     override fun onNewToken(token: String) {
         /**
@@ -40,7 +44,9 @@ class CafeteriaFirebaseMessagingService : FirebaseMessagingService() {
          * Even after a token changed,
          * the old token will still work for short period.
          */
-        Timber.i("New token published: '$token'")
+        Timber.i("New token published!")
+
+        externalCredentialsRepo.saveFirebaseToken(token)
     }
 
     override fun onMessageReceived(message: RemoteMessage) {

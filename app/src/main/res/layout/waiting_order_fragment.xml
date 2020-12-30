@@ -24,7 +24,7 @@
     <data>
         <variable
             name="vm"
-            type="com.inu.cafeteria.feature.order.OrderViewModel" />
+            type="com.inu.cafeteria.feature.order.WaitingOrderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

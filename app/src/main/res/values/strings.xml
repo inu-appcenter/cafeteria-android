@@ -155,5 +155,6 @@
     <string name="description_enter_your_number">Please enter your number.</string>
     <string name="hint_enter_number">Enter your waiting number</string>
     <string name="title_where_are_you_at">Where are you at?</string>
+    <string name="notify_fcm_token_not_found">Sorry, something is missing.</string>
 
 </resources>

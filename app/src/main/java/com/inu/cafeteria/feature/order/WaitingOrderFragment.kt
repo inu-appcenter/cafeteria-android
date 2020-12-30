@@ -21,23 +21,33 @@ package com.inu.cafeteria.feature.order
 
 import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.databinding.OrderFragmentBinding
+import com.inu.cafeteria.common.navigation.Navigator
+import com.inu.cafeteria.databinding.WaitingOrderFragmentBinding
+import org.koin.core.inject
 
-class OrderFragment : BaseFragment() {
+class WaitingOrderFragment : BaseFragment() {
 
-    private val viewModel: OrderViewModel by viewModels()
+    private val viewModel: WaitingOrderViewModel by viewModels()
+
+    private val navigator: Navigator by inject()
 
     override fun onCreateView(viewCreator: ViewCreator): View {
-        return viewCreator.createView<OrderFragmentBinding> {
+        return viewCreator.createView<WaitingOrderFragmentBinding> {
             initializeView(this)
             vm = viewModel
+        }
+    }
+
+    private fun initializeView(binding: WaitingOrderFragmentBinding) {
+        with(binding.openCameraButton) {
+            setOnClickListener {
+                navigator.showAddWaitingOrder()
+            }
         }
     }
 
@@ -45,14 +55,6 @@ class OrderFragment : BaseFragment() {
         // Check all notifications
         super.onResume()
         clearAllOrderNotifications()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 99 && resultCode == 1) {
-            val number = data?.getIntExtra("num", -1) ?: return
-
-            Toast.makeText(activity, "$number", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun clearAllOrderNotifications() {
@@ -71,12 +73,6 @@ class OrderFragment : BaseFragment() {
         } else {
             // Cancel all notifications
             notificationManager.cancelAll()
-        }
-    }
-
-    private fun initializeView(binding: OrderFragmentBinding) {
-        binding.openCameraButton.setOnClickListener {
-            startActivityForResult(Intent(activity, AddOrderActivity::class.java), 99)
         }
     }
 }

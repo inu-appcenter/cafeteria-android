@@ -45,7 +45,7 @@ val myModules = module {
     single {
         GlobalConfig(
             baseUrl = when (BuildConfig.FLAVOR_server) {
-                "localserver" -> "http://10.0.2.2:9999" // 127.0.0.1 of host. For emulator.
+                "localserver" -> "http://10.0.1.10:9999" // For emulator, use http://10.0.2.2:9999
                 "productionserver" -> "https://api.inu-cafeteria.app"
                 else -> "https://api.inu-cafeteria.app"
             },
@@ -169,6 +169,13 @@ val myModules = module {
         WaitingOrderRepositoryImpl(
             networkService = get()
         ) as WaitingOrderRepository
+    }
+
+    /** External credentials repository */
+    single {
+        ExternalCredentialsRepositoryImpl(
+            db = get()
+        ) as ExternalCredentialsRepository
     }
 
     /*****************************

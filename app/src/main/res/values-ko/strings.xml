@@ -145,5 +145,6 @@
     <string name="description_enter_your_number">대기번호를 입력해 주세요.</string>
     <string name="hint_enter_number">대기번호</string>
     <string name="title_where_are_you_at">어느 곳에 계신가요?</string>
+    <string name="notify_fcm_token_not_found">죄송합니다. 앱을 재설치해 주시기 바랍니다ㅠ</string>
 
 </resources>

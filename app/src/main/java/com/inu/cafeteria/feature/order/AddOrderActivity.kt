@@ -21,6 +21,8 @@ package com.inu.cafeteria.feature.order
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.camera.core.*
@@ -243,6 +245,8 @@ class AddOrderActivity : BaseActivity() {
     }
 
     companion object {
+        fun callingIntent(context: Context) = Intent(context, AddOrderActivity::class.java)
+
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 
         @JvmStatic

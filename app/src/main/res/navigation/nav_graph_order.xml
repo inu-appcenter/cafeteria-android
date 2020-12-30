@@ -27,8 +27,8 @@
 
     <fragment
         android:id="@+id/order_dest"
-        android:name="com.inu.cafeteria.feature.order.OrderFragment"
+        android:name="com.inu.cafeteria.feature.order.WaitingOrderFragment"
         android:label="@string/title_order"
-        tools:layout="@layout/order_fragment" />
+        tools:layout="@layout/waiting_order_fragment" />
 
 </navigation>

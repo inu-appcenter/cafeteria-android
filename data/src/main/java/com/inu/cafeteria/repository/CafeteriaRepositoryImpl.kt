@@ -89,7 +89,7 @@ class CafeteriaRepositoryImpl(
     }
 
     private fun getOrderInternal(): Array<Int> {
-        val result = db.getArrayInt(KEY_ORDER)
+        val result = db.getArrayInt(KEY_SORTING_ORDER)
 
         if (result == null) {
             // The first attempt to get order.
@@ -101,7 +101,7 @@ class CafeteriaRepositoryImpl(
     }
 
     override fun setSortingOrder(orderedIds: Array<Int>) {
-        db.putArrayInt(KEY_ORDER, orderedIds)
+        db.putArrayInt(KEY_SORTING_ORDER, orderedIds)
     }
 
     override fun resetSortingOrder() {
@@ -109,6 +109,6 @@ class CafeteriaRepositoryImpl(
     }
 
     companion object {
-        private const val KEY_ORDER = "com.inu.cafeteria.cafeteria_sorting_order"
+        private const val KEY_SORTING_ORDER = "com.inu.cafeteria.cafeteria_sorting_order"
     }
 }

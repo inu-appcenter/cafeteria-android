@@ -57,6 +57,7 @@ import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
+import com.inu.cafeteria.feature.order.AddOrderActivity
 import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
 import org.koin.core.KoinComponent
 import timber.log.Timber
@@ -89,6 +90,12 @@ class Navigator(
     fun showSorting() {
         startActivity(
             CafeteriaReorderActivity.callingIntent(context)
+        )
+    }
+
+    fun showAddWaitingOrder() {
+        startActivity(
+            AddOrderActivity.callingIntent(context)
         )
     }
 
