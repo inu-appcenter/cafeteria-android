@@ -26,7 +26,7 @@ interface CafeteriaRepository {
     fun getAllCafeteria(date: String? = null): List<Cafeteria>
     fun getCafeteriaOnly(): List<Cafeteria>
 
-    fun getSortingOrder(): Array<Int>
-    fun setSortingOrder(orderedIds: Array<Int>)
-    fun resetSortingOrder()
+    fun getSortingOrders(): Array<Int>
+    fun setSortingOrders(orderedIds: Array<Int>)
+    fun resetSortingOrders()
 }

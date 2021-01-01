@@ -31,7 +31,10 @@ import com.inu.cafeteria.exception.ResourceNotFoundException
 import com.inu.cafeteria.usecase.DeleteWaitingOrder
 import com.inu.cafeteria.usecase.GetCafeteriaOnly
 import com.inu.cafeteria.usecase.GetWaitingOrders
+import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
+import java.util.*
+import kotlin.concurrent.timer
 
 class WaitingOrderViewModel : BaseViewModel() {
 
@@ -44,6 +47,12 @@ class WaitingOrderViewModel : BaseViewModel() {
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
+
+    val shakeAddButtonEvent = SingleLiveEvent<Unit>()
+
+    private var shakeButtonTimer: Timer? = timer(period = 3000) {
+        shakeAddButtonEvent.postValue(Unit)
+    }
 
     fun fetchWaitingOrders() {
         _loading.value = true
@@ -116,5 +125,12 @@ class WaitingOrderViewModel : BaseViewModel() {
                 super.handleFailure(e)
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        shakeButtonTimer?.cancel()
+        shakeButtonTimer = null
     }
 }

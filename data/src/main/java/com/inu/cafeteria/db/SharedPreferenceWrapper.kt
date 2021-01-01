@@ -60,7 +60,17 @@ class SharedPreferenceWrapper(context: Context) {
         }
     }
 
-    fun getInt(key: String): Int {
-        return preferences.getInt(key, -1)
+    fun getInt(key: String, default: Int = -1): Int {
+        return preferences.getInt(key, default)
+    }
+
+    fun putBoolean(key: String, value: Boolean) {
+        preferences.edit {
+            putBoolean(key, value)
+        }
+    }
+
+    fun getBoolean(key: String, default: Boolean = false): Boolean {
+        return preferences.getBoolean(key, default)
     }
 }

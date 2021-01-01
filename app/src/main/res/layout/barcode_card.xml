@@ -31,24 +31,24 @@
 
     <!-- Content Wrapper -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:foregroundGravity="center"
-        app:cardCornerRadius="18dp"
-        app:cardElevation="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:foregroundGravity="center"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="24dp">
 
         <!-- Content -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/student_info_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> vm.onToggleBrightness()}">
+            android:onClick="@{() -> vm.onToggleBrightness()}"
+            android:background="?android:attr/selectableItemBackground">
 
             <!-- UICOOP logo -->
             <ImageView
@@ -123,7 +123,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/title_student_id"
-                android:textColor="@color/textPrimary"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="@dimen/textTertiary"
                 android:textStyle="bold"/>
 
@@ -138,7 +138,7 @@
                 app:layout_constraintTop_toBottomOf="@id/student_id_label"
                 android:text="@{vm.studentId}"
                 android:fontFamily="sans-serif-light"
-                android:textColor="@color/textPrimary"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="@dimen/textToolbar"
                 tools:text="201701562" />
 
@@ -177,12 +177,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="@dimen/close_space"
+                android:layout_marginVertical="@dimen/close_space"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/barcode_layout"
                 android:text="@{vm.barcodeContent}"
-                android:textColor="@color/textPrimary"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="@dimen/textSecondary"
                 tools:text="121020937" />
 

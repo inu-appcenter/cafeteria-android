@@ -69,62 +69,62 @@ class AddOrderActivity : BaseActivity() {
     }
 
     private fun initializeView(binding: AddOrderActivityBinding) {
-        with(binding.closeButton) {
-            setOnClickListener {
-                finish()
-            }
-        }
-
         with(binding.manualPart.cafeteriaSelectionRecycler) {
             adapter = CafeteriaSelectionAdapter().apply {
                 onClickRootLayout = viewModel::handleManualCafeteriaSelection
             }
         }
 
-        observe(viewModel.cameraViewVisible) {
-            it?.takeIf { it } ?: return@observe
+        with(viewModel) {
+            observe(cameraViewVisible) {
+                it?.takeIf { it } ?: return@observe
 
-            startCamera()
+                startCamera()
 
-            with(binding.cameraPart.corners) {
-                fadeInAndAnimateMargin(
-                    R.dimen.camera_frame_margin,
-                    500
-                )
-            }
-        }
-
-        observe(viewModel.manualViewVisible) {
-            it?.takeIf { it } ?: return@observe
-
-            stopCamera()
-
-            viewModel.fetchCafeteriaSelectionOptions()
-
-            with(binding.manualPart.waitingNumberInput) {
-                post {
-                    // Calling requestFocusWithKeyboard right away does not work.
-                    requestFocusWithKeyboard()
+                with(binding.cameraPart.corners) {
+                    fadeInAndAnimateMargin(
+                        R.dimen.camera_frame_margin,
+                        500
+                    )
                 }
             }
-        }
 
-        observe(viewModel.waitingNumberInputDone) {
-            it?.takeIf { it } ?: return@observe
+            observe(manualViewVisible) {
+                it?.takeIf { it } ?: return@observe
 
-            with(binding.manualPart.waitingNumberInput) {
-                hideKeyboard()
+                stopCamera()
+
+                viewModel.fetchCafeteriaSelectionOptions()
+
+                with(binding.manualPart.waitingNumberInput) {
+                    post {
+                        // Calling requestFocusWithKeyboard right away does not work.
+                        requestFocusWithKeyboard()
+                    }
+                }
             }
-        }
 
-        observe(viewModel.toggleFlashEvent) {
-            it ?: return@observe
+            observe(waitingNumberInputDone) {
+                it?.takeIf { it } ?: return@observe
 
-            cameraControl?.enableTorch(it)
-        }
+                with(binding.manualPart.waitingNumberInput) {
+                    hideKeyboard()
+                }
+            }
 
-        observe(viewModel.orderSuccessfullyAddedEvent) {
-            finish()
+            observe(closeEvent) {
+                finish()
+            }
+
+            observe(toggleFlashEvent) {
+                it ?: return@observe
+
+                cameraControl?.enableTorch(it)
+            }
+
+            observe(orderSuccessfullyAddedEvent) {
+                finish()
+            }
         }
     }
 

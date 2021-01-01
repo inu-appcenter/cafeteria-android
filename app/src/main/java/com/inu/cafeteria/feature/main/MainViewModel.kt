@@ -23,6 +23,7 @@ import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.entities.Notice
+import com.inu.cafeteria.exception.NoCredentialsException
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.repository.InteractionRepository
 import com.inu.cafeteria.repository.WaitingOrderRepository
@@ -116,6 +117,19 @@ class MainViewModel : BaseViewModel() {
     private fun checkForUnreadAnswers() {
         fetchUnreadAnswers(Unit) {
             it.onError(::handleFailure)
+        }
+    }
+
+    override fun handleFailure(e: Exception) {
+        when (e) {
+            is NoCredentialsException -> {
+                // Do nothing.
+                // It is perfectly ok to be without the firebase token
+                // on the very first launch right after installation.
+            }
+            else -> {
+                super.handleFailure(e)
+            }
         }
     }
 }

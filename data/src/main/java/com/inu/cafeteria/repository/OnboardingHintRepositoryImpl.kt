@@ -17,17 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.usecase
+package com.inu.cafeteria.repository
 
-import com.inu.cafeteria.functional.Result
-import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.repository.CafeteriaRepository
+import com.inu.cafeteria.db.SharedPreferenceWrapper
+import com.inu.cafeteria.entities.OnboardingHint
 
-class ResetCafeteriaOrder(
-    private val cafeteriaRepo: CafeteriaRepository
-) : UseCase<Unit, Unit>() {
+class OnboardingHintRepositoryImpl(
+    private val db: SharedPreferenceWrapper
+) : OnboardingHintRepository {
 
-    override fun run(params: Unit) = Result.of {
-        cafeteriaRepo.resetSortingOrders()
+    override fun doWeHaveToShowHint(hint: OnboardingHint): Boolean {
+        val hintHasBeenShown = db.getBoolean(hint.key)
+
+        return !hintHasBeenShown
+    }
+
+    override fun markHintShown(hint: OnboardingHint) {
+        db.putBoolean(hint.key, true)
     }
 }

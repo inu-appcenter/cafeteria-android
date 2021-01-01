@@ -28,10 +28,7 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.common.extension.observe
-import com.inu.cafeteria.common.extension.resetBrightness
-import com.inu.cafeteria.common.extension.setBrightness
-import com.inu.cafeteria.common.extension.setVisible
+import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
 
 class DiscountFragment : BaseFragment() {
@@ -74,6 +71,12 @@ class DiscountFragment : BaseFragment() {
 
             observe(bright) {
                 applyBrightness()
+            }
+
+            observe(showBrightnessToggleHint) {
+                with(binding.barcodeCardPart.studentInfoLayout) {
+                    forceRippleAnimation()
+                }
             }
         }
     }

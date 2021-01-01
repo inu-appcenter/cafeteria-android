@@ -24,6 +24,8 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.core.KoinComponent
@@ -37,7 +39,7 @@ abstract class BaseFragment : Fragment(), KoinComponent {
 
     private var networkEventHasNotEmittedSinceLastRecreation: Boolean = true
 
-    private var menu: Menu? = null
+    private val menu = MutableLiveData<Menu>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,10 +97,10 @@ abstract class BaseFragment : Fragment(), KoinComponent {
             inflater.inflate(it, menu)
         }
 
-        this.menu = menu
+        this.menu.value = menu
     }
 
-    protected fun getOptionsMenu(): Menu? = menu
+    protected fun getOptionsMenu(): LiveData<Menu> = menu
 
     open fun onBackPressed() {}
 

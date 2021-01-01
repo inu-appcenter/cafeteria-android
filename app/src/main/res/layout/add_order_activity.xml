@@ -71,7 +71,8 @@
             android:background="@null"
             android:tint="?android:attr/textColorPrimaryInverse"
             android:src="@drawable/ic_close_24px"
-            android:contentDescription="@string/description_close_button" />
+            android:contentDescription="@string/description_close_button"
+            android:onClick="@{() -> vm.close()}"/>
 
         <!-- Title -->
         <TextView

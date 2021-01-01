@@ -25,15 +25,17 @@ import android.util.SparseIntArray
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.OnboardingHintEventEmitter
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.entities.Cafeteria
+import com.inu.cafeteria.entities.OnboardingHint
 import com.inu.cafeteria.extension.afterDays
 import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.usecase.GetCafeteria
-import com.inu.cafeteria.usecase.GetCafeteriaOrder
+import com.inu.cafeteria.usecase.GetSortingOrders
 import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
 import timber.log.Timber
@@ -45,9 +47,9 @@ import java.util.*
 class CafeteriaViewModel : BaseViewModel() {
 
     private val getCafeteria: GetCafeteria by inject()
-    private val getCafeteriaOrder: GetCafeteriaOrder by inject()
+    private val getSortingOrders: GetSortingOrders by inject()
 
-    private val statusRepo: DeviceStatusRepository by inject()
+    private val deviceStatusRepository: DeviceStatusRepository by inject()
 
     private val cafeteriaCache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
 
@@ -68,11 +70,16 @@ class CafeteriaViewModel : BaseViewModel() {
     var menuPagePositions = SparseIntArray()
         private set
 
+    val showSortingHintEvent = SingleLiveEvent<Unit>()
     val moreClickEvent = SingleLiveEvent<Unit>()
     val animateEvent = SingleLiveEvent<Int>()
 
+    private val sortingHintEmitter = OnboardingHintEventEmitter(OnboardingHint.SortingCafeteria) {
+        showSortingHintEvent.postValue(Unit)
+    }
+
     fun load() {
-        if (!statusRepo.isOnline()) {
+        if (!deviceStatusRepository.isOnline()) {
             Timber.d("Device is offline. Pending loading cafeteria view model.")
             return
         }
@@ -168,14 +175,20 @@ class CafeteriaViewModel : BaseViewModel() {
 
     fun onClickOptionMenu(menuItemId: Int): Boolean {
         when(menuItemId) {
-            R.id.menu_reorder -> navigator.showSorting()
+            R.id.menu_reorder -> showSorting()
         }
 
         return true
     }
 
+    private fun showSorting() {
+        navigator.showSorting()
+
+        sortingHintEmitter.markHintAccepted()
+    }
+
     private fun handleCafeteria(allCafeteria: List<Cafeteria>) {
-        getCafeteriaOrder(Unit) {
+        getSortingOrders(Unit) {
             it.onSuccess{ orderedIds ->
                 handleCafeteriaOrdered(allCafeteria.applyOrder(orderedIds) { id })
             }.onError(::handleFailure)
@@ -210,5 +223,11 @@ class CafeteriaViewModel : BaseViewModel() {
         _selected.value = cafeteriaView
 
         moreClickEvent.call()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        sortingHintEmitter.destroy()
     }
 }
