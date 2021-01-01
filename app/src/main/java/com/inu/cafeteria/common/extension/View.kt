@@ -19,8 +19,10 @@
 
 package com.inu.cafeteria.common.extension
 
+import android.R
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -32,6 +34,7 @@ import android.view.animation.Transformation
 import androidx.annotation.DimenRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
+
 
 fun View.cancelTransition() {
     transitionName = null
@@ -48,7 +51,12 @@ fun View.setBackgroundTint(color: Int) {
 }
 
 fun View.setPadding(left: Int? = null, top: Int? = null, right: Int? = null, bottom: Int? = null) {
-    setPadding(left ?: paddingLeft, top ?: paddingTop, right ?: paddingRight, bottom ?: paddingBottom)
+    setPadding(
+        left ?: paddingLeft,
+        top ?: paddingTop,
+        right ?: paddingRight,
+        bottom ?: paddingBottom
+    )
 }
 
 var View.isVisible: Boolean
@@ -95,7 +103,12 @@ fun View.forwardTouches(parent: View) {
     }
 }
 
-fun <T: View> T?.withinAlphaAnimation(from: Float, to: Float, delay: Long = 0, action: T?.() -> Unit = {}) {
+fun <T : View> T?.withinAlphaAnimation(
+    from: Float,
+    to: Float,
+    delay: Long = 0,
+    action: T?.() -> Unit = {}
+) {
     this?.let {
         alpha = from
     }
@@ -117,13 +130,13 @@ fun View.removeFromParent() {
     (parent as? ViewGroup)?.removeView(this)
 }
 
-fun View.fadeIn(duration: Long=500L) {
+fun View.fadeIn(duration: Long = 500L) {
     alpha = 0f
     setVisible(true)
     animate().alpha(1f).setDuration(duration).start()
 }
 
-fun View.fadeOut(duration: Long=500L) {
+fun View.fadeOut(duration: Long = 500L) {
     alpha = 1f
     animate().alpha(0f).setDuration(duration).withEndAction {
         setVisible(false)
@@ -133,7 +146,7 @@ fun View.fadeOut(duration: Long=500L) {
 fun View.fadeInAndAnimateMargin(@DimenRes margin: Int, duration: Long) {
     val marginPixels = resources.getDimensionPixelSize(margin)
 
-    val animation = object: Animation() {
+    val animation = object : Animation() {
         override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
             alpha = interpolatedTime
 
@@ -150,4 +163,14 @@ fun View.fadeInAndAnimateMargin(@DimenRes margin: Int, duration: Long) {
     startAnimation(animation.apply {
         setDuration(duration)
     })
+}
+
+fun View.forceRippleAnimation() {
+    val background: Drawable = background
+
+    background.state = intArrayOf(R.attr.state_pressed, R.attr.state_enabled)
+
+    Handler().postDelayed({
+        background.state = intArrayOf()
+    }, 200)
 }
