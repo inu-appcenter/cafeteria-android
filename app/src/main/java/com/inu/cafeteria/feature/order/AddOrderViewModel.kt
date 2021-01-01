@@ -65,11 +65,12 @@ class AddOrderViewModel : BaseViewModel() {
         }
     }
 
+    val closeEvent = SingleLiveEvent<Unit>()
     val toggleFlashEvent = SingleLiveEvent<Boolean>()
     val orderSuccessfullyAddedEvent = SingleLiveEvent<Unit>()
 
-    private var pauseHandling: Boolean = false
-    private val rejectedOrderInputs = mutableListOf<OrderInput>()
+    private var pauseHandling: Boolean = false // Will not handle when waiting for server's responses.
+    private val rejectedOrderInputs = mutableListOf<OrderInput>() // Will not handle once-rejected inputs
 
     fun getProcessorCameraProvider(): LiveData<ProcessCameraProvider> {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(mContext)
@@ -116,6 +117,10 @@ class AddOrderViewModel : BaseViewModel() {
 
     fun changeToCameraScan() {
         setInputMode(InputMode.MODE_CAMERA)
+    }
+
+    fun close() {
+        closeEvent.call()
     }
 
     fun toggleFlash() {
