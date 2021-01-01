@@ -38,11 +38,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.messaging.RemoteMessage
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.common.service.CafeteriaFirebaseMessagingService
 import com.inu.cafeteria.databinding.WaitingOrderFragmentBinding
 import org.koin.core.inject
-import kotlin.concurrent.timer
 
 class WaitingOrderFragment : BaseFragment() {
 
@@ -115,21 +115,17 @@ class WaitingOrderFragment : BaseFragment() {
             }
         }
 
-        periodicallyShakeAddButton(3000)
-    }
+        with(viewModel) {
+            observe(shakeAddButtonEvent) {
+                if (viewModel.orders.value?.isNotEmpty() == true) {
+                    return@observe
+                }
 
-    private fun periodicallyShakeAddButton(interval: Long) {
-        timer(period = interval) {
-            val orders = viewModel.orders.value ?: return@timer
-
-            if (orders.isNotEmpty()) {
-                return@timer
-            }
-
-            with(binding.addOrderButton) {
-                startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_once).apply {
-                    duration = 100
-                })
+                with(binding.addOrderButton) {
+                    startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_once).apply {
+                        duration = 150
+                    })
+                }
             }
         }
     }

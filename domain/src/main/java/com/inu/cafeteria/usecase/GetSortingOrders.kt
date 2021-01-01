@@ -23,11 +23,11 @@ import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
 import com.inu.cafeteria.repository.CafeteriaRepository
 
-class ResetCafeteriaOrder(
+class GetSortingOrders(
     private val cafeteriaRepo: CafeteriaRepository
-) : UseCase<Unit, Unit>() {
+) : UseCase<Unit, Array<Int>>() {
 
     override fun run(params: Unit) = Result.of {
-        cafeteriaRepo.resetSortingOrders()
+        cafeteriaRepo.getSortingOrders()
     }
 }

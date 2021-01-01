@@ -20,6 +20,7 @@
 package com.inu.cafeteria.feature.cafeteria
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.MenuItem
 import android.view.View
 import androidx.databinding.BindingAdapter
@@ -87,6 +88,14 @@ class CafeteriaFragment : BaseFragment() {
         }
 
         with(viewModel) {
+            observe(showSortingHintEvent) {
+                Handler().post {
+                    withNonNull(activity?.findViewById<View>(R.id.menu_reorder)) {
+                        forceRippleAnimation()
+                    }
+                }
+            }
+
             observe(moreClickEvent) {
                 showCafeteriaDetails()
             }

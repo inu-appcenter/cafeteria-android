@@ -17,17 +17,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.usecase
+package com.inu.cafeteria.entities
 
-import com.inu.cafeteria.functional.Result
-import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.repository.CafeteriaRepository
-
-class ResetCafeteriaOrder(
-    private val cafeteriaRepo: CafeteriaRepository
-) : UseCase<Unit, Unit>() {
-
-    override fun run(params: Unit) = Result.of {
-        cafeteriaRepo.resetSortingOrders()
-    }
+enum class OnboardingHint(val key: String) {
+    SortingCafeteria("com.inu.cafeteria.hint_sorting_cafeteria"),
+    ToggleBrightness("com.inu.cafeteria.hint_toggle_brightness")
 }

@@ -17,17 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.usecase
+package com.inu.cafeteria.repository
 
-import com.inu.cafeteria.functional.Result
-import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.repository.CafeteriaRepository
+import com.inu.cafeteria.entities.OnboardingHint
 
-class GetCafeteriaOrder(
-    private val cafeteriaRepo: CafeteriaRepository
-) : UseCase<Unit, Array<Int>>() {
-
-    override fun run(params: Unit) = Result.of {
-        cafeteriaRepo.getSortingOrder()
-    }
+interface OnboardingHintRepository {
+    fun doWeHaveToShowHint(hint: OnboardingHint): Boolean
+    fun markHintShown(hint: OnboardingHint)
 }

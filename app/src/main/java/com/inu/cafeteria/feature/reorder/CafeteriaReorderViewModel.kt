@@ -25,7 +25,7 @@ import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.usecase.GetCafeteriaOnly
-import com.inu.cafeteria.usecase.GetCafeteriaOrder
+import com.inu.cafeteria.usecase.GetSortingOrders
 import com.inu.cafeteria.usecase.ResetCafeteriaOrder
 import com.inu.cafeteria.usecase.SetCafeteriaOrder
 import org.koin.core.inject
@@ -34,7 +34,7 @@ import timber.log.Timber
 class CafeteriaReorderViewModel : BaseViewModel() {
 
     private val getCafeteriaOnly: GetCafeteriaOnly by inject()
-    private val getCafeteriaOrder: GetCafeteriaOrder by inject()
+    private val getSortingOrders: GetSortingOrders by inject()
     private val setCafeteriaOrder: SetCafeteriaOrder by inject()
     private val resetCafeteriaOrder: ResetCafeteriaOrder by inject()
 
@@ -72,7 +72,7 @@ class CafeteriaReorderViewModel : BaseViewModel() {
     }
 
     private fun handleCafeteria(allCafeteria: List<Cafeteria>) {
-        getCafeteriaOrder(Unit) {
+        getSortingOrders(Unit) {
             it.onSuccess{ orderedIds ->
                 handleCafeteriaOrdered(allCafeteria.applyOrder(orderedIds) { id })
             }.onError(::handleFailure)

@@ -179,6 +179,13 @@ val myModules = module {
         ) as ExternalCredentialsRepository
     }
 
+    /** Onboarding hint repository */
+    single {
+        OnboardingHintRepositoryImpl(
+            db = get()
+        ) as OnboardingHintRepository
+    }
+
     /*****************************
      * Use Case
      *****************************/
@@ -211,7 +218,7 @@ val myModules = module {
 
     /** Get cafeteria order */
     single {
-        GetCafeteriaOrder(
+        GetSortingOrders(
             cafeteriaRepo = get()
         )
     }

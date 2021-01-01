@@ -56,13 +56,13 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
             app:layout_behavior=".common.widget.OverScrollBounceBehavior"
             android:visibility="@{vm.barcodeCardReady ? View.VISIBLE : View.GONE}"
             tools:visibility="gone">
 
             <!-- Barcode card -->
             <include
+                android:id="@+id/barcode_card_part"
                 vm="@{vm}"
                 layout="@layout/barcode_card"
                 android:layout_width="match_parent"
