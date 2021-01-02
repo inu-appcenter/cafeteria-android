@@ -24,25 +24,21 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
 import com.inu.cafeteria.extension.withNonNull
-import org.koin.core.inject
 
 class CafeteriaReorderFragment : BaseFragment() {
 
     private val viewModel: CafeteriaReorderViewModel by viewModels()
-    private val eventHub: EventHub by inject()
 
     private val adapterWrapper =
         ReorderableAdapterWrapper(
             adapterFactory = { CafeteriaReorderAdapter(onDragStart = it::startDrag) },
             onItemChange = {
                 viewModel.onChangeOrder(it.data.toOrderArray())
-                eventHub.reorderEvent.call()
             }
         )
 
