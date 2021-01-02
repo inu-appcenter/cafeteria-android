@@ -26,13 +26,21 @@ class OnboardingHintRepositoryImpl(
     private val db: SharedPreferenceWrapper
 ) : OnboardingHintRepository {
 
-    override fun doWeHaveToShowHint(hint: OnboardingHint): Boolean {
-        val hintHasBeenShown = db.getBoolean(hint.key)
+    override fun getExposureCount(hint: OnboardingHint): Long {
+        return db.getLong(hint.exposureCountKey, 0)
+    }
+
+    override fun markExposed(hint: OnboardingHint) {
+        db.putLong(hint.exposureCountKey, getExposureCount(hint) + 1)
+    }
+
+    override fun hintHasNotBeenShown(hint: OnboardingHint): Boolean {
+        val hintHasBeenShown = db.getBoolean(hint.hasBeenShownKey)
 
         return !hintHasBeenShown
     }
 
     override fun markHintShown(hint: OnboardingHint) {
-        db.putBoolean(hint.key, true)
+        db.putBoolean(hint.hasBeenShownKey, true)
     }
 }

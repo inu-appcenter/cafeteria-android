@@ -25,9 +25,9 @@ import android.util.SparseIntArray
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.OnboardingHintEventEmitter
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.navigation.Navigator
+import com.inu.cafeteria.common.onboarding.OnboardingHintEventEmitter
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.OnboardingHint
 import com.inu.cafeteria.extension.afterDays
@@ -70,12 +70,18 @@ class CafeteriaViewModel : BaseViewModel() {
     var menuPagePositions = SparseIntArray()
         private set
 
-    val showSortingHintEvent = SingleLiveEvent<Unit>()
     val moreClickEvent = SingleLiveEvent<Unit>()
     val animateEvent = SingleLiveEvent<Int>()
 
-    private val sortingHintEmitter = OnboardingHintEventEmitter(OnboardingHint.SortingCafeteria) {
-        showSortingHintEvent.postValue(Unit)
+    private val sortingHintEmitter = OnboardingHintEventEmitter(OnboardingHint.SortingCafeteria)
+    val sortingHintEvent = sortingHintEmitter.event
+
+    fun emitHintEvent() {
+        sortingHintEmitter.emitIfAvailable()
+    }
+
+    fun markHintShown() {
+        sortingHintEmitter.markHintAccepted()
     }
 
     fun load() {
@@ -223,11 +229,5 @@ class CafeteriaViewModel : BaseViewModel() {
         _selected.value = cafeteriaView
 
         moreClickEvent.call()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-
-        sortingHintEmitter.destroy()
     }
 }

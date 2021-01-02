@@ -19,7 +19,16 @@
 
 package com.inu.cafeteria.entities
 
-enum class OnboardingHint(val key: String) {
-    SortingCafeteria("com.inu.cafeteria.hint_sorting_cafeteria"),
-    ToggleBrightness("com.inu.cafeteria.hint_toggle_brightness")
+enum class OnboardingHint(
+    private val baseKey: String,
+    val minimumPreExposure: Long = 5,
+    val hasBeenShownKey: String = "${baseKey}_has_shown",
+    val exposureCountKey: String = "${baseKey}_exposure"
+) {
+
+    /** User can sort cafeteria order on the first tab. */
+    SortingCafeteria("com.inu.cafeteria.hint_sorting_cafeteria", 3),
+
+    /** User can toggle brightness of a barcode screen on the third tab. */
+    ToggleBrightness("com.inu.cafeteria.hint_toggle_brightness", 1)
 }

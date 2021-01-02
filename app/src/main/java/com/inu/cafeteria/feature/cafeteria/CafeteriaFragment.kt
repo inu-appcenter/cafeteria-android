@@ -33,6 +33,7 @@ import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
 import com.inu.cafeteria.extension.withNonNull
+import it.sephiroth.android.library.xtooltip.Tooltip
 import org.koin.core.inject
 
 class CafeteriaFragment : BaseFragment() {
@@ -88,10 +89,12 @@ class CafeteriaFragment : BaseFragment() {
         }
 
         with(viewModel) {
-            observe(showSortingHintEvent) {
+            observe(sortingHintEvent) {
                 Handler().post {
                     withNonNull(activity?.findViewById<View>(R.id.menu_reorder)) {
-                        forceRippleAnimation()
+                        showTooltip(context, binding.root, Tooltip.Gravity.LEFT, it?.hintText ?: return@post) {
+                            viewModel.markHintShown()
+                        }
                     }
                 }
             }
@@ -112,6 +115,12 @@ class CafeteriaFragment : BaseFragment() {
                 reloadCurrentTab()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.emitHintEvent()
     }
 
     private fun reloadCurrentTab() {

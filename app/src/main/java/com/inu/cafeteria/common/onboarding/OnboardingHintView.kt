@@ -17,14 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.common.onboarding
 
-import com.inu.cafeteria.entities.OnboardingHint
+import androidx.annotation.StringRes
 
-interface OnboardingHintRepository {
-    fun getExposureCount(hint: OnboardingHint): Long
-    fun markExposed(hint: OnboardingHint)
-
-    fun hintHasNotBeenShown(hint: OnboardingHint): Boolean
-    fun markHintShown(hint: OnboardingHint)
-}
+data class OnboardingHintView(
+    @StringRes val hintText: Int
+)

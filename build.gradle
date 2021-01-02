@@ -55,6 +55,7 @@ buildscript {
     ext.firebase_bom_version = '26.1.1'
     ext.mlkit_version = '16.1.2'
     ext.camerax_version = '1.0.0-SNAPSHOT'
+    ext.tooltip_version = '2.0.3'
 
     repositories {
         google()

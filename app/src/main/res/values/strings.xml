@@ -168,5 +168,7 @@
     <string name="description_order_ready">Yap.</string>
     <string name="order_status_done">Ready</string>
     <string name="order_status_waiting">Waiting</string>
+    <string name="hint_sorting_cafeteria">Reorder!</string>
+    <string name="hint_toggle_brightness">Make it bright!</string>
 
 </resources>
