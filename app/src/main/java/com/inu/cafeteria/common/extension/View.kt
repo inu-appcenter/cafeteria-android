@@ -19,34 +19,27 @@
 
 package com.inu.cafeteria.common.extension
 
-import android.R
+import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import androidx.annotation.DimenRes
+import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
-
+import it.sephiroth.android.library.xtooltip.ClosePolicy
+import it.sephiroth.android.library.xtooltip.Tooltip
 
 fun View.cancelTransition() {
     transitionName = null
 }
 
 fun View.setBackgroundTint(color: Int) {
-
-    // API 21 doesn't support this
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-        background?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-    }
-
     backgroundTintList = ColorStateList.valueOf(color)
 }
 
@@ -67,40 +60,6 @@ var View.isVisible: Boolean
 
 fun View.setVisible(visible: Boolean, invisible: Int = View.GONE) {
     visibility = if (visible) View.VISIBLE else invisible
-}
-
-/**
- * If a view captures clicks at all, then the parent won't ever receive touch events. This is a
- * problem when we're trying to capture link clicks, but tapping or long pressing other areas of
- * the view no longer work. Also problematic when we try to long press on an image in the message
- * view
- */
-
-fun View.forwardTouches(parent: View) {
-    var isLongClick = false
-
-    setOnLongClickListener {
-        isLongClick = true
-        true
-    }
-
-    setOnTouchListener { v, event ->
-        parent.onTouchEvent(event)
-
-        when {
-            event.action == MotionEvent.ACTION_UP && isLongClick -> {
-                isLongClick = true
-                true
-            }
-
-            event.action == MotionEvent.ACTION_DOWN -> {
-                isLongClick = false
-                v.onTouchEvent(event)
-            }
-
-            else -> v.onTouchEvent(event)
-        }
-    }
 }
 
 fun <T : View> T?.withinAlphaAnimation(
@@ -168,9 +127,20 @@ fun View.fadeInAndAnimateMargin(@DimenRes margin: Int, duration: Long) {
 fun View.forceRippleAnimation() {
     val background: Drawable = background
 
-    background.state = intArrayOf(R.attr.state_pressed, R.attr.state_enabled)
+    background.state = intArrayOf(android.R.attr.state_pressed, android.R.attr.state_enabled)
 
     Handler().postDelayed({
         background.state = intArrayOf()
     }, 200)
+}
+
+fun View.showTooltip(context: Context, rootView: View, gravity: Tooltip.Gravity, @StringRes text: Int, onDismiss: () -> Unit = {}) {
+    Tooltip.Builder(context)
+        .anchor(this)
+        .arrow(true)
+        .closePolicy(ClosePolicy.TOUCH_ANYWHERE_CONSUME)
+        .text(resources.getString(text))
+        .create()
+        .doOnHidden { onDismiss() }
+        .show(rootView, gravity)
 }

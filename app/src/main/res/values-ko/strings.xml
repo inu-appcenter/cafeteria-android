@@ -158,5 +158,7 @@
     <string name="description_order_ready">픽업대에서 기다리고 있습니다 :)</string>
     <string name="order_status_done">준비됨</string>
     <string name="order_status_waiting">대기중</string>
+    <string name="hint_sorting_cafeteria">순서를 바꿀 수 있어요!</string>
+    <string name="hint_toggle_brightness">탭하면 밝아져요!</string>
 
 </resources>

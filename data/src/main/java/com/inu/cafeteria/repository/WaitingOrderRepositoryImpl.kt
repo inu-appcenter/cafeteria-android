@@ -25,7 +25,6 @@ import com.inu.cafeteria.entities.WaitingOrder
 import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
 import com.inu.cafeteria.retrofit.scheme.AddWaitingOrderParams
-import timber.log.Timber
 
 class WaitingOrderRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
@@ -39,8 +38,6 @@ class WaitingOrderRepositoryImpl(
         val orders = networkService.getAllWaitingOrders(
             deviceIdentifier = deviceIdentifier
         ).getOrThrow() ?: return listOf()
-
-        Timber.e("FETCH!!!")
 
         return orders.map {
             WaitingOrder(

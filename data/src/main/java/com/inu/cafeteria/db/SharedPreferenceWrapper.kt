@@ -64,6 +64,16 @@ class SharedPreferenceWrapper(context: Context) {
         return preferences.getInt(key, default)
     }
 
+    fun putLong(key: String, value: Long) {
+        preferences.edit {
+            putLong(key, value)
+        }
+    }
+
+    fun getLong(key: String, default: Long = -1): Long {
+        return preferences.getLong(key, default)
+    }
+
     fun putBoolean(key: String, value: Boolean) {
         preferences.edit {
             putBoolean(key, value)

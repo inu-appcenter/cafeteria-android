@@ -17,14 +17,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.entities
+package com.inu.cafeteria.common.onboarding
 
-enum class OnboardingHint(
-    private val baseKey: String,
-    val minimumPreExposure: Long = 5,
-    val hasBeenShownKey: String = "${baseKey}_has_shown",
-    val exposureCountKey: String = "${baseKey}_exposure"
-) {
-    SortingCafeteria("com.inu.cafeteria.hint_sorting_cafeteria", 3),
-    ToggleBrightness("com.inu.cafeteria.hint_toggle_brightness", 1)
-}
+import androidx.annotation.StringRes
+
+data class OnboardingHintView(
+    @StringRes val hintText: Int
+)

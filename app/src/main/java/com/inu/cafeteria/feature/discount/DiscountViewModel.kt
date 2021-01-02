@@ -20,12 +20,16 @@
 package com.inu.cafeteria.feature.discount
 
 import android.graphics.Bitmap
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.OnboardingHintEventEmitter
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.navigation.Navigator
+import com.inu.cafeteria.common.onboarding.OnboardingHintEventEmitter
+import com.inu.cafeteria.common.onboarding.OnboardingHintView
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.entities.OnboardingHint
 import com.inu.cafeteria.exception.NoAccountException
@@ -36,7 +40,6 @@ import com.inu.cafeteria.usecase.ActivateBarcode
 import com.inu.cafeteria.usecase.CreateBarcode
 import com.inu.cafeteria.usecase.GetSavedAccount
 import com.inu.cafeteria.usecase.RememberedLogin
-import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
 import timber.log.Timber
 
@@ -73,10 +76,28 @@ class DiscountViewModel : BaseViewModel() {
     private val _bright = MutableLiveData(false)
     val bright: LiveData<Boolean> = _bright
 
-    val showBrightnessToggleHint = SingleLiveEvent<Unit>()
+    private val brightnessHintEmitter = OnboardingHintEventEmitter(OnboardingHint.ToggleBrightness)
+    val showBrightnessToggleHint = MediatorLiveData<OnboardingHintView>().apply {
 
-    private val brightnessHintEmitter = OnboardingHintEventEmitter(OnboardingHint.ToggleBrightness) {
-        showBrightnessToggleHint.postValue(Unit)
+        addSource(brightnessHintEmitter.event) {
+            brightnessHintEmitter.event.value
+                ?.takeIf { barcodeCardReady.value == true }
+                ?.let { postValue(it) }
+        }
+
+        addSource(barcodeCardReady) {
+            brightnessHintEmitter.event.value
+                ?.takeIf { barcodeCardReady.value == true }
+                ?.let { Handler(Looper.getMainLooper()).postDelayed({ postValue(it) }, 500) }
+        }
+    }
+
+    fun emitHintEvent() {
+        brightnessHintEmitter.emit()
+    }
+
+    fun markHintShown() {
+        brightnessHintEmitter.markHintAccepted()
     }
 
     fun preload() {
@@ -118,8 +139,6 @@ class DiscountViewModel : BaseViewModel() {
 
     fun onToggleBrightness() {
         _bright.value = !(_bright.value ?: false)
-
-        brightnessHintEmitter.markHintAccepted()
     }
 
     private fun showBarcode() {
@@ -170,11 +189,5 @@ class DiscountViewModel : BaseViewModel() {
 
         _barcodeCardReady.value = false
         _onceLoggedIn.value = false
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-
-        brightnessHintEmitter.destroy()
     }
 }

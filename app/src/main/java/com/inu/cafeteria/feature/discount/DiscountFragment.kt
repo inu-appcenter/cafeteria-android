@@ -74,8 +74,10 @@ class DiscountFragment : BaseFragment() {
             }
 
             observe(showBrightnessToggleHint) {
-                with(binding.barcodeCardPart.studentInfoLayout) {
-                    forceRippleAnimation()
+                with(binding.barcodeCardPart.theCard) {
+                    showTooltip(context, binding.root, Tooltip.Gravity.TOP, it?.hintText ?: return@observe) {
+                        viewModel.markHintShown()
+                    }
                 }
             }
         }
@@ -84,6 +86,7 @@ class DiscountFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
+        viewModel.emitHintEvent()
         applyBrightness()
     }
 

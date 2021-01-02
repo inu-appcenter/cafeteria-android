@@ -22,6 +22,9 @@ package com.inu.cafeteria.repository
 import com.inu.cafeteria.entities.OnboardingHint
 
 interface OnboardingHintRepository {
-    fun doWeHaveToShowHint(hint: OnboardingHint): Boolean
+    fun getExposureCount(hint: OnboardingHint): Long
+    fun markExposed(hint: OnboardingHint)
+
+    fun hintHasNotBeenShown(hint: OnboardingHint): Boolean
     fun markHintShown(hint: OnboardingHint)
 }
