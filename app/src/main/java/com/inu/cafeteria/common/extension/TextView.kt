@@ -32,3 +32,8 @@ fun TextView.setBold(bold: Boolean) {
 fun TextView.setTextColorRes(@ColorRes colorResId: Int) {
     resources.getColor(colorResId, null)
 }
+
+fun TextView.resetMaxLines() {
+    maxLines = Integer.MAX_VALUE
+    ellipsize = null
+}

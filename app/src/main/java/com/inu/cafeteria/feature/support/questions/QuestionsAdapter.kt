@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseBindingAdapter
 import com.inu.cafeteria.common.base.BaseBindingViewHolder
+import com.inu.cafeteria.common.extension.resetMaxLines
 import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.QuestionsAnswerItemBinding
 
@@ -36,7 +37,8 @@ class QuestionsAdapter : BaseBindingAdapter<QuestionView, QuestionsAdapter.Quest
         holder.bind(position)
     }
 
-    inner class QuestionsViewHolder(parent: ViewGroup) : BaseBindingViewHolder<QuestionsAnswerItemBinding>(parent, R.layout.questions_answer_item) {
+    inner class QuestionsViewHolder(parent: ViewGroup) :
+        BaseBindingViewHolder<QuestionsAnswerItemBinding>(parent, R.layout.questions_answer_item) {
 
         fun bind(position: Int) {
             val item = getItem(position) ?: return
@@ -45,14 +47,21 @@ class QuestionsAdapter : BaseBindingAdapter<QuestionView, QuestionsAdapter.Quest
 
             with(binding.root) {
                 setOnClickListener {
-                    item.answer?.let {
-                        readAnswer(it, position)
+                    item.answer?.let(::readAnswer)
+
+                    with(binding.questionPart) {
+                        content.resetMaxLines()
+                    }
+
+                    with(binding.answerPart) {
+                        answerBody.resetMaxLines()
+                        answerTitle.resetMaxLines()
                     }
                 }
             }
         }
 
-        private fun readAnswer(answer: AnswerView, position: Int) {
+        private fun readAnswer(answer: AnswerView) {
             if (!answer.read) {
                 onAnswerRead(answer.id)
                 answer.read = true

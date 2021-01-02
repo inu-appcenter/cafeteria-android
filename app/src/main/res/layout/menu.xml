@@ -33,12 +33,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/available_at"
             app:layout_constraintTop_toTopOf="parent"
-            android:ellipsize="end"
             android:textSize="@dimen/textSecondary"
             android:textColor="@color/textPrimary"
             android:textStyle="bold"
             android:text="@{menu.foods}"
             android:maxLines="2"
+            android:ellipsize="end"
             tools:text="학식은, 맛없어, 퉤퉤, 메롱, 헤헤, 졸려, 집가고싶다, 히히" />
 
         <!-- Corner name -->

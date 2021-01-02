@@ -30,6 +30,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/question_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/mid_space">
@@ -57,7 +58,9 @@
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/textSecondary"
             android:text="@{question.content}"
-            tools:text="궁금한게 있는데 말입니다." />
+            android:maxLines="3"
+            android:ellipsize="end"
+            tools:text="궁금한게 있는데 말입니다.\n어쩌구저쩌구\n저쩌구머시기" />
 
         <!-- Answered or not -->
         <TextView
