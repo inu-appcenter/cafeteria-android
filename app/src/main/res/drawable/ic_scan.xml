@@ -1,0 +1,28 @@
+<!--
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector android:height="24dp" android:viewportHeight="1000"
+    android:viewportWidth="1000" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#FF000000" android:pathData="M72.6,377.5c-21,0 -38.1,-24.5 -38.1,-49v-196c0,-63 35,-98 98,-98h196c24.5,0 49,17.1 49,38.1c0,21 -24.5,35.4 -49,35.4H157c-24.5,0 -49,24.5 -49,49v171.5C108,353 93.6,377.5 72.6,377.5L72.6,377.5z"/>
+    <path android:fillColor="#FF000000" android:pathData="M920,360"/>
+    <path android:fillColor="#FF000000" android:pathData="M990,500c0,27 -22,49 -49,49H59c-27,0 -49,-22 -49,-49l0,0c0,-27 22,-49 49,-49h882C968,451 990,473 990,500L990,500z"/>
+    <path android:fillColor="#FF000000" android:pathData="M622.5,72.6c0,-21 24.5,-38.1 49,-38.1h196c63,0 98,35 98,98v196c0,24.5 -17.1,49 -38.1,49c-21,0 -35.4,-24.5 -35.4,-49V157c0,-24.5 -24.5,-49 -49,-49H671.5C647,108 622.5,93.6 622.5,72.6L622.5,72.6z"/>
+    <path android:fillColor="#FF000000" android:pathData="M72.6,622.5c21,0 35.4,24.5 35.4,49V843c0,24.5 24.5,49 49,49h171.5c24.5,0 49,14.4 49,35.4s-24.5,38.1 -49,38.1h-196c-63,0 -98,-35 -98,-98v-196C34.5,647 51.6,622.5 72.6,622.5L72.6,622.5z"/>
+    <path android:fillColor="#FF000000" android:pathData="M622.5,927.4c0,-21 24.5,-35.4 49,-35.4H843c24.5,0 49,-24.5 49,-49V671.5c0,-24.5 14.4,-49 35.4,-49c21,0 38.1,24.5 38.1,49v196c0,63 -35,98 -98,98h-196C647,965.5 622.5,948.4 622.5,927.4L622.5,927.4z"/>
+</vector>

@@ -79,7 +79,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/button_add_order"
             android:textStyle="bold"
-            app:icon="@drawable/ic_qr_code_scanner_24px"
+            app:icon="@drawable/ic_scan"
             android:foregroundTint="?android:attr/textColorPrimaryInverse"
             android:textColor="?android:attr/textColorPrimaryInverse"
             app:iconTint="?android:attr/textColorPrimaryInverse"
