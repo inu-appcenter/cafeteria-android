@@ -25,6 +25,10 @@ enum class OnboardingHint(
     val hasBeenShownKey: String = "${baseKey}_has_shown",
     val exposureCountKey: String = "${baseKey}_exposure"
 ) {
+
+    /** User can sort cafeteria order on the first tab. */
     SortingCafeteria("com.inu.cafeteria.hint_sorting_cafeteria", 3),
+
+    /** User can toggle brightness of a barcode screen on the third tab. */
     ToggleBrightness("com.inu.cafeteria.hint_toggle_brightness", 1)
 }

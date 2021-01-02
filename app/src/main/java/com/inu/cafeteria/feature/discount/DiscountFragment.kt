@@ -30,6 +30,7 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
+import it.sephiroth.android.library.xtooltip.Tooltip
 
 class DiscountFragment : BaseFragment() {
 
@@ -74,7 +75,7 @@ class DiscountFragment : BaseFragment() {
             }
 
             observe(showBrightnessToggleHint) {
-                with(binding.barcodeCardPart.theCard) {
+                with(binding.barcodeCardPart.card) {
                     showTooltip(context, binding.root, Tooltip.Gravity.TOP, it?.hintText ?: return@observe) {
                         viewModel.markHintShown()
                     }

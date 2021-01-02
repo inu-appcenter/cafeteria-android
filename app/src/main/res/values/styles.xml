@@ -17,7 +17,7 @@
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Text -->
     <style name="TextPrimary">
@@ -180,8 +180,41 @@
         <item name="android:background">@drawable/top_rounded</item>
     </style>
 
+    <!-- Camera frame corner -->
     <style name="CornerStyle">
         <item name="android:tint">@color/themeBlue</item>
+    </style>
+
+    <!-- Tooltip -->
+    <style name="ToolTipLayoutDefaultStyle">
+        <item name="ttlm_padding">@dimen/ttlm_default_padding</item>
+        <item name="ttlm_strokeColor">@android:color/transparent</item>
+        <item name="ttlm_backgroundColor">@color/themeAccent</item>
+        <item name="ttlm_strokeWeight">@dimen/ttlm_default_stroke_weight</item>
+        <item name="ttlm_cornerRadius">@dimen/ttlm_default_corner_radius</item>
+        <item name="ttlm_arrowRatio">1.4</item>
+        <item name="ttlm_overlayStyle">@style/ToolTipOverlayDefaultStyle</item>
+        <item name="android:textAppearance">@style/ToolTipTextStyle</item>
+    </style>
+
+    <style name="ToolTipTextStyle" parent="TextAppearance.AppCompat.Small.Inverse">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:autoLink">all</item>
+        <item name="android:linksClickable">true</item>
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:textColorLink">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:gravity">start|top</item>
+        <item name="android:elevation" tools:ignore="NewApi">@dimen/ttlm_default_elevation</item>
+        <item name="android:translationZ" tools:ignore="NewApi">@dimen/ttlm_default_elevation</item>
+    </style>
+
+    <style name="ToolTipOverlayDefaultStyle">
+        <item name="android:color">@color/themeAccent</item>
+        <item name="ttlm_repeatCount">99</item>
+        <item name="ttlm_duration">600</item>
+        <item name="android:alpha">0.5</item>
+        <item name="android:layout_margin">8dp</item>
     </style>
 
 </resources>

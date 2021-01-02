@@ -88,12 +88,14 @@ class DiscountViewModel : BaseViewModel() {
         addSource(barcodeCardReady) {
             brightnessHintEmitter.event.value
                 ?.takeIf { barcodeCardReady.value == true }
+                // Right after barcodeCardReady is set, the layout might be in the middle of inflating.
+                // So we need to wait for it to be completed.
                 ?.let { Handler(Looper.getMainLooper()).postDelayed({ postValue(it) }, 500) }
         }
     }
 
     fun emitHintEvent() {
-        brightnessHintEmitter.emit()
+        brightnessHintEmitter.emitIfAvailable()
     }
 
     fun markHintShown() {

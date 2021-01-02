@@ -32,6 +32,7 @@ import androidx.annotation.DimenRes
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
+import com.inu.cafeteria.R
 import it.sephiroth.android.library.xtooltip.ClosePolicy
 import it.sephiroth.android.library.xtooltip.Tooltip
 
@@ -138,8 +139,9 @@ fun View.showTooltip(context: Context, rootView: View, gravity: Tooltip.Gravity,
     Tooltip.Builder(context)
         .anchor(this)
         .arrow(true)
-        .closePolicy(ClosePolicy.TOUCH_ANYWHERE_CONSUME)
+        .closePolicy(ClosePolicy.TOUCH_ANYWHERE_NO_CONSUME)
         .text(resources.getString(text))
+        .styleId(R.style.ToolTipLayoutDefaultStyle)
         .create()
         .doOnHidden { onDismiss() }
         .show(rootView, gravity)

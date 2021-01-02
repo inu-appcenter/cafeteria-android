@@ -77,7 +77,7 @@ class CafeteriaViewModel : BaseViewModel() {
     val sortingHintEvent = sortingHintEmitter.event
 
     fun emitHintEvent() {
-        sortingHintEmitter.emit()
+        sortingHintEmitter.emitIfAvailable()
     }
 
     fun markHintShown() {

@@ -48,6 +48,7 @@
 
     <color name="themeBlue">#3DBEF4</color>
     <color name="themeRed">#FF2841</color>
+    <color name="themeAccent">#7E47FF</color>
 
     <color name="breakfast">#FC4B00</color>
     <color name="lunch">#FD9A2B</color>
