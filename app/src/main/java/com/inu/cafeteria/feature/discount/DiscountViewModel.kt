@@ -136,6 +136,8 @@ class DiscountViewModel : BaseViewModel() {
     }
 
     fun onClickLogin() {
+        throw Exception()
+
         navigator.showLogin()
     }
 

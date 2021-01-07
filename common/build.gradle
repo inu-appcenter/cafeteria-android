@@ -65,7 +65,7 @@ dependencies {
      * allowing them to be used without 'implementation' again in each module.
      */
 
-    /** Kotlin extensions */
+    /** Kotlin */
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api "androidx.appcompat:appcompat:$appcompat_version"
     api "androidx.core:core-ktx:$core_ktx_version"
@@ -95,8 +95,9 @@ dependencies {
     /** Volley */
     api "com.android.volley:volley:$volley_version"
 
-    /** Firebase */
+    /** Firebase stuffs here. */
     api platform("com.google.firebase:firebase-bom:$firebase_bom_version")
     api 'com.google.firebase:firebase-analytics-ktx'
-    api 'com.google.firebase:firebase-messaging'
+    api 'com.google.firebase:firebase-messaging-ktx'
+    api 'com.google.firebase:firebase-crashlytics-ktx'
 }

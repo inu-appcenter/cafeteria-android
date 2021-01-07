@@ -52,10 +52,11 @@ buildscript {
     ext.leonids_version = '1.3.2'
     ext.swipe_refresh_layout_version = '1.1.0'
     ext.google_service_version = '4.3.4'
-    ext.firebase_bom_version = '26.1.1'
+    ext.firebase_bom_version = '26.2.0'
     ext.mlkit_version = '16.1.2'
     ext.camerax_version = '1.0.0-SNAPSHOT'
     ext.tooltip_version = '2.0.3'
+    ext.crashlystics_version = '2.4.1'
 
     repositories {
         google()
@@ -65,9 +66,10 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        /** Google stuffs here. */
         classpath "com.google.gms:google-services:$google_service_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlystics_version"
     }
 }
 
