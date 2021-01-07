@@ -234,9 +234,7 @@ abstract class NavigationActivity : BaseActivity(),
         val tabItemId = getTabItemIdByPosition(position)
 
         with(bottomNavigation) {
-            if (selectedItemId != tabItemId) {
-                selectedItemId = tabItemId
-            }
+
         }
     }
 
