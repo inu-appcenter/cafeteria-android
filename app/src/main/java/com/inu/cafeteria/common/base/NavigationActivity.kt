@@ -69,6 +69,12 @@ abstract class NavigationActivity : BaseActivity(),
         return setItem(menuItem)
     }
 
+    /**
+     * For children.
+     * Override this to get notified when a user selects a bottom navigation(tab).
+     */
+    protected open fun onTabSelected(item: MenuItem) {}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutRes)
@@ -197,7 +203,10 @@ abstract class NavigationActivity : BaseActivity(),
         getHostFragmentByTabItem(item)?.popToRoot() ?: Unit
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean =
-        setItem(item)
+        setItem(item).apply {
+            // This tab selection event will be captured through this hook.
+            onTabSelected(item)
+        }
 
     private fun getHostFragmentByTabItem(item: MenuItem) =
         findFragmentByTabItem(item)

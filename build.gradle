@@ -57,6 +57,7 @@ buildscript {
     ext.camerax_version = '1.0.0-SNAPSHOT'
     ext.tooltip_version = '2.0.3'
     ext.crashlystics_version = '2.4.1'
+    ext.perf_plugin_version = '1.3.4'
 
     repositories {
         google()
@@ -70,6 +71,7 @@ buildscript {
         /** Google stuffs here. */
         classpath "com.google.gms:google-services:$google_service_version"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$crashlystics_version"
+        classpath "com.google.firebase:perf-plugin:$perf_plugin_version"
     }
 }
 

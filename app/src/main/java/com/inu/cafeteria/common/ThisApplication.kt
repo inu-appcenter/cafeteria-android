@@ -37,7 +37,6 @@ class ThisApplication : Application() {
         startTimber()
         startKoin()
         startDeviceStatusRepository()
-        startFirebase()
         initializeNotificationChannel()
         initializeMlKit()
     }
@@ -56,10 +55,6 @@ class ThisApplication : Application() {
     private fun startDeviceStatusRepository() {
         val statusRepo: DeviceStatusRepository by inject()
         statusRepo.init()
-    }
-
-    private fun startFirebase() {
-
     }
 
     private fun initializeNotificationChannel() {

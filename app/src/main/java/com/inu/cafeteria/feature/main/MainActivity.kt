@@ -22,6 +22,7 @@ package com.inu.cafeteria.feature.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.annotation.IdRes
@@ -35,6 +36,7 @@ import com.inu.cafeteria.common.base.NavigationHostFragment
 import com.inu.cafeteria.common.extension.fadeIn
 import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.common.firebase.Events
 import com.inu.cafeteria.common.navigation.rootDestinations
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.feature.main.EasterEggHelper.Companion.getEasterEggs
@@ -133,7 +135,6 @@ class MainActivity : NavigationActivity() {
         observeLoginEvent() // to then fetch unread answers.
     }
 
-
     private fun setOfflineView() {
         val eggs = getEasterEggs(this)
 
@@ -220,6 +221,10 @@ class MainActivity : NavigationActivity() {
                 fadeIn(250L)
             }
         }
+    }
+
+    override fun onTabSelected(item: MenuItem) {
+        Events.onSelectTab(item.title.toString())
     }
 
     companion object {

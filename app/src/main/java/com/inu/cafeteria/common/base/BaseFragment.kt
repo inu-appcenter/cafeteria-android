@@ -61,7 +61,6 @@ abstract class BaseFragment : Fragment(), KoinComponent {
         super.onResume()
 
         // This ensures option menu exists after orientation change for Fragments in ViewPager.
-        Timber.i("BaseFragment resumed!")
         activity?.invalidateOptionsMenu()
     }
 

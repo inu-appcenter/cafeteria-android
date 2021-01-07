@@ -25,6 +25,7 @@ import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.extension.onChanged
+import com.inu.cafeteria.common.firebase.Events
 import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.Login
@@ -70,6 +71,7 @@ class LoginViewModel : BaseViewModel() {
 
         login(Pair(id, password)) {
             it
+                .onSuccess { Events.onLogin(id) }
                 .onError(::handleFailure)
                 .finally { _loading.value = false }
         }
