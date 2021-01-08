@@ -17,13 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.entities
 
-import com.inu.cafeteria.entities.PerfectReviewCondition
+enum class PerfectReviewCondition(
+    private val baseKey: String,
+    val minimumPreExposure: Long = 5,
+    val minimumDaysFromInstall: Long = 14,
+    val exposureCountKey: String = "${baseKey}_exposures",
+    val hasBeenAskedKey: String = "${baseKey}_has_been_asked",
+) {
 
-interface AppUsageRepository {
-    fun markReviewRequestShown(condition: PerfectReviewCondition)
-    fun markReviewChanceExposed(condition: PerfectReviewCondition)
-
-    fun isThisPerfectTimeForReview(condition: PerfectReviewCondition): Boolean
+    /** Ask for review when all orders had been finished */
+    AfterAllOrdersFinished("com.inu.cafeteria.review_condition_after_all_orders_finished", 3, 0)
 }

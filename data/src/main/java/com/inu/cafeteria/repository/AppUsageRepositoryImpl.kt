@@ -22,6 +22,7 @@ package com.inu.cafeteria.repository
 import android.content.Context
 import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.db.SharedPreferenceWrapper
+import com.inu.cafeteria.entities.PerfectReviewCondition
 import timber.log.Timber
 import java.util.*
 
@@ -30,56 +31,42 @@ class AppUsageRepositoryImpl(
     private val db: SharedPreferenceWrapper
 ) : AppUsageRepository {
 
-    override fun getElapsedTimeFromInstall(): Long {
+    override fun markReviewRequestShown(condition: PerfectReviewCondition) {
+        db.putBoolean(condition.hasBeenAskedKey, true)
+    }
+
+    override fun markReviewChanceExposed(condition: PerfectReviewCondition) {
+        db.putInt(condition.exposureCountKey, db.getInt(condition.exposureCountKey, 0))
+    }
+
+    override fun isThisPerfectTimeForReview(condition: PerfectReviewCondition): Boolean {
+        val exposures = db.getInt(condition.exposureCountKey, 0)
+
+        val hasBeenAsked = hasBeenAsked(condition)
+        val hadEnoughTime = getElapsedDaysFromInstall() > condition.minimumDaysFromInstall
+        val hadEnoughExposures = exposures >= condition.minimumPreExposure
+
+        return !hasBeenAsked && hadEnoughTime && hadEnoughExposures
+    }
+
+    private fun hasBeenAsked(condition: PerfectReviewCondition): Boolean {
+        return db.getBoolean(condition.hasBeenAskedKey, false)
+    }
+
+    private fun getElapsedDaysFromInstall(): Long {
         val installTime = getFirstInstallTime() ?: return 0
         val now = Date().time
+        val elapsedMillis = now - installTime
 
-        return now - installTime // Millis
+        return elapsedMillis / (60 * 60 * 24 * 1000/*a day*/)
     }
 
     private fun getFirstInstallTime(): Long? {
         return try {
-            context
-                .packageManager
-                .getPackageInfo(Config.appId, 0)
-                .firstInstallTime
+            context.packageManager.getPackageInfo(Config.appId, 0).firstInstallTime
         } catch (e: Exception) {
             Timber.e("Could not get first install time: $e")
             null
         }
-    }
-
-    override fun hasUserLeftReview(): Boolean {
-        return db.getBoolean(KEY_USER_LEFT_REVIEW, false)
-    }
-
-    override fun hasUserRefusedToReview(): Boolean {
-        return db.getBoolean(KEY_USER_REFUSED_TO_REVIEW, false)
-    }
-
-    override fun markUserLeftReview() {
-        db.putBoolean(KEY_USER_LEFT_REVIEW, true)
-    }
-
-    override fun markUserRefusedToReview() {
-        db.putBoolean(KEY_USER_REFUSED_TO_REVIEW, true)
-    }
-
-    override fun isThisPerfectTimeForReview(): Boolean {
-        val exposures = db.getInt(KEY_PERFECT_REVIEW_TIMING_EXPOSURES, 0)
-        db.putInt(KEY_PERFECT_REVIEW_TIMING_EXPOSURES, exposures + 1)
-
-        val userReviewed = hasUserLeftReview()
-        val userRejected = hasUserRefusedToReview()
-        val hadEnoughTime = getElapsedTimeFromInstall() > 60 * 60 * 24 * 14 * 1000 // 2 weeks
-        val hadEnoughExposures = exposures >= 3
-
-        return !userReviewed && !userRejected && hadEnoughTime && hadEnoughExposures
-    }
-
-    companion object {
-        private const val KEY_USER_LEFT_REVIEW = "com.inu.cafeteria.user_left_review"
-        private const val KEY_USER_REFUSED_TO_REVIEW = "com.inu.cafeteria.user_refused_to_review"
-        private const val KEY_PERFECT_REVIEW_TIMING_EXPOSURES = "com.inu.cafeteria.perfect_review_timing_exposures"
     }
 }

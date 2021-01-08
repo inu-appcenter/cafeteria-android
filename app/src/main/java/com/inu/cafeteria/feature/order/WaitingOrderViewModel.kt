@@ -24,6 +24,7 @@ import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Cafeteria
+import com.inu.cafeteria.entities.PerfectReviewCondition
 import com.inu.cafeteria.entities.WaitingOrder
 import com.inu.cafeteria.exception.BadRequestException
 import com.inu.cafeteria.exception.NoCredentialsException
@@ -81,7 +82,7 @@ class WaitingOrderViewModel : BaseViewModel() {
         orders: List<WaitingOrder>,
         cafeteria: List<Cafeteria>
     ) {
-        tryAskingForReviewIfPossible(orders)
+        handleFinishedOrders(orders)
 
         _orders.value = orders.map { order ->
             WaitingOrderView(
@@ -93,22 +94,26 @@ class WaitingOrderViewModel : BaseViewModel() {
         }
     }
 
-    private fun tryAskingForReviewIfPossible(orders: List<WaitingOrder>) {
+    private fun handleFinishedOrders(orders: List<WaitingOrder>) {
         val unfinishedOrdersBefore = _orders.value?.filter { !it.done }?.size ?: 0
         val unfinishedOrdersAfter = orders.filter { !it.done }.size
 
         val allOrdersJustGotFinished = (unfinishedOrdersBefore > 0 && unfinishedOrdersAfter == 0)
-        if (!allOrdersJustGotFinished) {
-            return
-        }
 
-        if (!appUsageRepository.isThisPerfectTimeForReview()) {
-            return
+        if (allOrdersJustGotFinished) {
+            tryAskingForReviewIfPossible()
         }
-
-        askForReviewEvent.call()
     }
 
+    private fun tryAskingForReviewIfPossible() {
+        val reviewCondition = PerfectReviewCondition.AfterAllOrdersFinished
+
+        appUsageRepository.markReviewChanceExposed(reviewCondition)
+
+        if (appUsageRepository.isThisPerfectTimeForReview(reviewCondition)) {
+            askForReviewEvent.call()
+        }
+    }
 
     private fun getCafeteriaNameById(allCafeteria: List<Cafeteria>, cafeteriaId: Int): String {
         val cafeteriaFound = allCafeteria.find { it.id == cafeteriaId } ?: return ""
@@ -131,6 +136,10 @@ class WaitingOrderViewModel : BaseViewModel() {
         _orders.value
             ?.filter { it.done }
             ?.forEach { deleteWaitingOrder(it.orderId) }
+    }
+
+    fun markAskedForReview() {
+        appUsageRepository.markReviewRequestShown(PerfectReviewCondition.AfterAllOrdersFinished)
     }
 
     override fun handleFailure(e: Exception) {

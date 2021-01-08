@@ -30,7 +30,6 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
@@ -41,6 +40,7 @@ import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.navigation.Navigator
+import com.inu.cafeteria.common.review.ReviewHelper
 import com.inu.cafeteria.common.service.CafeteriaFirebaseMessagingService
 import com.inu.cafeteria.databinding.WaitingOrderFragmentBinding
 import org.koin.core.inject
@@ -130,7 +130,9 @@ class WaitingOrderFragment : BaseFragment() {
             }
 
             observe(askForReviewEvent) {
-                Toast.makeText(context, "HEY!", Toast.LENGTH_SHORT).show()
+                ReviewHelper(activity ?: return@observe).askForReview {
+                    markAskedForReview()
+                }
             }
         }
     }

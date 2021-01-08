@@ -17,13 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.common.review
 
-import com.inu.cafeteria.entities.PerfectReviewCondition
+import android.app.Activity
+import com.google.android.play.core.review.ReviewManagerFactory
 
-interface AppUsageRepository {
-    fun markReviewRequestShown(condition: PerfectReviewCondition)
-    fun markReviewChanceExposed(condition: PerfectReviewCondition)
+class ReviewHelper(private val activity: Activity) {
 
-    fun isThisPerfectTimeForReview(condition: PerfectReviewCondition): Boolean
+    fun askForReview(onComplete: () -> Unit = {}) {
+        val manager = ReviewManagerFactory.create(activity)
+
+        val request = manager.requestReviewFlow()
+        request.addOnCompleteListener {
+            if (it.isSuccessful) {
+                val reviewInfo = request.result
+
+                val flow = manager.launchReviewFlow(activity, reviewInfo)
+                flow.addOnCompleteListener { onComplete() }
+            }
+        }
+    }
 }
