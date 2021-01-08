@@ -152,6 +152,14 @@ val myModules = module {
         ) as OnboardingHintRepository
     }
 
+    /** App usage repository */
+    single {
+        AppUsageRepositoryImpl(
+            context = get(),
+            db = get()
+        ) as AppUsageRepository
+    }
+
     /** Activate barcode */
     single {
         ActivateBarcode(

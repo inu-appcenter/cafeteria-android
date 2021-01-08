@@ -154,6 +154,10 @@ dependencies {
 
     /** Tooltip */
     implementation "it.sephiroth.android.library.targettooltip:target-tooltip-library:$tooltip_version"
+
+    /** In-app review */
+    implementation "com.google.android.play:core:$play_core_version"
+    implementation "com.google.android.play:core-ktx:$play_core_ktx_version"
 }
 
 repositories {
