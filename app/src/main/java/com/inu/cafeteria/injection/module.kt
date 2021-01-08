@@ -172,16 +172,37 @@ val myModules = module {
         CreateBarcode()
     }
 
-    /** Get cafeteria */
+    /** Get cafeteria only */
     single {
-        GetCafeteria(
+        GetCafeteriaOnly(
             cafeteriaRepo = get()
         )
     }
 
-    /** Get cafeteria only */
+    /** Get menu supporting cafeteria */
     single {
-        GetCafeteriaOnly(
+        GetMenuSupportingCafeteria(
+            cafeteriaRepo = get()
+        )
+    }
+
+    /** Get menu supporting cafeteria without menus */
+    single {
+        GetMenuSupportingCafeteriaWithoutMenus(
+            cafeteriaRepo = get()
+        )
+    }
+
+    /** Get discount supporting cafeteria (without menus) */
+    single {
+        GetDiscountSupportingCafeteria(
+            cafeteriaRepo = get()
+        )
+    }
+
+    /** Get notification supporting cafeteria (without menus) */
+    single {
+        GetNotificationSupportingCafeteria(
             cafeteriaRepo = get()
         )
     }
