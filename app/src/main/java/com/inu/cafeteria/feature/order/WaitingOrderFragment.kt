@@ -30,6 +30,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
@@ -126,6 +127,10 @@ class WaitingOrderFragment : BaseFragment() {
                         duration = 150
                     })
                 }
+            }
+
+            observe(askForReviewEvent) {
+                Toast.makeText(context, "HEY!", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -28,6 +28,7 @@ import com.inu.cafeteria.entities.WaitingOrder
 import com.inu.cafeteria.exception.BadRequestException
 import com.inu.cafeteria.exception.NoCredentialsException
 import com.inu.cafeteria.exception.ResourceNotFoundException
+import com.inu.cafeteria.repository.AppUsageRepository
 import com.inu.cafeteria.usecase.DeleteWaitingOrder
 import com.inu.cafeteria.usecase.GetCafeteriaOnly
 import com.inu.cafeteria.usecase.GetWaitingOrders
@@ -42,6 +43,8 @@ class WaitingOrderViewModel : BaseViewModel() {
     private val getCafeteriaOnly: GetCafeteriaOnly by inject()
     private val deleteWaitingOrder: DeleteWaitingOrder by inject()
 
+    private val appUsageRepository: AppUsageRepository by inject()
+
     private val _orders = MutableLiveData<List<WaitingOrderView>>()
     val orders: LiveData<List<WaitingOrderView>> = _orders
 
@@ -49,6 +52,7 @@ class WaitingOrderViewModel : BaseViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     val shakeAddButtonEvent = SingleLiveEvent<Unit>()
+    val askForReviewEvent = SingleLiveEvent<Unit>()
 
     private var shakeButtonTimer: Timer? = timer(period = 3000) {
         shakeAddButtonEvent.postValue(Unit)
@@ -77,6 +81,8 @@ class WaitingOrderViewModel : BaseViewModel() {
         orders: List<WaitingOrder>,
         cafeteria: List<Cafeteria>
     ) {
+        tryAskingForReviewIfPossible(orders)
+
         _orders.value = orders.map { order ->
             WaitingOrderView(
                 orderId = order.id,
@@ -86,6 +92,23 @@ class WaitingOrderViewModel : BaseViewModel() {
             )
         }
     }
+
+    private fun tryAskingForReviewIfPossible(orders: List<WaitingOrder>) {
+        val unfinishedOrdersBefore = _orders.value?.filter { !it.done }?.size ?: 0
+        val unfinishedOrdersAfter = orders.filter { !it.done }.size
+
+        val allOrdersJustGotFinished = (unfinishedOrdersBefore > 0 && unfinishedOrdersAfter == 0)
+        if (!allOrdersJustGotFinished) {
+            return
+        }
+
+        if (!appUsageRepository.isThisPerfectTimeForReview()) {
+            return
+        }
+
+        askForReviewEvent.call()
+    }
+
 
     private fun getCafeteriaNameById(allCafeteria: List<Cafeteria>, cafeteriaId: Int): String {
         val cafeteriaFound = allCafeteria.find { it.id == cafeteriaId } ?: return ""
