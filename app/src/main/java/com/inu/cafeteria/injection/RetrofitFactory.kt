@@ -69,7 +69,7 @@ class RetrofitFactory {
 
                 val installerName = getInstallerPackageName(context.packageName) ?: "StandAloneInstall"
 
-                return "$appName / $versionName($versionCode); $installerName; ($manufacturer; $model; SDK $version; Android $versionRelease)"
+                return "$appName/$versionName($versionCode); $installerName; $manufacturer; $model; SDK $version; Android $versionRelease"
             }
         }
     }
