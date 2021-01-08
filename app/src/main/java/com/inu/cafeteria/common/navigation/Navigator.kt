@@ -115,13 +115,13 @@ class Navigator(
             .show()
     }
 
-    fun showOrderFinishedNotification(activity: FragmentActivity, title: String, body: String) {
+    fun showOrderFinishedNotification(activity: FragmentActivity, title: String, body: String, onDismiss: () -> Unit = {}) {
         AlertDialog
             .Builder(activity)
             .setTitle(title)
             .setMessage(body)
             .setPositiveButton(context.getString(R.string.button_confirm)) { _, _ -> }
-            .setCancelable(false) // Force!
+            .setOnDismissListener { onDismiss() }
             .show()
     }
 

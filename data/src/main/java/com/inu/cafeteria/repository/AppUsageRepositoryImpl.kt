@@ -36,15 +36,15 @@ class AppUsageRepositoryImpl(
     }
 
     override fun markReviewChanceExposed(condition: PerfectReviewCondition) {
-        db.putInt(condition.exposureCountKey, db.getInt(condition.exposureCountKey, 0))
+        db.putInt(condition.exposureCountKey, db.getInt(condition.exposureCountKey, 0) + 1)
     }
 
     override fun isThisPerfectTimeForReview(condition: PerfectReviewCondition): Boolean {
         val exposures = db.getInt(condition.exposureCountKey, 0)
 
         val hasBeenAsked = hasBeenAsked(condition)
-        val hadEnoughTime = getElapsedDaysFromInstall() > condition.minimumDaysFromInstall
-        val hadEnoughExposures = exposures >= condition.minimumPreExposure
+        val hadEnoughTime = (getElapsedDaysFromInstall() >= condition.minimumDaysFromInstall)
+        val hadEnoughExposures = (exposures >= condition.minimumPreExposure)
 
         return !hasBeenAsked && hadEnoughTime && hadEnoughExposures
     }

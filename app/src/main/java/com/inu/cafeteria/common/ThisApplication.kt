@@ -54,6 +54,7 @@ class ThisApplication : Application() {
 
     private fun startDeviceStatusRepository() {
         val statusRepo: DeviceStatusRepository by inject()
+
         statusRepo.init()
     }
 

@@ -19,18 +19,13 @@
 
 package com.inu.cafeteria.feature.order
 
-import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.view.View
 import android.view.animation.AnimationUtils
-import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -55,7 +50,9 @@ class WaitingOrderFragment : BaseFragment() {
     /** Receives in-app firebase notification when app is active */
     private val pushNumberNotificationReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            onPushNumberNotification(intent?.getParcelableExtra("message") ?: return)
+            val message: RemoteMessage = intent?.getParcelableExtra("message") ?: return
+
+            viewModel.handleNotification(message)
         }
     }
 
@@ -80,10 +77,53 @@ class WaitingOrderFragment : BaseFragment() {
         }
     }
 
+    private fun initializeView(binding: WaitingOrderFragmentBinding) {
+        with(binding.waitingOrdersRecycler) {
+            adapter = WaitingOrderAdapter().apply {
+                emptyView = binding.emptyView
+                loadingView = binding.loadingView
+
+                onClickDelete = viewModel::deleteWaitingOrder
+            }
+
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
+
+        with(viewModel) {
+            observe(shakeAddButtonEvent) {
+                val hasOrders = (viewModel.orders.value?.isNotEmpty() == true)
+                if (hasOrders) {
+                    return@observe
+                }
+
+                // Start shake animation
+                with(binding.addOrderButton) {
+                    startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_once).apply {
+                        duration = 150
+                    })
+                }
+            }
+
+            observe(showOrderReadyDialogEvent) {
+                it ?: return@observe
+
+                navigator.showOrderFinishedNotification(activity ?: return@observe, it.first, it.second) {
+                    viewModel.askForReviewIfAllOrdersFinished()
+                }
+            }
+
+            observe(askForReviewEvent) {
+                ReviewHelper(activity ?: return@observe).askForReview {
+                    markAskedForReview()
+                }
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-        clearAllOrderNotifications()
 
+        viewModel.clearAllOrderNotifications()
         viewModel.fetchWaitingOrders()
     }
 
@@ -97,72 +137,6 @@ class WaitingOrderFragment : BaseFragment() {
         super.onDestroy()
 
         context?.unregisterReceiver(pushNumberNotificationReceiver)
-    }
-
-    private fun initializeView(binding: WaitingOrderFragmentBinding) {
-        with(binding.waitingOrdersRecycler) {
-            adapter = WaitingOrderAdapter().apply {
-                emptyView = binding.emptyView
-                loadingView = binding.loadingView
-
-                onClickDelete = viewModel::deleteWaitingOrder
-            }
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        }
-
-        with(binding.addOrderButton) {
-            setOnClickListener {
-                navigator.showAddWaitingOrder()
-            }
-        }
-
-        with(viewModel) {
-            observe(shakeAddButtonEvent) {
-                if (viewModel.orders.value?.isNotEmpty() == true) {
-                    return@observe
-                }
-
-                with(binding.addOrderButton) {
-                    startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_once).apply {
-                        duration = 150
-                    })
-                }
-            }
-
-            observe(askForReviewEvent) {
-                ReviewHelper(activity ?: return@observe).askForReview {
-                    markAskedForReview()
-                }
-            }
-        }
-    }
-
-    private fun clearAllOrderNotifications() {
-        val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager ?: return
-
-        // Warning: this will cancel notifications in other channels.
-        notificationManager.cancelAll()
-    }
-
-    private fun onPushNumberNotification(message: RemoteMessage) {
-        viewModel.fetchWaitingOrders()
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrate()
-        }
-
-        val title = message.notification?.title ?: context?.getString(R.string.title_order_ready) ?: "주문하신 음식이 나왔어요!"
-        val body = message.notification?.body ?: context?.getString(R.string.description_order_ready) ?: "픽업대에서 기다리고 있습니다 :)"
-
-        navigator.showOrderFinishedNotification(activity ?: return, title, body)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun vibrate() {
-        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-        val effect = VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
-
-        vibrator?.vibrate(effect)
     }
 
     companion object {

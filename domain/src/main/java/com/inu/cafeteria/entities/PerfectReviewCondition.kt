@@ -28,5 +28,5 @@ enum class PerfectReviewCondition(
 ) {
 
     /** Ask for review when all orders had been finished */
-    AfterAllOrdersFinished("com.inu.cafeteria.review_condition_after_all_orders_finished", 3, 0)
+    AfterAllOrdersFinished("com.inu.cafeteria.review_condition_after_all_orders_finished", 3, 7)
 }

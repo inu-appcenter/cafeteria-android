@@ -19,10 +19,19 @@
 
 package com.inu.cafeteria.feature.order
 
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import android.os.Handler
+import android.os.VibrationEffect
+import android.os.Vibrator
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.messaging.RemoteMessage
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.PerfectReviewCondition
 import com.inu.cafeteria.entities.WaitingOrder
@@ -44,6 +53,8 @@ class WaitingOrderViewModel : BaseViewModel() {
     private val getCafeteriaOnly: GetCafeteriaOnly by inject()
     private val deleteWaitingOrder: DeleteWaitingOrder by inject()
 
+    private val navigator: Navigator by inject()
+
     private val appUsageRepository: AppUsageRepository by inject()
 
     private val _orders = MutableLiveData<List<WaitingOrderView>>()
@@ -54,9 +65,17 @@ class WaitingOrderViewModel : BaseViewModel() {
 
     val shakeAddButtonEvent = SingleLiveEvent<Unit>()
     val askForReviewEvent = SingleLiveEvent<Unit>()
+    val showOrderReadyDialogEvent = SingleLiveEvent<Pair<String, String>>()
 
     private var shakeButtonTimer: Timer? = timer(period = 3000) {
         shakeAddButtonEvent.postValue(Unit)
+    }
+
+    fun clearAllOrderNotifications() {
+        val notificationManager = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager ?: return
+
+        // Warning: this will cancel notifications in other channels.
+        notificationManager.cancelAll()
     }
 
     fun fetchWaitingOrders() {
@@ -78,12 +97,7 @@ class WaitingOrderViewModel : BaseViewModel() {
         }
     }
 
-    private fun handleWaitingOrdersWithCafeteria(
-        orders: List<WaitingOrder>,
-        cafeteria: List<Cafeteria>
-    ) {
-        handleFinishedOrders(orders)
-
+    private fun handleWaitingOrdersWithCafeteria(orders: List<WaitingOrder>, cafeteria: List<Cafeteria>) {
         _orders.value = orders.map { order ->
             WaitingOrderView(
                 orderId = order.id,
@@ -94,31 +108,68 @@ class WaitingOrderViewModel : BaseViewModel() {
         }
     }
 
-    private fun handleFinishedOrders(orders: List<WaitingOrder>) {
-        val unfinishedOrdersBefore = _orders.value?.filter { !it.done }?.size ?: 0
-        val unfinishedOrdersAfter = orders.filter { !it.done }.size
-
-        val allOrdersJustGotFinished = (unfinishedOrdersBefore > 0 && unfinishedOrdersAfter == 0)
-
-        if (allOrdersJustGotFinished) {
-            tryAskingForReviewIfPossible()
-        }
-    }
-
-    private fun tryAskingForReviewIfPossible() {
-        val reviewCondition = PerfectReviewCondition.AfterAllOrdersFinished
-
-        appUsageRepository.markReviewChanceExposed(reviewCondition)
-
-        if (appUsageRepository.isThisPerfectTimeForReview(reviewCondition)) {
-            askForReviewEvent.call()
-        }
-    }
-
     private fun getCafeteriaNameById(allCafeteria: List<Cafeteria>, cafeteriaId: Int): String {
         val cafeteriaFound = allCafeteria.find { it.id == cafeteriaId } ?: return ""
 
         return cafeteriaFound.displayName ?: cafeteriaFound.name
+    }
+
+    fun addWaitingOrder() {
+        navigator.showAddWaitingOrder()
+    }
+
+    fun handleNotification(message: RemoteMessage) {
+        fetchWaitingOrders()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrate()
+        }
+
+        val title = message.notification?.title ?: mContext.getString(R.string.title_order_ready)
+        val body = message.notification?.body ?: mContext.getString(R.string.description_order_ready)
+
+        showOrderReadyDialogEvent.value = Pair(title, body)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun vibrate() {
+        val vibrator = mContext.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        val effect = VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
+
+        vibrator?.vibrate(effect)
+    }
+
+    fun askForReviewIfAllOrdersFinished() {
+        val unfinishedOrders = _orders.value?.filter { !it.done }?.size ?: 0
+        if (unfinishedOrders > 0) {
+            // We will ask for review only when order list is empty.
+            return
+        }
+
+        askForReviewIfPossible()
+    }
+
+    private fun askForReviewIfPossible() {
+        appUsageRepository.markReviewChanceExposed(PerfectReviewCondition.AfterAllOrdersFinished)
+
+        val goodTimeToAskForReview = appUsageRepository.isThisPerfectTimeForReview(PerfectReviewCondition.AfterAllOrdersFinished)
+        if (!goodTimeToAskForReview) {
+            return
+        }
+
+        Handler().postDelayed({
+            askForReviewEvent.call()
+        }, 1000)
+    }
+
+    fun markAskedForReview() {
+        appUsageRepository.markReviewRequestShown(PerfectReviewCondition.AfterAllOrdersFinished)
+    }
+
+    fun deleteFinishedOrders() {
+        _orders.value
+            ?.filter { it.done }
+            ?.forEach { deleteWaitingOrder(it.orderId) }
     }
 
     fun deleteWaitingOrder(orderId: Int) {
@@ -130,16 +181,6 @@ class WaitingOrderViewModel : BaseViewModel() {
                 .onError(::handleFailure)
                 .finally { _loading.value = false }
         }
-    }
-
-    fun deleteFinishedOrders() {
-        _orders.value
-            ?.filter { it.done }
-            ?.forEach { deleteWaitingOrder(it.orderId) }
-    }
-
-    fun markAskedForReview() {
-        appUsageRepository.markReviewRequestShown(PerfectReviewCondition.AfterAllOrdersFinished)
     }
 
     override fun handleFailure(e: Exception) {

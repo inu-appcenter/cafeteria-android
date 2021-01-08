@@ -43,21 +43,21 @@ object Config : KoinComponent {
     val appId = appBuildConfigHolder.applicationId
 
     /** API endpoints */
-    val baseUrl: String = when (appBuildConfigHolder.serverFlavor) {
+    val baseUrl get() = when (appBuildConfigHolder.serverFlavor) {
         "emulator" -> "http://10.0.2.2:9999"
         "localserver" -> "http://10.0.1.10:9999"
-        else -> RemoteConfig.getString("url_api_base")
+        else -> string("url_api_base")
     }
-    val manualPageUrl = string("url_service_manual")
-    val faqPageUrl = string("url_faq")
-    val feedbackUrl = string("url_beta_feedback")
-    val termsAndConditionsUrl = string("url_terms_and_conditions")
+    val manualPageUrl get() = string("url_service_manual")
+    val faqPageUrl get() = string("url_faq")
+    val feedbackUrl get() = string("url_beta_feedback")
+    val termsAndConditionsUrl get() = string("url_terms_and_conditions")
 
     /** Feature parameters */
-    val handleFinishedOrderAction = string("action_handle_finished_order")
-    val showOrderTab = boolean("feature_order_tab_enabled")
+    val handleFinishedOrderAction get() = string("action_handle_finished_order")
+    val showOrderTab get() = boolean("feature_order_tab_enabled")
 
     /** External sources */
-    val kakaoPlusFriendLink = string("url_appcenter_kakao_friend")
-    val uicoopPhoneNumber = string("tel_uicoop")
+    val kakaoPlusFriendLink get() = string("url_appcenter_kakao_friend")
+    val uicoopPhoneNumber get() = string("tel_uicoop")
 }
