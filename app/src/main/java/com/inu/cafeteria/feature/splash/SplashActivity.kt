@@ -24,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.inu.cafeteria.common.navigation.Navigator
 import org.koin.android.ext.android.inject
 
-
 class SplashActivity : AppCompatActivity() {
 
     private val navigator: Navigator by inject()

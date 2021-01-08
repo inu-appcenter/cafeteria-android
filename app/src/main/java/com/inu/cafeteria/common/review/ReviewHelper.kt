@@ -17,26 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.usecase
+package com.inu.cafeteria.common.review
 
-import android.content.Context
-import com.inu.cafeteria.config.Config
-import com.inu.cafeteria.functional.Result
-import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.util.Request
+import android.app.Activity
+import com.google.android.play.core.review.ReviewManagerFactory
 
-class SendAppFeedback(
-    val context: Context
-    ) : UseCase<String, String>() {
+class ReviewHelper(private val activity: Activity) {
 
-    override fun run(params: String): Result<String> {
+    fun askForReview(onComplete: () -> Unit = {}) {
+        val manager = ReviewManagerFactory.create(activity)
 
-        return Result.of {
-            Request.post(
-                context,
-                Config.feedbackUrl,
-                params.toByteArray()
-            )
+        val request = manager.requestReviewFlow()
+        request.addOnCompleteListener {
+            if (it.isSuccessful) {
+                val reviewInfo = request.result
+
+                val flow = manager.launchReviewFlow(activity, reviewInfo)
+                flow.addOnCompleteListener { onComplete() }
+            }
         }
     }
 }

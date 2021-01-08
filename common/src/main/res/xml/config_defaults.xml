@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of INU Cafeteria.
+  ~
+  ~ Copyright (C) 2020 INU Global App Center <potados99@gmail.com>
+  ~
+  ~ INU Cafeteria is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ INU Cafeteria is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<defaultsMap>
+
+    <!-- API endpoints -->
+    <entry>
+        <key>url_api_base</key>
+        <value>https://api.inu-cafeteria.app</value>
+    </entry>
+
+    <entry>
+        <key>url_service_manual</key>
+        <value>https://api.inu-cafeteria.app/res/pages/manual/index.html</value>
+    </entry>
+
+    <entry>
+        <key>url_faq</key>
+        <value>https://api.inu-cafeteria.app/res/pages/faq/index.html</value>
+    </entry>
+
+    <entry>
+        <key>url_beta_feedback</key>
+        <value>https://beta.inu-cafeteria.app/feedback</value>
+    </entry>
+
+    <entry>
+        <key>url_terms_and_conditions</key>
+        <value>https://raw.githubusercontent.com/inu-appcenter/terms-and-conditions/master/카페테리아-개인정보처리방침.txt</value>
+    </entry>
+
+    <!-- Feature parameters -->
+    <entry>
+        <key>action_handle_finished_order</key>
+        <value>view_orders</value>
+    </entry>
+
+    <entry>
+        <key>feature_order_tab_enabled</key>
+        <value>true</value>
+    </entry>
+
+    <!-- External sources -->
+    <entry>
+        <key>url_appcenter_kakao_friend</key>
+        <value>kakaoplus://plusfriend/home/_xgxaSLd</value>
+    </entry>
+
+    <entry>
+        <key>tel_uicoop</key>
+        <value>0328354720</value>
+    </entry>
+
+</defaultsMap>

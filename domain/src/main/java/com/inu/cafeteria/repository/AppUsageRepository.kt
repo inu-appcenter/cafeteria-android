@@ -17,26 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.usecase
+package com.inu.cafeteria.repository
 
-import android.content.Context
-import com.inu.cafeteria.config.Config
-import com.inu.cafeteria.functional.Result
-import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.util.Request
+import com.inu.cafeteria.entities.PerfectReviewCondition
 
-class SendAppFeedback(
-    val context: Context
-    ) : UseCase<String, String>() {
+interface AppUsageRepository {
+    fun markReviewRequestShown(condition: PerfectReviewCondition)
+    fun markReviewChanceExposed(condition: PerfectReviewCondition)
 
-    override fun run(params: String): Result<String> {
-
-        return Result.of {
-            Request.post(
-                context,
-                Config.feedbackUrl,
-                params.toByteArray()
-            )
-        }
-    }
+    fun isThisPerfectTimeForReview(condition: PerfectReviewCondition): Boolean
 }

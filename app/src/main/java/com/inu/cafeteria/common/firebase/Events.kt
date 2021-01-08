@@ -17,26 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.usecase
+package com.inu.cafeteria.common.firebase
 
-import android.content.Context
-import com.inu.cafeteria.config.Config
-import com.inu.cafeteria.functional.Result
-import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.util.Request
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 
-class SendAppFeedback(
-    val context: Context
-    ) : UseCase<String, String>() {
+object Events {
+    private val analytics = Firebase.analytics
 
-    override fun run(params: String): Result<String> {
+    fun onLogin(userId: Int) {
+        analytics.logEvent(FirebaseAnalytics.Event.LOGIN) {
+            param(FirebaseAnalytics.Param.ITEM_ID, userId.toString())
+        }
+    }
 
-        return Result.of {
-            Request.post(
-                context,
-                Config.feedbackUrl,
-                params.toByteArray()
-            )
+    fun onSelectTab(tabItemName: String) {
+        analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+            param(FirebaseAnalytics.Param.ITEM_ID, tabItemName)
         }
     }
 }

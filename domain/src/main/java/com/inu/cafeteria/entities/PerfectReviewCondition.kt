@@ -17,18 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria
+package com.inu.cafeteria.entities
 
-data class GlobalConfig(
-    val baseUrl: String,
-    val serviceManualPagePath: String,
-    val faqPagePath: String,
-    val deviceInfo: String,
-    val version: String,
-    val appId: String,
-    val kakaoPlusFriendLink: String,
-    val uicoopPhoneNumber: String,
-    val feedbackUrl: String,
-    val viewOrdersAction: String,
-    val termsAndConditionsUrl: String,
-)
+enum class PerfectReviewCondition(
+    private val baseKey: String,
+    val minimumPreExposure: Long = 5,
+    val minimumDaysFromInstall: Long = 14,
+    val exposureCountKey: String = "${baseKey}_exposures",
+    val hasBeenAskedKey: String = "${baseKey}_has_been_asked",
+) {
+
+    /** Ask for review when all orders had been finished */
+    AfterAllOrdersFinished("com.inu.cafeteria.review_condition_after_all_orders_finished", 3, 7)
+}

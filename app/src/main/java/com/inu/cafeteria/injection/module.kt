@@ -21,11 +21,10 @@ package com.inu.cafeteria.injection
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.os.Build
 import com.inu.cafeteria.BuildConfig
-import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.navigation.Navigator
+import com.inu.cafeteria.config.BuildConfigHolder
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.feature.main.LifecycleEventHandler
 import com.inu.cafeteria.feature.main.LifecycleEventHandlerImplBeta
@@ -38,48 +37,26 @@ import org.koin.dsl.module
 
 val myModules = module {
 
-    /*****************************
-     * Global config
-     *****************************/
-
+    /** Config */
     single {
-        GlobalConfig(
-            baseUrl = when (BuildConfig.FLAVOR_server) {
-                "localserver" -> "http://10.0.1.10:9999" // For emulator, use http://10.0.2.2:9999
-                "productionserver" -> "https://api.inu-cafeteria.app"
-                else -> "https://api.inu-cafeteria.app"
-            },
-            serviceManualPagePath = "/res/pages/manual/index.html",
-            faqPagePath = "/res/pages/faq/index.html",
-            deviceInfo = "${Build.MANUFACTURER} ${Build.MODEL}; Android ${Build.VERSION.RELEASE}" ,
-            version = BuildConfig.VERSION_NAME,
-            appId = BuildConfig.APPLICATION_ID,
-            kakaoPlusFriendLink = "kakaoplus://plusfriend/home/_xgxaSLd",
-            uicoopPhoneNumber = "0328354720",
-            feedbackUrl = "https://beta.inu-cafeteria.app/feedback",
-            viewOrdersAction = "view_orders",
-            termsAndConditionsUrl = "https://raw.githubusercontent.com/inu-appcenter/terms-and-conditions/master/카페테리아-개인정보처리방침.txt"
+        BuildConfigHolder(
+            serverFlavor = BuildConfig.FLAVOR_server,
+            versionName = BuildConfig.VERSION_NAME,
+            applicationId = BuildConfig.APPLICATION_ID
         )
     }
-
-
-    /*****************************
-     * General
-     *****************************/
 
     /** Navigator */
     single {
         Navigator(
-            context = get(),
-            globalConfig = get()
+            context = get()
         )
     }
 
     /** Network Service */
     single {
         RetrofitFactory.createCafeteriaNetworkService(
-            context = get(),
-            baseUrl = get<GlobalConfig>().baseUrl
+            context = get()
         )
     }
 
@@ -102,22 +79,12 @@ val myModules = module {
         } as LifecycleEventHandler
     }
 
-
-    /*****************************
-     * Service
-     *****************************/
-
     /** Account service */
     single {
         AccountService(
             accountRepo = get()
         )
     }
-
-
-    /*****************************
-     * Repository
-     *****************************/
 
     /** Cafeteria repository */
     single {
@@ -160,8 +127,7 @@ val myModules = module {
     /** Interaction repository */
     single {
         InteractionRepositoryImpl(
-            networkService = get(),
-            globalConfig = get()
+            networkService = get()
         ) as InteractionRepository
     }
 
@@ -186,9 +152,13 @@ val myModules = module {
         ) as OnboardingHintRepository
     }
 
-    /*****************************
-     * Use Case
-     *****************************/
+    /** App usage repository */
+    single {
+        AppUsageRepositoryImpl(
+            context = get(),
+            db = get()
+        ) as AppUsageRepository
+    }
 
     /** Activate barcode */
     single {
@@ -240,8 +210,7 @@ val myModules = module {
     /** Send app feedback */
     single {
         SendAppFeedback(
-            context = get(),
-            globalConfig = get()
+            context = get()
         )
     }
 
@@ -269,16 +238,14 @@ val myModules = module {
     /** Check new notice */
     single {
         GetNewNotice(
-            noticeRepo = get(),
-            globalConfig = get()
+            noticeRepo = get()
         )
     }
 
     /** Get all notices */
     single {
         GetAllNotices(
-            noticeRepo = get(),
-            globalConfig = get()
+            noticeRepo = get()
         )
     }
 

@@ -83,7 +83,8 @@
             android:foregroundTint="?android:attr/textColorPrimaryInverse"
             android:textColor="?android:attr/textColorPrimaryInverse"
             app:iconTint="?android:attr/textColorPrimaryInverse"
-            app:backgroundTint="?android:attr/colorPrimary"/>
+            app:backgroundTint="?android:attr/colorPrimary"
+            android:onClick="@{() -> vm.addWaitingOrder()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

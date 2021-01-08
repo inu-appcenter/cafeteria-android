@@ -34,23 +34,32 @@ class ThisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Timber.plant(Timber.DebugTree())
+        startTimber()
+        startKoin()
+        startDeviceStatusRepository()
+        initializeNotificationChannel()
+        initializeMlKit()
+    }
 
+    private fun startTimber() {
+        Timber.plant(Timber.DebugTree())
+    }
+
+    private fun startKoin() {
         startKoin {
             androidContext(this@ThisApplication)
             modules(myModules)
         }
-
-        startDeviceStatusRepository()
-
-        NotificationChannelManager.addPushNumberNotificationChannel(this)
-
-        initializeMlKit()
     }
 
     private fun startDeviceStatusRepository() {
         val statusRepo: DeviceStatusRepository by inject()
+
         statusRepo.init()
+    }
+
+    private fun initializeNotificationChannel() {
+        NotificationChannelManager.addPushNumberNotificationChannel(this)
     }
 
     private fun initializeMlKit() {

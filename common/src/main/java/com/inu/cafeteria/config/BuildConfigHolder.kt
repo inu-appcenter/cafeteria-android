@@ -17,26 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.usecase
+package com.inu.cafeteria.config
 
-import android.content.Context
-import com.inu.cafeteria.config.Config
-import com.inu.cafeteria.functional.Result
-import com.inu.cafeteria.interactor.UseCase
-import com.inu.cafeteria.util.Request
-
-class SendAppFeedback(
-    val context: Context
-    ) : UseCase<String, String>() {
-
-    override fun run(params: String): Result<String> {
-
-        return Result.of {
-            Request.post(
-                context,
-                Config.feedbackUrl,
-                params.toByteArray()
-            )
-        }
-    }
-}
+/**
+ * This holder carries app module's BuildConfig to the project scope.
+ */
+data class BuildConfigHolder(
+    val serverFlavor: String,
+    val versionName: String,
+    val applicationId: String
+)

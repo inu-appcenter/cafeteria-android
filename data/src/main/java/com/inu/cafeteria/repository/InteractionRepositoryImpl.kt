@@ -20,7 +20,7 @@
 package com.inu.cafeteria.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.inu.cafeteria.GlobalConfig
+import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.entities.Question
 import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
@@ -30,9 +30,8 @@ import com.inu.cafeteria.retrofit.scheme.QuestionResult
 import com.inu.cafeteria.util.Cache
 
 class InteractionRepositoryImpl(
-    private val networkService: CafeteriaNetworkService,
-    private val globalConfig: GlobalConfig
-) : InteractionRepository {
+    private val networkService: CafeteriaNetworkService
+    ) : InteractionRepository {
 
     private val questionsCache = Cache<List<QuestionResult>>()
     private val answerCache = Cache<List<AnswerResult>>()
@@ -42,8 +41,8 @@ class InteractionRepositoryImpl(
     override fun ask(content: String) {
         networkService.ask(
             AskParams(
-                deviceInfo = globalConfig.deviceInfo,
-                version = globalConfig.version,
+                deviceInfo = Config.deviceInfo,
+                version = Config.version,
                 content = content
             )
         ).getOrThrow()

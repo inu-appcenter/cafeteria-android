@@ -23,9 +23,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.feature.support.SupportOption.Companion.availableSupportOptionsForThoseHaveNotification
 import com.inu.cafeteria.feature.support.SupportOption.Companion.availableSupportOptionsForThoseLoggedIn
 import com.inu.cafeteria.feature.support.SupportOption.Companion.availableSupportOptionsForThoseNotLoggedIn
@@ -35,7 +35,6 @@ import org.koin.core.inject
 
 class SupportViewModel : BaseViewModel() {
 
-    private val globalConfig: GlobalConfig by inject()
     private val accountService: AccountService by inject()
     private val interactionRepo: InteractionRepository by inject()
 
@@ -46,11 +45,11 @@ class SupportViewModel : BaseViewModel() {
 
     val supportOptions: LiveData<List<SupportOption>> = _supportOptions
 
-    val appVersionText = mContext.getString(R.string.description_app_version, globalConfig.version)
+    val appVersionText = mContext.getString(R.string.description_app_version, Config.version)
 
-    fun getKakaoIntent() = Intent(Intent.ACTION_VIEW, Uri.parse(globalConfig.kakaoPlusFriendLink))
+    fun getKakaoIntent() = Intent(Intent.ACTION_VIEW, Uri.parse(Config.kakaoPlusFriendLink))
 
-    fun callUiCoopIntent() = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${globalConfig.uicoopPhoneNumber}"))
+    fun callUiCoopIntent() = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${Config.uicoopPhoneNumber}"))
 
     private fun updateSupportOptions() {
         val loggedIn = accountService.isLoggedIn();

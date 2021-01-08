@@ -20,6 +20,8 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.firebase.firebase-perf'
 
     id 'kotlin-android'
     id 'kotlin-kapt'
@@ -65,6 +67,12 @@ android {
             dimension "stage"
         }
 
+        emulator {
+            // Running app on emulator, and want to communicate with host 127.0.0.1
+            dimension "server"
+            versionNameSuffix "-emulator"
+        }
+
         localserver {
             dimension "server"
             versionNameSuffix "-localserver"
@@ -100,6 +108,9 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "org.koin:koin-test:$koin_test_version"
 
+    /** Kotlin */
+    implementation "androidx.core:core-ktx:$kotlin_core_ktx_version"
+
     /** Koin Test */
     androidTestImplementation "org.koin:koin-test:$koin_version"
 
@@ -122,8 +133,6 @@ dependencies {
 
     /** Glide */
     implementation "com.github.bumptech.glide:glide:$glide_version"
-    implementation "androidx.core:core-ktx:$kotlin_core_ktx_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     /** Navigation */
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
@@ -145,6 +154,10 @@ dependencies {
 
     /** Tooltip */
     implementation "it.sephiroth.android.library.targettooltip:target-tooltip-library:$tooltip_version"
+
+    /** In-app review */
+    implementation "com.google.android.play:core:$play_core_version"
+    implementation "com.google.android.play:core-ktx:$play_core_ktx_version"
 }
 
 repositories {
