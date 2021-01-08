@@ -30,7 +30,6 @@ import com.inu.cafeteria.retrofit.scheme.MenuResult
 import com.inu.cafeteria.util.Cache
 import com.inu.cafeteria.util.PairedCache
 import java.util.*
-
 class CafeteriaRepositoryImpl(
     private val networkService: CafeteriaNetworkService,
     private val db: SharedPreferenceWrapper
@@ -40,7 +39,23 @@ class CafeteriaRepositoryImpl(
     private val cornerCache = Cache<List<CornerResult>>()
     private val menuCaches = PairedCache<String, List<MenuResult>>()
 
+    override fun getAllMenuSupportingCafeteria(includeMenu: Boolean, menuDate: String?): List<Cafeteria> {
+        return getAllCafeteriaInternal(includeMenu, menuDate).filter { it.supportMenu }
+    }
+
+    override fun getAllDiscountSupportingCafeteria(): List<Cafeteria> {
+        return getAllCafeteriaInternal(false).filter { it.supportDiscount }
+    }
+
+    override fun getAllNotificationSupportingCafeteria(): List<Cafeteria> {
+        return getAllCafeteriaInternal(false).filter { it.supportNotification }
+    }
+
     override fun getAllCafeteria(date: String?): List<Cafeteria> {
+        return getAllCafeteriaInternal(true, date)
+    }
+
+    private fun getAllCafeteriaInternal(includeMenu: Boolean, menuDate: String? = null): List<Cafeteria> {
         val cafeteria = cachedFetch(cafeteriaCache) {
             networkService.getCafeteria().getOrThrow()
         } ?: return listOf()
@@ -49,9 +64,13 @@ class CafeteriaRepositoryImpl(
             networkService.getCorners().getOrThrow()
         } ?: return listOf()
 
-        val menus = cachedFetch(menuCaches, date ?: Date().format()) {
-            networkService.getMenus(date, split = true).getOrThrow()
-        } ?: return listOf()
+        val menus =
+            if (includeMenu)
+                cachedFetch(menuCaches, menuDate ?: Date().format()) {
+                    networkService.getMenus(menuDate, split = true).getOrThrow()
+                } ?: return listOf()
+            else
+                listOf()
 
         return CafeteriaResultGatherer(cafeteria, corners, menus).combine()
     }

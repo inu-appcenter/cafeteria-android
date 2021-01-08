@@ -23,6 +23,10 @@ import com.inu.cafeteria.entities.Cafeteria
 
 interface CafeteriaRepository {
 
+    fun getAllMenuSupportingCafeteria(includeMenu: Boolean = true, menuDate: String? = null): List<Cafeteria>
+    fun getAllDiscountSupportingCafeteria(): List<Cafeteria>
+    fun getAllNotificationSupportingCafeteria(): List<Cafeteria>
+
     fun getAllCafeteria(date: String? = null): List<Cafeteria>
     fun getCafeteriaOnly(): List<Cafeteria>
 
