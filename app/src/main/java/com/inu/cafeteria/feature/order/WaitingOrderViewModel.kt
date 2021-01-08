@@ -40,7 +40,7 @@ import com.inu.cafeteria.exception.NoCredentialsException
 import com.inu.cafeteria.exception.ResourceNotFoundException
 import com.inu.cafeteria.repository.AppUsageRepository
 import com.inu.cafeteria.usecase.DeleteWaitingOrder
-import com.inu.cafeteria.usecase.GetCafeteriaOnly
+import com.inu.cafeteria.usecase.GetMenuSupportingCafeteriaWithoutMenus
 import com.inu.cafeteria.usecase.GetWaitingOrders
 import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
@@ -49,8 +49,8 @@ import kotlin.concurrent.timer
 
 class WaitingOrderViewModel : BaseViewModel() {
 
+    private val getCafeteria: GetMenuSupportingCafeteriaWithoutMenus by inject()
     private val getWaitingOrders: GetWaitingOrders by inject()
-    private val getCafeteriaOnly: GetCafeteriaOnly by inject()
     private val deleteWaitingOrder: DeleteWaitingOrder by inject()
 
     private val navigator: Navigator by inject()
@@ -89,7 +89,7 @@ class WaitingOrderViewModel : BaseViewModel() {
     }
 
     private fun handleWaitingOrders(orders: List<WaitingOrder>) {
-        getCafeteriaOnly(Unit) { result ->
+        getCafeteria(Unit) { result ->
             result
                 .onSuccess { handleWaitingOrdersWithCafeteria(orders, it) }
                 .onError(::handleFailure)

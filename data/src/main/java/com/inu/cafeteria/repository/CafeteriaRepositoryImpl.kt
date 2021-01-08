@@ -56,10 +56,6 @@ class CafeteriaRepositoryImpl(
         return getAllCafeteriaInternal(false).filter { it.supportNotification }
     }
 
-    override fun getAllCafeteria(date: String?): List<Cafeteria> {
-        return getAllCafeteriaInternal(true, date)
-    }
-
     private fun getAllCafeteriaInternal(
         includeMenu: Boolean,
         menuDate: String? = null
@@ -87,24 +83,6 @@ class CafeteriaRepositoryImpl(
         return CafeteriaResultGatherer(cafeteria, corners, menus).combine()
     }
 
-    override fun getCafeteriaOnly(): List<Cafeteria> {
-        val cafeteria = cachedFetch(cafeteriaCache) {
-            networkService.getCafeteria().getOrThrow()
-        } ?: return listOf()
-
-        return cafeteria.map {
-            Cafeteria(
-                id = it.id,
-                name = it.name,
-                displayName = it.displayName,
-                supportMenu = it.supportMenu,
-                supportDiscount = it.supportDiscount,
-                supportNotification = it.supportNotification,
-                corners = listOf()
-            )
-        }
-    }
-
     @Synchronized
     private fun <T> cachedFetch(cache: Cache<T>, fetch: () -> T?): T? {
         return (if (cache.isValid) cache.get() else null) ?: fetch()?.also(cache::set)
@@ -113,10 +91,7 @@ class CafeteriaRepositoryImpl(
     @Synchronized
     private fun <K, V> cachedFetch(cache: PairedCache<K, V>, key: K, fetch: () -> V?): V? {
         return (if (cache.isValid(key)) cache.get(key) else null) ?: fetch()?.also {
-            cache.set(
-                key,
-                it
-            )
+            cache.set(key, it)
         }
     }
 

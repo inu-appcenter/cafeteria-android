@@ -172,13 +172,6 @@ val myModules = module {
         CreateBarcode()
     }
 
-    /** Get cafeteria only */
-    single {
-        GetCafeteriaOnly(
-            cafeteriaRepo = get()
-        )
-    }
-
     /** Get menu supporting cafeteria */
     single {
         GetMenuSupportingCafeteria(

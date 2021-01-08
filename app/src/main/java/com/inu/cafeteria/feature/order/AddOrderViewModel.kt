@@ -33,15 +33,15 @@ import com.inu.cafeteria.exception.BadRequestException
 import com.inu.cafeteria.exception.ForbiddenException
 import com.inu.cafeteria.exception.NoCredentialsException
 import com.inu.cafeteria.usecase.AddWaitingOrder
-import com.inu.cafeteria.usecase.GetCafeteriaOnly
+import com.inu.cafeteria.usecase.GetMenuSupportingCafeteriaWithoutMenus
 import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
 import timber.log.Timber
 
 class AddOrderViewModel : BaseViewModel() {
 
+    private val getCafeteria: GetMenuSupportingCafeteriaWithoutMenus by inject()
     private val addWaitingOrder: AddWaitingOrder by inject()
-    private val getCafeteriaOnly: GetCafeteriaOnly by inject()
 
     private val cameraProviderLiveData = MutableLiveData<ProcessCameraProvider>()
 
@@ -135,7 +135,7 @@ class AddOrderViewModel : BaseViewModel() {
     }
 
     fun fetchCafeteriaSelectionOptions() {
-        getCafeteriaOnly(Unit) {
+        getCafeteria(Unit) {
             it.onSuccess(::handleCafeteriaResult).onError(::handleFailure)
         }
     }
