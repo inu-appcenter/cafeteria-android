@@ -17,18 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria
+package com.inu.cafeteria.config
 
-data class GlobalConfig(
-    val baseUrl: String,
-    val serviceManualPagePath: String,
-    val faqPagePath: String,
-    val deviceInfo: String,
-    val version: String,
-    val appId: String,
-    val kakaoPlusFriendLink: String,
-    val uicoopPhoneNumber: String,
-    val feedbackUrl: String,
-    val viewOrdersAction: String,
-    val termsAndConditionsUrl: String,
+/**
+ * This holder carries app module's BuildConfig to the project scope.
+ */
+data class BuildConfigHolder(
+    val serverFlavor: String,
+    val versionName: String,
+    val applicationId: String
 )

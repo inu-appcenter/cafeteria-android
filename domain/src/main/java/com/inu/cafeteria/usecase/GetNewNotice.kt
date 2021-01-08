@@ -19,7 +19,7 @@
 
 package com.inu.cafeteria.usecase
 
-import com.inu.cafeteria.GlobalConfig
+import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
@@ -27,13 +27,12 @@ import com.inu.cafeteria.repository.NoticeRepository
 
 class GetNewNotice(
     private val noticeRepo: NoticeRepository,
-    private val globalConfig: GlobalConfig
 ) : UseCase<Unit, Notice?>() {
 
     override fun run(params: Unit) = Result.of {
         noticeRepo.getNewNotice(
             "android",
-            globalConfig.version
+            Config.version
         )
     }
 }

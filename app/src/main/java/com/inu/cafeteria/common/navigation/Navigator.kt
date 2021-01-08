@@ -30,10 +30,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.extension.hideKeyboard
 import com.inu.cafeteria.common.extension.requestFocusWithKeyboard
+import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.feature.login.LoginActivity
@@ -49,7 +49,6 @@ import timber.log.Timber
 
 class Navigator(
     private val context: Context,
-    private val globalConfig: GlobalConfig
 ) : KoinComponent {
 
     fun showMain(extras: Bundle? = null) {
@@ -128,13 +127,13 @@ class Navigator(
 
     fun showTermsAndConditions() {
         startActivity(
-            Intent(Intent.ACTION_VIEW, Uri.parse(globalConfig.termsAndConditionsUrl))
+            Intent(Intent.ACTION_VIEW, Uri.parse(Config.termsAndConditionsUrl))
         )
     }
 
     fun showStore() {
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("market://details?id=" + globalConfig.appId)
+            data = Uri.parse("market://details?id=" + Config.appId)
         }
 
         startActivity(intent)

@@ -25,6 +25,7 @@ import android.os.Build
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -75,7 +76,7 @@ class RetrofitFactory {
 
     companion object {
 
-        fun createCafeteriaNetworkService(context: Context, baseUrl: String): CafeteriaNetworkService {
+        fun createCafeteriaNetworkService(context: Context): CafeteriaNetworkService {
             val cookieJar = PersistentCookieJar(
                 SetCookieCache(),
                 SharedPrefsCookiePersistor(context)
@@ -88,7 +89,7 @@ class RetrofitFactory {
             val builder = Retrofit.Builder()
 
             val retrofit = builder
-                .baseUrl(baseUrl)
+                .baseUrl(Config.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()

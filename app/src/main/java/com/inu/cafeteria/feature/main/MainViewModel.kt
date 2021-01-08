@@ -19,9 +19,9 @@
 
 package com.inu.cafeteria.feature.main
 
-import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.navigation.Navigator
+import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.exception.NoCredentialsException
 import com.inu.cafeteria.repository.DeviceStatusRepository
@@ -34,7 +34,6 @@ import timber.log.Timber
 
 class MainViewModel : BaseViewModel() {
     private val navigator: Navigator by inject()
-    private val globalConfig: GlobalConfig by inject()
 
     private val getNewNotice: GetNewNotice by inject()
     private val dismissNotice: DismissNotice by inject()
@@ -96,7 +95,7 @@ class MainViewModel : BaseViewModel() {
     }
 
     private fun checkForUpdate(activity: MainActivity) {
-        shouldIUpdate(globalConfig.version) {
+        shouldIUpdate(Config.version) {
             it.onSuccess { shouldUpdate ->
                 if (shouldUpdate) {
                     Timber.i("Need to update!")

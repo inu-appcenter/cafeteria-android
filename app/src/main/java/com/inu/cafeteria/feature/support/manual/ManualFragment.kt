@@ -19,13 +19,9 @@
 
 package com.inu.cafeteria.feature.support.manual
 
-import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.common.base.WebViewOnlyFragment
-import org.koin.core.inject
+import com.inu.cafeteria.config.Config
 
 class ManualFragment : WebViewOnlyFragment() {
-    private val globalConfig: GlobalConfig by inject()
-    private val manualPageUrl = globalConfig.baseUrl + globalConfig.serviceManualPagePath
-
-    override fun getPageUrl() = manualPageUrl
+    override fun getPageUrl() = Config.manualPageUrl
 }

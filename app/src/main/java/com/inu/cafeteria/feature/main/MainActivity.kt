@@ -22,6 +22,7 @@ package com.inu.cafeteria.feature.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
@@ -29,7 +30,6 @@ import androidx.annotation.IdRes
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.LiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.inu.cafeteria.GlobalConfig
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.NavigationActivity
 import com.inu.cafeteria.common.base.NavigationHostFragment
@@ -38,6 +38,7 @@ import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.firebase.Events
 import com.inu.cafeteria.common.navigation.rootDestinations
+import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.feature.main.EasterEggHelper.Companion.getEasterEggs
 import org.koin.core.inject
@@ -112,10 +113,8 @@ class MainActivity : NavigationActivity() {
     }
 
     private fun handleFirebaseNotificationClickAction(clickAction: String) {
-        val globalConfig: GlobalConfig by inject()
-
         when (clickAction) {
-            globalConfig.viewOrdersAction -> {
+            Config.handleFinishedOrderAction -> {
                 Timber.i("Got action '$clickAction'. Jumping to 'order' tab!")
                 jumpToTab(R.id.tab_order)
             }
@@ -221,6 +220,11 @@ class MainActivity : NavigationActivity() {
                 fadeIn(250L)
             }
         }
+    }
+
+    override fun onInflatedBottomMenu(menu: Menu) {
+        // Apply remote setting: whether to reveal or not the order feature.
+        menu.findItem(R.id.tab_order)?.isVisible = Config.showOrderTab
     }
 
     override fun onTabSelected(item: MenuItem) {

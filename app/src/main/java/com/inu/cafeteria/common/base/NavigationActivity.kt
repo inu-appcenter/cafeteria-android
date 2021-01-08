@@ -20,6 +20,7 @@
 package com.inu.cafeteria.common.base
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.IdRes
@@ -68,6 +69,12 @@ abstract class NavigationActivity : BaseActivity(),
      */
     protected open fun onTabSelected(item: MenuItem) {}
 
+    /**
+     * For children
+     * Override to modify menu.
+     */
+    protected open fun onInflatedBottomMenu(menu: Menu) {}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutRes)
@@ -115,6 +122,8 @@ abstract class NavigationActivity : BaseActivity(),
         with(bottomNavigation) {
             menu.clear()
             inflateMenu(menuRes)
+
+            onInflatedBottomMenu(menu)
 
             setOnNavigationItemSelectedListener(this@NavigationActivity)
             setOnNavigationItemReselectedListener(this@NavigationActivity)

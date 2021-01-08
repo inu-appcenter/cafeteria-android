@@ -67,6 +67,12 @@ android {
             dimension "stage"
         }
 
+        emulator {
+            // Running app on emulator, and want to communicate with host 127.0.0.1
+            dimension "server"
+            versionNameSuffix "-emulator"
+        }
+
         localserver {
             dimension "server"
             versionNameSuffix "-localserver"
