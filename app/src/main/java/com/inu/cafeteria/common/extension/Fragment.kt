@@ -20,6 +20,9 @@
 package com.inu.cafeteria.common.extension
 
 import android.content.Context
+import android.view.MenuItem
+import androidx.annotation.IdRes
+import androidx.annotation.MenuRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -58,6 +61,28 @@ fun Fragment.setSupportActionBar(toolbar: Toolbar?, showTitle: Boolean = false, 
             setDisplayShowTitleEnabled(showTitle)
             setDisplayHomeAsUpEnabled(showUpButton)
         }
+    }
+}
+
+fun Fragment.setToolbar(
+    @IdRes toolbarId: Int,
+    @MenuRes menuId: Int,
+    onClick: (MenuItem) -> Boolean = this::onOptionsItemSelected
+) {
+    activity?.findViewById<Toolbar>(toolbarId)?.let {
+        setToolbar(it, menuId, onClick)
+    }
+}
+
+fun Fragment.setToolbar(
+    toolbar: Toolbar,
+    @MenuRes menuId: Int,
+    onClick: (MenuItem) -> Boolean = this::onOptionsItemSelected
+) {
+    with(toolbar) {
+        menu.clear()
+        inflateMenu(menuId)
+        setOnMenuItemClickListener(onClick)
     }
 }
 

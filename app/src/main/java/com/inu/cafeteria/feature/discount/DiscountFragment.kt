@@ -37,10 +37,6 @@ import org.koin.core.inject
 
 class DiscountFragment : BaseFragment() {
 
-    override val toolbarId = R.id.toolbar_discount
-    override val optionMenuId = R.menu.discount_menu
-    override val setupToolbarForNavigation = true
-
     private lateinit var binding: DiscountFragmentBinding
     private val viewModel: DiscountViewModel by viewModels()
 
@@ -67,6 +63,8 @@ class DiscountFragment : BaseFragment() {
         }
 
     private fun initializeView(binding: DiscountFragmentBinding) {
+        setToolbar(R.id.toolbar_discount, R.menu.discount_menu)
+
         with(binding.carrot) {
             startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_forever).apply {
                 duration = 200
@@ -75,10 +73,7 @@ class DiscountFragment : BaseFragment() {
 
         with(viewModel) {
             observe(loggedInStatus) {
-                if (isOnline()) {
-                    // Same pattern as in MainActivity.
-                    viewModel.load()
-                }
+                viewModel.load()
             }
 
             observe(bright) {

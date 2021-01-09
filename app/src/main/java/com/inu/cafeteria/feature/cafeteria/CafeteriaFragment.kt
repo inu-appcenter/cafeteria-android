@@ -37,10 +37,6 @@ import org.koin.core.inject
 
 class CafeteriaFragment : BaseFragment() {
 
-    override val toolbarId = R.id.toolbar_cafeteria
-    override val optionMenuId = R.menu.cafeteria_menu
-    override val setupToolbarForNavigation = true
-
     private lateinit var binding: CafeteriaFragmentBinding
     private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
     private val eventHub: EventHub by inject()
@@ -56,8 +52,7 @@ class CafeteriaFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(viewCreator: ViewCreator) =
-        persistentView?.apply { removeFromParent() } ?:
+    override fun onCreateView(viewCreator: ViewCreator) = persistentView?.apply { removeFromParent() } ?:
         viewCreator<CafeteriaFragmentBinding> {
             initializeView(this)
             vm = viewModel
@@ -66,6 +61,8 @@ class CafeteriaFragment : BaseFragment() {
         }
 
     private fun initializeView(binding: CafeteriaFragmentBinding) {
+        setToolbar(binding.toolbarCafeteria, R.menu.cafeteria_menu)
+
         with(binding.cafeteriaRecycler) {
             adapter = this@CafeteriaFragment.adapter.apply {
                 onClickMore = viewModel::onViewMore

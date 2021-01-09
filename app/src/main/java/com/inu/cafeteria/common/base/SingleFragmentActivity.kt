@@ -39,11 +39,6 @@ abstract class SingleFragmentActivity : BaseActivity() {
         addFragment(savedInstanceState)
     }
 
-    override fun onBackPressed() {
-        (fragment as? BaseFragment)?.onBackPressed()
-        super.onBackPressed()
-    }
-
     private fun addFragment(savedInstanceState: Bundle?) =
         savedInstanceState ?:
         supportFragmentManager.inImmediateTransaction {

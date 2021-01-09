@@ -33,7 +33,6 @@ import org.koin.core.inject
 
 abstract class BaseActivity : AppCompatActivity(), KoinComponent {
 
-    protected val mContext: Context by inject()
     private val deviceStatusRepository: DeviceStatusRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +42,6 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
         getRuntimePermissions()
     }
 
-    // -----------------Code for network event------------------------------------------------------
     protected fun isOnline() = deviceStatusRepository.isOnline()
 
     private fun observeNetworkStateChange(isThisFirstTimeCreated: Boolean) {
@@ -58,18 +56,6 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
 
     protected open fun onNetworkStateChange(available: Boolean) {}
 
-    // -----------------Code for options item-------------------------------------------------------
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    // -----------------Code for permissions--------------------------------------------------------
     private fun getRuntimePermissions() {
         val allNeededPermissions = requiredPermissions
             .filter { !isPermissionGranted(this, it) }
@@ -111,6 +97,16 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
     protected open fun onAllPermissionsGranted() {}
 
     protected open fun onPermissionNotGranted() {}
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     companion object {
         private const val REQUEST_CODE_PERMISSIONS = 10
