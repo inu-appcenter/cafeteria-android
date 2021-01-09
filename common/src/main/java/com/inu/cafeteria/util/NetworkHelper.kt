@@ -24,6 +24,7 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Build
+import java.util.concurrent.atomic.AtomicBoolean
 
 class NetworkHelper {
 
@@ -33,7 +34,8 @@ class NetworkHelper {
             var result = false
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val networkCapabilities = connectivityManager.activeNetwork ?: return false
-                val actNw = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+                val actNw =
+                    connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
                 result = when {
                     actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
                     actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
@@ -57,6 +59,10 @@ class NetworkHelper {
             return result
         }
 
+        /**
+         * Observe network 'CHANGE'.
+         * This will not emit onAvailable event when already online.
+         */
         fun onNetworkChange(
             connectivityManager: ConnectivityManager,
             onAvailable: () -> Unit,
@@ -67,23 +73,32 @@ class NetworkHelper {
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .build()
 
+            val previousState = AtomicBoolean(isOnline(connectivityManager))
+
             connectivityManager.registerNetworkCallback(
                 networkRequest,
                 object : ConnectivityManager.NetworkCallback() {
                     override fun onAvailable(network: Network) {
                         super.onAvailable(network)
 
-                        onAvailable()
+                        if (previousState.compareAndSet(false, true)) {
+                            onAvailable()
+                        }
                     }
 
                     override fun onUnavailable() {
                         super.onUnavailable()
-                        onUnavailable()
+
+                        if (previousState.compareAndSet(true, false)) {
+                            onUnavailable()
+                        }
                     }
 
                     override fun onLost(network: Network) {
                         super.onLost(network)
-                        onUnavailable()
+                        if (previousState.compareAndSet(true, false)) {
+                            onUnavailable()
+                        }
                     }
                 })
         }

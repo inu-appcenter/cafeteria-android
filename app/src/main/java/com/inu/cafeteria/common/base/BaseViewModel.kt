@@ -28,12 +28,23 @@ import com.inu.cafeteria.exception.NetworkException
 import com.inu.cafeteria.exception.NullBodyException
 import com.inu.cafeteria.exception.ResponseFailException
 import com.inu.cafeteria.exception.ServerFailException
+import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     protected val mContext: Context by inject()
+
+    private val deviceStatusRepository: DeviceStatusRepository by inject()
+
+    protected fun saySorryIfOffline(): Boolean {
+        return if (!deviceStatusRepository.isOnline()) {
+            saySorryToBeOffline()
+            true
+        } else
+            false
+    }
 
     protected open fun handleFailure(e: Exception) {
         val errorMessage = when (e) {
@@ -59,5 +70,9 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     protected open fun handleFailure(@StringRes message: Int, vararg args: Any?) {
         Toast.makeText(mContext, mContext.getString(message, *args), Toast.LENGTH_SHORT).show()
+    }
+
+    protected open fun saySorryToBeOffline() {
+        Toast.makeText(mContext, mContext.getString(R.string.sorry_to_be_offline), Toast.LENGTH_SHORT).show()
     }
 }

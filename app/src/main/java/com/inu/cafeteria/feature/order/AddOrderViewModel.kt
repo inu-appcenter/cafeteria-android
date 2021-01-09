@@ -70,7 +70,7 @@ class AddOrderViewModel : BaseViewModel() {
     val orderSuccessfullyAddedEvent = SingleLiveEvent<Unit>()
 
     private var pauseHandling: Boolean = false // Will not handle when waiting for server's responses.
-    private val rejectedOrderInputs = mutableListOf<OrderInput>() // Will not handle once-rejected inputs
+    private val rejectedOrderTickets = mutableListOf<OrderInput.Ticket>() // Will not handle once-rejected inputs
 
     fun getProcessorCameraProvider(): LiveData<ProcessCameraProvider> {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(mContext)
@@ -88,23 +88,28 @@ class AddOrderViewModel : BaseViewModel() {
 
     /** Final destination */
     fun handleOrderInput(input: OrderInput) {
+        if (saySorryIfOffline()) {
+            Timber.w("Offline! Can do nothing!")
+            return
+        }
+
         if (pauseHandling) {
             Timber.v("Hey! calm down!")
             return
         }
 
-        if (input in rejectedOrderInputs) {
-            Timber.v("Oh, we don't try request with it anymore: $input")
+        if (input in rejectedOrderTickets) {
+            Timber.v("Oh, we don't try request with the ticket anymore: $input")
             return
         }
 
         pauseHandling = true // Stop until we get response.
 
-        addWaitingOrder(input) {
-            it
+        addWaitingOrder(input) { result ->
+            result
                 .onSuccess { orderSuccessfullyAddedEvent.call() }
                 .onError(::handleFailure)
-                .onError { rejectedOrderInputs.add(input) } // To remember and not to send a request with the same input again.
+                .onError { if (input is OrderInput.Ticket) rejectedOrderTickets.add(input) } // To remember and not to send a request with the same ticket input again.
                 .finally { pauseHandling = false }
         }
     }
@@ -135,6 +140,11 @@ class AddOrderViewModel : BaseViewModel() {
     }
 
     fun fetchCafeteriaSelectionOptions() {
+        if (saySorryIfOffline()) {
+            Timber.w("Offline! Fetch canceled.")
+            return
+        }
+
         getCafeteria(Unit) {
             it.onSuccess(::handleCafeteriaResult).onError(::handleFailure)
         }

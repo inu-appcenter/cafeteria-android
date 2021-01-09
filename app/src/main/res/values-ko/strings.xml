@@ -160,5 +160,6 @@
     <string name="order_status_waiting">대기중</string>
     <string name="hint_sorting_cafeteria">순서를 바꿀 수 있어요!</string>
     <string name="hint_toggle_brightness">탭하면 밝아져요!</string>
+    <string name="sorry_to_be_offline">죄송해요 오프라인이라 할 수 있는게 없어요 ㅠ</string>
 
 </resources>

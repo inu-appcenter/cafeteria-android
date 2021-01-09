@@ -19,11 +19,11 @@
 
 package com.inu.cafeteria.repository
 
-import androidx.lifecycle.LiveData
+import com.inu.cafeteria.util.PublicLiveEvent
 
 interface DeviceStatusRepository {
     fun init()
 
     fun isOnline(): Boolean
-    fun isOnlineEvent(): LiveData<Boolean>
+    fun networkStateChangeEvent(): PublicLiveEvent<Boolean>
 }

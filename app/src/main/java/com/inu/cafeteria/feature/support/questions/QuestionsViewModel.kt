@@ -27,6 +27,7 @@ import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.usecase.GetQuestionsAndAnswers
 import com.inu.cafeteria.usecase.MarkAnswerRead
 import org.koin.core.inject
+import timber.log.Timber
 import java.util.*
 
 class QuestionsViewModel : BaseViewModel() {
@@ -41,6 +42,11 @@ class QuestionsViewModel : BaseViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     fun load(invalidateCache: Boolean = false, afterLoadingFinished: () -> Unit = {}) {
+        if (saySorryIfOffline()) {
+            Timber.w("Offline! Fetch canceled.")
+            return
+        }
+
         getQuestionsAndAnswers(invalidateCache) {
             _loading.value = true
 

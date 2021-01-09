@@ -24,7 +24,6 @@ import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.exception.NoCredentialsException
-import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.repository.InteractionRepository
 import com.inu.cafeteria.repository.WaitingOrderRepository
 import com.inu.cafeteria.service.AccountService
@@ -41,8 +40,6 @@ class MainViewModel : BaseViewModel() {
     private val getWaitingOrders: GetWaitingOrders by inject()
     private val fetchUnreadAnswers: FetchUnreadAnswers by inject()
 
-    private val statusRepository: DeviceStatusRepository by inject()
-
     private val interactionRepository: InteractionRepository by inject()
     val numberOfUnreadAnswers = interactionRepository.getNumberOfUnreadAnswersLiveData()
 
@@ -53,8 +50,8 @@ class MainViewModel : BaseViewModel() {
     val loggedInStatus = accountService.loggedInStatus()
 
     fun load(activity: MainActivity) {
-        if (!statusRepository.isOnline()) {
-            Timber.d("Device is offline. Pending loading main view model.")
+        if (saySorryIfOffline()) {
+            Timber.d("Device is offline. Cancel loading main view model.")
             return
         }
 
@@ -66,8 +63,8 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun onLoggedIn() {
-        if (!statusRepository.isOnline()) {
-            Timber.d("Device is offline. Pending calling onLoggedIn callback in main view model.")
+        if (saySorryIfOffline()) {
+            Timber.d("Device is offline. Cancel calling onLoggedIn callback in main view model.")
             return
         }
 

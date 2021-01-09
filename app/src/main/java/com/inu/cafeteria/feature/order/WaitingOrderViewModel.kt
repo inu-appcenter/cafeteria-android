@@ -44,6 +44,7 @@ import com.inu.cafeteria.usecase.GetMenuSupportingCafeteriaWithoutMenus
 import com.inu.cafeteria.usecase.GetWaitingOrders
 import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
+import timber.log.Timber
 import java.util.*
 import kotlin.concurrent.timer
 
@@ -79,6 +80,11 @@ class WaitingOrderViewModel : BaseViewModel() {
     }
 
     fun fetchWaitingOrders() {
+        if (saySorryIfOffline()) {
+            Timber.w("Offline! Fetch canceled.")
+            return
+        }
+
         _loading.value = true
 
         getWaitingOrders(Unit) {

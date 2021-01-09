@@ -26,6 +26,7 @@ import com.inu.cafeteria.entities.Notice
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.usecase.GetAllNotices
 import org.koin.core.inject
+import timber.log.Timber
 import java.util.*
 
 class NoticeViewModel : BaseViewModel() {
@@ -39,6 +40,11 @@ class NoticeViewModel : BaseViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     fun load() {
+        if (saySorryIfOffline()) {
+            Timber.w("Offline! Fetch canceled.")
+            return
+        }
+
         _loading.value = true
 
         getAllNotices(Unit) {

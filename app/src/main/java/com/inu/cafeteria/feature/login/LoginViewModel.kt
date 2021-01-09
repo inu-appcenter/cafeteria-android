@@ -30,6 +30,7 @@ import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.Login
 import org.koin.core.inject
+import timber.log.Timber
 
 class LoginViewModel : BaseViewModel() {
 
@@ -59,6 +60,11 @@ class LoginViewModel : BaseViewModel() {
     }
 
     fun performLogin() {
+        if (saySorryIfOffline()) {
+            Timber.w("Offline! Login canceled.")
+            return
+        }
+
         if (!isItOkayToSendLoginRequestNow()) {
             handleFailure(R.string.error_check_login_form)
             return

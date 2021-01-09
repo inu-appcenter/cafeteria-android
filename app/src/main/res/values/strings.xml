@@ -170,5 +170,6 @@
     <string name="order_status_waiting">Waiting</string>
     <string name="hint_sorting_cafeteria">Reorder!</string>
     <string name="hint_toggle_brightness">Make it bright!</string>
+    <string name="sorry_to_be_offline">Sorry, we can do nothing within offline mode :(</string>
 
 </resources>

@@ -19,38 +19,39 @@
 
 package com.inu.cafeteria.util
 
-import android.annotation.SuppressLint
-import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
-class SingleLiveEvent<T> : MutableLiveData<T?>() {
-    private val mPending: AtomicBoolean = AtomicBoolean(false)
+class PublicLiveEvent<T> : MutableLiveData<T?>() {
+    private val mPendingPerObserver = mutableMapOf<Observer<in T>, AtomicBoolean>()
 
-    @SuppressLint("LogNotTimber")
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T?>) {
-        if (hasActiveObservers()) {
-            Log.w(
-                TAG,
-                "Multiple observers registered but only one will be notified of changes."
-            )
+        val pending = AtomicBoolean(false).apply {
+            mPendingPerObserver[observer] = this
         }
 
         // Observe the internal MutableLiveData
         super.observe(owner) {
-            if (mPending.compareAndSet(true, false)) {
+            if (pending.compareAndSet(true, false)) {
                 observer.onChanged(it)
             }
         }
     }
 
     @MainThread
+    override fun removeObserver(observer: Observer<in T?>) {
+        super.removeObserver(observer)
+
+        mPendingPerObserver.remove(observer)
+    }
+
+    @MainThread
     override fun setValue(t: T?) {
-        mPending.set(true)
+        mPendingPerObserver.forEach { it.value.set(true) }
         super.setValue(t)
     }
 
@@ -60,9 +61,5 @@ class SingleLiveEvent<T> : MutableLiveData<T?>() {
     @MainThread
     fun call() {
         value = null
-    }
-
-    companion object {
-        private const val TAG = "SingleLiveEvent"
     }
 }

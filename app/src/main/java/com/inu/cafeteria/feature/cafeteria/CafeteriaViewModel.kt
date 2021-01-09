@@ -33,7 +33,6 @@ import com.inu.cafeteria.entities.OnboardingHint
 import com.inu.cafeteria.extension.afterDays
 import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.extension.format
-import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.usecase.GetMenuSupportingCafeteria
 import com.inu.cafeteria.usecase.GetSortingOrders
 import com.inu.cafeteria.util.SingleLiveEvent
@@ -48,8 +47,6 @@ class CafeteriaViewModel : BaseViewModel() {
 
     private val getCafeteria: GetMenuSupportingCafeteria by inject()
     private val getSortingOrders: GetSortingOrders by inject()
-
-    private val deviceStatusRepository: DeviceStatusRepository by inject()
 
     private val cafeteriaCache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
 
@@ -85,8 +82,8 @@ class CafeteriaViewModel : BaseViewModel() {
     }
 
     fun load() {
-        if (!deviceStatusRepository.isOnline()) {
-            Timber.d("Device is offline. Pending loading cafeteria view model.")
+        if (saySorryIfOffline()) {
+            Timber.d("Device is offline. Cancel loading cafeteria view model.")
             return
         }
 

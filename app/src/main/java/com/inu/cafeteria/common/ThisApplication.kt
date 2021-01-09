@@ -20,8 +20,10 @@
 package com.inu.cafeteria.common
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import com.google.mlkit.common.MlKit
 import com.inu.cafeteria.common.notification.NotificationChannelManager
+import com.inu.cafeteria.config.RemoteConfig
 import com.inu.cafeteria.injection.myModules
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.android.ext.android.inject
@@ -39,6 +41,7 @@ class ThisApplication : Application() {
         startDeviceStatusRepository()
         initializeNotificationChannel()
         initializeMlKit()
+        initializeFirebaseAndRemoteConfig()
     }
 
     private fun startTimber() {
@@ -71,6 +74,15 @@ class ThisApplication : Application() {
              * Therefore wee need to make sure it is initialized by doing it safely.
              */
             MlKit.initialize(this)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun initializeFirebaseAndRemoteConfig() {
+        try {
+            FirebaseApp.initializeApp(this)
+            RemoteConfig.initialize()
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -30,41 +30,30 @@ import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import timber.log.Timber
 
 abstract class BaseActivity : AppCompatActivity(), KoinComponent {
 
     protected val mContext: Context by inject()
     private val deviceStatusRepository: DeviceStatusRepository by inject()
 
-    private var networkEventHasNotEmittedSinceLastRecreation: Boolean = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        observeNetworkStateChange(savedInstanceState != null)
+        observeNetworkStateChange(savedInstanceState == null)
         getRuntimePermissions()
     }
 
     // -----------------Code for network event------------------------------------------------------
     protected fun isOnline() = deviceStatusRepository.isOnline()
 
-    private fun observeNetworkStateChange(isThisActivityRecreated: Boolean) {
-        observe(deviceStatusRepository.isOnlineEvent()) {
-            it?.let {
-                propagateNetworkChangeOrNot(isThisActivityRecreated, it)
-            }
-        }
-    }
-
-    private fun propagateNetworkChangeOrNot(activityRecreated: Boolean, newNetworkState: Boolean) {
-        if (activityRecreated && networkEventHasNotEmittedSinceLastRecreation) {
-            Timber.i("Ignoring LiveData event on observe because this is right after Activity recreation!")
-            networkEventHasNotEmittedSinceLastRecreation = false
-            return
+    private fun observeNetworkStateChange(isThisFirstTimeCreated: Boolean) {
+        if (isThisFirstTimeCreated) {
+            onNetworkStateChange(isOnline())
         }
 
-        onNetworkStateChange(newNetworkState)
+        observe(deviceStatusRepository.networkStateChangeEvent()) {
+            it?.let(::onNetworkStateChange)
+        }
     }
 
     protected open fun onNetworkStateChange(available: Boolean) {}

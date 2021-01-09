@@ -37,15 +37,13 @@ abstract class BaseFragment : Fragment(), KoinComponent {
     protected val mContext: Context by inject()
     private val deviceStatusRepository: DeviceStatusRepository by inject()
 
-    private var networkEventHasNotEmittedSinceLastRecreation: Boolean = true
-
     private val menu = MutableLiveData<Menu>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(optionMenuId != null)
-        observeNetworkStateChange(savedInstanceState != null)
+        observeNetworkStateChange(savedInstanceState == null)
     }
 
     override fun onCreateView(
@@ -67,22 +65,14 @@ abstract class BaseFragment : Fragment(), KoinComponent {
     // -----------------Code for network event------------------------------------------------------
     protected fun isOnline() = deviceStatusRepository.isOnline()
 
-    private fun observeNetworkStateChange(isThisFragmentRecreated: Boolean) {
-        observe(deviceStatusRepository.isOnlineEvent()) {
-            it?.let {
-                propagateNetworkChangeOrNot(isThisFragmentRecreated, it)
-            }
-        }
-    }
-
-    private fun propagateNetworkChangeOrNot(fragmentRecreated: Boolean, newNetworkState: Boolean) {
-        if (fragmentRecreated && networkEventHasNotEmittedSinceLastRecreation) {
-            Timber.i("Ignoring LiveData event on observe because this is right after Fragment recreation!")
-            networkEventHasNotEmittedSinceLastRecreation = false
-            return
+    private fun observeNetworkStateChange(isThisFirstTimeCreated: Boolean) {
+        if (isThisFirstTimeCreated) {
+            onNetworkStateChange(isOnline())
         }
 
-        onNetworkStateChange(newNetworkState)
+        observe(deviceStatusRepository.networkStateChangeEvent()) {
+            it?.let(::onNetworkStateChange)
+        }
     }
 
     protected open fun onNetworkStateChange(available: Boolean) {}

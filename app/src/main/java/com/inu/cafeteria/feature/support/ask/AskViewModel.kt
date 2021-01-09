@@ -52,22 +52,18 @@ class AskViewModel : BaseViewModel() {
         restorePreviousText()
     }
 
-    private fun validateContent(): Boolean {
-        val currentContent = content.get()
+    private fun restorePreviousText() {
+        val storedText = db.getString(KEY_STORED_ASK_TEXT)?.takeIf { it.isNotBlank() } ?: return
 
-        if (currentContent.isNullOrBlank()) {
-            return false
-        }
-
-        val allowedMaxLength = mContext.resources.getInteger(R.integer.question_max_length)
-        if (currentContent.length > allowedMaxLength) {
-            return false
-        }
-
-        return true
+        content.set(storedText)
     }
 
     fun submit() {
+        if (saySorryIfOffline()) {
+            Timber.w("Offline! Submit canceled.")
+            return
+        }
+
         if (!validateContent()) {
             Timber.w("Content is not valid to submit!!")
             return
@@ -84,15 +80,24 @@ class AskViewModel : BaseViewModel() {
         }
     }
 
+    private fun validateContent(): Boolean {
+        val currentContent = content.get()
+
+        if (currentContent.isNullOrBlank()) {
+            return false
+        }
+
+        val allowedMaxLength = mContext.resources.getInteger(R.integer.question_max_length)
+        if (currentContent.length > allowedMaxLength) {
+            return false
+        }
+
+        return true
+    }
+
     private fun onSubmitSuccess() {
         clearStoredText()
         submitSuccessEvent.call()
-    }
-
-    private fun restorePreviousText() {
-        val storedText = db.getString(KEY_STORED_ASK_TEXT)?.takeIf { it.isNotBlank() } ?: return
-
-        content.set(storedText)
     }
 
     private fun storeCurrentText() {

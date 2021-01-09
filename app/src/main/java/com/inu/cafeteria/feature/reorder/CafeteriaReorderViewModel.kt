@@ -30,6 +30,7 @@ import com.inu.cafeteria.usecase.GetSortingOrders
 import com.inu.cafeteria.usecase.ResetCafeteriaOrder
 import com.inu.cafeteria.usecase.SetCafeteriaOrder
 import org.koin.core.inject
+import timber.log.Timber
 
 class CafeteriaReorderViewModel : BaseViewModel() {
 
@@ -47,6 +48,11 @@ class CafeteriaReorderViewModel : BaseViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     fun fetch() {
+        if (saySorryIfOffline()) {
+            Timber.w("Offline! Fetch canceled.")
+            return
+        }
+
         startLoading()
 
         getCafeteria(Unit) {

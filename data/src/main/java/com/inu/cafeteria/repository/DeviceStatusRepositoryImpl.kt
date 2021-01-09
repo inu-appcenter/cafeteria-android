@@ -20,44 +20,40 @@
 package com.inu.cafeteria.repository
 
 import android.net.ConnectivityManager
-import android.os.Handler
-import android.os.Looper
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.util.NetworkHelper
+import com.inu.cafeteria.util.PublicLiveEvent
+import java.util.*
+import kotlin.concurrent.schedule
 
 class DeviceStatusRepositoryImpl(
     private val manager: ConnectivityManager
 ) : DeviceStatusRepository {
 
-    private val online = MutableLiveData(isOnline())
+    private val networkChangeEvent = PublicLiveEvent<Boolean>()
 
     override fun init() {
         startObservingNetworkState()
     }
 
     private fun startObservingNetworkState() {
-        val onOnline = { postAfterSomeTime() }
-        val onOffline = { online.postValue(false) }
+        val onOnline = { postAfterSomeTime(true) }
+        val onOffline = { networkChangeEvent.postValue(false) }
 
         NetworkHelper.onNetworkChange(manager, onOnline, onOffline)
     }
 
-    private fun postAfterSomeTime() {
+    private fun postAfterSomeTime(value: Boolean) {
         // Don't know why but after network turned available and isOnline() returns true,
         // the network doesn't work for a while.
-        // So we need to wait for it become 'really' available.
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (online.value != true) {
-                // Prevent duplicated event!
-                online.postValue(true)
-            }
-        }, 500)
+        // So we need to wait until it become 'really' available.
+        Timer().schedule(500) {
+            networkChangeEvent.postValue(value)
+        }
     }
 
     override fun isOnline(): Boolean {
         return NetworkHelper.isOnline(manager)
     }
 
-    override fun isOnlineEvent(): LiveData<Boolean> = online
+    override fun networkStateChangeEvent(): PublicLiveEvent<Boolean> = networkChangeEvent
 }

@@ -30,7 +30,6 @@ import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.entities.OnboardingHint
 import com.inu.cafeteria.exception.NoAccountException
 import com.inu.cafeteria.exception.UnauthorizedException
-import com.inu.cafeteria.repository.DeviceStatusRepository
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.ActivateBarcode
 import com.inu.cafeteria.usecase.CreateBarcode
@@ -47,8 +46,6 @@ class DiscountViewModel : BaseViewModel() {
     private val getSavedAccount: GetSavedAccount by inject()
 
     private val accountService: AccountService by inject()
-
-    private val statusRepository: DeviceStatusRepository by inject()
 
     private val navigator: Navigator by inject()
 
@@ -93,8 +90,8 @@ class DiscountViewModel : BaseViewModel() {
     }
 
     fun load() {
-        if (!statusRepository.isOnline()) {
-            Timber.d("Device is offline. Pending loading discount view model.")
+        if (saySorryIfOffline()) {
+            Timber.d("Device is offline. Cancel loading discount view model.")
             return
         }
 
