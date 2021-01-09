@@ -21,13 +21,11 @@ package com.inu.cafeteria.feature.discount
 
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.common.onboarding.OnboardingHintEventEmitter
-import com.inu.cafeteria.common.onboarding.OnboardingHintView
 import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.entities.OnboardingHint
 import com.inu.cafeteria.exception.NoAccountException
@@ -75,23 +73,14 @@ class DiscountViewModel : BaseViewModel() {
     val bright: LiveData<Boolean> = _bright
 
     private val brightnessHintEmitter = OnboardingHintEventEmitter(OnboardingHint.ToggleBrightness)
-    val showBrightnessToggleHint = MediatorLiveData<OnboardingHintView>().apply {
-
-        addSource(brightnessHintEmitter.event) {
-            brightnessHintEmitter.event.value
-                ?.takeIf { barcodeCardReady.value == true }
-                ?.let { postValue(it) }
-        }
-
-        addSource(barcodeCardReady) {
-            brightnessHintEmitter.event.value
-                ?.takeIf { barcodeCardReady.value == true }
-                ?.let { postValue(it) }
-        }
-    }
+    val showBrightnessToggleHintEvent = brightnessHintEmitter.event
 
     fun emitHintEvent() {
-        brightnessHintEmitter.emitIfAvailable()
+        // This will be called every onResume.
+        if (_barcodeCardReady.value == true) {
+            // However, the hint chance comes only when barcode card is ready.
+            brightnessHintEmitter.emitIfAvailable()
+        }
     }
 
     fun markHintShown() {
@@ -171,6 +160,8 @@ class DiscountViewModel : BaseViewModel() {
     private fun handleBarcodeImage(image: Bitmap) {
         _barcodeBitmap.value = image
         _barcodeCardReady.value = true
+
+        emitHintEvent()
     }
 
     private fun handleLoginFailure(exception: Exception) {

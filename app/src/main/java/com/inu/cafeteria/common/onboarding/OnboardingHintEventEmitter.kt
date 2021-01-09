@@ -19,11 +19,10 @@
 
 package com.inu.cafeteria.common.onboarding
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
 import com.inu.cafeteria.entities.OnboardingHint
 import com.inu.cafeteria.repository.OnboardingHintRepository
+import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -34,8 +33,7 @@ class OnboardingHintEventEmitter(private val hint: OnboardingHint) : KoinCompone
 
     private val onboardingHintRepository: OnboardingHintRepository by inject()
 
-    private val _event = MutableLiveData<OnboardingHintView>(null)
-    val event: LiveData<OnboardingHintView> = _event
+    val event = SingleLiveEvent<OnboardingHintView>()
 
     fun emitIfAvailable() {
         // A layout which is combined with the hint is shown to the user.
@@ -55,7 +53,7 @@ class OnboardingHintEventEmitter(private val hint: OnboardingHint) : KoinCompone
             OnboardingHint.ToggleBrightness -> OnboardingHintView(R.string.hint_toggle_brightness)
         }
 
-        _event.postValue(hintView)
+        event.postValue(hintView)
     }
 
     fun markHintAccepted() {

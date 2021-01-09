@@ -34,6 +34,7 @@ import it.sephiroth.android.library.xtooltip.Tooltip
 
 class DiscountFragment : BaseFragment() {
 
+    private lateinit var binding: DiscountFragmentBinding
     private val viewModel: DiscountViewModel by viewModels()
 
     override fun onNetworkStateChange(available: Boolean) {
@@ -53,6 +54,7 @@ class DiscountFragment : BaseFragment() {
         viewCreator<DiscountFragmentBinding> {
             initializeView(this)
             vm = viewModel
+            binding = this
         }
 
     private fun initializeView(binding: DiscountFragmentBinding) {
@@ -74,7 +76,7 @@ class DiscountFragment : BaseFragment() {
                 applyBrightness()
             }
 
-            observe(showBrightnessToggleHint) {
+            observe(showBrightnessToggleHintEvent) {
                 it ?: return@observe
 
                 with(binding.barcodeCardPart.card) {
@@ -100,6 +102,7 @@ class DiscountFragment : BaseFragment() {
         super.onPause()
 
         resetBrightness()
+        clearTooltip()
     }
 
     private fun applyBrightness() {
@@ -112,6 +115,10 @@ class DiscountFragment : BaseFragment() {
 
     private fun resetBrightness() {
         activity?.resetBrightness()
+    }
+
+    private fun clearTooltip() {
+        binding.root.dismissTooltip()
     }
 
     companion object {

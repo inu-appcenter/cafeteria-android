@@ -20,7 +20,6 @@
 package com.inu.cafeteria.feature.cafeteria
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.MenuItem
 import android.view.View
 import androidx.databinding.BindingAdapter
@@ -40,6 +39,7 @@ class CafeteriaFragment : BaseFragment() {
 
     override val optionMenuId: Int = R.menu.cafeteria_menu
 
+    private lateinit var binding: CafeteriaFragmentBinding
     private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
     private val eventHub: EventHub by inject()
 
@@ -60,6 +60,7 @@ class CafeteriaFragment : BaseFragment() {
             initializeView(this)
             vm = viewModel
             persistentView = root
+            binding = this
         }
 
     private fun initializeView(binding: CafeteriaFragmentBinding) {
@@ -90,11 +91,11 @@ class CafeteriaFragment : BaseFragment() {
 
         with(viewModel) {
             observe(sortingHintEvent) {
-                Handler().post {
-                    withNonNull(activity?.findViewById<View>(R.id.menu_reorder)) {
-                        showTooltip(context, binding.root, Tooltip.Gravity.LEFT, it?.hintText ?: return@post) {
-                            viewModel.markHintShown()
-                        }
+                it ?: return@observe
+
+                withNonNull(activity?.findViewById<View>(R.id.menu_reorder)) {
+                    showTooltip(context, binding.root, Tooltip.Gravity.LEFT, it.hintText) {
+                        viewModel.markHintShown()
                     }
                 }
             }
@@ -117,12 +118,6 @@ class CafeteriaFragment : BaseFragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.emitHintEvent()
-    }
-
     private fun reloadCurrentTab() {
         withNonNull(view?.findViewById<RecyclerView>(R.id.cafeteria_recycler)) {
             withinAlphaAnimation(0f, 1f) {
@@ -131,12 +126,28 @@ class CafeteriaFragment : BaseFragment() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) =
-        viewModel.onClickOptionMenu(item.itemId)
-
     private fun showCafeteriaDetails() {
         findNavController().navigate(R.id.action_cafeteria_detail)
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.emitHintEvent()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        clearTooltip()
+    }
+
+    private fun clearTooltip() {
+        binding.root.dismissTooltip()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) =
+        viewModel.onClickOptionMenu(item.itemId)
 
     override fun onSaveInstanceState(outState: Bundle) {
         viewModel.onSaveMenuPagePositions(adapter.positions)

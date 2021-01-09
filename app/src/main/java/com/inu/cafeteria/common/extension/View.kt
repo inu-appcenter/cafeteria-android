@@ -155,3 +155,8 @@ fun View.showTooltip(context: Context, rootView: View, gravity: Tooltip.Gravity,
         setTag(R.id.tooltip, tooltip)
     }
 }
+
+fun View.dismissTooltip() {
+    (getTag(R.id.tooltip) as? Tooltip)?.dismiss()
+    setTag(R.id.tooltip, null)
+}
