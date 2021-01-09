@@ -44,11 +44,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            buildConfigField "String", "AES_KEY", "\"${generator((('A'..'Z')+('a'..'z')+('0'..'9')).join(), 12)}\""
-        }
-        debug {
-            buildConfigField "String", "AES_KEY", key_test
         }
     }
 
