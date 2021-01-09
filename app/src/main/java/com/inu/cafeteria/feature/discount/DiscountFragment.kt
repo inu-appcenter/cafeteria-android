@@ -75,10 +75,15 @@ class DiscountFragment : BaseFragment() {
             }
 
             observe(showBrightnessToggleHint) {
+                it ?: return@observe
+
                 with(binding.barcodeCardPart.card) {
-                    showTooltip(context, binding.root, Tooltip.Gravity.TOP, it?.hintText ?: return@observe) {
-                        viewModel.markHintShown()
-                    }
+                    postDelayed({
+                        // We need some time to get the layout ready, before we show the hint.
+                        showTooltip(context, binding.root, Tooltip.Gravity.TOP, it.hintText) {
+                            viewModel.markHintShown()
+                        }
+                    }, 500)
                 }
             }
         }
