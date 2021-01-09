@@ -67,8 +67,8 @@ class CafeteriaViewModel : BaseViewModel() {
     var menuPagePositions = SparseIntArray()
         private set
 
-    val moreClickEvent = SingleLiveEvent<Unit>()
     val animateEvent = SingleLiveEvent<Int>()
+    val navigateEvent = SingleLiveEvent<Int>()
 
     private val sortingHintEmitter = OnboardingHintEventEmitter(OnboardingHint.SortingCafeteria)
     val sortingHintEvent = sortingHintEmitter.event
@@ -230,6 +230,6 @@ class CafeteriaViewModel : BaseViewModel() {
     fun onViewMore(cafeteriaView: CafeteriaView) {
         _selected.value = cafeteriaView
 
-        moreClickEvent.call()
+        navigateEvent.value = R.id.action_cafeteria_detail
     }
 }

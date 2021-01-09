@@ -39,8 +39,8 @@ class CafeteriaReorderFragment : BaseFragment() {
             }
         )
 
-    override fun onCreateView(viewCreator: ViewCreator) =
-        viewCreator<CafeteriaReorderFragmentBinding> {
+    override fun onCreateView(create: ViewCreator) =
+        create<CafeteriaReorderFragmentBinding> {
             initializeView(this)
             vm = viewModel
         }

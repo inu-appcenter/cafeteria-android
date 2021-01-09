@@ -19,7 +19,6 @@
 
 package com.inu.cafeteria.feature.support.ask
 
-import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -32,12 +31,11 @@ class AskFragment : BaseFragment() {
 
     private val viewModel: AskViewModel by viewModels()
 
-    override fun onCreateView(viewCreator: ViewCreator): View {
-        return viewCreator.createView<AskFragmentBinding> {
+    override fun onCreateView(create: ViewCreator) =
+        create<AskFragmentBinding> {
             init()
             vm = viewModel
         }
-    }
 
     private fun init() {
         with(viewModel) {
@@ -51,7 +49,8 @@ class AskFragment : BaseFragment() {
     }
 
     private fun notifyUserYouSucceeded() {
-        Toast.makeText(activity, getString(R.string.notify_ask_succeeded), Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, getString(R.string.notify_ask_succeeded), Toast.LENGTH_SHORT)
+            .show()
     }
 
     private fun navigateBack() {

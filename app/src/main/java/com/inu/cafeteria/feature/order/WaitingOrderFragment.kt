@@ -69,8 +69,8 @@ class WaitingOrderFragment : BaseFragment() {
         )
     }
 
-    override fun onCreateView(viewCreator: ViewCreator): View {
-        return viewCreator.createView<WaitingOrderFragmentBinding> {
+    override fun onCreateView(create: ViewCreator): View {
+        return create.createView<WaitingOrderFragmentBinding> {
             initializeView(this)
             binding = this
             vm = viewModel

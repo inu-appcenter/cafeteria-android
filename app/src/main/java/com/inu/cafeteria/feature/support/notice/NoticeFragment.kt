@@ -39,8 +39,8 @@ class NoticeFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(viewCreator: ViewCreator): View {
-        return viewCreator.createView<NoticeFragmentBinding> {
+    override fun onCreateView(create: ViewCreator): View {
+        return create.createView<NoticeFragmentBinding> {
             initializeView(this)
             vm = viewModel
         }

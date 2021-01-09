@@ -55,8 +55,8 @@ class DiscountFragment : BaseFragment() {
         viewModel.preload()
     }
 
-    override fun onCreateView(viewCreator: ViewCreator): View =
-        viewCreator<DiscountFragmentBinding> {
+    override fun onCreateView(create: ViewCreator): View =
+        create<DiscountFragmentBinding> {
             initializeView(this)
             vm = viewModel
             binding = this
@@ -107,19 +107,19 @@ class DiscountFragment : BaseFragment() {
         viewModel.emitHintEvent()
     }
 
-    override fun onPause() {
-        super.onPause()
-
-        resetBrightness()
-        clearTooltip()
-    }
-
     private fun applyBrightness() {
         if (viewModel.bright.value == true) {
             activity?.setBrightness(1f)
         } else {
             activity?.resetBrightness()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        resetBrightness()
+        clearTooltip()
     }
 
     private fun resetBrightness() {

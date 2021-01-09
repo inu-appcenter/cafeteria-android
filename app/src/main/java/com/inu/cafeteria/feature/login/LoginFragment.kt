@@ -29,8 +29,8 @@ class LoginFragment : BaseFragment() {
 
     private val viewModel: LoginViewModel by viewModels()
 
-    override fun onCreateView(viewCreator: ViewCreator) =
-        viewCreator<LoginFragmentBinding> {
+    override fun onCreateView(create: ViewCreator) =
+        create<LoginFragmentBinding> {
             initializeView(this)
             vm = viewModel
         }

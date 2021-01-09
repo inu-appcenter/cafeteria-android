@@ -39,8 +39,8 @@ class QuestionsFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(viewCreator: ViewCreator): View {
-        return viewCreator.createView<QuestionsFragmentBinding> {
+    override fun onCreateView(create: ViewCreator): View {
+        return create.createView<QuestionsFragmentBinding> {
             initializeView(this)
             vm = viewModel
         }

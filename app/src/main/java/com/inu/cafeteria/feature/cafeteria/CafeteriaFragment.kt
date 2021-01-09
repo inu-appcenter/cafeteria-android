@@ -39,8 +39,8 @@ class CafeteriaFragment : BaseFragment() {
 
     private lateinit var binding: CafeteriaFragmentBinding
     private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
-    private val eventHub: EventHub by inject()
 
+    private val eventHub: EventHub by inject()
     private val adapter = CafeteriaAdapter()
 
     // Reuse view after lifecycle!
@@ -52,8 +52,8 @@ class CafeteriaFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(viewCreator: ViewCreator) = persistentView?.apply { removeFromParent() } ?:
-        viewCreator<CafeteriaFragmentBinding> {
+    override fun onCreateView(create: ViewCreator) = persistentView?.apply { removeFromParent() } ?:
+        create<CafeteriaFragmentBinding> {
             initializeView(this)
             vm = viewModel
             persistentView = root
@@ -97,14 +97,14 @@ class CafeteriaFragment : BaseFragment() {
                 }
             }
 
-            observe(moreClickEvent) {
-                showCafeteriaDetails()
-            }
-
             observe(animateEvent) {
                 with(binding.cafeteriaRecycler) {
                     slideInWithFade(it ?: 0)
                 }
+            }
+
+            observe(navigateEvent) {
+                findNavController().navigate(it ?: return@observe)
             }
         }
 
@@ -121,10 +121,6 @@ class CafeteriaFragment : BaseFragment() {
                 viewModel.reselectCurrentDateTab()
             }
         }
-    }
-
-    private fun showCafeteriaDetails() {
-        findNavController().navigate(R.id.action_cafeteria_detail)
     }
 
     override fun onResume() {

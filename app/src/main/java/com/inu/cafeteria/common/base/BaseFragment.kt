@@ -32,8 +32,6 @@ import org.koin.core.inject
 
 abstract class BaseFragment : Fragment(), KoinComponent {
 
-    private val deviceStatusRepository: DeviceStatusRepository by inject()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,21 +45,7 @@ abstract class BaseFragment : Fragment(), KoinComponent {
     ) = onCreateView(ViewCreator(this, inflater, container))
         ?: super.onCreateView(inflater, container, savedInstanceState)
 
-    protected open fun onCreateView(viewCreator: ViewCreator): View? = null
-
-    protected fun isOnline() = deviceStatusRepository.isOnline()
-
-    private fun observeNetworkStateChange(isThisFirstTimeCreated: Boolean) {
-        if (isThisFirstTimeCreated) {
-            onNetworkStateChange(isOnline())
-        }
-
-        observe(deviceStatusRepository.networkStateChangeEvent()) {
-            it?.let(::onNetworkStateChange)
-        }
-    }
-
-    protected open fun onNetworkStateChange(available: Boolean) {}
+    protected open fun onCreateView(create: ViewCreator): View? = null
 
     class ViewCreator(
         val fragment: BaseFragment,
@@ -86,4 +70,20 @@ abstract class BaseFragment : Fragment(), KoinComponent {
                 .root
         }
     }
+
+    private val deviceStatusRepository: DeviceStatusRepository by inject()
+
+    private fun isOnline() = deviceStatusRepository.isOnline()
+
+    private fun observeNetworkStateChange(isThisFirstTimeCreated: Boolean) {
+        if (isThisFirstTimeCreated) {
+            onNetworkStateChange(isOnline())
+        }
+
+        observe(deviceStatusRepository.networkStateChangeEvent()) {
+            it?.let(::onNetworkStateChange)
+        }
+    }
+
+    protected open fun onNetworkStateChange(available: Boolean) {}
 }

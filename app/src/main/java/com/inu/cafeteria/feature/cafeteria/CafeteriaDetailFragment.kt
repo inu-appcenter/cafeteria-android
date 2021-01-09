@@ -34,8 +34,8 @@ class CafeteriaDetailFragment : BaseFragment() {
 
     private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
 
-    override fun onCreateView(viewCreator: ViewCreator) =
-        viewCreator<CafeteriaDetailFragmentBinding> {
+    override fun onCreateView(create: ViewCreator) =
+        create<CafeteriaDetailFragmentBinding> {
             initializeView(this)
             vm = viewModel
         }

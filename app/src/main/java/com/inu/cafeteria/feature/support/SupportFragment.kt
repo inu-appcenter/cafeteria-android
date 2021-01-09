@@ -39,8 +39,8 @@ class SupportFragment : BaseFragment() {
 
     private val adapter = SupportOptionsAdapter()
 
-    override fun onCreateView(viewCreator: ViewCreator): View {
-        return viewCreator.createView<SupportFragmentBinding> {
+    override fun onCreateView(create: ViewCreator): View {
+        return create.createView<SupportFragmentBinding> {
             initializeView(this)
             vm = viewModel
         }
