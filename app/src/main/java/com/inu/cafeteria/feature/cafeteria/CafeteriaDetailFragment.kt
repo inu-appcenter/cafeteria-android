@@ -24,6 +24,7 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
+import com.inu.cafeteria.common.extension.setLeftInsetDivider
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.extension.supportActionBar
 import com.inu.cafeteria.databinding.CafeteriaDetailFragmentBinding
@@ -46,9 +47,11 @@ class CafeteriaDetailFragment : BaseFragment() {
             title = viewModel.selected.value?.name
         }
 
-        withNonNull(binding.menuPageRecycler) {
-            adapter = MenuPageAdapter(pageSize = 0 /* no paging */).apply {
+        with(binding.menuRecycler) {
+            adapter = MenuAdapter().apply {
                 emptyView = binding.emptyViewPart.emptyCafeteriaView
+
+                setLeftInsetDivider(R.drawable.line_divider, R.dimen.menu_left_margin_until_text)
             }
         }
     }
@@ -59,7 +62,7 @@ class CafeteriaDetailFragment : BaseFragment() {
         @BindingAdapter("menus")
         fun setCafeteria(view: RecyclerView, menus: List<MenuView>?) {
             menus?.let {
-                (view.adapter as? MenuPageAdapter)?.data = it
+                (view.adapter as? MenuAdapter)?.data = it
             }
         }
     }

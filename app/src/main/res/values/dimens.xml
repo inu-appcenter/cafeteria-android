@@ -75,6 +75,7 @@
     <dimen name="mid_space">12dp</dimen>
     <dimen name="far_space">16dp</dimen>
     <dimen name="distant_space">18dp</dimen>
+    <dimen name="fell_apart_space">22dp</dimen>
 
     <!-- Cafeteria section item -->
     <dimen name="cafeteria_vertical_space">16dp</dimen>

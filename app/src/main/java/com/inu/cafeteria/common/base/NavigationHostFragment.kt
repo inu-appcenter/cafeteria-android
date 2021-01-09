@@ -29,7 +29,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import timber.log.Timber
 
 /**
  * A base Fragment that will be a holder of each page of bottom navigation.
@@ -64,7 +63,6 @@ class NavigationHostFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        Timber.e("YEAH!!!!!!")
         // It doesn't work inside onCreate.
         setUpToolbarAndNavController()
     }

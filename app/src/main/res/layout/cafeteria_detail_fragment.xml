@@ -40,22 +40,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Menu pages -->
-        <androidx.recyclerview.widget.RecyclerView
-            style="@style/HorizontallyFullSizedViewConstrained"
-            android:id="@+id/menu_page_recycler"
+        <androidx.core.widget.NestedScrollView
+            style="@style/FlexibleSizedView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_cafeteria_detail"
-            android:layout_marginTop="@dimen/near_space"
-            android:paddingHorizontal="@dimen/cafeteria_menu_page_horizontal_space"
-            android:paddingVertical="@dimen/cafeteria_menu_page_vertical_space"
-            android:nestedScrollingEnabled="false"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            menus="@{vm.selected.wholeMenus}"
-            tools:listitem="@layout/menu_page" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingVertical="@dimen/fell_apart_space"
+            android:clipToPadding="false">
+
+            <!-- Menus in a card view -->
+            <androidx.cardview.widget.CardView
+                style="@style/HorizontallyFullSizedView"
+                android:layout_marginHorizontal="@dimen/fell_apart_space"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="@dimen/mid_space">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    style="@style/HorizontallyFullSizedView"
+                    android:id="@+id/menu_recycler"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    menus="@{vm.selected.wholeMenus}"
+                    tools:listitem="@layout/menu" />
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.core.widget.NestedScrollView>
 
         <!-- Empty view -->
         <include
