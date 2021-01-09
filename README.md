@@ -61,7 +61,7 @@
 ### 2021.1.8 v4.2.0b5
 - 인앱 리뷰 API 추가
 - Remote Config 추가
-- Crachlytics 추가
+- Crashlytics 추가
 - Analytics 추가
 
 ### 2021.1.3 v4.2.0b4

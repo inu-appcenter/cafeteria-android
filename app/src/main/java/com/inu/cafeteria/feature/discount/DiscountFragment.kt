@@ -45,7 +45,7 @@ class DiscountFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Offline works. Should be performed whether the networks is available or not.
+        // Should be performed whether the networks is available or not.
         viewModel.preload()
     }
 
