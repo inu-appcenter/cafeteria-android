@@ -37,7 +37,9 @@ import org.koin.core.inject
 
 class CafeteriaFragment : BaseFragment() {
 
-    override val optionMenuId: Int = R.menu.cafeteria_menu
+    override val toolbarId = R.id.toolbar_cafeteria
+    override val optionMenuId = R.menu.cafeteria_menu
+    override val setupToolbarForNavigation = true
 
     private lateinit var binding: CafeteriaFragmentBinding
     private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
@@ -132,7 +134,6 @@ class CafeteriaFragment : BaseFragment() {
         super.onResume()
 
         viewModel.emitHintEvent()
-        setSupportActionBar(binding.toolbarCafeteria)
     }
 
     override fun onPause() {

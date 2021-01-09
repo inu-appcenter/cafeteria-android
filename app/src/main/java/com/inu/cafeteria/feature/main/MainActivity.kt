@@ -37,7 +37,6 @@ import com.inu.cafeteria.common.extension.fadeIn
 import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.common.firebase.Events
-import com.inu.cafeteria.common.navigation.rootDestinations
 import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.extension.withNonNull
 import com.inu.cafeteria.feature.main.EasterEggHelper.Companion.getEasterEggs
@@ -57,10 +56,9 @@ class MainActivity : NavigationActivity() {
         /** Home */
         NavigationHostFragment.createArguments(
             layoutRes = R.layout.content_home_base,
-            toolbarId = -1, // Un-managed toolbar.
+            toolbarId = -1, // Unmanaged toolbar.
             navHostId = R.id.nav_host_cafeteria,
-            tabItemId = R.id.tab_cafeteria,
-            rootDests = rootDestinations
+            tabItemId = R.id.tab_cafeteria
         ),
 
         /** Order notification */
@@ -68,8 +66,7 @@ class MainActivity : NavigationActivity() {
             layoutRes = R.layout.content_order_base,
             toolbarId = R.id.toolbar_order,
             navHostId = R.id.nav_host_order,
-            tabItemId = R.id.tab_order,
-            rootDests = rootDestinations
+            tabItemId = R.id.tab_order
         ),
 
         /** Discount */
@@ -77,8 +74,7 @@ class MainActivity : NavigationActivity() {
             layoutRes = R.layout.content_discount_base,
             toolbarId = R.id.toolbar_discount,
             navHostId = R.id.nav_host_discount,
-            tabItemId = R.id.tab_discount,
-            rootDests = rootDestinations
+            tabItemId = R.id.tab_discount
         ),
 
         /** Support */
@@ -86,8 +82,7 @@ class MainActivity : NavigationActivity() {
             layoutRes = R.layout.content_support_base,
             toolbarId = R.id.toolbar_support,
             navHostId = R.id.nav_host_support,
-            tabItemId = R.id.tab_support,
-            rootDests = rootDestinations
+            tabItemId = R.id.tab_support
         )
     )
 

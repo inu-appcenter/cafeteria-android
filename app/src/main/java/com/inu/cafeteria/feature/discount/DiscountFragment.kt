@@ -37,7 +37,9 @@ import org.koin.core.inject
 
 class DiscountFragment : BaseFragment() {
 
-    override val optionMenuId: Int = R.menu.discount_menu
+    override val toolbarId = R.id.toolbar_discount
+    override val optionMenuId = R.menu.discount_menu
+    override val setupToolbarForNavigation = true
 
     private lateinit var binding: DiscountFragmentBinding
     private val viewModel: DiscountViewModel by viewModels()
@@ -105,8 +107,9 @@ class DiscountFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.emitHintEvent()
         applyBrightness()
+
+        viewModel.emitHintEvent()
     }
 
     override fun onPause() {

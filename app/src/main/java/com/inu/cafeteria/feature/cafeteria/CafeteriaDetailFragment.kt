@@ -19,7 +19,6 @@
 
 package com.inu.cafeteria.feature.cafeteria
 
-import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -36,20 +35,20 @@ class CafeteriaDetailFragment : BaseFragment() {
 
     override fun onCreateView(viewCreator: ViewCreator) =
         viewCreator<CafeteriaDetailFragmentBinding> {
-            initializeView(root)
+            initializeView(this)
             vm = viewModel
         }
 
-    private fun initializeView(view: View) {
-        setSupportActionBar(view.findViewById(R.id.toolbar_cafeteria_detail), showTitle = true, showUpButton = true)
+    private fun initializeView(binding: CafeteriaDetailFragmentBinding) {
+        setSupportActionBar(binding.toolbarCafeteriaDetail, showTitle = true, showUpButton = true)
 
         withNonNull(supportActionBar) {
             title = viewModel.selected.value?.name
         }
 
-        withNonNull(view.findViewById<RecyclerView>(R.id.menu_page_recycler)) {
+        withNonNull(binding.menuPageRecycler) {
             adapter = MenuPageAdapter(pageSize = 0 /* no paging */).apply {
-                emptyView = view.findViewById(R.id.empty_cafeteria_view)
+                emptyView = binding.emptyViewPart.emptyCafeteriaView
             }
         }
     }

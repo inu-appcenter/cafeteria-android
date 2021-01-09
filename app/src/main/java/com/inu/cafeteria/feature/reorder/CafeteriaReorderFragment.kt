@@ -19,16 +19,13 @@
 
 package com.inu.cafeteria.feature.reorder
 
-import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
-import com.inu.cafeteria.extension.withNonNull
 
 class CafeteriaReorderFragment : BaseFragment() {
 
@@ -44,19 +41,19 @@ class CafeteriaReorderFragment : BaseFragment() {
 
     override fun onCreateView(viewCreator: ViewCreator) =
         viewCreator<CafeteriaReorderFragmentBinding> {
-            initializeView(root)
+            initializeView(this)
             vm = viewModel
         }
 
-    private fun initializeView(view: View) {
-        setSupportActionBar(view.findViewById(R.id.toolbar_reorder), showTitle = true, showUpButton = true)
+    private fun initializeView(binding: CafeteriaReorderFragmentBinding) {
+        setSupportActionBar(binding.toolbarReorder, showTitle = true, showUpButton = true)
 
-        withNonNull(view.findViewById<RecyclerView>(R.id.cafeteria_sort_recycler)) {
+        with(binding.cafeteriaSortRecycler) {
             adapterWrapper.setWithRecyclerView(this)
 
             with(adapterWrapper.adapter) {
-                emptyView = view.findViewById(R.id.empty_view_group)
-                loadingView = view.findViewById(R.id.loading_view)
+                emptyView = binding.emptyViewGroup
+                loadingView = binding.loadingView
             }
         }
     }
