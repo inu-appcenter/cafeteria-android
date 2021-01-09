@@ -21,6 +21,7 @@ package com.inu.cafeteria.feature.discount
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -29,13 +30,19 @@ import androidx.fragment.app.viewModels
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
+import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.databinding.DiscountFragmentBinding
 import it.sephiroth.android.library.xtooltip.Tooltip
+import org.koin.core.inject
 
 class DiscountFragment : BaseFragment() {
 
+    override val optionMenuId: Int = R.menu.discount_menu
+
     private lateinit var binding: DiscountFragmentBinding
     private val viewModel: DiscountViewModel by viewModels()
+
+    private val navigator: Navigator by inject()
 
     override fun onNetworkStateChange(available: Boolean) {
         if (available) {
@@ -88,6 +95,10 @@ class DiscountFragment : BaseFragment() {
                     }, 500)
                 }
             }
+
+            observe(showDiscountServiceDescriptionEvent) {
+                navigator.showDialog(activity ?: return@observe, "", "")
+            }
         }
     }
 
@@ -120,6 +131,9 @@ class DiscountFragment : BaseFragment() {
     private fun clearTooltip() {
         binding.root.dismissTooltip()
     }
+
+    override fun onOptionsItemSelected(item: MenuItem) =
+        viewModel.onClickOptionMenu(item.itemId)
 
     companion object {
 

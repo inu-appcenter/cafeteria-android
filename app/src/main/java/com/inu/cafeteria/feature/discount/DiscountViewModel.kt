@@ -35,6 +35,7 @@ import com.inu.cafeteria.usecase.ActivateBarcode
 import com.inu.cafeteria.usecase.CreateBarcode
 import com.inu.cafeteria.usecase.GetSavedAccount
 import com.inu.cafeteria.usecase.RememberedLogin
+import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
 import timber.log.Timber
 
@@ -71,6 +72,8 @@ class DiscountViewModel : BaseViewModel() {
 
     private val brightnessHintEmitter = OnboardingHintEventEmitter(OnboardingHint.ToggleBrightness)
     val showBrightnessToggleHintEvent = brightnessHintEmitter.event
+
+    val showDiscountServiceDescriptionEvent = SingleLiveEvent<Unit>()
 
     fun emitHintEvent() {
         // This will be called every onResume.
@@ -175,5 +178,17 @@ class DiscountViewModel : BaseViewModel() {
 
         _barcodeCardReady.value = false
         _onceLoggedIn.value = false
+    }
+
+    fun onClickOptionMenu(menuItemId: Int): Boolean {
+        when(menuItemId) {
+            R.id.menu_info -> showDiscountServiceDescription()
+        }
+
+        return true
+    }
+
+    private fun showDiscountServiceDescription() {
+        showDiscountServiceDescriptionEvent.call()
     }
 }

@@ -64,8 +64,6 @@ class CafeteriaFragment : BaseFragment() {
         }
 
     private fun initializeView(binding: CafeteriaFragmentBinding) {
-        setSupportActionBar(binding.toolbarCafeteria)
-
         with(binding.cafeteriaRecycler) {
             adapter = this@CafeteriaFragment.adapter.apply {
                 onClickMore = viewModel::onViewMore
@@ -134,6 +132,7 @@ class CafeteriaFragment : BaseFragment() {
         super.onResume()
 
         viewModel.emitHintEvent()
+        setSupportActionBar(binding.toolbarCafeteria)
     }
 
     override fun onPause() {

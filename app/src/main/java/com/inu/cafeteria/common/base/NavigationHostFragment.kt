@@ -29,8 +29,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupWithNavController
+import com.inu.cafeteria.common.extension.setSupportActionBar
 
 /**
  * A base Fragment that will be a holder of each page of bottom navigation.
@@ -69,11 +70,15 @@ class NavigationHostFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        // It doesn't work inside onCreate.
+        getToolbar()?.let {
+            setSupportActionBar(it)
+        }
+
         setUpToolbarAndNavController()
     }
 
-    private fun setUpToolbarAndNavController() =
-        getToolbar()?.let { NavigationUI.setupWithNavController(it, getNavController(), appBarConfig) }
+    private fun setUpToolbarAndNavController() = getToolbar()?.setupWithNavController(getNavController())
 
     private fun getToolbar(): Toolbar? = if (toolbarId != -1) requireActivity().findViewById(toolbarId) else null
 

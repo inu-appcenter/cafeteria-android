@@ -131,6 +131,16 @@ class Navigator(
         )
     }
 
+    fun showDialog(activity: FragmentActivity, title: String, body: String, onDismiss: () -> Unit = {}) {
+        AlertDialog
+            .Builder(activity)
+            .setTitle(title)
+            .setMessage(body)
+            .setPositiveButton(context.getString(R.string.button_confirm)) { _, _ -> }
+            .setOnDismissListener { onDismiss() }
+            .show()
+    }
+
     fun showStore() {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse("market://details?id=" + Config.appId)

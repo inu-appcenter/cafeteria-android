@@ -145,10 +145,21 @@ abstract class NavigationActivity : BaseActivity(),
 
     private fun handleRootLevelBackPress() {
         if (backStack.isNotEmpty()) {
-            backStack.popOrNull()?.let(mainPager::setCurrentItem)
+            popFromBackStack()
         } else {
             handleActivityExitAttempt()
         }
+    }
+
+    private fun popFromBackStack() {
+        val popped = backStack.popOrNull() ?: return
+
+        // Move the ViewPager first.
+        setViewPagerItem(popped)
+
+        // And then trigger onNavigationItemSelected.
+        // We already moved the ViewPager, the listener won't do duplicated jobs.
+        selectTab(popped)
     }
 
     private fun handleActivityExitAttempt() {
@@ -179,38 +190,37 @@ abstract class NavigationActivity : BaseActivity(),
     private fun getMenuItemByPosition(position: Int) = bottomNavigation.menu[position]
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        setViewPagerItemByMenuItem(item)
-        updateBackStackByMenuItem(item)
+        if (viewPagerAlreadyMoved(item)) {
+            // Triggered by onBackPressed()
+        } else {
+            // Triggered by user's tap on BottomNavigation.
+            saveCurrentViewPagerPositionToBackStack()
+            setViewPagerItemByMenuItem(item)
+        }
 
-        // This tab selection event will be captured through this hook.
         onTabSelected(item)
 
         return true
+    }
+
+    private fun viewPagerAlreadyMoved(item: MenuItem): Boolean {
+        val currentPosition = mainPager.currentItem
+        val newPosition = getPositionByMenuItem(item)
+
+        return currentPosition == newPosition
+    }
+
+    private fun saveCurrentViewPagerPositionToBackStack() {
+        val currentPosition = mainPager.currentItem
+
+        backStack.placeOnTop(currentPosition)
     }
 
     private fun setViewPagerItemByMenuItem(item: MenuItem) =
         setViewPagerItem(getPositionByMenuItem(item))
 
     private fun setViewPagerItem(position: Int) {
-        with(mainPager) {
-            if (currentItem != position) {
-                currentItem = position
-            }
-        }
-    }
-
-    private fun updateBackStackByMenuItem(item: MenuItem) {
-        val currentPosition = mainPager.currentItem
-        val newPosition = getPositionByMenuItem(item)
-
-        updateBackStack(currentPosition, newPosition)
-    }
-
-    private fun updateBackStack(currentPosition: Int, newPosition: Int) {
-        if (currentPosition != newPosition) {
-            // Back stack does not have the latest item: it stores histories.
-            backStack.placeOnTop(currentPosition)
-        }
+        mainPager.currentItem = position
     }
 
     override fun onNavigationItemReselected(item: MenuItem) =
@@ -247,8 +257,7 @@ abstract class NavigationActivity : BaseActivity(),
     }
 
     inner class ViewPagerAdapter : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getItem(position: Int): Fragment =
-            NavigationHostFragment.newInstance(fragmentArguments[position])
+        override fun getItem(position: Int): Fragment = NavigationHostFragment.newInstance(fragmentArguments[position])
         override fun getCount(): Int = fragmentArguments.size
     }
 
