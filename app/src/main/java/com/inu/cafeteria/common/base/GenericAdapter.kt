@@ -62,7 +62,7 @@ abstract class GenericAdapter<E, T: ViewDataBinding> : RecyclerView.Adapter<Gene
         set(value) {
             field = value
 
-            notifyDataSetChanged()
+            notifyItemRangeChanged(0, value.size)
             updatePeripheralViews()
         }
 

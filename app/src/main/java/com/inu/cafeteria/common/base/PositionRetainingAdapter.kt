@@ -21,19 +21,20 @@ package com.inu.cafeteria.common.base
 
 import android.util.SparseIntArray
 import androidx.annotation.CallSuper
+import androidx.viewbinding.ViewBinding
 import timber.log.Timber
 
 /**
  * This adapter handles loading/empty view visibility.
  */
-abstract class PositionRetainingAdapter<T> : PlainAdapter<T, PositionRetainingViewHolder>() {
+abstract class PositionRetainingAdapter<ItemT, BindingT: ViewBinding> : PlainAdapter<ItemT, PositionRetainingViewHolder<BindingT>>() {
 
     var positions = SparseIntArray()
 
     /**
      * This must be called when an inner RecyclerView is scrolled.
      */
-    fun saveViewHolderPosition(holder: PositionRetainingViewHolder) {
+    fun saveViewHolderPosition(holder: PositionRetainingViewHolder<BindingT>) {
         val position = holder.adapterPosition
         val firstVisiblePosition = holder.layoutManager?.findFirstVisibleItemPosition() ?: -1
 
@@ -42,7 +43,7 @@ abstract class PositionRetainingAdapter<T> : PlainAdapter<T, PositionRetainingVi
         positions.put(position, firstVisiblePosition)
     }
 
-    private fun restoreViewHolderPosition(holder: PositionRetainingViewHolder) {
+    private fun restoreViewHolderPosition(holder: PositionRetainingViewHolder<BindingT>) {
         positions.get(holder.adapterPosition, -1).takeIf { it >= 0 }?.let {
             Timber.i("Restore holder's page number: $it")
 
@@ -51,11 +52,11 @@ abstract class PositionRetainingAdapter<T> : PlainAdapter<T, PositionRetainingVi
     }
 
     @CallSuper
-    override fun onBindViewHolder(holder: PositionRetainingViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PositionRetainingViewHolder<BindingT>, position: Int) {
         restoreViewHolderPosition(holder)
     }
 
-    override fun onViewRecycled(holder: PositionRetainingViewHolder) {
+    override fun onViewRecycled(holder: PositionRetainingViewHolder<BindingT>) {
         saveViewHolderPosition(holder)
 
         super.onViewRecycled(holder)

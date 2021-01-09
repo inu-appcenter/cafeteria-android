@@ -35,9 +35,8 @@ import com.inu.cafeteria.databinding.DiscountFragmentBinding
 import it.sephiroth.android.library.xtooltip.Tooltip
 import org.koin.core.inject
 
-class DiscountFragment : BaseFragment() {
+class DiscountFragment : BaseFragment<DiscountFragmentBinding>() {
 
-    private lateinit var binding: DiscountFragmentBinding
     private val viewModel: DiscountViewModel by viewModels()
 
     private val navigator: Navigator by inject()
@@ -129,7 +128,7 @@ class DiscountFragment : BaseFragment() {
     }
 
     private fun clearTooltip() {
-        binding.root.dismissTooltip()
+        binding?.root?.dismissTooltip()
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =

@@ -27,7 +27,7 @@ import com.inu.cafeteria.common.extension.setSupportActionBar
 import com.inu.cafeteria.common.widget.ReorderableAdapterWrapper
 import com.inu.cafeteria.databinding.CafeteriaReorderFragmentBinding
 
-class CafeteriaReorderFragment : BaseFragment() {
+class CafeteriaReorderFragment : BaseFragment<CafeteriaReorderFragmentBinding>() {
 
     private val viewModel: CafeteriaReorderViewModel by viewModels()
 

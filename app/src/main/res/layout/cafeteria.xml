@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_root"
-    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_width="match_parent"
     android:paddingTop="@dimen/cafeteria_vertical_space">
 
     <!-- Cafeteria name -->
@@ -51,14 +51,19 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/menu_page" />
 
-    <include
-        layout="@layout/empty_cafeteria_view"
+    <!-- Empty view -->
+    <TextView
+        android:id="@+id/empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/near_space"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cafeteria_name"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="@dimen/textSecondary"
+        android:textColor="@color/textTertiary"
+        android:textStyle="bold"
+        android:text="@string/no_information_on_this_cafeteria" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

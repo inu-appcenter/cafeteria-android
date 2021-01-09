@@ -21,10 +21,12 @@ package com.inu.cafeteria.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.extension.inflate
+import com.inu.cafeteria.common.extension.removeFromParent
 import com.inu.cafeteria.extension.forEachBits
 
 class AvailableTimeView(
@@ -32,27 +34,33 @@ class AvailableTimeView(
     attributeSet: AttributeSet
 ) : LinearLayout(context, attributeSet) {
 
-    init {
-        initView()
-    }
+    private val viewCache: MutableMap<Int, View> = mutableMapOf()
 
-    private fun initView() {
-        inflate(context, R.layout.available_time_view, this)
-        setAvailableTime(if (isInEditMode) 7 else 0)
-    }
+    // Prevent unnecessary works.
+    private var lastAvailableTime = 0
+    private var lastLayoutKey = 0
 
     fun setAvailableTime(availableTimes: Int) {
-        val layout = selectProperLayout(availableTimes.countOneBits())
+        if (availableTimes == lastAvailableTime) {
+            return
+        }
 
-        val imageViewsIterator = listOf<ImageView?>(
-            layout.findViewById(R.id.squircle_slot_0),
-            layout.findViewById(R.id.squircle_slot_1),
-            layout.findViewById(R.id.squircle_slot_2)
+        prepareProperLayout(availableTimes.countOneBits())
+
+        val slotIds = listOf(
+            R.id.squircle_slot_0,
+            R.id.squircle_slot_1,
+            R.id.squircle_slot_2
         ).iterator()
 
         availableTimes.forEachBits((0..2)) { time ->
-            imageViewsIterator.next()?.setImageResource(getImageForTime(time))
+            val id = slotIds.next()
+            val view = findViewById<ImageView>(id)
+
+            view?.setImageResource(getImageForTime(time))
         }
+
+        lastAvailableTime = availableTimes
     }
 
     private fun getImageForTime(time: Int): Int {
@@ -64,15 +72,38 @@ class AvailableTimeView(
         }
     }
 
-    private fun selectProperLayout(howMany: Int): ConstraintLayout {
-        val layouts = listOf<ConstraintLayout>(
-            findViewById(R.id.single_view),
-            findViewById(R.id.double_view),
-            findViewById(R.id.triple_view)
-        ).onEach { it.visibility = GONE }
+    private fun prepareProperLayout(howMany: Int) {
+        if (howMany == lastLayoutKey) {
+            return
+        }
 
-        return if (howMany in 1..3) { layouts[howMany-1] } else { layouts[0] }
-            .apply { visibility = VISIBLE }
+        removeAllViews()
+
+        addView(bringView(howMany).apply { removeFromParent() })
+
+        lastLayoutKey = howMany
+    }
+
+    private fun bringView(howMany: Int): View {
+        val viewInCache = viewCache[howMany]
+        if (viewInCache != null) {
+            return viewInCache
+        }
+
+        return inflateView(howMany).apply {
+            viewCache[howMany] = this
+        }
+    }
+
+    private fun inflateView(howMany: Int): View {
+        val layoutId = when (howMany) {
+            1 -> R.layout.squircle_single
+            2 -> R.layout.squircle_double
+            3 -> R.layout.squircle_triple
+            else -> R.layout.squircle_single
+        }
+
+        return inflate(layoutId)
     }
 
     companion object {

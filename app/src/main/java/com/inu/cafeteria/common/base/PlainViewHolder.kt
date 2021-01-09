@@ -19,13 +19,7 @@
 
 package com.inu.cafeteria.common.base
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
-open class PlainViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-    constructor(parent: ViewGroup, @LayoutRes layoutId: Int)
-            : this(LayoutInflater.from(parent.context).inflate(layoutId, parent, false))
-}
+open class PlainViewHolder<T: ViewBinding>(val binding: T) : RecyclerView.ViewHolder(binding.root)

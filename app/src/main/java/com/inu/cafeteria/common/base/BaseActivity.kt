@@ -19,7 +19,6 @@
 
 package com.inu.cafeteria.common.base
 
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
@@ -31,10 +30,9 @@ import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-abstract class BaseActivity : AppCompatActivity(), KoinComponent {
+abstract class BaseActivity : AppCompatActivity(), NetworkChangeObserver, PermissionFighter, KoinComponent {
 
-    private val deviceStatusRepository: DeviceStatusRepository by inject()
-
+    /** AppCompatActivity */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,27 +40,13 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
         getRuntimePermissions()
     }
 
-    protected fun isOnline() = deviceStatusRepository.isOnline()
-
-    private fun observeNetworkStateChange(isThisFirstTimeCreated: Boolean) {
-        if (isThisFirstTimeCreated) {
-            onNetworkStateChange(isOnline())
-        }
-
-        observe(deviceStatusRepository.networkStateChangeEvent()) {
-            it?.let(::onNetworkStateChange)
-        }
-    }
-
-    protected open fun onNetworkStateChange(available: Boolean) {}
-
-    private fun getRuntimePermissions() {
-        val allNeededPermissions = requiredPermissions
-            .filter { !isPermissionGranted(this, it) }
-            .toTypedArray()
-
-        if (allNeededPermissions.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, allNeededPermissions, REQUEST_CODE_PERMISSIONS)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -82,29 +66,49 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
         }
     }
 
-    private fun isPermissionGranted(context: Context, permission: String): Boolean {
-        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
-    }
+    /** NetworkChangeObserver */
+    private val deviceStatusRepository: DeviceStatusRepository by inject()
 
-    protected fun allPermissionsGranted(): Boolean {
-        return requiredPermissions.all {
-            isPermissionGranted(this, it)
+    protected fun isOnline() = deviceStatusRepository.isOnline()
+
+    private fun observeNetworkStateChange(isThisFirstTimeCreated: Boolean) {
+        if (isThisFirstTimeCreated) {
+            onNetworkStateChange(isOnline())
+        }
+
+        observe(deviceStatusRepository.networkStateChangeEvent()) {
+            it?.let(::onNetworkStateChange)
         }
     }
 
-    protected open val requiredPermissions: Array<String> = arrayOf()
+    override fun onNetworkStateChange(available: Boolean) {
+        // Make your implementation here.
+    }
 
-    protected open fun onAllPermissionsGranted() {}
+    /** PermissionFighter */
+    override val requiredPermissions: Array<String> = arrayOf()
 
-    protected open fun onPermissionNotGranted() {}
+    override fun onAllPermissionsGranted() {}
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onPermissionNotGranted() {}
+
+    override fun allPermissionsGranted(): Boolean {
+        return requiredPermissions.all {
+            isPermissionGranted(it)
+        }
+    }
+
+    private fun isPermissionGranted(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun getRuntimePermissions() {
+        val allNeededPermissions = requiredPermissions
+            .filter { !isPermissionGranted(it) }
+            .toTypedArray()
+
+        if (allNeededPermissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, allNeededPermissions, REQUEST_CODE_PERMISSIONS)
         }
     }
 

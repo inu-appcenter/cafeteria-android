@@ -19,25 +19,19 @@
 
 package com.inu.cafeteria.feature.support
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.setVisible
 import com.inu.cafeteria.databinding.SupportFragmentBinding
 
-class SupportFragment : BaseFragment() {
+class SupportFragment : BaseFragment<SupportFragmentBinding>() {
 
     private val viewModel: SupportViewModel by viewModels()
-
-    private val adapter = SupportOptionsAdapter()
 
     override fun onCreateView(create: ViewCreator): View {
         return create.createView<SupportFragmentBinding> {
@@ -48,22 +42,20 @@ class SupportFragment : BaseFragment() {
 
     private fun initializeView(binding: SupportFragmentBinding) {
         with(binding.supportOptionsRecycler) {
-            adapter = this@SupportFragment.adapter
-        }
-
-        with(adapter) {
-            onClickRootLayout = {
-                findNavController().navigate(it.navigateTo)
+            adapter = SupportOptionsAdapter().apply {
+                onClickRootLayout = {
+                    this@SupportFragment.findNavController().navigate(it.navigateTo)
+                }
             }
         }
 
         with(binding.kakaotalkButtonPart.kakaotalkButton) {
             setVisible(isKakaoTalkInstalled())
-            setOnClickListener { onKakaoTalkClick() }
+            setOnClickListener { viewModel.openKakaoTalk() }
         }
 
         with(binding.uicoopCallButtonPart.callUicoopButton) {
-            setOnClickListener { onCallUiCoopClick() }
+            setOnClickListener { viewModel.callUiCoop() }
         }
     }
 
@@ -73,22 +65,6 @@ class SupportFragment : BaseFragment() {
             true
         } catch (e: PackageManager.NameNotFoundException) {
             false
-        }
-    }
-
-    private fun onKakaoTalkClick() {
-        safeStartActivity(viewModel.getKakaoIntent())
-    }
-
-    private fun onCallUiCoopClick() {
-        safeStartActivity(viewModel.callUiCoopIntent())
-    }
-
-    private fun safeStartActivity(intent: Intent) {
-        try {
-            startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(activity, getText(R.string.fail_no_activity), Toast.LENGTH_SHORT).show()
         }
     }
 

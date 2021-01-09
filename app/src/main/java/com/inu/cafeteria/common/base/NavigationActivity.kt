@@ -22,19 +22,33 @@ package com.inu.cafeteria.common.base
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.inu.cafeteria.R
 import com.inu.cafeteria.common.widget.BackStack
 import com.inu.cafeteria.common.widget.NonSwipingViewPager
 import java.util.*
 
 /**
  * A base Activity that acts as a host of bottom navigation.
+ *
+ * Code flows follow steps below:
+ *
+ * When moved to another tab by user clicking on bottom navigation:
+ *   1. onNavigationItemSelected() triggered.
+ *   2. Save current ViewPager position to the back stack.
+ *   3. Set ViewPager position to the new one(user clicked).
+ *
+ * When moved to another tab by pressing back button:
+ *   1. onBackPressed() triggered.
+ *   2. handleRootLevelBackPress() called.
+ *   3. If possible, popFromBackStack() called.
+ *   4. Pop from back stack and call setViewPagerItem() using the popped one.
+ *   5. selectTab() called.
+ *   6. onNavigationItemSelected() triggered.
+ *   7. The ViewPager is already set to a new position(at step 4), so do nothing!
  */
 abstract class NavigationActivity : BaseActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
@@ -50,8 +64,6 @@ abstract class NavigationActivity : BaseActivity(),
 
     private lateinit var mainPager: NonSwipingViewPager
     private lateinit var bottomNavigation: BottomNavigationView
-
-    private var lastRootLevelBackPress = 0L
 
     /**
      * For children.
@@ -83,19 +95,6 @@ abstract class NavigationActivity : BaseActivity(),
         initBottomNavigation()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        backStack.saveBackStack(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        // Calling super will automatically restore UI states(e.g. selected tab).
-        super.onRestoreInstanceState(savedInstanceState)
-
-        backStack.restoreBackStack(savedInstanceState)
-    }
-
     private fun initViewPager(savedInstanceState: Bundle?) {
         mainPager = findViewById(mainPagerRes)
 
@@ -119,6 +118,14 @@ abstract class NavigationActivity : BaseActivity(),
         }
     }
 
+    private fun getAllFragments() =
+        supportFragmentManager.fragments
+            .filter { fragment ->
+                fragment is NavigationHostFragment && fragment.getTabItemId() in fragmentArguments.map { it.tabItemId }
+            }.map {
+                it as NavigationHostFragment
+            }
+
     private fun initBottomNavigation() {
         bottomNavigation = findViewById(bottomNavRes)
 
@@ -131,6 +138,19 @@ abstract class NavigationActivity : BaseActivity(),
             setOnNavigationItemSelectedListener(this@NavigationActivity)
             setOnNavigationItemReselectedListener(this@NavigationActivity)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        backStack.saveBackStack(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        // Calling super will automatically restore UI states(e.g. selected tab).
+        super.onRestoreInstanceState(savedInstanceState)
+
+        backStack.restoreBackStack(savedInstanceState)
     }
 
     override fun onBackPressed() {
@@ -147,7 +167,7 @@ abstract class NavigationActivity : BaseActivity(),
         if (backStack.isNotEmpty()) {
             popFromBackStack()
         } else {
-            handleActivityExitAttempt()
+            finishAndRemoveTask()
         }
     }
 
@@ -162,33 +182,7 @@ abstract class NavigationActivity : BaseActivity(),
         selectTab(popped)
     }
 
-    private fun handleActivityExitAttempt() {
-        val now = Date().time
-        val elapsed = now - lastRootLevelBackPress
-
-        if (elapsed < BACK_PRESS_THRESHOLD_MILLIS) {
-            finishAndRemoveTask()
-        } else {
-            Toast.makeText(
-                this,
-                getString(R.string.notify_press_again_to_exit),
-                Toast.LENGTH_SHORT
-            ).show()
-            lastRootLevelBackPress = now
-        }
-    }
-
-    private fun getAllFragments() =
-        supportFragmentManager.fragments
-            .filter { fragment ->
-                fragment is NavigationHostFragment && fragment.getTabItemId() in fragmentArguments.map { it.tabItemId }
-            }.map {
-                it as NavigationHostFragment
-            }
-
-    private fun getPositionByMenuItem(item: MenuItem) = fragmentArguments.indexOfFirst { it.tabItemId == item.itemId }
-    private fun getMenuItemByPosition(position: Int) = bottomNavigation.menu[position]
-
+    /** BottomNavigation handlers */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (viewPagerAlreadyMoved(item)) {
             // Triggered by onBackPressed()
@@ -216,27 +210,10 @@ abstract class NavigationActivity : BaseActivity(),
         backStack.placeOnTop(currentPosition)
     }
 
-    private fun setViewPagerItemByMenuItem(item: MenuItem) =
-        setViewPagerItem(getPositionByMenuItem(item))
-
-    private fun setViewPagerItem(position: Int) {
-        mainPager.currentItem = position
-    }
-
     override fun onNavigationItemReselected(item: MenuItem) =
         getHostFragmentByTabItem(item)?.popToRoot() ?: Unit
 
-    private fun getHostFragmentByTabItem(item: MenuItem) =
-        findFragmentByTabItem(item)
-
-    private fun findFragmentByTabItem(item: MenuItem) =
-        findFragmentByPosition(getPositionByMenuItem(item))
-
-    private fun findFragmentByPosition(position: Int) =
-        supportFragmentManager.findFragmentByTag(
-            "android:switcher:${mainPager.id}:${position}"
-        ) as? NavigationHostFragment
-
+    /** Setting BottomNavigation/ViewPager */
     private fun selectTab(position: Int) {
         val menuItem = getMenuItemByPosition(position)
 
@@ -256,12 +233,24 @@ abstract class NavigationActivity : BaseActivity(),
         }
     }
 
+    private fun setViewPagerItem(position: Int) {
+        mainPager.currentItem = position
+    }
+
+    private fun setViewPagerItemByMenuItem(item: MenuItem) =
+        setViewPagerItem(getPositionByMenuItem(item))
+
+    /** Getting position/MenuItem/Fragment */
+    private fun getPositionByMenuItem(item: MenuItem) = fragmentArguments.indexOfFirst { it.tabItemId == item.itemId }
+    private fun getMenuItemByPosition(position: Int) = bottomNavigation.menu[position]
+
+    private fun getHostFragmentByTabItem(item: MenuItem) = findFragmentByTabItem(item)
+    private fun findFragmentByTabItem(item: MenuItem) = findFragmentByPosition(getPositionByMenuItem(item))
+    private fun findFragmentByPosition(position: Int) = supportFragmentManager
+        .findFragmentByTag("android:switcher:${mainPager.id}:${position}") as? NavigationHostFragment
+
     inner class ViewPagerAdapter : FragmentPagerAdapter(supportFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getItem(position: Int): Fragment = NavigationHostFragment.newInstance(fragmentArguments[position])
         override fun getCount(): Int = fragmentArguments.size
-    }
-
-    companion object {
-        private const val BACK_PRESS_THRESHOLD_MILLIS = 500
     }
 }

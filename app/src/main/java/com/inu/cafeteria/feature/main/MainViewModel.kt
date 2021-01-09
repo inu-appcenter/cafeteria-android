@@ -50,7 +50,7 @@ class MainViewModel : BaseViewModel() {
     val loggedInStatus = accountService.loggedInStatus()
 
     fun load(activity: MainActivity) {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.d("Device is offline. Cancel loading main view model.")
             return
         }
@@ -63,7 +63,7 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun onLoggedIn() {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.d("Device is offline. Cancel calling onLoggedIn callback in main view model.")
             return
         }

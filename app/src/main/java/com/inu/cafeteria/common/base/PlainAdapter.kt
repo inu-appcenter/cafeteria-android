@@ -26,7 +26,7 @@ import com.inu.cafeteria.common.extension.setVisible
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
-abstract class PlainAdapter<T, VH: PlainViewHolder> : RecyclerView.Adapter<VH>(), KoinComponent {
+abstract class PlainAdapter<T, VH: PlainViewHolder<*>> : RecyclerView.Adapter<VH>(), KoinComponent {
 
     /**
      * loadingView will be shown when it is not null and isLoading is true.
@@ -57,7 +57,7 @@ abstract class PlainAdapter<T, VH: PlainViewHolder> : RecyclerView.Adapter<VH>()
             if (field === value) return
             field = value
 
-            notifyDataSetChanged()
+            notifyItemRangeChanged(0, value.size)
             updatePeripheralViews()
         }
 

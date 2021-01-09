@@ -32,47 +32,62 @@ import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-abstract class BaseViewModel : ViewModel(), KoinComponent {
+abstract class BaseViewModel : ViewModel(), ContextOwner, Verbal, NetworkSensitive, FailureFriendly, KoinComponent {
 
-    protected val mContext: Context by inject()
+    /** ContextOwner */
+    override val context: Context by inject()
 
-    private val deviceStatusRepository: DeviceStatusRepository by inject()
-
-    protected fun saySorryIfOffline(): Boolean {
-        return if (!deviceStatusRepository.isOnline()) {
-            saySorryToBeOffline()
-            true
-        } else
-            false
+    /** Verbal */
+    override fun notify(message: String?) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    protected open fun handleFailure(e: Exception) {
+    override fun notify(@StringRes message: Int, vararg args: Any?) {
+        notify(context.getString(message, *args))
+    }
+
+    /** NetworkSensitive */
+    private val deviceStatusRepository: DeviceStatusRepository by inject()
+
+    override fun handleIfOffline(): Boolean {
+        if (isOffline()) {
+            saySorryToBeOffline()
+        }
+
+        return isOffline()
+    }
+
+    override fun isOnline() = deviceStatusRepository.isOnline()
+    override fun isOffline() = !isOnline()
+
+    protected open fun saySorryToBeOffline() {
+        notify(R.string.sorry_to_be_offline)
+    }
+
+    /** FailureFriendly */
+    override fun handleFailure(e: Exception) {
         val errorMessage = when (e) {
             is NetworkException -> {
-                mContext.getString(R.string.fail_server)
+                context.getString(R.string.fail_server)
             }
             is ServerFailException -> {
-                mContext.getString(R.string.fail_server_internal)
+                context.getString(R.string.fail_server_internal)
             }
             is ResponseFailException -> {
-                mContext.getString(R.string.fail_response)
+                context.getString(R.string.fail_response)
             }
             is NullBodyException -> {
-                mContext.getString(R.string.fail_response_body_null)
+                context.getString(R.string.fail_response_body_null)
             }
             else -> {
                 e.message
             }
         }
 
-        Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show()
+        notify(errorMessage)
     }
 
-    protected open fun handleFailure(@StringRes message: Int, vararg args: Any?) {
-        Toast.makeText(mContext, mContext.getString(message, *args), Toast.LENGTH_SHORT).show()
-    }
-
-    protected open fun saySorryToBeOffline() {
-        Toast.makeText(mContext, mContext.getString(R.string.sorry_to_be_offline), Toast.LENGTH_SHORT).show()
+    override fun handleFailure(@StringRes message: Int, vararg args: Any?) {
+        notify(message, args)
     }
 }

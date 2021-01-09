@@ -25,6 +25,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
+import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.feature.support.SupportOption.Companion.availableSupportOptionsForThoseHaveNotification
 import com.inu.cafeteria.feature.support.SupportOption.Companion.availableSupportOptionsForThoseLoggedIn
@@ -38,18 +39,15 @@ class SupportViewModel : BaseViewModel() {
     private val accountService: AccountService by inject()
     private val interactionRepo: InteractionRepository by inject()
 
+    private val navigator: Navigator by inject()
+
+    val appVersionText = context.getString(R.string.description_app_version, Config.version)
+
     private val _supportOptions = MediatorLiveData<List<SupportOption>>().apply {
         addSource(accountService.loggedInStatus()) { updateSupportOptions() }
         addSource(interactionRepo.getNumberOfUnreadAnswersLiveData()) { updateSupportOptions() }
     }
-
     val supportOptions: LiveData<List<SupportOption>> = _supportOptions
-
-    val appVersionText = mContext.getString(R.string.description_app_version, Config.version)
-
-    fun getKakaoIntent() = Intent(Intent.ACTION_VIEW, Uri.parse(Config.kakaoPlusFriendLink))
-
-    fun callUiCoopIntent() = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${Config.uicoopPhoneNumber}"))
 
     private fun updateSupportOptions() {
         val loggedIn = accountService.isLoggedIn();
@@ -61,4 +59,16 @@ class SupportViewModel : BaseViewModel() {
             else -> availableSupportOptionsForThoseNotLoggedIn
         })
     }
+
+    fun openKakaoTalk() {
+        navigator.safeStartActivity(getKakaoIntent())
+    }
+
+    private fun getKakaoIntent() = Intent(Intent.ACTION_VIEW, Uri.parse(Config.kakaoPlusFriendLink))
+
+    fun callUiCoop() {
+        navigator.safeStartActivity(callUiCoopIntent())
+    }
+
+    private fun callUiCoopIntent() = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${Config.uicoopPhoneNumber}"))
 }

@@ -40,7 +40,7 @@ class NoticeViewModel : BaseViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     fun load() {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.w("Offline! Fetch canceled.")
             return
         }

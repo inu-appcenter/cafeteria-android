@@ -20,9 +20,6 @@
 package com.inu.cafeteria.feature.order
 
 import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -30,49 +27,36 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.messaging.RemoteMessage
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.observe
+import com.inu.cafeteria.common.extension.registerReceiver
 import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.common.review.ReviewHelper
 import com.inu.cafeteria.common.service.CafeteriaFirebaseMessagingService
 import com.inu.cafeteria.databinding.WaitingOrderFragmentBinding
 import org.koin.core.inject
 
-class WaitingOrderFragment : BaseFragment() {
+class WaitingOrderFragment : BaseFragment<WaitingOrderFragmentBinding>() {
 
     private val viewModel: WaitingOrderViewModel by viewModels()
-    private lateinit var binding: WaitingOrderFragmentBinding
 
     private val navigator: Navigator by inject()
 
-    /** Receives in-app firebase notification when app is active */
-    private val pushNumberNotificationReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val message: RemoteMessage = intent?.getParcelableExtra("message") ?: return
-
-            viewModel.handleNotification(message)
-        }
-    }
-
-    private val pushNumberNotificationFilter = IntentFilter().apply {
-        addAction(CafeteriaFirebaseMessagingService.ACTION_PUSH_NUMBER_NOTIFICATION)
-    }
+    // Receives in-app firebase notification when app is active
+    private var receiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        context?.registerReceiver(
-            pushNumberNotificationReceiver,
-            pushNumberNotificationFilter
-        )
+        receiver = context?.registerReceiver(CafeteriaFirebaseMessagingService.ACTION_PUSH_NUMBER_NOTIFICATION) {
+            viewModel.handleNotification(it?.getParcelableExtra("message"))
+        }
     }
 
     override fun onCreateView(create: ViewCreator): View {
         return create.createView<WaitingOrderFragmentBinding> {
             initializeView(this)
-            binding = this
             vm = viewModel
         }
     }
@@ -136,7 +120,7 @@ class WaitingOrderFragment : BaseFragment() {
     override fun onDestroy() {
         super.onDestroy()
 
-        context?.unregisterReceiver(pushNumberNotificationReceiver)
+        context?.unregisterReceiver(receiver)
     }
 
     companion object {

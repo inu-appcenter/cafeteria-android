@@ -17,31 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.feature.support.ask
+package com.inu.cafeteria.common.base
 
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.inu.cafeteria.common.base.BaseFragment
-import com.inu.cafeteria.common.extension.observe
-import com.inu.cafeteria.databinding.AskFragmentBinding
+interface PermissionFighter {
+    val requiredPermissions: Array<String>
 
-class AskFragment : BaseFragment<AskFragmentBinding>() {
+    fun onAllPermissionsGranted()
+    fun onPermissionNotGranted()
 
-    private val viewModel: AskViewModel by viewModels()
-
-    override fun onCreateView(create: ViewCreator) =
-        create<AskFragmentBinding> {
-            init()
-            vm = viewModel
-        }
-
-    private fun init() {
-        with(viewModel) {
-            load()
-
-            observe(navigateUpEvent) {
-                findNavController().navigateUp()
-            }
-        }
-    }
+    fun allPermissionsGranted(): Boolean
 }

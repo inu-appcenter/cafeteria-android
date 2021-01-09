@@ -48,7 +48,7 @@ class CafeteriaReorderViewModel : BaseViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     fun fetch() {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.w("Offline! Fetch canceled.")
             return
         }

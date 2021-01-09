@@ -91,7 +91,7 @@ class DiscountViewModel : BaseViewModel() {
     }
 
     fun load() {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.d("Device is offline. Cancel loading discount view model.")
             return
         }
@@ -139,8 +139,8 @@ class DiscountViewModel : BaseViewModel() {
     }
 
     private fun showBarcodeForAccount(account: Account) {
-        val barcodeRatio = mContext.getString(R.string.barcode_ratio).toFloat()
-        val barcodeWidth = mContext.resources.getDimensionPixelSize(R.dimen.barcode_width)
+        val barcodeRatio = context.getString(R.string.barcode_ratio).toFloat()
+        val barcodeWidth = context.resources.getDimensionPixelSize(R.dimen.barcode_width)
         val barcodeHeight = (barcodeWidth / barcodeRatio).toInt()
 
         createBarcode(Triple(account.barcode, barcodeWidth, barcodeHeight)) {
@@ -189,8 +189,8 @@ class DiscountViewModel : BaseViewModel() {
     private fun showDiscountServiceDescription() {
         getCafeteria(Unit) { result ->
             result.onSuccess {
-                val title = mContext.getString(R.string.title_discount_service_description)
-                val body = mContext.getString(R.string.description_discount_service, it.joinToString { c -> c.displayName ?: c.name })
+                val title = context.getString(R.string.title_discount_service_description)
+                val body = context.getString(R.string.description_discount_service, it.joinToString { c -> c.displayName ?: c.name })
 
                 showDiscountServiceDescriptionEvent.value = Pair(title, body)
             }

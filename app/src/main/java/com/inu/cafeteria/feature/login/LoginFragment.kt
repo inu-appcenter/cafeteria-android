@@ -25,7 +25,7 @@ import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.common.extension.*
 import com.inu.cafeteria.databinding.LoginFragmentBinding
 
-class LoginFragment : BaseFragment() {
+class LoginFragment : BaseFragment<LoginFragmentBinding>() {
 
     private val viewModel: LoginViewModel by viewModels()
 

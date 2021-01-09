@@ -73,14 +73,14 @@ class WaitingOrderViewModel : BaseViewModel() {
     }
 
     fun clearAllOrderNotifications() {
-        val notificationManager = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager ?: return
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager ?: return
 
         // Warning: this will cancel notifications in other channels.
         notificationManager.cancelAll()
     }
 
     fun fetchWaitingOrders() {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.w("Offline! Fetch canceled.")
             return
         }
@@ -124,22 +124,24 @@ class WaitingOrderViewModel : BaseViewModel() {
         navigator.showAddWaitingOrder()
     }
 
-    fun handleNotification(message: RemoteMessage) {
+    fun handleNotification(message: RemoteMessage?) {
+        message ?: return
+        
         fetchWaitingOrders()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrate()
         }
 
-        val title = message.notification?.title ?: mContext.getString(R.string.title_order_ready)
-        val body = message.notification?.body ?: mContext.getString(R.string.description_order_ready)
+        val title = message.notification?.title ?: context.getString(R.string.title_order_ready)
+        val body = message.notification?.body ?: context.getString(R.string.description_order_ready)
 
         showOrderReadyDialogEvent.value = Pair(title, body)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun vibrate() {
-        val vibrator = mContext.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         val effect = VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
 
         vibrator?.vibrate(effect)

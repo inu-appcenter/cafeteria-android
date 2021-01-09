@@ -19,31 +19,31 @@
 
 package com.inu.cafeteria.feature.cafeteria
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.PositionRetainingAdapter
 import com.inu.cafeteria.common.base.PositionRetainingViewHolder
 import com.inu.cafeteria.common.extension.onScrollStateChange
-import com.inu.cafeteria.extension.withNonNull
+import com.inu.cafeteria.databinding.CafeteriaBinding
 import timber.log.Timber
 
-class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView>() {
+class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView, CafeteriaBinding>() {
 
     private val menuPagePool = RecyclerView.RecycledViewPool()
     private val menuPool = RecyclerView.RecycledViewPool()
 
     var onClickMore: (CafeteriaView) -> Any? = {}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PositionRetainingViewHolder {
-        return CafeteriaViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PositionRetainingViewHolder<CafeteriaBinding> {
+        val inflater = LayoutInflater.from(parent.context)
+
+        return CafeteriaViewHolder(CafeteriaBinding.inflate(inflater, parent, false/*Important!!*/))
     }
 
-    override fun onBindViewHolder(holder: PositionRetainingViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PositionRetainingViewHolder<CafeteriaBinding>, position: Int) {
         super.onBindViewHolder(holder, position)
 
         with(holder as CafeteriaViewHolder) {
@@ -51,10 +51,9 @@ class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView>() {
         }
     }
 
-    inner class CafeteriaViewHolder(parent: ViewGroup) : PositionRetainingViewHolder(parent, R.layout.cafeteria) {
+    inner class CafeteriaViewHolder(binding: CafeteriaBinding) : PositionRetainingViewHolder<CafeteriaBinding>(binding) {
 
-        override val layoutManager: LinearLayoutManager? =
-            view.findViewById<RecyclerView>(R.id.menu_page_recycler)?.layoutManager as? LinearLayoutManager
+        override val layoutManager: LinearLayoutManager = binding.menuPageRecycler.layoutManager as LinearLayoutManager
 
         private val menuPageAdapter = MenuPageAdapter(menuPool)
 
@@ -65,11 +64,11 @@ class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView>() {
         }
 
         private fun setChildRecyclerView() {
-            withNonNull(view.findViewById(R.id.menu_page_recycler) as RecyclerView) {
+            with(binding.menuPageRecycler) {
                 onScrollStateChange { saveViewHolderPosition(this@CafeteriaViewHolder) }
 
                 adapter = menuPageAdapter.apply {
-                    emptyView = itemView.findViewById(R.id.empty_cafeteria_view)
+                    emptyView = binding.emptyView
                 }
 
                 setRecycledViewPool(menuPagePool)
@@ -81,14 +80,14 @@ class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView>() {
         fun bind(cafeteria: CafeteriaView?) {
             cafeteria ?: return
 
-            withNonNull(view.findViewById<TextView>(R.id.cafeteria_name)) {
-                text = cafeteria.name
-            }
-
-            withNonNull(view.findViewById<ImageButton>(R.id.more_button)) {
+            with(binding.moreButton) {
                 setOnClickListener {
                     onClickMore(cafeteria)
                 }
+            }
+
+            with(binding.cafeteriaName) {
+                text = cafeteria.name
             }
 
             menuPageAdapter.data = cafeteria.wholeMenus

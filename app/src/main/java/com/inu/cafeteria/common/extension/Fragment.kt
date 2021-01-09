@@ -32,7 +32,6 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelLazy
 import com.inu.cafeteria.extension.withNonNull
-import com.inu.cafeteria.util.Notify
 
 /**
  * Do something in the middle of beginTransaction() and commitNow().
@@ -83,14 +82,6 @@ fun Fragment.setToolbar(
         menu.clear()
         inflateMenu(menuId)
         setOnMenuItemClickListener(onClick)
-    }
-}
-
-fun Fragment.notify(message: String?, long: Boolean = false) {
-    message?.let {
-        with(Notify(context)) {
-            if (long) long(it) else short(it)
-        }
     }
 }
 

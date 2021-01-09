@@ -34,17 +34,18 @@ import com.inu.cafeteria.databinding.CafeteriaFragmentBinding
 import com.inu.cafeteria.extension.withNonNull
 import it.sephiroth.android.library.xtooltip.Tooltip
 import org.koin.core.inject
+import java.lang.ref.WeakReference
 
-class CafeteriaFragment : BaseFragment() {
+class CafeteriaFragment : BaseFragment<CafeteriaFragmentBinding>() {
 
-    private lateinit var binding: CafeteriaFragmentBinding
     private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
 
     private val eventHub: EventHub by inject()
     private val adapter = CafeteriaAdapter()
 
     // Reuse view after lifecycle!
-    private var persistentView: View? = null
+    // This may cause memory leak after onDestroyView, however it is an intended behavior.
+    private var persistentView: WeakReference<View>? = null
 
     override fun onNetworkStateChange(available: Boolean) {
         if (available) {
@@ -52,11 +53,11 @@ class CafeteriaFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(create: ViewCreator) = persistentView?.apply { removeFromParent() } ?:
+    override fun onCreateView(create: ViewCreator) = persistentView?.get()?.apply { removeFromParent() } ?:
         create<CafeteriaFragmentBinding> {
             initializeView(this)
             vm = viewModel
-            persistentView = root
+            persistentView = WeakReference(root)
             binding = this
         }
 
@@ -136,7 +137,7 @@ class CafeteriaFragment : BaseFragment() {
     }
 
     private fun clearTooltip() {
-        binding.root.dismissTooltip()
+        binding?.root?.dismissTooltip()
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =

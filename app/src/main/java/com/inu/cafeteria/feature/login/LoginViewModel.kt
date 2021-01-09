@@ -60,7 +60,7 @@ class LoginViewModel : BaseViewModel() {
     }
 
     fun performLogin() {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.w("Offline! Login canceled.")
             return
         }

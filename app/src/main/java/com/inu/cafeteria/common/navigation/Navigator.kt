@@ -20,6 +20,7 @@
 package com.inu.cafeteria.common.navigation
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -27,6 +28,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -171,6 +173,14 @@ class Navigator(
             .setCanceledOnTouchOutside(false)
 
         textInput.requestFocusWithKeyboard()
+    }
+
+    fun safeStartActivity(intent: Intent) {
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(context, context.getString(R.string.fail_no_activity), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun startActivity(intent: Intent) {

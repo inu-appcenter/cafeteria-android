@@ -42,7 +42,7 @@ class QuestionsViewModel : BaseViewModel() {
     val loading: LiveData<Boolean> = _loading
 
     fun load(invalidateCache: Boolean = false, afterLoadingFinished: () -> Unit = {}) {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.w("Offline! Fetch canceled.")
             return
         }

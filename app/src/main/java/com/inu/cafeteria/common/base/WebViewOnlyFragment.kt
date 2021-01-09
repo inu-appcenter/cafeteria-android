@@ -20,37 +20,26 @@
 package com.inu.cafeteria.common.base
 
 import android.annotation.SuppressLint
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import android.widget.ProgressBar
-import com.inu.cafeteria.R
 import com.inu.cafeteria.common.extension.setVisible
-import com.inu.cafeteria.extension.withNonNull
+import com.inu.cafeteria.databinding.WebViewOnlyFragmentBinding
 
-abstract class WebViewOnlyFragment : BaseFragment() {
+abstract class WebViewOnlyFragment : BaseFragment<WebViewOnlyFragmentBinding>() {
 
     abstract fun getPageUrl(): String
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.web_view_only_fragment, container, false).apply {
+    override fun onCreateView(create: ViewCreator) =
+        create<WebViewOnlyFragmentBinding> {
             initializeView(this)
         }
-    }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun initializeView(view: View) {
-        withNonNull(view.findViewById<WebView>(R.id.web_view)) {
+    private fun initializeView(binding: WebViewOnlyFragmentBinding) {
+        with(binding.webView) {
             webChromeClient = object: WebChromeClient() {
                 override fun onProgressChanged(webView: WebView?, newProgress: Int) {
-                    withNonNull(view.findViewById<ProgressBar>(R.id.progress_bar)) {
+                    with(binding.progressBar) {
                         progress = newProgress
                         if (newProgress == 100) {
                             setVisible(false)

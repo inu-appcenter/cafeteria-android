@@ -46,7 +46,7 @@ class AskViewModel : BaseViewModel() {
         }
     }
 
-    val submitSuccessEvent = SingleLiveEvent<Unit>()
+    val navigateUpEvent = SingleLiveEvent<Unit>()
 
     fun load() {
         restorePreviousText()
@@ -59,7 +59,7 @@ class AskViewModel : BaseViewModel() {
     }
 
     fun submit() {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.w("Offline! Submit canceled.")
             return
         }
@@ -87,7 +87,7 @@ class AskViewModel : BaseViewModel() {
             return false
         }
 
-        val allowedMaxLength = mContext.resources.getInteger(R.integer.question_max_length)
+        val allowedMaxLength = context.resources.getInteger(R.integer.question_max_length)
         if (currentContent.length > allowedMaxLength) {
             return false
         }
@@ -97,7 +97,8 @@ class AskViewModel : BaseViewModel() {
 
     private fun onSubmitSuccess() {
         clearStoredText()
-        submitSuccessEvent.call()
+        notify(R.string.notify_ask_succeeded)
+        navigateUpEvent.call()
     }
 
     private fun storeCurrentText() {

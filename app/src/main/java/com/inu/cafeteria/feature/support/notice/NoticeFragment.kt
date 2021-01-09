@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.databinding.NoticeFragmentBinding
 
-class NoticeFragment : BaseFragment() {
+class NoticeFragment : BaseFragment<NoticeFragmentBinding>() {
 
     private val viewModel: NoticeViewModel by viewModels()
 

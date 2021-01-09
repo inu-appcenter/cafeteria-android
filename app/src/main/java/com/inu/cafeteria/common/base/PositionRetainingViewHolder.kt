@@ -19,19 +19,13 @@
 
 package com.inu.cafeteria.common.base
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewbinding.ViewBinding
 
 /**
  * Call PositionRetainingViewHolder#saveViewHolderPosition
  * when scroll state of the inner RecyclerView changes
  */
-abstract class PositionRetainingViewHolder(view: View) : PlainViewHolder(view) {
-    constructor(parent: ViewGroup, @LayoutRes layoutId: Int)
-            : this(LayoutInflater.from(parent.context).inflate(layoutId, parent, false))
-
+abstract class PositionRetainingViewHolder<T: ViewBinding>(binding: T) : PlainViewHolder<T>(binding) {
     abstract val layoutManager: LinearLayoutManager?
 }

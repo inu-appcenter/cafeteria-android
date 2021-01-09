@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.common.base.BaseFragment
 import com.inu.cafeteria.databinding.QuestionsFragmentBinding
 
-class QuestionsFragment : BaseFragment() {
+class QuestionsFragment : BaseFragment<QuestionsFragmentBinding>() {
 
     private val viewModel: QuestionsViewModel by viewModels()
 

@@ -25,9 +25,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.util.TypedValue
-import android.widget.Toast
 import androidx.annotation.ColorRes
-import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.inu.cafeteria.extension.tryOrNull
 
@@ -58,18 +56,14 @@ fun Context.resolveColor(@ColorRes res: Int): Int {
     return this.resources.getColor(res, theme)
 }
 
-fun Context.makeToast(@StringRes res: Int, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, res, duration).show()
-}
-
-fun Context.makeToast(text: String, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, text, duration).show()
-}
-
-fun Context.registerReceiver(action: String, onReceive: (intent: Intent?) -> Unit) {
-    registerReceiver(object: BroadcastReceiver() {
+fun Context.registerReceiver(action: String, onReceive: (intent: Intent?) -> Unit): BroadcastReceiver {
+    val receiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             onReceive(intent)
         }
-    }, IntentFilter(action))
+    }
+
+    registerReceiver(receiver, IntentFilter(action))
+
+    return receiver
 }

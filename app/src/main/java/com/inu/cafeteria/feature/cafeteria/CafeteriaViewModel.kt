@@ -82,7 +82,7 @@ class CafeteriaViewModel : BaseViewModel() {
     }
 
     fun load() {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.d("Device is offline. Cancel loading cafeteria view model.")
             return
         }

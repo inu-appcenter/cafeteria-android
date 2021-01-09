@@ -73,7 +73,7 @@ class AddOrderViewModel : BaseViewModel() {
     private val rejectedOrderTickets = mutableListOf<OrderInput.Ticket>() // Will not handle once-rejected inputs
 
     fun getProcessorCameraProvider(): LiveData<ProcessCameraProvider> {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(mContext)
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
 
         cameraProviderFuture.addListener({
             try {
@@ -81,14 +81,14 @@ class AddOrderViewModel : BaseViewModel() {
             } catch (e: Exception) {
                 Timber.e("Unhandled exception: ${e.message}")
             }
-        }, ContextCompat.getMainExecutor(mContext))
+        }, ContextCompat.getMainExecutor(context))
 
         return cameraProviderLiveData
     }
 
     /** Final destination */
     fun handleOrderInput(input: OrderInput) {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.w("Offline! Can do nothing!")
             return
         }
@@ -140,7 +140,7 @@ class AddOrderViewModel : BaseViewModel() {
     }
 
     fun fetchCafeteriaSelectionOptions() {
-        if (saySorryIfOffline()) {
+        if (handleIfOffline()) {
             Timber.w("Offline! Fetch canceled.")
             return
         }

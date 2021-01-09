@@ -29,9 +29,14 @@ import com.inu.cafeteria.common.extension.observe
 import com.inu.cafeteria.repository.DeviceStatusRepository
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import timber.log.Timber
 
-abstract class BaseFragment : Fragment(), KoinComponent {
+abstract class BaseFragment<T: ViewDataBinding> : BindingOwner<T>, Fragment(), NetworkChangeObserver, KoinComponent {
 
+    /** BindingOwner */
+    override var binding: T? = null
+
+    /** Fragment */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,35 +47,57 @@ abstract class BaseFragment : Fragment(), KoinComponent {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = onCreateView(ViewCreator(this, inflater, container))
+    ) = onCreateView(ViewCreator(this, inflater, container, ::setBindingIfPossible))
         ?: super.onCreateView(inflater, container, savedInstanceState)
+
+    private fun setBindingIfPossible(unknownBinding: ViewDataBinding?) {
+        unknownBinding ?: return
+
+        @Suppress("UNCHECKED_CAST")
+        val casted = unknownBinding as? T
+
+        if (casted == null) {
+            Timber.e("Wrong binding type!!")
+            return
+        }
+
+        binding = casted
+    }
 
     protected open fun onCreateView(create: ViewCreator): View? = null
 
     class ViewCreator(
-        val fragment: BaseFragment,
+        val fragment: Fragment,
         val inflater: LayoutInflater,
-        val container: ViewGroup?
+        val container: ViewGroup?,
+        val onFinishBinding: (ViewDataBinding) -> Unit
     ) {
-
-        inline operator fun <reified T: ViewDataBinding> invoke(also: T.() -> Unit = {}) =
+        inline operator fun <reified ReifiedT: ViewDataBinding> invoke(also: ReifiedT.() -> Unit = {}) =
             createView(also)
 
-        inline fun <reified T: ViewDataBinding> createView(also: T.() -> Unit = {}): View {
-            val inflateMethod = T::class.java.getMethod(
+        inline fun <reified ReifiedT: ViewDataBinding> createView(also: ReifiedT.() -> Unit = {}): View {
+            val inflateMethod = ReifiedT::class.java.getMethod(
                 "inflate",
                 LayoutInflater::class.java,
                 ViewGroup::class.java,
                 Boolean::class.java
             )
 
-            return (inflateMethod.invoke(null, inflater, container, false) as T)
+            return (inflateMethod.invoke(null, inflater, container, false) as ReifiedT)
                 .apply { lifecycleOwner = fragment }
+                .apply { onFinishBinding(this) }
                 .apply { also(this) }
                 .root
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        binding = null
+    }
+
+    /** NetworkChangeObserver */
     private val deviceStatusRepository: DeviceStatusRepository by inject()
 
     private fun isOnline() = deviceStatusRepository.isOnline()
@@ -85,5 +112,14 @@ abstract class BaseFragment : Fragment(), KoinComponent {
         }
     }
 
-    protected open fun onNetworkStateChange(available: Boolean) {}
+    override fun onNetworkStateChange(available: Boolean) {
+        // Make your implementation here.
+    }
+
+    @PublishedApi
+    internal var accessBinding: T?
+        get() = binding
+        set(value) {
+            binding = value
+        }
 }

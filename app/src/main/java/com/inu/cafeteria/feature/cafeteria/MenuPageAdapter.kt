@@ -38,16 +38,16 @@ class MenuPageAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MenuPageViewHolder(parent)
 
     override fun onBindViewHolder(holder: MenuPageViewHolder, position: Int) {
-        fun paginateProps(pageNumber: Int): List<MenuView> {
-            val indexStart = pageNumber * pageSize
-            val indexEnd = min(indexStart + pageSize - 1, data.size - 1)
-
-            return data.slice(indexStart..indexEnd)
-        }
-
         holder.bind(
             if (pageSize == 0) data else paginateProps(position)
         )
+    }
+
+    private fun paginateProps(pageNumber: Int): List<MenuView> {
+        val indexStart = pageNumber * pageSize
+        val indexEnd = min(indexStart + pageSize - 1, data.size - 1)
+
+        return data.slice(indexStart..indexEnd)
     }
 
     override fun getItemCount(): Int {

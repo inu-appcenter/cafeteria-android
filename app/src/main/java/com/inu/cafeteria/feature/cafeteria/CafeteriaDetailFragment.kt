@@ -30,7 +30,7 @@ import com.inu.cafeteria.common.extension.supportActionBar
 import com.inu.cafeteria.databinding.CafeteriaDetailFragmentBinding
 import com.inu.cafeteria.extension.withNonNull
 
-class CafeteriaDetailFragment : BaseFragment() {
+class CafeteriaDetailFragment : BaseFragment<CafeteriaDetailFragmentBinding>() {
 
     private val viewModel: CafeteriaViewModel by navGraphViewModels(R.id.nav_graph_cafeteria)
 
