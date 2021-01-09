@@ -21,13 +21,11 @@ package com.inu.cafeteria.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.inu.cafeteria.R
 import com.inu.cafeteria.extension.forEachBits
-import com.inu.cafeteria.extension.has
 
 class AvailableTimeView(
     context: Context,
@@ -71,19 +69,15 @@ class AvailableTimeView(
             findViewById(R.id.single_view),
             findViewById(R.id.double_view),
             findViewById(R.id.triple_view)
-        ).apply { forEach { it.visibility = GONE } }
+        ).onEach { it.visibility = GONE }
 
         return if (howMany in 1..3) { layouts[howMany-1] } else { layouts[0] }
             .apply { visibility = VISIBLE }
     }
 
-    private fun makeItVisibleOrNotFor(time: Int, availableTimes: Int) =
-        if (availableTimes.has(time)) View.VISIBLE
-        else View.GONE
-
     companion object {
-        private const val BREAKFAST = 0x01
+        private const val BREAKFAST = 0x04
         private const val LUNCH = 0x02
-        private const val DINNER = 0x04
+        private const val DINNER = 0x01
     }
 }
