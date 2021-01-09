@@ -24,11 +24,11 @@ import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
 import com.inu.cafeteria.repository.CafeteriaRepository
 
-class GetCafeteria(
+class GetMenuSupportingCafeteriaWithoutMenus(
     private val cafeteriaRepo: CafeteriaRepository
-) : UseCase<String, List<Cafeteria>>() {
+) : UseCase<Unit, List<Cafeteria>>() {
 
-    override fun run(params: String) = Result.of {
-        cafeteriaRepo.getAllCafeteria(params)
+    override fun run(params: Unit) = Result.of {
+        cafeteriaRepo.getAllMenuSupportingCafeteria(includeMenu = false)
     }
 }

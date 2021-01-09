@@ -24,11 +24,11 @@ import com.inu.cafeteria.functional.Result
 import com.inu.cafeteria.interactor.UseCase
 import com.inu.cafeteria.repository.CafeteriaRepository
 
-class GetCafeteriaOnly /* = without corners inside. */ (
+class GetDiscountSupportingCafeteria(
     private val cafeteriaRepo: CafeteriaRepository
 ) : UseCase<Unit, List<Cafeteria>>() {
 
     override fun run(params: Unit) = Result.of {
-        cafeteriaRepo.getCafeteriaOnly()
+        cafeteriaRepo.getAllDiscountSupportingCafeteria()
     }
 }

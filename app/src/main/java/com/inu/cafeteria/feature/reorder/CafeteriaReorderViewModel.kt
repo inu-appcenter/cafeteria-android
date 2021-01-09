@@ -25,7 +25,7 @@ import com.inu.cafeteria.common.EventHub
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.extension.applyOrder
-import com.inu.cafeteria.usecase.GetCafeteriaOnly
+import com.inu.cafeteria.usecase.GetMenuSupportingCafeteriaWithoutMenus
 import com.inu.cafeteria.usecase.GetSortingOrders
 import com.inu.cafeteria.usecase.ResetCafeteriaOrder
 import com.inu.cafeteria.usecase.SetCafeteriaOrder
@@ -33,7 +33,7 @@ import org.koin.core.inject
 
 class CafeteriaReorderViewModel : BaseViewModel() {
 
-    private val getCafeteriaOnly: GetCafeteriaOnly by inject()
+    private val getCafeteria: GetMenuSupportingCafeteriaWithoutMenus by inject()
     private val getSortingOrders: GetSortingOrders by inject()
     private val setCafeteriaOrder: SetCafeteriaOrder by inject()
     private val resetCafeteriaOrder: ResetCafeteriaOrder by inject()
@@ -49,7 +49,7 @@ class CafeteriaReorderViewModel : BaseViewModel() {
     fun fetch() {
         startLoading()
 
-        getCafeteriaOnly(Unit) {
+        getCafeteria(Unit) {
             it.onSuccess(::handleCafeteria).onError(::handleFailure)
         }
     }

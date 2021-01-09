@@ -34,7 +34,7 @@ import com.inu.cafeteria.extension.afterDays
 import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.repository.DeviceStatusRepository
-import com.inu.cafeteria.usecase.GetCafeteria
+import com.inu.cafeteria.usecase.GetMenuSupportingCafeteria
 import com.inu.cafeteria.usecase.GetSortingOrders
 import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
@@ -46,7 +46,7 @@ import java.util.*
  */
 class CafeteriaViewModel : BaseViewModel() {
 
-    private val getCafeteria: GetCafeteria by inject()
+    private val getCafeteria: GetMenuSupportingCafeteria by inject()
     private val getSortingOrders: GetSortingOrders by inject()
 
     private val deviceStatusRepository: DeviceStatusRepository by inject()
@@ -173,7 +173,6 @@ class CafeteriaViewModel : BaseViewModel() {
         // }, 250)
         //
         // However it doesn't matter because we can pre-fetch all data(number of them are fixed!).
-
         Handler(Looper.getMainLooper()).postDelayed({
             _loading.value = false
         }, if (slowly) 250 else 0)
@@ -195,10 +194,16 @@ class CafeteriaViewModel : BaseViewModel() {
 
     private fun handleCafeteria(allCafeteria: List<Cafeteria>) {
         getSortingOrders(Unit) {
-            it.onSuccess{ orderedIds ->
-                handleCafeteriaOrdered(allCafeteria.applyOrder(orderedIds) { id })
-            }.onError(::handleFailure)
+            it
+                .onSuccess{ orderedIds -> handleCafeteriaAndOrder(allCafeteria, orderedIds) }
+                .onError(::handleFailure)
         }
+    }
+
+    private fun handleCafeteriaAndOrder(allCafeteria: List<Cafeteria>, orderedIds: Array<Int>) {
+        handleCafeteriaOrdered(
+            allCafeteria.applyOrder(orderedIds) {id}
+        )
     }
 
     private fun handleCafeteriaOrdered(allCafeteriaOrdered: List<Cafeteria>) {

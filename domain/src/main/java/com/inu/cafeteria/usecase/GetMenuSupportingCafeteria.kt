@@ -17,17 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.usecase
 
 import com.inu.cafeteria.entities.Cafeteria
+import com.inu.cafeteria.functional.Result
+import com.inu.cafeteria.interactor.UseCase
+import com.inu.cafeteria.repository.CafeteriaRepository
 
-interface CafeteriaRepository {
+class GetMenuSupportingCafeteria(
+    private val cafeteriaRepo: CafeteriaRepository
+) : UseCase<String, List<Cafeteria>>() {
 
-    fun getAllMenuSupportingCafeteria(includeMenu: Boolean = true, menuDate: String? = null): List<Cafeteria>
-    fun getAllDiscountSupportingCafeteria(): List<Cafeteria>
-    fun getAllNotificationSupportingCafeteria(): List<Cafeteria>
-
-    fun getSortingOrders(): Array<Int>
-    fun setSortingOrders(orderedIds: Array<Int>)
-    fun resetSortingOrders()
+    override fun run(params: String) = Result.of {
+        cafeteriaRepo.getAllMenuSupportingCafeteria(includeMenu = true, menuDate = params)
+    }
 }

@@ -29,6 +29,7 @@ import com.inu.cafeteria.retrofit.scheme.CornerResult
 import com.inu.cafeteria.retrofit.scheme.MenuResult
 import com.inu.cafeteria.util.Cache
 import com.inu.cafeteria.util.PairedCache
+import timber.log.Timber
 import java.util.*
 
 class CafeteriaRepositoryImpl(
@@ -40,38 +41,46 @@ class CafeteriaRepositoryImpl(
     private val cornerCache = Cache<List<CornerResult>>()
     private val menuCaches = PairedCache<String, List<MenuResult>>()
 
-    override fun getAllCafeteria(date: String?): List<Cafeteria> {
-        val cafeteria = cachedFetch(cafeteriaCache) {
-            networkService.getCafeteria().getOrThrow()
-        } ?: return listOf()
-
-        val corners = cachedFetch(cornerCache) {
-            networkService.getCorners().getOrThrow()
-        } ?: return listOf()
-
-        val menus = cachedFetch(menuCaches, date ?: Date().format()) {
-            networkService.getMenus(date, split = true).getOrThrow()
-        } ?: return listOf()
-
-        return CafeteriaResultGatherer(cafeteria, corners, menus).combine()
+    override fun getAllMenuSupportingCafeteria(
+        includeMenu: Boolean,
+        menuDate: String?
+    ): List<Cafeteria> {
+        return getAllCafeteriaInternal(includeMenu, menuDate).filter { it.supportMenu }
     }
 
-    override fun getCafeteriaOnly(): List<Cafeteria> {
+    override fun getAllDiscountSupportingCafeteria(): List<Cafeteria> {
+        return getAllCafeteriaInternal(false).filter { it.supportDiscount }
+    }
+
+    override fun getAllNotificationSupportingCafeteria(): List<Cafeteria> {
+        return getAllCafeteriaInternal(false).filter { it.supportNotification }
+    }
+
+    private fun getAllCafeteriaInternal(
+        includeMenu: Boolean,
+        menuDate: String? = null
+    ): List<Cafeteria> {
         val cafeteria = cachedFetch(cafeteriaCache) {
             networkService.getCafeteria().getOrThrow()
         } ?: return listOf()
 
-        return cafeteria.map {
-            Cafeteria(
-                id = it.id,
-                name = it.name,
-                displayName = it.displayName,
-                supportMenu = it.supportMenu,
-                supportDiscount = it.supportDiscount,
-                supportNotification = it.supportNotification,
-                corners = listOf()
-            )
-        }
+        val corners =
+            if (includeMenu)
+                cachedFetch(cornerCache) {
+                    networkService.getCorners().getOrThrow()
+                } ?: return listOf()
+            else
+                listOf()
+
+        val menus =
+            if (includeMenu)
+                cachedFetch(menuCaches, menuDate ?: Date().format()) {
+                    networkService.getMenus(menuDate, split = true).getOrThrow()
+                } ?: return listOf()
+            else
+                listOf()
+
+        return CafeteriaResultGatherer(cafeteria, corners, menus).combine()
     }
 
     @Synchronized
@@ -81,23 +90,37 @@ class CafeteriaRepositoryImpl(
 
     @Synchronized
     private fun <K, V> cachedFetch(cache: PairedCache<K, V>, key: K, fetch: () -> V?): V? {
-        return (if (cache.isValid(key)) cache.get(key) else null) ?: fetch()?.also { cache.set(key, it) }
+        return (if (cache.isValid(key)) cache.get(key) else null) ?: fetch()?.also {
+            cache.set(key, it)
+        }
     }
 
     override fun getSortingOrders(): Array<Int> {
         return getOrderInternal()
     }
 
+    @Synchronized
     private fun getOrderInternal(): Array<Int> {
-        val result = db.getArrayInt(KEY_SORTING_ORDER)
+        val existing = db.getArrayInt(KEY_SORTING_ORDER) ?: arrayOf()
+        val newlyFetched = getNewlyFetchedIds() // Those not have been shown before.
 
-        if (result == null) {
-            // The first attempt to get order.
-            resetSortingOrders()
-            return getOrderInternal()
+        val order = newlyFetched + existing
+
+        if (newlyFetched.isNotEmpty()) {
+            Timber.i("Found new cafeteria: $newlyFetched")
+            setSortingOrders(order)
         }
 
-        return result
+        return order
+    }
+
+    private fun getNewlyFetchedIds(): Array<Int> {
+        val currentlyVisibleIds = db.getArrayInt(KEY_SORTING_ORDER) ?: arrayOf()
+        val lastFetchedIds = db.getArrayInt(KEY_LAST_FETCHED_IDS) ?: arrayOf()
+
+        val allFetchedIds = getAllMenuSupportingCafeteriaIds()
+
+        return allFetchedIds.filter { it !in lastFetchedIds && it !in currentlyVisibleIds }.toTypedArray()
     }
 
     override fun setSortingOrders(orderedIds: Array<Int>) {
@@ -105,10 +128,17 @@ class CafeteriaRepositoryImpl(
     }
 
     override fun resetSortingOrders() {
-        setSortingOrders(getCafeteriaOnly().map { it.id }.toTypedArray())
+        setSortingOrders(getAllMenuSupportingCafeteriaIds())
+    }
+
+    private fun getAllMenuSupportingCafeteriaIds(): Array<Int> {
+        return getAllMenuSupportingCafeteria().map { it.id }.toTypedArray().apply {
+            db.putArrayInt(KEY_LAST_FETCHED_IDS, this)
+        }
     }
 
     companion object {
         private const val KEY_SORTING_ORDER = "com.inu.cafeteria.cafeteria_sorting_order"
+        private const val KEY_LAST_FETCHED_IDS = "com.inu.cafeteria.last_fetched_cafeteria_ids"
     }
 }

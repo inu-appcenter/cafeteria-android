@@ -136,13 +136,22 @@ fun View.forceRippleAnimation() {
 }
 
 fun View.showTooltip(context: Context, rootView: View, gravity: Tooltip.Gravity, @StringRes text: Int, onDismiss: () -> Unit = {}) {
-    Tooltip.Builder(context)
-        .anchor(this)
-        .arrow(true)
-        .closePolicy(ClosePolicy.TOUCH_ANYWHERE_NO_CONSUME)
-        .text(resources.getString(text))
-        .styleId(R.style.ToolTipLayoutDefaultStyle)
-        .create()
-        .doOnHidden { onDismiss() }
-        .show(rootView, gravity)
+    (getTag(R.id.tooltip) as? Tooltip)?.dismiss()
+
+    post {
+        // We need to put this code in the View.post().
+        // Because it "seems that you set the tooltip too early on the lifecycle" - Sulfkain
+        // More information: https://github.com/sephiroth74/android-target-tooltip/issues/122#issuecomment-468319757
+        val tooltip = Tooltip.Builder(context)
+            .anchor(this)
+            .arrow(true)
+            .closePolicy(ClosePolicy.TOUCH_ANYWHERE_NO_CONSUME)
+            .text(resources.getString(text))
+            .styleId(R.style.ToolTipLayoutDefaultStyle)
+            .create()
+            .doOnHidden { onDismiss() }
+            .apply { show(rootView, gravity) }
+
+        setTag(R.id.tooltip, tooltip)
+    }
 }

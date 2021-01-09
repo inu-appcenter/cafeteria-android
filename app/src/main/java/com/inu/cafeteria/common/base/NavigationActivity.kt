@@ -90,6 +90,9 @@ abstract class NavigationActivity : BaseActivity(),
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        // Calling super will automatically restore UI states(e.g. selected tab).
+        super.onRestoreInstanceState(savedInstanceState)
+
         backStack.restoreBackStack(savedInstanceState)
     }
 
