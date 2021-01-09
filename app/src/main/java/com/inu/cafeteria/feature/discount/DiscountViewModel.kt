@@ -31,10 +31,7 @@ import com.inu.cafeteria.entities.OnboardingHint
 import com.inu.cafeteria.exception.NoAccountException
 import com.inu.cafeteria.exception.UnauthorizedException
 import com.inu.cafeteria.service.AccountService
-import com.inu.cafeteria.usecase.ActivateBarcode
-import com.inu.cafeteria.usecase.CreateBarcode
-import com.inu.cafeteria.usecase.GetSavedAccount
-import com.inu.cafeteria.usecase.RememberedLogin
+import com.inu.cafeteria.usecase.*
 import com.inu.cafeteria.util.SingleLiveEvent
 import org.koin.core.inject
 import timber.log.Timber
@@ -45,6 +42,7 @@ class DiscountViewModel : BaseViewModel() {
     private val rememberedLogin: RememberedLogin by inject()
     private val activateBarcode: ActivateBarcode by inject()
     private val getSavedAccount: GetSavedAccount by inject()
+    private val getCafeteria: GetDiscountSupportingCafeteria by inject()
 
     private val accountService: AccountService by inject()
 
@@ -73,7 +71,7 @@ class DiscountViewModel : BaseViewModel() {
     private val brightnessHintEmitter = OnboardingHintEventEmitter(OnboardingHint.ToggleBrightness)
     val showBrightnessToggleHintEvent = brightnessHintEmitter.event
 
-    val showDiscountServiceDescriptionEvent = SingleLiveEvent<Unit>()
+    val showDiscountServiceDescriptionEvent = SingleLiveEvent<Pair<String, String>>()
 
     fun emitHintEvent() {
         // This will be called every onResume.
@@ -189,6 +187,14 @@ class DiscountViewModel : BaseViewModel() {
     }
 
     private fun showDiscountServiceDescription() {
-        showDiscountServiceDescriptionEvent.call()
+        getCafeteria(Unit) { result ->
+            result.onSuccess {
+                val title = mContext.getString(R.string.title_discount_service_description)
+                val body = mContext.getString(R.string.description_discount_service, it.joinToString { c -> c.displayName ?: c.name })
+
+                showDiscountServiceDescriptionEvent.value = Pair(title, body)
+            }
+        }
+
     }
 }

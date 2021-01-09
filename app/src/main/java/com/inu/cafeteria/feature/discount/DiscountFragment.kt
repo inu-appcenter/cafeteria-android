@@ -94,7 +94,9 @@ class DiscountFragment : BaseFragment() {
             }
 
             observe(showDiscountServiceDescriptionEvent) {
-                navigator.showDialog(activity ?: return@observe, "", "")
+                it ?: return@observe
+
+                navigator.showDialog(activity ?: return@observe, it.first, it.second)
             }
         }
     }
