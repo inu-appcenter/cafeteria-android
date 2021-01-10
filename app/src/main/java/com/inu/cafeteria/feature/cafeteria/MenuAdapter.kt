@@ -30,37 +30,41 @@ import com.inu.cafeteria.databinding.MenuBinding
 import com.inu.cafeteria.extension.withNonNull
 import timber.log.Timber
 
+/**
+ * Bottom of the Cafeteria menu view hierarchy.
+ * It benefits performance with async inflating.
+ */
 class MenuAdapter : BaseBindingAdapter<MenuView, MenuAdapter.MenuViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
         Timber.d("Inflate Menu view holder!")
 
-        val itemView = AsyncFrameLayout(parent.context)
-        itemView.inflateAsync(R.layout.menu)
+        val asyncViewWrapper = AsyncFrameLayout(parent.context).apply {
+            inflateAsync(R.layout.menu)
+        }
 
-        return MenuViewHolder(itemView)
+        return MenuViewHolder(asyncViewWrapper)
     }
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         val menu = getItem(position) ?: return
 
-        holder.asyncView.invokeWhenInflated {
+        holder.asyncViewWrapper.invokeWhenInflated {
+            Timber.d("Finished inflating Menu view holder!")
+
             holder.createBinding(R.id.root_layout)
-            post {
-                holder.bind(menu)
-            }
+            post { holder.bind(menu) }
         }
     }
 
-    class MenuViewHolder(val asyncView: AsyncFrameLayout) : AsyncBindingViewHolder<MenuBinding>(asyncView) {
+    class MenuViewHolder(val asyncViewWrapper: AsyncFrameLayout) : AsyncBindingViewHolder<MenuBinding>(asyncViewWrapper) {
 
         fun bind(item: MenuView) {
-            Timber.e("YEAH BIND!!! binding: ${binding != null}")
-
             withNonNull(binding) {
                 menu = item
 
                 with(foods) {
+                    // Initial
                     maxLines = 2
 
                     // On click

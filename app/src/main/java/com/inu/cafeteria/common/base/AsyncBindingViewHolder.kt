@@ -25,11 +25,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * This is for adapters who inflate views asynchronously.
+ * The 'view' passed to the constructor works as a wrapper of a real view.
+ * Once it is sure that the real view is inflated and added to the view,
+ * user can call 'createBinding' to create a binding from that view.
+ */
 open class AsyncBindingViewHolder<T: ViewDataBinding>(private val view: View) : RecyclerView.ViewHolder(view) {
 
     protected var binding: T? = null
         private set
 
+    /**
+     * Create a binding from its item view.
+     *
+     * @param rootId: id of root view of the real view(must be a binding layout).
+     */
     fun createBinding(@IdRes rootId: Int) {
         binding = DataBindingUtil.bind<T>(view.findViewById(rootId))
     }

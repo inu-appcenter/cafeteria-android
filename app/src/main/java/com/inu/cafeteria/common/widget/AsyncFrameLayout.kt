@@ -38,6 +38,7 @@ class AsyncFrameLayout @JvmOverloads constructor(
     defStyleRes
 ) {
     init {
+        // This view is design to wrap a RecyclerView item.
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
     }
 
@@ -48,6 +49,7 @@ class AsyncFrameLayout @JvmOverloads constructor(
         AsyncLayoutInflater(context).inflate(layoutResId, this) { view, _, _ ->
             addView(view)
             isInflated = true
+
             pendingActions.forEach { action -> action() }
             pendingActions.clear()
         }
