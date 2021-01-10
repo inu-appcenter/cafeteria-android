@@ -17,10 +17,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common.widget
+package com.inu.cafeteria.common.base
 
+import android.view.View
+import androidx.annotation.IdRes
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
-interface ItemDragListener {
-    fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
+open class AsyncBindingViewHolder<T: ViewDataBinding>(private val view: View) : RecyclerView.ViewHolder(view) {
+
+    protected var binding: T? = null
+        private set
+
+    fun createBinding(@IdRes rootId: Int) {
+        binding = DataBindingUtil.bind<T>(view.findViewById(rootId))
+    }
 }

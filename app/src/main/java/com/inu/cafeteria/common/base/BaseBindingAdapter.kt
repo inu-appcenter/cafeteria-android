@@ -29,7 +29,7 @@ import timber.log.Timber
 /**
  * A base adapter that uses BaseBindingViewHolder, which has ViewDataBinding instance.
  */
-abstract class BaseBindingAdapter<T, VH: BaseBindingViewHolder<*>> : RecyclerView.Adapter<VH>(), KoinComponent {
+abstract class BaseBindingAdapter<T, VH: RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>(), KoinComponent {
 
     /**
      * loadingView will be shown when it is not null and isLoading is true.

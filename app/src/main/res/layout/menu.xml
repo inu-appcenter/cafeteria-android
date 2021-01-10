@@ -13,6 +13,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/HorizontallyFullSizedView"
+        android:id="@+id/root_layout"
         android:paddingVertical="@dimen/menu_outer_space"
         android:paddingHorizontal="@dimen/menu_outer_space"
         android:background="?android:attr/selectableItemBackground">

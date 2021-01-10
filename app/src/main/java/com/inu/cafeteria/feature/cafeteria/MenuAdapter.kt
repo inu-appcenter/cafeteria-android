@@ -22,10 +22,12 @@ package com.inu.cafeteria.feature.cafeteria
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.base.AsyncBindingViewHolder
 import com.inu.cafeteria.common.base.BaseBindingAdapter
-import com.inu.cafeteria.common.base.BaseBindingViewHolder
+import com.inu.cafeteria.common.widget.AsyncFrameLayout
 import com.inu.cafeteria.common.widget.AvailableTimeView
 import com.inu.cafeteria.databinding.MenuBinding
+import com.inu.cafeteria.extension.withNonNull
 import timber.log.Timber
 
 class MenuAdapter : BaseBindingAdapter<MenuView, MenuAdapter.MenuViewHolder>() {
@@ -33,23 +35,37 @@ class MenuAdapter : BaseBindingAdapter<MenuView, MenuAdapter.MenuViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
         Timber.d("Inflate Menu view holder!")
 
-        return MenuViewHolder(parent)
+        val itemView = AsyncFrameLayout(parent.context)
+        itemView.inflateAsync(R.layout.menu)
+
+        return MenuViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         val menu = getItem(position) ?: return
 
-        holder.bind(menu)
+        holder.asyncView.invokeWhenInflated {
+            holder.createBinding(R.id.root_layout)
+            post {
+                holder.bind(menu)
+            }
+        }
     }
 
-    class MenuViewHolder(parent: ViewGroup) : BaseBindingViewHolder<MenuBinding>(parent, R.layout.menu) {
+    class MenuViewHolder(val asyncView: AsyncFrameLayout) : AsyncBindingViewHolder<MenuBinding>(asyncView) {
 
         fun bind(item: MenuView) {
-            binding.menu = item
+            Timber.e("YEAH BIND!!! binding: ${binding != null}")
 
-            with(binding.foods) {
-                // On click
-                binding.root.setOnClickListener { maxLines = 5 }
+            withNonNull(binding) {
+                menu = item
+
+                with(foods) {
+                    maxLines = 2
+
+                    // On click
+                    root.setOnClickListener { maxLines = 5 }
+                }
             }
         }
     }
