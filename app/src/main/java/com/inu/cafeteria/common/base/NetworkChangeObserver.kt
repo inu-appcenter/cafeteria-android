@@ -19,6 +19,12 @@
 
 package com.inu.cafeteria.common.base
 
+/**
+ * It helps children to be notified when network status changes.
+ * They will override onNetworkStateChange, which will be called by their parents.
+ *
+ * BaseFragment, BaseActivity should implement this.
+ */
 interface NetworkChangeObserver {
     fun onNetworkStateChange(available: Boolean)
 }
