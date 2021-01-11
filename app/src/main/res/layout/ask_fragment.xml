@@ -67,6 +67,7 @@
         <Button
             android:id="@+id/submit"
             style="@style/HorizontallyFullSizedViewConstrained"
+            android:layout_height="@dimen/toolbarHeight"
             android:layout_margin="@dimen/far_space"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
