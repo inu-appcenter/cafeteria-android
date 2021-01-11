@@ -50,7 +50,7 @@ class AvailableTimeView(
         }
 
         prepareProperView(availableTimes.countOneBits()) {
-            setSlots(availableTimes)
+            setAvailableTimeSlots(availableTimes)
         }
 
         lastAvailableTime = availableTimes
@@ -63,8 +63,7 @@ class AvailableTimeView(
 
         removeAllViews()
 
-        bringView(howMany) {
-            it.removeFromParent()
+        bringViewCached(howMany) {
             addView(it)
 
             onProperViewReady()
@@ -73,10 +72,13 @@ class AvailableTimeView(
         lastLayoutKey = howMany
     }
 
-    private fun bringView(howMany: Int, onViewReady: (View) -> Unit) {
-        val viewInCache = viewCache[howMany]
-        if (viewInCache != null) {
-            onViewReady(viewInCache)
+    private fun bringViewCached(howMany: Int, onViewReady: (View) -> Unit) {
+        val fromCache = viewCache[howMany]
+
+        if (fromCache != null) {
+            fromCache.removeFromParent() // Might not have been removed early.
+            onViewReady(fromCache)
+            return
         }
 
         inflateView(howMany) {
@@ -101,7 +103,7 @@ class AvailableTimeView(
         }
     }
 
-    private fun setSlots(availableTimes: Int) {
+    private fun setAvailableTimeSlots(availableTimes: Int) {
         val slotIds = listOf(
             R.id.squircle_slot_0,
             R.id.squircle_slot_1,
