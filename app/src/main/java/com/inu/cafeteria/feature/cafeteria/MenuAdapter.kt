@@ -21,9 +21,11 @@ package com.inu.cafeteria.feature.cafeteria
 
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.AsyncBindingViewHolder
 import com.inu.cafeteria.common.base.BaseBindingAdapter
+import com.inu.cafeteria.common.base.GenericDiffCallback
 import com.inu.cafeteria.common.widget.AsyncFrameLayout
 import com.inu.cafeteria.common.widget.AvailableTimeView
 import com.inu.cafeteria.databinding.MenuBinding
@@ -35,6 +37,13 @@ import timber.log.Timber
  * It benefits performance with async inflating.
  */
 class MenuAdapter : BaseBindingAdapter<MenuView, MenuAdapter.MenuViewHolder>() {
+
+    override fun onItemsChanged(old: List<MenuView>, new: List<MenuView>) {
+        val diffCallback = GenericDiffCallback(old, new) { cornerName }
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        diffResult.dispatchUpdatesTo(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
         Timber.d("Inflate Menu view holder!")

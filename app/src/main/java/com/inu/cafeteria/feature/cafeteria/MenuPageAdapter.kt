@@ -39,19 +39,19 @@ class MenuPageAdapter(
 
     override fun onBindViewHolder(holder: MenuPageViewHolder, position: Int) {
         holder.bind(
-            if (pageSize == 0) data else paginateProps(position)
+            if (pageSize == 0) items else paginateProps(position)
         )
     }
 
     private fun paginateProps(pageNumber: Int): List<MenuView> {
         val indexStart = pageNumber * pageSize
-        val indexEnd = min(indexStart + pageSize - 1, data.size - 1)
+        val indexEnd = min(indexStart + pageSize - 1, items.size - 1)
 
-        return data.slice(indexStart..indexEnd)
+        return items.slice(indexStart..indexEnd)
     }
 
     override fun getItemCount(): Int {
-        return if (pageSize == 0) 1 else ceil(data.size.toDouble() / pageSize).toInt()
+        return if (pageSize == 0) 1 else ceil(items.size.toDouble() / pageSize).toInt()
     }
 
     inner class MenuPageViewHolder(parent: ViewGroup) : BaseBindingViewHolder<MenuPageBinding>(parent, R.layout.menu_page) {
@@ -74,7 +74,7 @@ class MenuPageAdapter(
         }
 
         fun bind(pagedMenus: List<MenuView>) {
-            menuAdapter.data = pagedMenus
+            menuAdapter.items = pagedMenus
         }
     }
 

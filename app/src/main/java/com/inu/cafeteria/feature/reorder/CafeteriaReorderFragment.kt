@@ -35,7 +35,7 @@ class CafeteriaReorderFragment : BaseFragment<CafeteriaReorderFragmentBinding>()
         ReorderableAdapterWrapper(
             adapterFactory = { CafeteriaReorderAdapter(onDragStart = it::startDrag) },
             onItemChange = {
-                viewModel.onChangeOrder(it.data.toOrderArray())
+                viewModel.onChangeOrder(it.items.toOrderArray())
             }
         )
 
@@ -70,7 +70,7 @@ class CafeteriaReorderFragment : BaseFragment<CafeteriaReorderFragmentBinding>()
         @BindingAdapter("cafeteriaToReorder")
         fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaReorderView>?) {
             cafeteria?.let {
-                (view.adapter as? CafeteriaReorderAdapter)?.data = it.toMutableList()
+                (view.adapter as? CafeteriaReorderAdapter)?.items = it.toMutableList()
             }
         }
     }

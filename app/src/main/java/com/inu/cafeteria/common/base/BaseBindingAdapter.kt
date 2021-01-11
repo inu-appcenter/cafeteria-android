@@ -29,44 +29,44 @@ import timber.log.Timber
 /**
  * A base adapter that uses BaseBindingViewHolder, which has ViewDataBinding instance.
  */
-abstract class BaseBindingAdapter<T, VH: RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>(), KoinComponent {
+abstract class BaseBindingAdapter<T, VH: RecyclerView.ViewHolder>
+    : RecyclerView.Adapter<VH>(), BaseAdapter<T>, KoinComponent {
 
-    /**
-     * loadingView will be shown when it is not null and isLoading is true.
-     */
-    var loadingView: View? = null
+    override var loadingView: View? = null
         set(value) {
             field = value
             updatePeripheralViews()
         }
 
-    var isLoading: Boolean = false
+    override var isLoading: Boolean = false
         set(value) {
             field = value
             updatePeripheralViews()
         }
 
-    /**
-     * emptyView will be shown when it is not null and data.isEmpty() returns true
-     */
-    var emptyView: View? = null
+    override var emptyView: View? = null
         set(value) {
             field = value
             updatePeripheralViews()
         }
 
-    var data: List<T> = ArrayList()
+    override var items: List<T> = listOf()
         set(value) {
-            if (field === value) return
+            val old = field
+
             field = value
 
-            notifyDataSetChanged()
+            onItemsChanged(old, value)
             updatePeripheralViews()
         }
+
+    override fun onItemsChanged(old: List<T>, new: List<T>) {
+        notifyDataSetChanged()
+    }
 
     @CallSuper
     protected open fun updatePeripheralViews() {
-        emptyView?.setVisible(data.isEmpty() && !isLoading)
+        emptyView?.setVisible(items.isEmpty() && !isLoading)
         loadingView?.setVisible(isLoading)
     }
 
@@ -76,10 +76,10 @@ abstract class BaseBindingAdapter<T, VH: RecyclerView.ViewHolder> : RecyclerView
             return null
         }
 
-        return data[position]
+        return items[position]
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return items.size
     }
 }

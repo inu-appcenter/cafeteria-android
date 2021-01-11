@@ -62,7 +62,7 @@ class CafeteriaDetailFragment : BaseFragment<CafeteriaDetailFragmentBinding>() {
         @BindingAdapter("menus")
         fun setCafeteria(view: RecyclerView, menus: List<MenuView>?) {
             menus?.let {
-                (view.adapter as? MenuAdapter)?.data = it
+                (view.adapter as? MenuAdapter)?.items = it
             }
         }
     }

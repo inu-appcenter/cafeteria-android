@@ -99,7 +99,7 @@ class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView, CafeteriaBindin
                 text = cafeteria.name
             }
 
-            menuPageAdapter.data = cafeteria.wholeMenus
+            menuPageAdapter.items = cafeteria.wholeMenus
         }
     }
 }

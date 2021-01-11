@@ -64,7 +64,7 @@ class NoticeFragment : BaseFragment<NoticeFragmentBinding>() {
         @BindingAdapter("notices")
         fun setNotices(view: RecyclerView, notices: List<NoticeView>?) {
             notices?.let {
-                (view.adapter as? NoticeAdapter)?.data = it
+                (view.adapter as? NoticeAdapter)?.items = it
             }
         }
 

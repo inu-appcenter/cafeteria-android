@@ -76,7 +76,7 @@ class QuestionsFragment : BaseFragment<QuestionsFragmentBinding>() {
         @BindingAdapter("questions")
         fun setQuestions(view: RecyclerView, questions: List<QuestionView>?) {
             questions?.let {
-                (view.adapter as? QuestionsAdapter)?.data = it
+                (view.adapter as? QuestionsAdapter)?.items = it
             }
         }
 

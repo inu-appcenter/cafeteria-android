@@ -47,11 +47,11 @@ class CafeteriaReorderAdapter(
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         if (fromPosition < toPosition) {
             for (i in fromPosition until toPosition) {
-                Collections.swap(data, i, i + 1)
+                Collections.swap(items, i, i + 1)
             }
         } else {
             for (i in fromPosition downTo toPosition + 1) {
-                Collections.swap(data, i, i - 1)
+                Collections.swap(items, i, i - 1)
             }
         }
         notifyItemMoved(fromPosition, toPosition)
@@ -59,7 +59,7 @@ class CafeteriaReorderAdapter(
     }
 
     override fun onItemDismiss(position: Int) {
-        data = data.minusElement(data[position])
+        items = items.minusElement(items[position])
         updatePeripheralViews()
         notifyItemRemoved(position)
     }
