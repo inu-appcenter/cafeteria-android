@@ -51,9 +51,10 @@ object RemoteConfig : KoinComponent {
             return
         }
 
-        remoteConfig = Firebase.remoteConfig.apply {
-            setDefaultsAsync(fallback).addOnCompleteListener { configReady = true }
+        remoteConfig = Firebase.remoteConfig
 
+        remoteConfig.run {
+            setDefaultsAsync(fallback).addOnCompleteListener { configReady = true }
             safeFetch()
         }
 

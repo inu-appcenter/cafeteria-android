@@ -25,10 +25,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.inu.cafeteria.common.base.GenericDiffCallback
 import com.inu.cafeteria.common.base.PositionRetainingAdapter
 import com.inu.cafeteria.common.base.PositionRetainingViewHolder
 import com.inu.cafeteria.common.extension.onScrollStateChange
+import com.inu.cafeteria.common.widget.GenericDiffCallback
 import com.inu.cafeteria.databinding.CafeteriaBinding
 import timber.log.Timber
 

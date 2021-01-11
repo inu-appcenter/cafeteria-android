@@ -21,6 +21,8 @@ package com.inu.cafeteria.common.widget
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.inu.cafeteria.common.base.ItemTouchHelperAdapter
+import com.inu.cafeteria.common.base.ItemTouchHelperViewHolder
 
 /**
  * A RecyclerView.Adapter wrapper that supports item reordering by using ItemTouchHelper.

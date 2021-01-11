@@ -26,14 +26,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseBindingAdapter
 import com.inu.cafeteria.common.base.BaseBindingViewHolder
-import com.inu.cafeteria.common.widget.ItemTouchHelperAdapter
-import com.inu.cafeteria.common.widget.ItemTouchHelperViewHolder
+import com.inu.cafeteria.common.base.ItemTouchHelperAdapter
+import com.inu.cafeteria.common.base.ItemTouchHelperViewHolder
 import com.inu.cafeteria.databinding.CafeteriaReorderItemBinding
 import java.util.*
 
 class CafeteriaReorderAdapter(
     private val onDragStart: (RecyclerView.ViewHolder) -> Any?
-) : BaseBindingAdapter<CafeteriaReorderView, CafeteriaReorderAdapter.ReorderViewHolder>(), ItemTouchHelperAdapter {
+) : BaseBindingAdapter<CafeteriaReorderView, CafeteriaReorderAdapter.ReorderViewHolder>(),
+    ItemTouchHelperAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ReorderViewHolder(parent)
@@ -64,7 +65,8 @@ class CafeteriaReorderAdapter(
         notifyItemRemoved(position)
     }
 
-    inner class ReorderViewHolder(parent: ViewGroup) : BaseBindingViewHolder<CafeteriaReorderItemBinding>(parent, R.layout.cafeteria_reorder_item), ItemTouchHelperViewHolder {
+    inner class ReorderViewHolder(parent: ViewGroup) : BaseBindingViewHolder<CafeteriaReorderItemBinding>(parent, R.layout.cafeteria_reorder_item),
+        ItemTouchHelperViewHolder {
 
         fun bind(item: CafeteriaReorderView) {
             binding.cafeteria = item

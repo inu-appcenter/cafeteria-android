@@ -23,7 +23,7 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.GenericAdapter
-import com.inu.cafeteria.common.base.GenericDiffCallback
+import com.inu.cafeteria.common.widget.GenericDiffCallback
 import com.inu.cafeteria.databinding.WaitingOrderItemBinding
 
 class WaitingOrderAdapter : GenericAdapter<WaitingOrderView, WaitingOrderItemBinding>() {

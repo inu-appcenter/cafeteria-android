@@ -25,9 +25,9 @@ import androidx.recyclerview.widget.DiffUtil
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.AsyncBindingViewHolder
 import com.inu.cafeteria.common.base.BaseBindingAdapter
-import com.inu.cafeteria.common.base.GenericDiffCallback
 import com.inu.cafeteria.common.widget.AsyncFrameLayout
 import com.inu.cafeteria.common.widget.AvailableTimeView
+import com.inu.cafeteria.common.widget.GenericDiffCallback
 import com.inu.cafeteria.databinding.MenuBinding
 import com.inu.cafeteria.extension.withNonNull
 import timber.log.Timber

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.common.base
+package com.inu.cafeteria.common.widget
 
 import androidx.recyclerview.widget.DiffUtil
 
