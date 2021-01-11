@@ -57,6 +57,8 @@ abstract class PlainAdapter<T, VH: PlainViewHolder<*>> : RecyclerView.Adapter<VH
             if (field === value) return
             field = value
 
+            // Don'nt know why but...
+            // this preserves RecyclerView position when changing date in CafeteriaFragment.
             notifyItemRangeChanged(0, value.size)
             updatePeripheralViews()
         }

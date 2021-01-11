@@ -91,13 +91,14 @@ class MainActivity : NavigationActivity() {
 
     /**
      * Called when brought to here by re-entering activity
-     * by firebase notification(or any launcher intent).
+     * by Firebase notification(or any other launcher intent).
      *
      * MainActivity will always be called with
-     * FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP flags.
+     * FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_SINGLE_TOP flags
+     * (see [com.inu.cafeteria.common.navigation.Navigator.showMain]).
      *
-     * If this activity is first created, onCreate is called.
-     * Otherwise, onNewIntent will be called.
+     * If it is the first time the activity created, [onCreate] will be called.
+     * Otherwise, [onNewIntent] will be called.
      */
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)

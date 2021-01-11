@@ -19,6 +19,9 @@
 
 package com.inu.cafeteria.common.base
 
+/**
+ * Network sensitive components(e.g. ViewModel) may use these network utility methods.
+ */
 interface NetworkSensitive {
     fun handleIfOffline(): Boolean
 

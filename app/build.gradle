@@ -159,7 +159,8 @@ dependencies {
     implementation "com.google.android.play:core:$play_core_version"
     implementation "com.google.android.play:core-ktx:$play_core_ktx_version"
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+    // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+    implementation "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
 }
 
 repositories {

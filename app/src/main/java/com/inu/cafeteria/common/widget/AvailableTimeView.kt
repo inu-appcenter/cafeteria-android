@@ -22,13 +22,17 @@ package com.inu.cafeteria.common.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import com.inu.cafeteria.R
-import com.inu.cafeteria.common.extension.inflate
 import com.inu.cafeteria.common.extension.removeFromParent
 import com.inu.cafeteria.extension.forEachBits
 
+/**
+ * [setAvailableTime] works asynchronously.
+ */
 class AvailableTimeView(
     context: Context,
     attributeSet: AttributeSet
@@ -45,8 +49,61 @@ class AvailableTimeView(
             return
         }
 
-        prepareProperLayout(availableTimes.countOneBits())
+        prepareProperView(availableTimes.countOneBits()) {
+            setAvailableTimeSlots(availableTimes)
+        }
 
+        lastAvailableTime = availableTimes
+    }
+
+    private fun prepareProperView(howMany: Int, onProperViewReady: () -> Unit) {
+        if (howMany == lastLayoutKey) {
+            return
+        }
+
+        removeAllViews()
+
+        bringViewCached(howMany) {
+            addView(it)
+
+            onProperViewReady()
+        }
+
+        lastLayoutKey = howMany
+    }
+
+    private fun bringViewCached(howMany: Int, onViewReady: (View) -> Unit) {
+        val fromCache = viewCache[howMany]
+
+        if (fromCache != null) {
+            fromCache.removeFromParent() // Might not have been removed early.
+            onViewReady(fromCache)
+            return
+        }
+
+        inflateView(howMany) {
+            viewCache[howMany] = it
+
+            onViewReady(it)
+        }
+    }
+
+    private fun inflateView(howMany: Int, onInflateFinished: (View) -> Unit) {
+        val layoutId = when (howMany) {
+            1 -> R.layout.squircle_single
+            2 -> R.layout.squircle_double
+            3 -> R.layout.squircle_triple
+            else -> R.layout.squircle_single
+        }
+
+        val inflater = AsyncLayoutInflater(context)
+
+        inflater.inflate(layoutId, this) { view: View, _: Int, _: ViewGroup? ->
+            onInflateFinished(view)
+        }
+    }
+
+    private fun setAvailableTimeSlots(availableTimes: Int) {
         val slotIds = listOf(
             R.id.squircle_slot_0,
             R.id.squircle_slot_1,
@@ -59,8 +116,6 @@ class AvailableTimeView(
 
             view?.setImageResource(getImageForTime(time))
         }
-
-        lastAvailableTime = availableTimes
     }
 
     private fun getImageForTime(time: Int): Int {
@@ -70,40 +125,6 @@ class AvailableTimeView(
             DINNER -> R.drawable.night
             else -> R.drawable.no_img
         }
-    }
-
-    private fun prepareProperLayout(howMany: Int) {
-        if (howMany == lastLayoutKey) {
-            return
-        }
-
-        removeAllViews()
-
-        addView(bringView(howMany).apply { removeFromParent() })
-
-        lastLayoutKey = howMany
-    }
-
-    private fun bringView(howMany: Int): View {
-        val viewInCache = viewCache[howMany]
-        if (viewInCache != null) {
-            return viewInCache
-        }
-
-        return inflateView(howMany).apply {
-            viewCache[howMany] = this
-        }
-    }
-
-    private fun inflateView(howMany: Int): View {
-        val layoutId = when (howMany) {
-            1 -> R.layout.squircle_single
-            2 -> R.layout.squircle_double
-            3 -> R.layout.squircle_triple
-            else -> R.layout.squircle_single
-        }
-
-        return inflate(layoutId)
     }
 
     companion object {
