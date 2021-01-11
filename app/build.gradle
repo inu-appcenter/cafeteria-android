@@ -95,8 +95,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation project(":common")
     implementation project(":domain")
     implementation project(":data")
@@ -108,9 +106,6 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "org.koin:koin-test:$koin_test_version"
-
-    /** Kotlin */
-    implementation "androidx.core:core-ktx:$kotlin_core_ktx_version"
 
     /** Koin Test */
     androidTestImplementation "org.koin:koin-test:$koin_version"

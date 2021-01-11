@@ -54,13 +54,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    /** Tests */
-    testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "androidx.test:runner:$test_runner_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
-
     /**
      * Dependencies below will be used globally in every module.
      * The 'api' artifact reveals its dependencies to its user,
@@ -69,8 +62,12 @@ dependencies {
 
     /** Kotlin */
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    /** Core ktx */
+    api "androidx.core:core-ktx:$kotlin_core_ktx_version"
+
+    /** Appcompat */
     api "androidx.appcompat:appcompat:$appcompat_version"
-    api "androidx.core:core-ktx:$core_ktx_version"
 
     /** Timber */
     api "com.jakewharton.timber:timber:$timber_version"
@@ -104,4 +101,9 @@ dependencies {
     api 'com.google.firebase:firebase-crashlytics-ktx'
     api 'com.google.firebase:firebase-config-ktx'
     api 'com.google.firebase:firebase-perf-ktx'
+
+    /** Tests */
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test:runner:$test_runner_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
 }
