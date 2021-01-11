@@ -56,10 +56,15 @@ class LoginFragment : BaseFragment<LoginFragmentBinding>() {
         with(viewModel) {
             observe(loggedInStatus) {
                 if (it == true) {
-                    binding.passwordField.hideKeyboard() // Keyboard does not disappear automatically.
                     finishActivity()
                 }
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        binding?.passwordField?.hideKeyboard()
     }
 }
