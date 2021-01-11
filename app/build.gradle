@@ -148,9 +148,10 @@ dependencies {
     implementation "com.google.android.gms:play-services-mlkit-text-recognition:$mlkit_version"
 
     /** CameraX */
-    implementation "androidx.camera:camera-camera2:1.0.0-beta07"
-    implementation "androidx.camera:camera-lifecycle:1.0.0-beta07"
-    implementation "androidx.camera:camera-view:1.0.0-alpha14"
+    // See https://developer.android.com/jetpack/androidx/releases/camera?hl=ko
+    implementation "androidx.camera:camera-camera2:1.0.0-beta09"
+    implementation "androidx.camera:camera-lifecycle:1.0.0-beta09"
+    implementation "androidx.camera:camera-view:1.0.0-alpha16"
 
     /** Tooltip */
     implementation "it.sephiroth.android.library.targettooltip:target-tooltip-library:$tooltip_version"
@@ -159,8 +160,11 @@ dependencies {
     implementation "com.google.android.play:core:$play_core_version"
     implementation "com.google.android.play:core-ktx:$play_core_ktx_version"
 
+    /** Leak canary (rarely used) */
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
-    implementation "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
+
+    /** Async inflater */
+    implementation "androidx.asynclayoutinflater:asynclayoutinflater:$async_inflater_version"
 }
 
 repositories {

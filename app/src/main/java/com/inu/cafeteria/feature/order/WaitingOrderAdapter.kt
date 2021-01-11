@@ -20,6 +20,7 @@
 package com.inu.cafeteria.feature.order
 
 import android.view.animation.AnimationUtils
+import androidx.recyclerview.widget.DiffUtil
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.GenericAdapter
 import com.inu.cafeteria.databinding.WaitingOrderItemBinding
@@ -27,6 +28,13 @@ import com.inu.cafeteria.databinding.WaitingOrderItemBinding
 class WaitingOrderAdapter : GenericAdapter<WaitingOrderView, WaitingOrderItemBinding>() {
 
     var onClickDelete: (Int) -> Unit = {}
+
+    override fun onItemsChanged(old: List<WaitingOrderView>, new: List<WaitingOrderView>) {
+        val diffCallback = WaitingOrderDiffCallback(old, new)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        diffResult.dispatchUpdatesTo(this)
+    }
 
     override fun getLayoutIdForPosition(position: Int) = R.layout.waiting_order_item
 
@@ -43,9 +51,9 @@ class WaitingOrderAdapter : GenericAdapter<WaitingOrderView, WaitingOrderItemBin
             clearAnimation()
 
             if (item.done) {
-                startAnimation(
-                    AnimationUtils.loadAnimation(context, R.anim.alpha_animation)
-                )
+                val animation = AnimationUtils.loadAnimation(context, R.anim.alpha_animation)
+
+                startAnimation(animation)
             }
         }
     }

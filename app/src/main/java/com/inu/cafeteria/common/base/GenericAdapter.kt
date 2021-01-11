@@ -60,11 +60,20 @@ abstract class GenericAdapter<E, T: ViewDataBinding> : RecyclerView.Adapter<Gene
 
     var items: List<E> = listOf()
         set(value) {
+            val old = field
+
             field = value
 
-            notifyItemRangeChanged(0, value.size)
+            onItemsChanged(old, value)
             updatePeripheralViews()
         }
+
+    /**
+     * User can modify notify action
+     */
+    protected open fun onItemsChanged(old: List<E>, new: List<E>) {
+        notifyDataSetChanged()
+    }
 
     @CallSuper
     protected open fun updatePeripheralViews() {

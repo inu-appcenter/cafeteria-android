@@ -179,7 +179,7 @@ class AddOrderActivity : BaseActivity() {
 
     private fun bindPreviewUseCase(cameraProvider: ProcessCameraProvider) {
         val previewUseCase = Preview.Builder().build().apply {
-            setSurfaceProvider(binding.cameraPart.previewView.createSurfaceProvider())
+            setSurfaceProvider(binding.cameraPart.previewView.surfaceProvider)
         }
 
         cameraProvider.bindToLifecycle(this, getCameraSelector(cameraProvider), previewUseCase)
