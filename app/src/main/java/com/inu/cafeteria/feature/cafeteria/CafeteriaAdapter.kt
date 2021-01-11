@@ -21,9 +21,11 @@ package com.inu.cafeteria.feature.cafeteria
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.inu.cafeteria.common.base.GenericDiffCallback
 import com.inu.cafeteria.common.base.PositionRetainingAdapter
 import com.inu.cafeteria.common.base.PositionRetainingViewHolder
 import com.inu.cafeteria.common.extension.onScrollStateChange
@@ -36,6 +38,13 @@ class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView, CafeteriaBindin
     private val menuPool = RecyclerView.RecycledViewPool()
 
     var onClickMore: (CafeteriaView) -> Any? = {}
+
+    override fun onItemsChanged(old: List<CafeteriaView>, new: List<CafeteriaView>) {
+        val diffCallback = GenericDiffCallback(old, new) { id }
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        diffResult.dispatchUpdatesTo(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PositionRetainingViewHolder<CafeteriaBinding> {
         val inflater = LayoutInflater.from(parent.context)

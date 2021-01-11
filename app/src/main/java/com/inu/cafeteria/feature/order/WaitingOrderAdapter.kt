@@ -23,6 +23,7 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.GenericAdapter
+import com.inu.cafeteria.common.base.GenericDiffCallback
 import com.inu.cafeteria.databinding.WaitingOrderItemBinding
 
 class WaitingOrderAdapter : GenericAdapter<WaitingOrderView, WaitingOrderItemBinding>() {
@@ -30,7 +31,7 @@ class WaitingOrderAdapter : GenericAdapter<WaitingOrderView, WaitingOrderItemBin
     var onClickDelete: (Int) -> Unit = {}
 
     override fun onItemsChanged(old: List<WaitingOrderView>, new: List<WaitingOrderView>) {
-        val diffCallback = WaitingOrderDiffCallback(old, new)
+        val diffCallback = GenericDiffCallback(old, new) { orderId }
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         diffResult.dispatchUpdatesTo(this)

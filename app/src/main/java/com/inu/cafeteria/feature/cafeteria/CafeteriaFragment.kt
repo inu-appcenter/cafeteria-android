@@ -155,7 +155,7 @@ class CafeteriaFragment : BaseFragment<CafeteriaFragmentBinding>() {
         @BindingAdapter("cafeteria")
         fun setCafeteria(view: RecyclerView, cafeteria: List<CafeteriaView>?) {
             cafeteria?.let {
-                (view.adapter as? CafeteriaAdapter)?.data = it
+                (view.adapter as? CafeteriaAdapter)?.items = it
             }
         }
 

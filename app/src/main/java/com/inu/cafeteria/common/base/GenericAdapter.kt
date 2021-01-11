@@ -32,33 +32,28 @@ import com.inu.cafeteria.common.extension.setVisible
 /**
  * Complete generic adapter.
  */
-abstract class GenericAdapter<E, T: ViewDataBinding> : RecyclerView.Adapter<GenericAdapter<E, T>.GenericViewHolder>() {
+abstract class GenericAdapter<T, BindingT: ViewDataBinding>
+    : RecyclerView.Adapter<GenericAdapter<T, BindingT>.GenericViewHolder>(), BaseAdapter<T> {
 
-    /**
-     * loadingView will be shown when it is not null and isLoading is true.
-     */
-    var loadingView: View? = null
+    override var loadingView: View? = null
         set(value) {
             field = value
             updatePeripheralViews()
         }
 
-    var isLoading: Boolean = false
+    override var isLoading: Boolean = false
         set(value) {
             field = value
             updatePeripheralViews()
         }
 
-    /**
-     * emptyView will be shown when it is not null and data.isEmpty() returns true
-     */
-    var emptyView: View? = null
+    override var emptyView: View? = null
         set(value) {
             field = value
             updatePeripheralViews()
         }
 
-    var items: List<E> = listOf()
+    override var items: List<T> = listOf()
         set(value) {
             val old = field
 
@@ -68,10 +63,7 @@ abstract class GenericAdapter<E, T: ViewDataBinding> : RecyclerView.Adapter<Gene
             updatePeripheralViews()
         }
 
-    /**
-     * User can modify notify action
-     */
-    protected open fun onItemsChanged(old: List<E>, new: List<E>) {
+    override fun onItemsChanged(old: List<T>, new: List<T>) {
         notifyDataSetChanged()
     }
 
@@ -81,12 +73,12 @@ abstract class GenericAdapter<E, T: ViewDataBinding> : RecyclerView.Adapter<Gene
         loadingView?.setVisible(isLoading)
     }
 
-    var onClickRootLayout: (item: E) -> Unit = {}
+    var onClickRootLayout: (item: T) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
-        val binding = DataBindingUtil.inflate<T>(inflater, viewType, parent, false)
+        val binding = DataBindingUtil.inflate<BindingT>(inflater, viewType, parent, false)
 
         return GenericViewHolder(binding)
     }
@@ -109,13 +101,13 @@ abstract class GenericAdapter<E, T: ViewDataBinding> : RecyclerView.Adapter<Gene
         return items.size
     }
 
-    open fun onBindFinished(item: E, holder: GenericViewHolder) {}
+    open fun onBindFinished(item: T, holder: GenericViewHolder) {}
 
     inner class GenericViewHolder(
-        val binding: T
+        val binding: BindingT
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: E) {
+        fun bind(item: T) {
             with(this.binding) {
                 setVariable(BR.item, item)
                 executePendingBindings()
