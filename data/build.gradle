@@ -25,17 +25,13 @@ plugins {
 android {
     compileSdkVersion 29
 
-    def generator = { String alphabet, int n ->
-        new Random().with {
-            (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
-        }
-    }
-
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 29
+
         versionCode project.ext.versionCode
         versionName project.ext.versionName
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }

@@ -37,9 +37,10 @@ android {
         applicationId 'com.inu.cafeteria'
         versionCode project.ext.versionCode
         versionName project.ext.versionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         archivesBaseName = "$applicationId-v$versionName-$project.ext.versionCode"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
     }
 
