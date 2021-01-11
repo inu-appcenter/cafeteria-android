@@ -1,6 +1,6 @@
 # cafeteria-android
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/inu-appcenter/cafeteria-android/Android%20CI)](https://github.com/inu-appcenter/cafeteria-android/actions?query=workflow%3A%22Node.js+CI%22)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/inu-appcenter/cafeteria-android/Android%20CI)](https://github.com/inu-appcenter/cafeteria-android/actions?query=workflow%3A%22Android+CI%22)
 [![GitHub last commit](https://img.shields.io/github/last-commit/inu-appcenter/cafeteria-android)](https://github.com/inu-appcenter/cafeteria-android/commits)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/inu-appcenter/cafeteria-android)](https://github.com/inu-appcenter/cafeteria-android/releases/latest)
 [![GitHub stars](https://img.shields.io/github/stars/inu-appcenter/cafeteria-android?style=shield)](https://github.com/inu-appcenter/cafeteria-android/stargazers)
