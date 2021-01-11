@@ -89,14 +89,18 @@ class CafeteriaAdapter : PositionRetainingAdapter<CafeteriaView, CafeteriaBindin
         fun bind(cafeteria: CafeteriaView?) {
             cafeteria ?: return
 
-            with(binding.moreButton) {
+            with(binding.cafeteriaName) {
+                text = cafeteria.name
+
                 setOnClickListener {
                     onClickMore(cafeteria)
                 }
             }
 
-            with(binding.cafeteriaName) {
-                text = cafeteria.name
+            with(binding.moreButton) {
+                setOnClickListener {
+                    onClickMore(cafeteria)
+                }
             }
 
             menuPageAdapter.items = cafeteria.wholeMenus

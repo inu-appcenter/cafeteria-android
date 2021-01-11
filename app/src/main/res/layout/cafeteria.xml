@@ -20,6 +20,7 @@
         android:textStyle="bold"
         android:textSize="@dimen/textTitle"
         android:textColor="#000"
+        android:background="?android:attr/selectableItemBackground"
         tools:text="Section A" />
 
     <!-- More button -->
