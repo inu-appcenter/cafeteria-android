@@ -20,7 +20,7 @@
 buildscript {
 
     /** THE VERSION NAME! */
-    ext.version_name = '4.2.0b7'
+    ext.version_name = '4.2.0b8'
 
     ext.kotlin_version = '1.4.21'
     ext.gradle_version = '4.1.1'
