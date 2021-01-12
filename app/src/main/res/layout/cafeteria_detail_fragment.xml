@@ -50,7 +50,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <!-- Scrollable content -->
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 style="@style/HorizontallyFullSizedView"
                 android:orientation="vertical"
                 android:paddingVertical="@dimen/far_space"
@@ -58,8 +58,11 @@
 
                 <!-- Menus in a card view -->
                 <androidx.cardview.widget.CardView
-                    style="@style/HorizontallyFullSizedView"
+                    android:id="@+id/menu_card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/fell_apart_space"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:cardElevation="6dp"
                     app:cardCornerRadius="@dimen/mid_space"
                     android:paddingTop="@dimen/near_space">
@@ -74,24 +77,40 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <!-- Comment icon -->
+                <ImageView
+                    android:id="@+id/comment_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mid_space"
+                    app:layout_constraintStart_toStartOf="@id/menu_card_view"
+                    app:layout_constraintTop_toBottomOf="@id/menu_card_view"
+                    app:tint="?android:attr/textColorSecondary"
+                    android:src="@drawable/ic_announcement_24px"
+                    android:contentDescription="@string/desc_announcement" />
+
                 <!-- Comment -->
                 <TextView
                     style="@style/TextSecondary"
                     android:id="@+id/comment"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar_cafeteria_detail"
-                    android:layout_marginTop="@dimen/mid_space"
-                    android:layout_marginHorizontal="@dimen/fell_apart_space"
-                    android:drawablePadding="@dimen/near_space"
-                    app:drawableStartCompat="@drawable/ic_announcement_24px"
-                    app:drawableTint="?android:attr/textColorSecondary"
+                    android:layout_marginStart="@dimen/near_space"
+                    app:layout_constraintTop_toTopOf="@id/comment_icon"
+                    app:layout_constraintStart_toEndOf="@id/comment_icon"
+                    app:layout_constraintEnd_toEndOf="@id/menu_card_view"
                     android:text="@{vm.selected.comment}"
                     android:lineSpacingExtra="2sp"
-                    android:visibility="@{(vm.selected.comment != null) ? View.VISIBLE : View.GONE}"
                     tools:text="히히히히히히히히히!\n하ㅏ하하!" />
 
-            </LinearLayout>
+                <!-- Comment group -->
+                <androidx.constraintlayout.widget.Group
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="comment_icon, comment"
+                    android:visibility="@{(vm.selected.comment != null) ? View.VISIBLE : View.GONE}" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
