@@ -88,9 +88,7 @@ class MenuAdapter : BaseBindingAdapter<MenuView, MenuAdapter.MenuViewHolder>() {
         @JvmStatic
         @BindingAdapter("availableAt")
         fun setAvailableAt(view: AvailableTimeView, availableAt: Int?) {
-            availableAt?.let {
-                view.setAvailableTime(it)
-            }
+            availableAt?.let(view::setAvailableTime)
         }
 
     }
