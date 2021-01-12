@@ -20,17 +20,16 @@
 package com.inu.cafeteria.common.navigation
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.os.Handler
+import android.view.animation.AnimationUtils
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.extension.hideKeyboard
@@ -42,6 +41,7 @@ import com.inu.cafeteria.feature.login.LoginActivity
 import com.inu.cafeteria.feature.main.MainActivity
 import com.inu.cafeteria.feature.order.AddOrderActivity
 import com.inu.cafeteria.feature.reorder.CafeteriaReorderActivity
+import com.plattysoft.leonids.ParticleSystem
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
@@ -82,7 +82,7 @@ class Navigator(
     }
 
     @SuppressLint("InflateParams")
-    fun showNotice(activity: FragmentActivity, notice: Notice, onDismiss: () -> Unit) {
+    fun showNotice(activity: Activity, notice: Notice, onDismiss: () -> Unit) {
         val dialog = BottomSheetDialog(activity)
         val noticeView = activity.layoutInflater.inflate(R.layout.notice_view, null).apply {
             withNonNull(findViewById<TextView>(R.id.title)) {
@@ -105,7 +105,7 @@ class Navigator(
         dialog.show()
     }
 
-    fun showUpdate(activity: FragmentActivity) {
+    fun showUpdate(activity: Activity) {
         AlertDialog
             .Builder(activity)
             .setTitle(context.getString(R.string.wait))
@@ -117,7 +117,7 @@ class Navigator(
             .show()
     }
 
-    fun showOrderFinishedNotification(activity: FragmentActivity, title: String, body: String, onDismiss: () -> Unit = {}) {
+    fun showOrderFinishedNotification(activity: Activity, title: String, body: String, onDismiss: () -> Unit = {}) {
         AlertDialog
             .Builder(activity)
             .setTitle(title)
@@ -133,7 +133,7 @@ class Navigator(
         )
     }
 
-    fun showDialog(activity: FragmentActivity, title: String, body: String, onDismiss: () -> Unit = {}) {
+    fun showDialog(activity: Activity, title: String, body: String, onDismiss: () -> Unit = {}) {
         AlertDialog
             .Builder(activity)
             .setTitle(title)
@@ -152,7 +152,7 @@ class Navigator(
     }
 
     @SuppressLint("RestrictedApi")
-    fun showBetaTestFeedbackDialog(activity: FragmentActivity, sendFeedback: (String) -> Unit) {
+    fun showBetaTestFeedbackDialog(activity: Activity, sendFeedback: (String) -> Unit) {
         val textInput = EditText(activity).apply {
             hint = "관심 가져주셔서 감사합니다 :)"
         }
@@ -173,6 +173,36 @@ class Navigator(
             .setCanceledOnTouchOutside(false)
 
         textInput.requestFocusWithKeyboard()
+    }
+
+    @SuppressLint("RestrictedApi")
+    fun showPotadosDialog(activity: Activity) {
+        val potadosImageView = ImageView(activity).apply {
+            setPadding(50, 50, 50, 50)
+            setImageResource(R.drawable.potato)
+            setOnClickListener {
+                startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_once).apply {
+                    duration = 200
+                })
+            }
+        }
+
+        AlertDialog.Builder(activity)
+            .setTitle("감자 좋아하세요?")
+            .setMessage("좋은 하루 보내세요 :)\n\nINU 카페테리아\n© potados99")
+            .setView(potadosImageView, 60, 0, 60, 0)
+            .setPositiveButton("닫기") { _, _ -> }
+            .show()
+
+        ParticleSystem(activity, 100, R.drawable.dot, 3000)
+            .setSpeedRange(0.2f, 0.7f)
+            .oneShot(potadosImageView, 100)
+
+        Handler().postDelayed({
+            potadosImageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake_once).apply {
+                duration = 200
+            })
+        }, 800)
     }
 
     fun safeStartActivity(intent: Intent) {

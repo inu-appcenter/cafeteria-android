@@ -23,31 +23,62 @@ import android.app.Activity
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.inu.cafeteria.R
+import com.inu.cafeteria.common.navigation.Navigator
+import com.inu.cafeteria.util.ActivityHelper
+import com.inu.cafeteria.util.Events
 import com.inu.cafeteria.util.Fun
 import com.plattysoft.leonids.ParticleSystem
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class EasterEggHelper {
+object EasterEggHelper : KoinComponent {
 
-    companion object {
+    fun getOfflineViewEasterEggs(activity: Activity) = Fun(
+        listOf(
+            Fun.Event(9) {
+                ParticleSystem(activity, 50, R.drawable.dot, 3000)
+                    .setSpeedRange(0.2f, 0.7f)
+                    .oneShot(activity.findViewById<CardView>(R.id.offline_view), 50)
 
-        fun getEasterEggs(activity: Activity) = Fun(
-            listOf(
-                Fun.Event(9) {
-                    ParticleSystem(activity, 50, R.drawable.dot, 3000)
-                        .setSpeedRange(0.2f, 0.7f)
-                        .oneShot(activity.findViewById<CardView>(R.id.offline_view), 50)
-                },
-                Fun.Event(17) {
-                    Toast.makeText(activity, activity.getString(R.string.egg_help), Toast.LENGTH_SHORT).show()
-                },
-                Fun.Event(22) {
-                    Toast.makeText(activity, activity.getString(R.string.egg_upup), Toast.LENGTH_SHORT).show()
-                },
-                Fun.Event(99) {
-                    Toast.makeText(activity, activity.getString(R.string.egg_gmg), Toast.LENGTH_SHORT).show()
-                    Toast.makeText(activity, activity.getString(R.string.heart), Toast.LENGTH_SHORT).show()
-                }
-            )
+                Events.onUserDiscoveredEasterEgg("폭죽 발견")
+            },
+            Fun.Event(17) {
+                Toast.makeText(activity, activity.getString(R.string.egg_help), Toast.LENGTH_SHORT).show()
+
+                Events.onUserDiscoveredEasterEgg("오프라인 뷰 연타 1")
+            },
+            Fun.Event(22) {
+                Toast.makeText(activity, activity.getString(R.string.egg_upup), Toast.LENGTH_SHORT).show()
+
+                Events.onUserDiscoveredEasterEgg("오프라인 뷰 연타 2")
+            },
+            Fun.Event(99) {
+                Toast.makeText(activity, activity.getString(R.string.egg_gmg), Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.heart), Toast.LENGTH_SHORT).show()
+
+                Events.onUserDiscoveredEasterEgg("오프라인 뷰 연타 3")
+            }
         )
-    }
+    )
+
+    fun getBarcodeCardEasterEggs() = Fun(
+        listOf(
+            Fun.Event(5) {
+                val activity = ActivityHelper.getActivity() ?: return@Event
+
+                Toast.makeText(activity, activity.getString(R.string.egg_lightning), Toast.LENGTH_SHORT).show()
+
+                Events.onUserDiscoveredEasterEgg("바코드 연타")
+            },
+
+            Fun.Event(10) {
+                val activity = ActivityHelper.getActivity() ?: return@Event
+                val navigator: Navigator by inject()
+
+                navigator.showPotadosDialog(activity)
+
+                Events.onUserDiscoveredEasterEgg("감자 팝업 발견")
+            }
+        )
+    )
 }

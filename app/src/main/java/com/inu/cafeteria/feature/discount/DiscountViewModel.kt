@@ -30,6 +30,7 @@ import com.inu.cafeteria.entities.Account
 import com.inu.cafeteria.entities.OnboardingHint
 import com.inu.cafeteria.exception.NoAccountException
 import com.inu.cafeteria.exception.UnauthorizedException
+import com.inu.cafeteria.feature.main.EasterEggHelper
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.*
 import com.inu.cafeteria.util.SingleLiveEvent
@@ -47,6 +48,8 @@ class DiscountViewModel : BaseViewModel() {
     private val accountService: AccountService by inject()
 
     private val navigator: Navigator by inject()
+
+    private val eggs = EasterEggHelper.getBarcodeCardEasterEggs()
 
     private val _barcodeCardReady = MutableLiveData(false)
     val barcodeCardReady: LiveData<Boolean> = _barcodeCardReady
@@ -122,8 +125,17 @@ class DiscountViewModel : BaseViewModel() {
         navigator.showLogin()
     }
 
-    fun onToggleBrightness() {
+    fun onClickBarcodeCard() {
+        toggleBrightness()
+        giveSomeEggs()
+    }
+
+    private fun toggleBrightness() {
         _bright.value = !(_bright.value ?: false)
+    }
+
+    private fun giveSomeEggs() {
+        eggs.haveSomeFun()
     }
 
     private fun showBarcode() {
@@ -195,6 +207,5 @@ class DiscountViewModel : BaseViewModel() {
                 showDiscountServiceDescriptionEvent.value = Pair(title, body)
             }
         }
-
     }
 }

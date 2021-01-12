@@ -36,10 +36,9 @@ import com.inu.cafeteria.common.base.NavigationHostFragment
 import com.inu.cafeteria.common.extension.fadeIn
 import com.inu.cafeteria.common.extension.fadeOut
 import com.inu.cafeteria.common.extension.observe
-import com.inu.cafeteria.common.firebase.Events
 import com.inu.cafeteria.config.Config
 import com.inu.cafeteria.extension.withNonNull
-import com.inu.cafeteria.feature.main.EasterEggHelper.Companion.getEasterEggs
+import com.inu.cafeteria.util.Events
 import org.koin.core.inject
 import timber.log.Timber
 import java.util.*
@@ -131,7 +130,7 @@ class MainActivity : NavigationActivity() {
     }
 
     private fun setOfflineView() {
-        val eggs = getEasterEggs(this)
+        val eggs = EasterEggHelper.getOfflineViewEasterEggs(this)
 
         withNonNull(findViewById<CardView>(R.id.offline_view)) {
             val animation = AnimationUtils

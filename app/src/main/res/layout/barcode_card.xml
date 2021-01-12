@@ -48,7 +48,7 @@
             android:id="@+id/student_info_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> vm.onToggleBrightness()}"
+            android:onClick="@{() -> vm.onClickBarcodeCard()}"
             android:background="?android:attr/selectableItemBackground">
 
             <!-- UICOOP logo -->

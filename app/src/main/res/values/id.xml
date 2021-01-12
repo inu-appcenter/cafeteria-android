@@ -19,5 +19,6 @@
   -->
 
 <resources>
-    <item name="tooltip" type="id"/>
+    <item name="tooltip" type="id" />
+    <item name="potados" type="id" />
 </resources>

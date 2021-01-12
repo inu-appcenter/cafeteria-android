@@ -174,5 +174,6 @@
     <string name="title_discount_service_description">Discount for students</string>
     <string name="description_discount_service">Discount supported on %s.</string>
     <string name="desc_announcement">This is an announcement</string>
+    <string name="egg_lightning">Buzzzzzzz!</string>
 
 </resources>

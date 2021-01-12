@@ -25,10 +25,10 @@ import androidx.lifecycle.MutableLiveData
 import com.inu.cafeteria.R
 import com.inu.cafeteria.common.base.BaseViewModel
 import com.inu.cafeteria.common.extension.onChanged
-import com.inu.cafeteria.common.firebase.Events
 import com.inu.cafeteria.common.navigation.Navigator
 import com.inu.cafeteria.service.AccountService
 import com.inu.cafeteria.usecase.Login
+import com.inu.cafeteria.util.Events
 import org.koin.core.inject
 import timber.log.Timber
 
