@@ -111,14 +111,6 @@ class CafeteriaFragment : BaseFragment<CafeteriaFragmentBinding>() {
 
         with(eventHub) {
             observe(reorderEvent) {
-                reloadCurrentTab()
-            }
-        }
-    }
-
-    private fun reloadCurrentTab() {
-        withNonNull(view?.findViewById<RecyclerView>(R.id.cafeteria_recycler)) {
-            withinAlphaAnimation(0f, 1f) {
                 viewModel.reselectCurrentDateTab()
             }
         }

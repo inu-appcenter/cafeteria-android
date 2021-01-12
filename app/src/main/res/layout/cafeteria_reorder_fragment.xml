@@ -49,10 +49,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_reorder"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingBottom="@dimen/toolbarHeight"
+            android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}"
             cafeteriaToReorder="@{vm.cafeteria}"
-            isLoading="@{vm.loading}"
+            areReorderItemsLoading="@{vm.loading}"
             tools:listitem="@layout/cafeteria_reorder_item" />
 
         <!-- Empty view group -->
@@ -102,6 +104,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/shadow" />
+
+        <!-- Big reset button -->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/big_reset_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/action_reset"
+            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:backgroundTint="?android:attr/colorPrimary"
+            android:onClick="@{v -> vm.resetOrder()}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -73,5 +73,11 @@ class CafeteriaReorderFragment : BaseFragment<CafeteriaReorderFragmentBinding>()
                 (view.adapter as? CafeteriaReorderAdapter)?.items = it.toMutableList()
             }
         }
+
+        @JvmStatic
+        @BindingAdapter("areReorderItemsLoading")
+        fun setReorderItemsLoading(view: RecyclerView, isLoading: Boolean?) {
+            (view.adapter as? CafeteriaReorderAdapter)?.isLoading = isLoading ?: true
+        }
     }
 }

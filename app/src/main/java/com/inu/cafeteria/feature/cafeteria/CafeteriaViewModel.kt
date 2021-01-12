@@ -19,8 +19,6 @@
 
 package com.inu.cafeteria.feature.cafeteria
 
-import android.os.Handler
-import android.os.Looper
 import android.util.SparseIntArray
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -139,7 +137,7 @@ class CafeteriaViewModel : BaseViewModel() {
 
         getFromCache(date)?.let {
             handleCafeteria(it)
-            finishLoading(slowly = false)
+            finishLoading()
             return
         }
 
@@ -161,20 +159,8 @@ class CafeteriaViewModel : BaseViewModel() {
         _loading.value = true
     }
 
-    private fun finishLoading(slowly: Boolean) {
-        // God damn point: Even if the network job is finished and the result arrived,
-        // we have to wait for a few more moments before we show up the cafeteria_recycler.
-        // Otherwise it will slow down UI rendering.
-        // We needed to right like below:
-        //
-        // Handler(Looper.getMainLooper()).postDelayed({
-        //     _loading.value = false
-        // }, 250)
-        //
-        // However it doesn't matter because we can pre-fetch all data(number of them are fixed!).
-        Handler(Looper.getMainLooper()).postDelayed({
-            _loading.value = false
-        }, if (slowly) 250 else 0)
+    private fun finishLoading() {
+        _loading.value = false
     }
 
     fun onClickOptionMenu(menuItemId: Int): Boolean {
@@ -220,13 +206,13 @@ class CafeteriaViewModel : BaseViewModel() {
 
         _cafeteria.value = result
 
-        finishLoading(slowly = result.isNotEmpty())
+        finishLoading()
     }
 
     override fun handleFailure(e: Exception) {
         super.handleFailure(e)
 
-        finishLoading(slowly = false)
+        finishLoading()
     }
 
     fun onViewMore(cafeteriaView: CafeteriaView) {

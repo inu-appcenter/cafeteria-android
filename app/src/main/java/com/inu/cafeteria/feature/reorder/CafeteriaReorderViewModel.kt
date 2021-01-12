@@ -60,19 +60,19 @@ class CafeteriaReorderViewModel : BaseViewModel() {
         }
     }
 
-    fun resetOrder() {
-        resetCafeteriaOrder(Unit) {
-            fetch()
-            eventHub.reorderEvent.call()
-        }
-    }
-
     private fun startLoading() {
         _loading.value = true
     }
 
     private fun finishLoading() {
         _loading.value = false
+    }
+
+    fun resetOrder() {
+        resetCafeteriaOrder(Unit) {
+            fetch()
+            eventHub.reorderEvent.call()
+        }
     }
 
     fun onChangeOrder(orderedIds: Array<Int>) {
