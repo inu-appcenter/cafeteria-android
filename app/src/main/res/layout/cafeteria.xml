@@ -6,7 +6,7 @@
     android:id="@+id/item_root"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:paddingTop="@dimen/cafeteria_vertical_space">
+    android:paddingTop="@dimen/near_space">
 
     <!-- Cafeteria name -->
     <TextView
@@ -15,8 +15,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/more_button"
+        android:paddingVertical="@dimen/near_space"
+        android:paddingStart="@dimen/cafeteria_horizontal_space"
+        android:paddingEnd="0dp"
         android:lines="1"
-        android:layout_marginStart="@dimen/cafeteria_horizontal_space"
         android:textStyle="bold"
         android:textSize="@dimen/textTitle"
         android:textColor="#000"
@@ -26,9 +28,10 @@
     <!-- More button -->
     <ImageButton
         android:id="@+id/more_button"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="@dimen/cafeteria_horizontal_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/near_space"
+        android:paddingHorizontal="@dimen/cafeteria_horizontal_space"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintTop_toTopOf="@id/cafeteria_name"
         app:layout_constraintBottom_toBottomOf="@id/cafeteria_name"
@@ -45,7 +48,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cafeteria_name"
         android:paddingHorizontal="@dimen/cafeteria_menu_page_horizontal_space"
-        android:paddingVertical="@dimen/cafeteria_menu_page_vertical_space"
+        android:paddingBottom="@dimen/cafeteria_menu_page_vertical_space"
+        android:paddingTop="@dimen/close_space"
         android:nestedScrollingEnabled="false"
         android:clipToPadding="false"
         android:orientation="horizontal"
