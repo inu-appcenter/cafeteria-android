@@ -85,6 +85,7 @@
 
         <!-- Privacy notion -->
         <TextView
+            style="@style/TextTertiary"
             android:id="@+id/privacy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,6 +95,7 @@
 
         <!-- Terms and conditions link -->
         <TextView
+            style="@style/TextTertiary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/far_space"
