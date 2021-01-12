@@ -17,20 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.retrofit.scheme
 
-import com.inu.cafeteria.entities.Cafeteria
-import com.inu.cafeteria.entities.CafeteriaComment
+import com.google.gson.annotations.SerializedName
 
-interface CafeteriaRepository {
-
-    fun getAllMenuSupportingCafeteria(includeMenu: Boolean = true, menuDate: String? = null): List<Cafeteria>
-    fun getAllDiscountSupportingCafeteria(): List<Cafeteria>
-    fun getAllNotificationSupportingCafeteria(): List<Cafeteria>
-
-    fun getCafeteriaComment(cafeteriaId: Int): CafeteriaComment?
-
-    fun getSortingOrders(): Array<Int>
-    fun setSortingOrders(orderedIds: Array<Int>)
-    fun resetSortingOrders()
-}
+data class CafeteriaCommentResult(
+    val comment: String?,
+    @SerializedName("cafeteria-id") val cafeteriaId: Int
+)

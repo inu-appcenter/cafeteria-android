@@ -33,6 +33,7 @@ import com.inu.cafeteria.entities.OnboardingHint
 import com.inu.cafeteria.extension.afterDays
 import com.inu.cafeteria.extension.applyOrder
 import com.inu.cafeteria.extension.format
+import com.inu.cafeteria.usecase.GetCafeteriaComment
 import com.inu.cafeteria.usecase.GetMenuSupportingCafeteria
 import com.inu.cafeteria.usecase.GetSortingOrders
 import com.inu.cafeteria.util.SingleLiveEvent
@@ -47,6 +48,7 @@ class CafeteriaViewModel : BaseViewModel() {
 
     private val getCafeteria: GetMenuSupportingCafeteria by inject()
     private val getSortingOrders: GetSortingOrders by inject()
+    private val getCafeteriaComment: GetCafeteriaComment by inject()
 
     private val cafeteriaCache: MutableMap<String, List<Cafeteria>> = mutableMapOf()
 
@@ -55,8 +57,8 @@ class CafeteriaViewModel : BaseViewModel() {
     private val _cafeteria = MutableLiveData<List<CafeteriaView>>()
     val cafeteria: LiveData<List<CafeteriaView>> = _cafeteria
 
-    private val _selected = MutableLiveData<CafeteriaView>()
-    val selected: LiveData<CafeteriaView> = _selected
+    private val _selected = MutableLiveData<CafeteriaDetailedView>()
+    val selected: LiveData<CafeteriaDetailedView> = _selected
 
     private val _loading = MutableLiveData(true)
     val loading: LiveData<Boolean> = _loading
@@ -228,8 +230,11 @@ class CafeteriaViewModel : BaseViewModel() {
     }
 
     fun onViewMore(cafeteriaView: CafeteriaView) {
-        _selected.value = cafeteriaView
-
-        navigateEvent.value = R.id.action_cafeteria_detail
+        getCafeteriaComment(cafeteriaView.id) { result ->
+            result
+                .onSuccess { _selected.value = CafeteriaDetailedView.fromCafeteriaViewAndComment(cafeteriaView, it) }
+                .onError { _selected.value = CafeteriaDetailedView.fromCafeteriaViewAndComment(cafeteriaView, null) }
+                .finally { navigateEvent.value = R.id.action_cafeteria_detail }
+        }
     }
 }

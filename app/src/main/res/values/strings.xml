@@ -173,5 +173,6 @@
     <string name="sorry_to_be_offline">Sorry, we can do nothing within offline mode :(</string>
     <string name="title_discount_service_description">Discount for students</string>
     <string name="description_discount_service">Discount supported on %s.</string>
+    <string name="desc_announcement">This is an announcement</string>
 
 </resources>

@@ -65,6 +65,8 @@ interface CafeteriaNetworkService {
     @GET("/menus")
     fun getMenus(@Query("date") date: String? = null, @Query("split") split: Boolean = false/* server-side false default */): Call<List<MenuResult>>
 
+    @GET("/cafeteriaComments")
+    fun getCafeteriaComments(): Call<List<CafeteriaCommentResult>>
 
     /** Membership */
     @POST("/login")

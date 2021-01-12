@@ -163,5 +163,6 @@
     <string name="sorry_to_be_offline">죄송해요 오프라인이라 할 수 있는게 없어요 ㅠ</string>
     <string name="title_discount_service_description">학생 할인 혜택 안내</string>
     <string name="description_discount_service">%s에서 이용하실 수 있습니다. 할인 제공 여부와 시점은 식당 사정에 따라 달라질 수 있습니다.</string>
+    <string name="desc_announcement">안내입니다</string>
 
 </resources>

@@ -333,4 +333,10 @@ val myModules = module {
             externalCredentialsRepo = get()
         )
     }
+
+    single {
+        GetCafeteriaComment(
+            cafeteriaRepo = get()
+        )
+    }
 }

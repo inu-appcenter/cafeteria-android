@@ -21,9 +21,11 @@ package com.inu.cafeteria.repository
 
 import com.inu.cafeteria.db.SharedPreferenceWrapper
 import com.inu.cafeteria.entities.Cafeteria
+import com.inu.cafeteria.entities.CafeteriaComment
 import com.inu.cafeteria.extension.format
 import com.inu.cafeteria.extension.getOrThrow
 import com.inu.cafeteria.retrofit.CafeteriaNetworkService
+import com.inu.cafeteria.retrofit.scheme.CafeteriaCommentResult
 import com.inu.cafeteria.retrofit.scheme.CafeteriaResult
 import com.inu.cafeteria.retrofit.scheme.CornerResult
 import com.inu.cafeteria.retrofit.scheme.MenuResult
@@ -39,7 +41,8 @@ class CafeteriaRepositoryImpl(
 
     private val cafeteriaCache = Cache<List<CafeteriaResult>>()
     private val cornerCache = Cache<List<CornerResult>>()
-    private val menuCaches = PairedCache<String, List<MenuResult>>()
+    private val menuCache = PairedCache<String, List<MenuResult>>()
+    private val commentCache = Cache<List<CafeteriaCommentResult>>()
 
     override fun getAllMenuSupportingCafeteria(
         includeMenu: Boolean,
@@ -74,13 +77,23 @@ class CafeteriaRepositoryImpl(
 
         val menus =
             if (includeMenu)
-                cachedFetch(menuCaches, menuDate ?: Date().format()) {
+                cachedFetch(menuCache, menuDate ?: Date().format()) {
                     networkService.getMenus(menuDate, split = true).getOrThrow()
                 } ?: return listOf()
             else
                 listOf()
 
         return CafeteriaResultGatherer(cafeteria, corners, menus).combine()
+    }
+
+    override fun getCafeteriaComment(cafeteriaId: Int): CafeteriaComment? {
+        val comment = cachedFetch(commentCache) {
+            networkService.getCafeteriaComments().getOrThrow()
+        } ?: return null
+
+        val commentForThatCafeteria = comment.find { it.cafeteriaId == cafeteriaId } ?: return null
+
+        return CafeteriaComment(commentForThatCafeteria.comment)
     }
 
     @Synchronized

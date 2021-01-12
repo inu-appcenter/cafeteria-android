@@ -17,20 +17,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.inu.cafeteria.repository
+package com.inu.cafeteria.feature.cafeteria
 
-import com.inu.cafeteria.entities.Cafeteria
 import com.inu.cafeteria.entities.CafeteriaComment
 
-interface CafeteriaRepository {
-
-    fun getAllMenuSupportingCafeteria(includeMenu: Boolean = true, menuDate: String? = null): List<Cafeteria>
-    fun getAllDiscountSupportingCafeteria(): List<Cafeteria>
-    fun getAllNotificationSupportingCafeteria(): List<Cafeteria>
-
-    fun getCafeteriaComment(cafeteriaId: Int): CafeteriaComment?
-
-    fun getSortingOrders(): Array<Int>
-    fun setSortingOrders(orderedIds: Array<Int>)
-    fun resetSortingOrders()
+data class CafeteriaDetailedView(
+    val id: Int,
+    val name: String,
+    val comment: String?,
+    val wholeMenus: List<MenuView>
+) {
+    companion object {
+        fun fromCafeteriaViewAndComment(
+            cafeteriaView: CafeteriaView,
+            cafeteriaComment: CafeteriaComment?
+        ) =
+            CafeteriaDetailedView(
+                cafeteriaView.id,
+                cafeteriaView.name,
+                cafeteriaComment?.comment,
+                cafeteriaView.wholeMenus
+            )
+    }
 }

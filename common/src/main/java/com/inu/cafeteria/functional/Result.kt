@@ -33,7 +33,7 @@ sealed class Result<out T> {
     val succeeded get() = this is Success && data != null
 
     fun <R> onSuccess(body: (T) -> R): Result<T> {
-        if (this is Success && data != null) {
+        if (this is Success) {
             body(data)
         }
         return this
