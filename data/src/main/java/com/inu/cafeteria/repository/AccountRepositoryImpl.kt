@@ -52,11 +52,11 @@ class AccountRepositoryImpl(
     private fun login(param: LoginParams): Account {
         val result = networkService
             .getLoginResult(param)
-            .getOrThrow()
+            .getOrThrow() ?: throw NullBodyException("Login result must not be null!")
 
-        return result?.toAccount().apply {
+        return result.toAccount().apply {
             loggedIn.postValue(true)
-        } ?: throw NullBodyException("Login result must not be null!")
+        }
     }
 
     override fun getSavedAccount(): Account? {
