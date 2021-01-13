@@ -175,5 +175,10 @@
     <string name="description_discount_service">Discount supported on %s.</string>
     <string name="desc_announcement">This is an announcement</string>
     <string name="egg_lightning">Buzzzzzzz!</string>
-
+    <string name="title_thank_you_for_attention">Thanks!</string>
+    <string name="description_let_me_know_what_to_do">Let me know what to improve.</string>
+    <string name="button_send">Send</string>
+    <string name="title_do_you_love_potato">Do you like potato?</string>
+    <string name="description_have_a_good_day">Have a good day :)\n\nINU Cafeteria\n© potados99</string>
+    <string name="button_close">Close</string>
 </resources>

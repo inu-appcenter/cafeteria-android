@@ -22,6 +22,7 @@ package com.inu.cafeteria.feature.splash
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.inu.cafeteria.common.navigation.Navigator
+import com.inu.cafeteria.config.RemoteConfig
 import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity() {
@@ -31,7 +32,9 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        navigator.showMain(intent?.extras)
-        finish()
+        RemoteConfig.onRemoteConfigReady {
+            navigator.showMain(intent?.extras)
+            finish()
+        }
     }
 }

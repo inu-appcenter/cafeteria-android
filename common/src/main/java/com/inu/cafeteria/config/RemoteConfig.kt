@@ -43,7 +43,11 @@ object RemoteConfig : KoinComponent {
     private lateinit var remoteConfig: FirebaseRemoteConfig
 
     private var initialized = false
-    private var configReady = false
+    private var localConfigReady = false
+    private var remoteConfigReady = false
+
+    private var localConfigReadyAction: () -> Unit = {}
+    private var remoteConfigReadyAction: () -> Unit = {}
 
     // Must call this!
     fun initialize() {
@@ -54,8 +58,17 @@ object RemoteConfig : KoinComponent {
         remoteConfig = Firebase.remoteConfig
 
         remoteConfig.run {
-            setDefaultsAsync(fallback).addOnCompleteListener { configReady = true }
-            safeFetch()
+            setDefaultsAsync(fallback).addOnCompleteListener {
+                // This will be done first.
+                localConfigReady = true
+                localConfigReadyAction()
+            }
+
+            safeFetch()?.addOnCompleteListener {
+                // This might take longer.
+                remoteConfigReady = true
+                remoteConfigReadyAction()
+            }
         }
 
         initialized = true
@@ -70,6 +83,28 @@ object RemoteConfig : KoinComponent {
         }
     }
 
-    fun getBoolean(key: String) = if (configReady) remoteConfig.getBoolean(key) else fallback[key].toBoolean()
-    fun getString(key: String) = if (configReady) remoteConfig.getString(key) else fallback[key] ?: ""
+    fun onLocalConfigReady(action: () -> Unit = {}) {
+        if (localConfigReady) {
+            action()
+            return
+        }
+
+        localConfigReadyAction = action
+    }
+
+    fun onRemoteConfigReady(action: () -> Unit = {}) {
+        if (remoteConfigReady) {
+            action()
+            return
+        }
+
+        remoteConfigReadyAction = action
+    }
+
+    /**
+     * Below are accessible on anytime.
+     * We need a fallback to be able to serve when config is not ready.
+     */
+    fun getBoolean(key: String) = if (localConfigReady || remoteConfigReady) remoteConfig.getBoolean(key) else fallback[key].toBoolean()
+    fun getString(key: String) = if (localConfigReady || remoteConfigReady) remoteConfig.getString(key) else fallback[key] ?: ""
 }

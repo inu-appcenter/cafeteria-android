@@ -31,7 +31,7 @@ class DeviceStatusRepositoryImpl(
 
     private val networkChangeEvent = PublicLiveEvent<Boolean>()
 
-    override fun init() {
+    override fun initialize() {
         startObservingNetworkState()
     }
 

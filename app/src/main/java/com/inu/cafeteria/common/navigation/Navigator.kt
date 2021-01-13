@@ -154,19 +154,19 @@ class Navigator(
     @SuppressLint("RestrictedApi")
     fun showBetaTestFeedbackDialog(activity: Activity, sendFeedback: (String) -> Unit) {
         val textInput = EditText(activity).apply {
-            hint = "관심 가져주셔서 감사합니다 :)"
+            hint = context.getString(R.string.title_thank_you_for_attention)
         }
 
         AlertDialog.Builder(activity)
             .setTitle("피드백")
-            .setMessage("개선이 필요한 부분을 알려주세요!\uD83D\uDE0A")
+            .setMessage(context.getString(R.string.description_let_me_know_what_to_do))
             .setView(textInput, 60, 0, 60, 0)
-            .setPositiveButton("보내기") { dialog, _ ->
+            .setPositiveButton(context.getString(R.string.button_send)) { dialog, _ ->
                 sendFeedback(textInput.text.toString())
                 textInput.hideKeyboard()
                 dialog.dismiss() // Not gonna dismiss automatically
             }
-            .setNegativeButton("취소하기") { _, _ ->
+            .setNegativeButton(context.getString(R.string.button_cancel)) { _, _ ->
                 textInput.hideKeyboard()
             }
             .show()
@@ -188,10 +188,11 @@ class Navigator(
         }
 
         AlertDialog.Builder(activity)
-            .setTitle("감자 좋아하세요?")
-            .setMessage("좋은 하루 보내세요 :)\n\nINU 카페테리아\n© potados99")
+            .setTitle(context.getString(R.string.title_do_you_love_potato))
+            .setMessage(context.getString(R.string.description_have_a_good_day))
             .setView(potadosImageView, 60, 0, 60, 0)
-            .setPositiveButton("닫기") { _, _ -> }
+            .setPositiveButton(context.getString(R.string.button_close)) { _, _ -> }
+            .setCancelable(false)
             .show()
 
         ParticleSystem(activity, 100, R.drawable.dot, 3000)

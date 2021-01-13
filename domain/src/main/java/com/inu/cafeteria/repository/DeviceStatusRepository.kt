@@ -22,7 +22,7 @@ package com.inu.cafeteria.repository
 import com.inu.cafeteria.util.PublicLiveEvent
 
 interface DeviceStatusRepository {
-    fun init()
+    fun initialize()
 
     fun isOnline(): Boolean
     fun networkStateChangeEvent(): PublicLiveEvent<Boolean>
