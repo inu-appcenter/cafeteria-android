@@ -47,14 +47,14 @@
 > 엔티티, 유스케이스, 저장소 정의, 서비스 정의 등이 여기에 속합니다.
 
 > ### data
->Interfaces/Infrastructure 레이어에 해당합니다.
+> Interfaces/Infrastructure 레이어에 해당합니다.
 >
->저장소의 구현, Shared Preferences, Retrofit factory 등이 여기에 속합니다.
+> 저장소의 구현, Shared Preferences, Retrofit factory 등이 여기에 속합니다.
 
 > ### common
->모든 레이어에서 참조할 수 있는 유틸리티 모음입니다.
+> 모든 레이어에서 참조할 수 있는 유틸리티 모음입니다.
 >
->`UseCase`, `Repository` 원형에 대한 정의와 안드로이드/비 안드로이드 유틸리티, 설정 오브젝트가 여기에 속합니다.
+> `UseCase`, `Repository` 원형에 대한 정의와 안드로이드/비 안드로이드 유틸리티, 설정 오브젝트가 여기에 속합니다.
 
 ## 업데이트 로그
 

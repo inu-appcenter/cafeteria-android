@@ -19,6 +19,7 @@
 
 package com.inu.cafeteria.config
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.google.android.gms.tasks.Task
 import com.google.firebase.ktx.Firebase
@@ -40,6 +41,7 @@ object RemoteConfig : KoinComponent {
     private val context: Context by inject()
     private val fallback: Map<String, String> = DefaultsXmlParser.getDefaultsFromXml(context, R.xml.config_defaults)
 
+    @SuppressLint("StaticFieldLeak") // This is a design decision.
     private lateinit var remoteConfig: FirebaseRemoteConfig
 
     private var initialized = false
