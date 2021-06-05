@@ -1,3 +1,5 @@
+## 🚨 이 저장소는 더이상 관리되지 않습니다. 새 저장소([cafeteria-mobile](https://github.com/inu-appcenter/cafeteria-mobile))로 와주세요! 🚨
+
 # cafeteria-android
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/inu-appcenter/cafeteria-android/Android%20CI)](https://github.com/inu-appcenter/cafeteria-android/actions?query=workflow%3A%22Android+CI%22)
